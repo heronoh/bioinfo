@@ -156,7 +156,28 @@ pre code {
 </div>
 
 
-
+<div id="what-is-this" class="section level3">
+<h3>What is this?</h3>
+<p>If you use <a href="http://rmarkdown.rstudio.com/">R Markdown</a> for data analysis projects, you might like to put your HTML reports on the web for people to look at. It would be nice if those pages were closely tied to your GitHub repository, but HTML pages render as code on GitHub proper. So this repository is a template for making a GitHub pages version of your analysis. Not that you have to use GitHub pages: you could just as easily rsync your HTML files anywhere else that you want.</p>
+<p>For example, here is the table of contents for rendered versions of every R Markdown document in this repository.</p>
+</div>
+<div id="table-of-contents" class="section level3">
+<h3>Table of contents</h3>
+<ul>
+</ul>
+</div>
+<div id="what-does-this-do" class="section level3">
+<h3>What does this do?</h3>
+<p>As little as possible. The aim is to be very lightweight. But it does do this:</p>
+<ol style="list-style-type: decimal">
+<li>Includes an index page (you’re looking at it) with a table of contents for every <code>.Rmd</code> file in the root directory of your project.</li>
+<li>Inserts a navigation header into each rendered HTML file.</li>
+<li>Sets some shared options for HTML documents rendered from R Markdown.</li>
+<li>Contains a basic Makefile to render all the documents.</li>
+</ol>
+<p>Don’t forget to commit the HTML files that you generate. You can then configure GitHub to create a web page from the master branch, as <a href="https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/">explained here</a>.</p>
+<p>See the <a href="https://github.com/lmullen/rmd-notebook">GitHub repository</a> for the source. See the <a href="http://rmarkdown.rstudio.com/">R Markdown documentation</a> if you want to do more.</p>
+</div>
 
 
 
