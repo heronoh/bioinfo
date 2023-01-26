@@ -2,14 +2,13 @@
 title: "Práticas em Bioinformática"
 author: "Prof. Heron OH"
 place: "Biomedicina - PUC Minas"
-date: 01/2023
+date: 2023/01
 output: 
   html_document:
     toc: true
     toc_depth: 2
     toc_float: true
-    theme: darkly
-    highlight: zenburn
+    highlight: breezedark
 ---
 
 ```{r setup, include=FALSE}
@@ -17,30 +16,77 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+<style>
+body {
+text-align: justify}
+</style>
+
 
 \_\_<span style="color:darkgreen">Bioinformática para Biomedicina - 2023</span>\_\_
 
 
-## Práticas em Linha de comando - Linux
+## Prática I - Navegando em diretórios
 
-### Prática I - Navegando em diretórios 
-
-Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o **diretório raiz**, representado pelo símbolo _barra_ (**/**). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem _endereços_. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu _endereço_. Para se evitar a ocorrencia de erros usamos, preferencialmente, **_endereços completos_**, ou seja, contendo todas as pastas a partir do diretório raiz, o **/** . Por exemplo:
-
-> Na sua linha de comando ( _bash_ ), escreva o seguinte comando e aperte ***ENTER***.
-
-```{bash, echo=TRUE,eval=FALSE}
+### Comandos básicos
 
 
-summary(cars)
-```
+&nbsp;&nbsp;&nbsp;&nbsp;Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o **diretório raiz**, representado pelo símbolo _barra_ (**/**). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem _endereços_. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu _endereço_. Para se evitar a ocorrencia de erros usamos, preferencialmente, **_endereços completos_**, ou seja, contendo todas as pastas a partir do diretório raiz, o **/** . Por exemplo:
 
-## Including Plots
-
-You can also embed plots, for example:
+> 1) Na sua linha de comando (_bash_), escreva o seguinte comando e aperte ***ENTER***.
 
 ```{bash, echo=TRUE,eval=FALSE}
-plot(pressure)
+pwd
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+&nbsp;&nbsp;&nbsp;&nbsp;O comando ***pwd*** retorna o _path to the working directory_, o caminho para o diretório que você está.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para mudarmos de diretório, utilizamos o comando ***cd***. Quando executado sem argumentos, ele te transporta para a ***\$HOME***, o diretório _casa_ do usuário, e que carrega seu nome. Este diretório geralmente está localizado em **/home/$usuário**
+
+> 2) Agora execute o comando ***cd***, sem argumentos, e verifique mais uma vez onde você está. 
+
+```{bash, echo=TRUE,eval=FALSE}
+cd
+
+pwd
+```
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;Se você já estava na sua ***\$HOME***, você continua no mesmo lugar.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;Agora vamos criar diretórios para explorar outros comandos. Para criar um diretório, utilizamos o comando ***mkdir***, seguido do nome do diretório a ser criado, com caminhos completos ou não. Caso não seja fornecido caminho, o novo diretório será criado no diretório onde se está.
+
+> 3) Utilize o comando ***mkdir*** para criar 3 pastas, _pasta_A_, _pasta_B_, _pasta_C_,. Liste os arquivos do diretório onde você está com o comando ***ls***.
+
+```{bash, echo=TRUE,eval=FALSE}
+mkdir pasta_A
+mkdir pasta_B
+mkdir pasta_C
+
+ls
+```
+
+> 4) O comando ***ls*** (assim como a grande maioria de comandos) aceita argumentos. Argumentos são elementos que modificam a maneira como cada comando funciona. Experimente a variação a seguir e veja a diferença.
+
+```{bash, echo=TRUE,eval=FALSE}
+ls -lh
+```
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;Você acaba de listar os arquivos e pastas, bem como outras informações. Da esquerda para a direita: a) tipo de arquivo e permissões; b) contagem de links; c) usuário e grupo proprietários do arquivo; d) tamanho do arquivo (em _bytes_); e) data da última modificação; f) nome do arquivo.
+
+
+### Exercícios
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;Utilizando os comandos que você aprendeu, .
+
+> 1) mova os arquivos _arquivo_1_, _arquivo_2_ e _arquivo_3_ da pasta de onde eles foram criados para a pasta _pasta_C_.
+
+```{bash, echo=TRUE,eval=TRUE,engine.opts ='-l'}
+tree ~/aula -L 2
+```
+
+
