@@ -1,25 +1,28 @@
-Pratica\_1-Bioinfo
+Práticas em Bioinformática
 ================
-Heron O. Hilário
+Prof. Heron OH
 01/2023
 
-# Práticas em Linha de comando - Linux
+\_\_<span style="color:darkgreen">Bioinformática para Biomedicina -
+2023</span>\_\_
 
-## Prática I - Navegando em diretórios
+## Práticas em Linha de comando - Linux
+
+### Prática I - Navegando em diretórios
 
 Para se trabalhar na linha de comando, é muito importante saber onde se
 está. O computador é organizado em diretórios (também chamados de
 pastas). Todos os diretórios estão contidos dentro de um diretório
-principal, o *diretório raiz*, representado por */*. Todos os arquivos
-ou pastas do computador tem uma localização definida, e portanto tem
-*endereços*. Para a execução de qualquer comando que atua sobre um
-arquivo é nee que deve ser usada preferencialmente para se evitar a
-ocorrencia de erros.
+principal, o **diretório raiz**, representado pelo símbolo *barra*
+(**/**). Todos os arquivos ou pastas do computador tem uma localização
+definida, e portanto, tem *endereços*. Para a execução de qualquer
+comando que atua sobre um arquivo deve ser fornecido o seu *endereço*.
+Para se evitar a ocorrencia de erros usamos, preferencialmente,
+***endereços completos***, ou seja, contendo todas as pastas a partir do
+diretório raiz, o **/** . Por exemplo:
 
-cessário se fornecer o endereço deste arquivo. Há muitas maneiras de se
-fornecer o endereço de arquivos ou pastas. Vamos começar com a mais
-completa, Este é o primeiro caracter que aparece nos endereços de cada
-arquivo
+> Na sua linha de comando ( *bash* ), escreva o seguinte comando e
+> aperte ***ENTER***.
 
 ``` bash
 
