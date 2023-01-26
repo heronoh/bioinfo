@@ -2,7 +2,7 @@
 title: "Pratica_1-Bioinfo"
 author: "Heron O. Hilário"
 date: 01/2023
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
