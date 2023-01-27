@@ -1,36 +1,29 @@
 ---
 title: "Ensino em Bioinformática"
 author: "Heron O.H."
-date: "1/25/2023"
+date: "2023/01"
 output: 
   html_document:
     toc: true
     toc_depth: 2
     toc_float: false
-    theme: darkly
+    theme: bootstrap
     highlight: zenburn
+editor_options: 
+  chunk_output_type: inline
 ---
 
 
+# Olá
 
+Bem vind@. Neste canal iremos desbravar o universo da bioinformática. Aqui disponibilizarei os roteiros de aulas práticas produzidos para a disciplina _Bioinformática e Genômica_, da PUC Minas 
 
-[Proxima aula](./aulas/Pratica_1-Bioinfo)
+### Aulas práticas
 
-
-[Proxima aulasssss](https://github.com/heronoh/bioinfo/blob/main/aulas/Pratica_1-Bioinfo.html)
-
-
-[Proxima aulasssss](./aulas/Pratica_1-Bioinfo.html)
-
-
-### Teste?
-
-### Table of contents
-
-```{r echo=TRUE, results='asis',eval=TRUE}
+```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=FALSE, results='asis'}
 
 rmd <- Sys.glob("aulas/*.Rmd")
-rmd <- Sys.glob("*.Rmd")
+# rmd <- Sys.glob("*.Rmd")
 rmd <- rmd[rmd != "index.Rmd"]
 html <- sub(".Rmd", ".html", rmd)
 lines <- lapply(rmd, readLines)
@@ -44,17 +37,3 @@ cat("</ul>")
 ```
 
 
-
-
-### What does this do?
-
-As little as possible. The aim is to be very lightweight. But it does do this:
-
-1. Includes an index page (you're looking at it) with a table of contents for every `.Rmd` file in the root directory of your project.
-2. Inserts a navigation header into each rendered HTML file.
-4. Sets some shared options for HTML documents rendered from R Markdown.
-5. Contains a basic Makefile to render all the documents.
-  
-Don't forget to commit the HTML files that you generate. You can then configure GitHub to create a web page from the master branch, as [explained here](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/).
-
-See the [GitHub repository](https://github.com/lmullen/rmd-notebook) for the source. See the [R Markdown documentation](http://rmarkdown.rstudio.com/) if you want to do more.
