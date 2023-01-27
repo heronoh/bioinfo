@@ -333,7 +333,6 @@ div.tocify {
 </div>
 
 
-#configurar pros resultados do bash sairem coloridos e não ANSI
 <STYLE type="text/css" scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 </STYLE>
@@ -341,65 +340,113 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 body {
 text-align: justify}
 </style>
-<p>__<span style="color:darkgreen">Bioinformática para Biomedicina - 2023</span>__</p>
-<div id="prática-i---navegando-em-diretórios" class="section level2">
-<h2>Prática I - Navegando em diretórios</h2>
-<div id="comandos-básicos" class="section level3">
-<h3>Comandos básicos</h3>
+<div id="a-linha-de-comando" class="section level2">
+<h2>A linha de comando</h2>
+<p>Todos os sistemas operacionais podem ser operados sem a necessidade de uma interface gráfica, ou seja, sem uma tela com ícones que você selecione clicando (<em>mouse</em>). Isto é realizado apenas atavés do teclado. A linha de comando é a interface por onde você transmite instruções escritas para o computador (<strong><em>input</em></strong>), que te retorna o resultado do processamento dessas instruções (<strong><em>output</em></strong>). Há uma infinidade de <em>comandos</em> que podem ser executados, mas alguns que conheceremos nestas práticas são fundamentais no dia a dia do bioinformata.</p>
+</div>
+<div id="comandos-básicos" class="section level2">
+<h2>Comandos básicos</h2>
+<div id="navegando-em-diretórios" class="section level3">
+<h3>Navegando em diretórios</h3>
 <p>    Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o <strong>diretório raiz</strong>, representado pelo símbolo <em>barra</em> (<strong>/</strong>). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem <em>endereços</em>. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu <em>endereço</em>. Para se evitar a ocorrencia de erros usamos, preferencialmente, <strong><em>endereços completos</em></strong>, ou seja, contendo todas as pastas a partir do diretório raiz, o <strong>/</strong> . Por exemplo:</p>
 <blockquote>
-<ol style="list-style-type: decimal">
-<li>Na sua linha de comando (<em>bash</em>), escreva o seguinte comando e aperte <strong><em>ENTER</em></strong>.</li>
-</ol>
+<p>Na sua linha de comando (<em>bash</em>), escreva o seguinte comando e aperte <strong><em>ENTER</em></strong>.</p>
 </blockquote>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
 <p>    O comando <strong><em>pwd</em></strong> retorna o <em>path to the working directory</em>, o caminho para o diretório que você está.</p>
-<p>    Para mudarmos de diretório, utilizamos o comando <strong><em>cd</em></strong>. Quando executado sem argumentos, ele te transporta para a <strong><em>$HOME</em></strong>, o diretório <em>casa</em> do usuário, e que carrega seu nome. Este diretório geralmente está localizado em <strong>/home/$usuário</strong></p>
+<p>    Para mudarmos de diretório, utilizamos o comando <strong><em>cd</em></strong>. Quando executado sem argumentos, ele te transporta para a <strong><em>$HOME</em></strong>, o diretório <em>casa</em> do usuário, e que carrega seu nome. Este diretório geralmente está localizado em <strong>/home/$usuário</strong>.</p>
+<p>Você pode identificar qual é o seu usuário com o comando <strong><em>whoami</em></strong></p>
 <blockquote>
-<ol start="2" style="list-style-type: decimal">
-<li>Agora execute o comando <strong><em>cd</em></strong>, sem argumentos, e verifique mais uma vez onde você está.</li>
-</ol>
+<p>Identifique seu usuário.</p>
 </blockquote>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">whoami</span></span></code></pre></div>
+<pre><code>## noreh</code></pre>
+<p>No meu caso, estou utilizando o usuário <em>noreh</em>.</p>
+<blockquote>
+<p>Agora execute o comando <strong><em>cd</em></strong>, sem argumentos, e verifique mais uma vez onde você está.</p>
+</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
 <p>    Se você já estava na sua <strong><em>$HOME</em></strong>, você continua no mesmo lugar.</p>
-<p>    Agora vamos criar diretórios para explorar outros comandos. Para criar um diretório, utilizamos o comando <strong><em>mkdir</em></strong>, seguido do nome do diretório a ser criado, com caminhos completos ou não. Caso não seja fornecido caminho, o novo diretório será criado no diretório onde se está.</p>
 <blockquote>
-<ol start="3" style="list-style-type: decimal">
-<li>Utilize o comando <strong><em>mkdir</em></strong> para criar 3 pastas, <em>pasta_A</em>, <em>pasta_B</em>, <em>pasta_C</em>,. Liste os arquivos do diretório onde você está com o comando <strong><em>ls</em></strong>.</li>
-</ol>
+<p>Utilize o comando <strong><em>cd</em></strong> com argumentos, e verifique mais uma vez onde você está.</p>
 </blockquote>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_A</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_B</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_C</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div>
-<blockquote>
-<ol start="4" style="list-style-type: decimal">
-<li>O comando <strong><em>ls</em></strong> (assim como a grande maioria de comandos) aceita argumentos. Argumentos são elementos que modificam a maneira como cada comando funciona. Experimente a variação a seguir e veja a diferença.</li>
-</ol>
-</blockquote>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span></code></pre></div>
-<p>    Você acaba de listar os arquivos e pastas, bem como outras informações. Da esquerda para a direita: a) tipo de arquivo e permissões; b) contagem de links; c) usuário e grupo proprietários do arquivo; d) tamanho do arquivo (em <em>bytes</em>); e) data da última modificação; f) nome do arquivo.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
+<hr />
+<p>Estes argumentos representam <em>o diretório atual</em> (<strong><em>.</em></strong>) e <em>o diretório acima do atual</em> (<strong><em>..</em></strong>), e são utilizados em <em>caminhos relativos</em>, que em breve veremos com mais detalhes.</p>
 </div>
-<div id="exercícios" class="section level3">
-<h3>Exercícios</h3>
-<p>    Utilizando os comandos que você aprendeu, .</p>
+<div id="criando-e-modificando-diretórios" class="section level3">
+<h3>Criando e modificando diretórios</h3>
+<p>    Agora vamos criar diretórios para explorar outros comandos. Para criar um diretório, utilizamos o comando <strong><em>mkdir</em></strong>, seguido do nome do diretório a ser criado, com caminhos completos ou não. Caso não seja fornecido um caminho, o novo diretório será criado no diretório onde se está.</p>
 <blockquote>
-<ol style="list-style-type: decimal">
-<li>mova os arquivos <em>arquivo_1</em>, <em>arquivo_2</em> e <em>arquivo_3</em> da pasta de onde eles foram criados para a pasta <em>pasta_C</em>.</li>
-</ol>
+<p>Utilize o comando <strong><em>mkdir</em></strong> para criar uma pasta <em>aula1</em>, na sua <strong><em>$HOME</em></strong>. Entre nessa pasta com <strong><em>cd</em></strong>.</p>
 </blockquote>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> ~/aula <span class="at">-L</span> 2</span></code></pre></div>
-<PRE class="fansi fansi-output"><CODE>## <span style="color: #0000BB; font-weight: bold;">/home/noreh/aula</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> aula1</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> aula1</span></code></pre></div>
+<blockquote>
+<p>Utilize o comando <strong><em>mkdir</em></strong> para criar 3 pastas, <em>pasta_A</em>, <em>pasta_B</em>, <em>pasta_C</em>, dentro de <em>aula1</em>. Liste os arquivos do diretório onde você está com o comando <strong><em>ls</em></strong>.</p>
+</blockquote>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_A</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_B</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_C</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div>
+<blockquote>
+<p>O comando <strong><em>ls</em></strong> (assim como a grande maioria de comandos) aceita argumentos. Argumentos são elementos que modificam a maneira como cada comando funciona. Experimente a variação a seguir e veja a diferença.</p>
+</blockquote>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span></code></pre></div>
+<p>     Você acaba de listar os arquivos e pastas, bem como outras informações. Da esquerda para a direita: a) tipo de arquivo e permissões; b) contagem de links; c) usuário e grupo proprietários do arquivo; d) tamanho do arquivo (em <em>bytes</em>); e) data da última modificação; f) nome do arquivo.</p>
+</div>
+<div id="caminhos-absolutos-e-relativos" class="section level3">
+<h3>Caminhos absolutos e relativos</h3>
+<p>     Caminhos</p>
+<blockquote>
+<p>Utilize o comando <strong><em>mkdir</em></strong> para criar 3 pastas, <em>pasta_A</em>, <em>pasta_B</em>, <em>pasta_C</em>,. Liste os arquivos do diretório onde você está com o comando <strong><em>ls</em></strong>.</p>
+</blockquote>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_A</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_B</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_C</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div>
+</div>
+<div id="estrutura-de-diretórios" class="section level3">
+<h3>Estrutura de diretórios</h3>
+<p>    </p>
+<blockquote>
+<p>Utilize o comando <strong><em>tree</em></strong> para ver a estrutura de pastas a partir da sua <strong><em>$HOME</em></strong>.</p>
+</blockquote>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> ~/aula1 <span class="at">-L</span> 2</span></code></pre></div>
+<PRE class="fansi fansi-output"><CODE>## <span style="color: #0000BB; font-weight: bold;">/home/noreh/aula1</span>
 ## ├── <span style="color: #0000BB; font-weight: bold;">pasta_A</span>
 ## ├── <span style="color: #0000BB; font-weight: bold;">pasta_B</span>
 ## └── <span style="color: #0000BB; font-weight: bold;">pasta_C</span>
 ## 
 ## 3 directories, 0 files
 </CODE></PRE>
+<p>Note que o seu nome de usuário será diferente do meu, mostrado neste exemplo.</p>
 </div>
+</div>
+<div id="exercícios" class="section level2">
+<h2>Exercícios</h2>
+<p>    Utilizando os comandos que você aprendeu, .</p>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>mova os arquivos <em>arquivo_1</em>, <em>arquivo_2</em> e <em>arquivo_3</em> da pasta de onde eles foram criados para a pasta <em>pasta_C</em>.</li>
+</ol>
+</blockquote>
 </div>
 
 
@@ -451,7 +498,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2",
+      selectors: "h1,h2,h3",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

@@ -4,19 +4,22 @@ author: "Prof. Heron OH"
 place: "Biomedicina - PUC Minas"
 date: 2023/01
 output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    toc_float: true
-    theme: default
+  html_document: 
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
     highlight: zenburn
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+```{r color, echo=FALSE, results='asis'}
 #configurar pros resultados do bash sairem coloridos e não ANSI
-```{r color, echo = FALSE, results='asis'}
+
 old_hooks <- fansi::set_knit_hooks(
   knitr::knit_hooks, 
   which = c("output", "message", "error")
@@ -29,29 +32,46 @@ text-align: justify}
 </style>
 
 
-\_\_<span style="color:darkgreen">Bioinformática para Biomedicina - 2023</span>\_\_
+## A linha de comando
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Todos os sistemas operacionais podem ser operados sem a necessidade de uma interface gráfica, ou seja, sem uma tela com ícones que você selecione clicando (_mouse_). Isto é realizado apenas atavés do teclado. A linha de comando é a interface por onde você transmite instruções escritas para o computador (***input***), que te retorna o resultado do processamento dessas instruções (***output***). Há uma infinidade de _comandos_ que podem ser executados, mas alguns que conheceremos nestas práticas são fundamentais no dia a dia do bioinformata.
 
 
-## Prática I - Navegando em diretórios
+## Comandos básicos
 
-### Comandos básicos
+### Navegando em diretórios
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o **diretório raiz**, representado pelo símbolo _barra_ (**/**). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem _endereços_. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu _endereço_. Para se evitar a ocorrencia de erros usamos, preferencialmente, **_endereços completos_**, ou seja, contendo todas as pastas a partir do diretório raiz, o **/** . Por exemplo:
+&nbsp;&nbsp;&nbsp;&nbsp;
+Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o **diretório raiz**, representado pelo símbolo _barra_ (**/**). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem _endereços_. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu _endereço_. Para se evitar a ocorrencia de erros usamos, preferencialmente, **_endereços completos_**, ou seja, contendo todas as pastas a partir do diretório raiz, o **/** . Por exemplo:
 
-> 1) Na sua linha de comando (_bash_), escreva o seguinte comando e aperte ***ENTER***.
+> Na sua linha de comando (_bash_), escreva o seguinte comando e aperte ***ENTER***.
 
 ```{bash, echo=TRUE,eval=FALSE}
 pwd
 ```
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;O comando ***pwd*** retorna o _path to the working directory_, o caminho para o diretório que você está.
+&nbsp;&nbsp;&nbsp;&nbsp;
+O comando ***pwd*** retorna o _path to the working directory_, o caminho para o diretório que você está.
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Para mudarmos de diretório, utilizamos o comando ***cd***. Quando executado sem argumentos, ele te transporta para a ***\$HOME***, o diretório _casa_ do usuário, e que carrega seu nome. Este diretório geralmente está localizado em **/home/$usuário**
+&nbsp;&nbsp;&nbsp;&nbsp;
+Para mudarmos de diretório, utilizamos o comando ***cd***. Quando executado sem argumentos, ele te transporta para a ***\$HOME***, o diretório _casa_ do usuário, e que carrega seu nome. Este diretório geralmente está localizado em **/home/$usuário**.
 
-> 2) Agora execute o comando ***cd***, sem argumentos, e verifique mais uma vez onde você está. 
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você pode identificar qual é o seu usuário com o comando ***whoami***
+
+> Identifique seu usuário.  
+
+```{bash, echo=TRUE,eval=TRUE}
+whoami
+
+```
+ No meu caso, estou utilizando o usuário _noreh_.
+
+> Agora execute o comando ***cd***, sem argumentos, e verifique mais uma vez onde você está. 
 
 ```{bash, echo=TRUE,eval=FALSE}
 cd
@@ -59,15 +79,51 @@ cd
 pwd
 ```
 
+&nbsp;&nbsp;&nbsp;&nbsp;
+Se você já estava na sua ***\$HOME***, você continua no mesmo lugar.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Se você já estava na sua ***\$HOME***, você continua no mesmo lugar.
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Agora vamos criar diretórios para explorar outros comandos. Para criar um diretório, utilizamos o comando ***mkdir***, seguido do nome do diretório a ser criado, com caminhos completos ou não. Caso não seja fornecido caminho, o novo diretório será criado no diretório onde se está.
-
-> 3) Utilize o comando ***mkdir*** para criar 3 pastas, _pasta_A_, _pasta_B_, _pasta_C_,. Liste os arquivos do diretório onde você está com o comando ***ls***.
+> Utilize o comando ***cd*** com argumentos, e verifique mais uma vez onde você está. 
 
 ```{bash, echo=TRUE,eval=FALSE}
+cd ..
+
+pwd
+
+cd .
+
+pwd
+
+```
+
+---
+
+Estes argumentos representam _o diretório atual_ (***.***) e _o diretório acima do atual_ (***..***), e são utilizados em *caminhos relativos*, que em breve veremos com mais detalhes.
+
+
+### Criando e modificando diretórios
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora vamos criar diretórios para explorar outros comandos. Para criar um diretório, utilizamos o comando ***mkdir***, seguido do nome do diretório a ser criado, com caminhos completos ou não. Caso não seja fornecido um caminho, o novo diretório será criado no diretório onde se está.
+
+> Utilize o comando ***mkdir*** para criar uma pasta _aula1_, na sua ***$HOME***. Entre nessa pasta com ***cd***.
+
+```{bash, echo=TRUE,eval=FALSE}
+cd
+
+mkdir aula1
+
+cd aula1
+
+```
+
+> Utilize o comando ***mkdir*** para criar 3 pastas, _pasta_A_, _pasta_B_, _pasta_C_, dentro de _aula1_. Liste os arquivos do diretório onde você está com o comando ***ls***.
+
+```{bash, echo=TRUE,eval=FALSE}
+
+ls
+
 mkdir pasta_A
 mkdir pasta_B
 mkdir pasta_C
@@ -75,25 +131,67 @@ mkdir pasta_C
 ls
 ```
 
-> 4) O comando ***ls*** (assim como a grande maioria de comandos) aceita argumentos. Argumentos são elementos que modificam a maneira como cada comando funciona. Experimente a variação a seguir e veja a diferença.
+> O comando ***ls*** (assim como a grande maioria de comandos) aceita argumentos. Argumentos são elementos que modificam a maneira como cada comando funciona. Experimente a variação a seguir e veja a diferença.
 
 ```{bash, echo=TRUE,eval=FALSE}
 ls -lh
 ```
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;Você acaba de listar os arquivos e pastas, bem como outras informações. Da esquerda para a direita: a) tipo de arquivo e permissões; b) contagem de links; c) usuário e grupo proprietários do arquivo; d) tamanho do arquivo (em _bytes_); e) data da última modificação; f) nome do arquivo.
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você acaba de listar os arquivos e pastas, bem como outras informações. Da esquerda para a direita: a) tipo de arquivo e permissões; b) contagem de links; c) usuário e grupo proprietários do arquivo; d) tamanho do arquivo (em _bytes_); e) data da última modificação; f) nome do arquivo.
 
 
-### Exercícios
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Agora vamos criar alguns arquivos. 
+
+> Utilize o comando ***touch*** para criar dentro da pasta _pasta_A_ alguns arquivos.
+
+```{bash, echo=TRUE,eval=FALSE}
+cd pasta_A
+
+touch arquivo_{1:3}_{A:C}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Veja que, com um comando apenas, você criou diversos arquivos (vazios). Isso acontece porque o uso de ***{}*** possibilita a representação de múltiplos caracteres. Faça experiencias com o comando ***echo***, que _imprime_ algum texto ou expressão.
+
+> Faça experiencias com o comando ***echo***, que _imprime_ algum texto ou expressão.
+
+```{bash, echo=TRUE,eval=FALSE}
+echo arquivo_{1:3}_{A:C}
+
+
+echo {1:3}
+
+echo {1:30}
+
+echo {A,T,G,C}{A,T,G,C}
+
+echo {A,T,G,C} {A,T,G,C}
+
+
+
+```
+
+### Estrutura de diretórios
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+> Utilize o comando ***tree*** para ver a estrutura de pastas a partir da sua ***$HOME***.
+
+```{bash echo=TRUE,eval=TRUE}
+tree ~/aula1 -L 2
+```
+Note que o seu nome de usuário será diferente do meu, mostrado neste exemplo.
+
+## Exercícios
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Utilizando os comandos que você aprendeu, .
 
 > 1) mova os arquivos _arquivo_1_, _arquivo_2_ e _arquivo_3_ da pasta de onde eles foram criados para a pasta _pasta_C_.
 
-```{bash echo=TRUE}
-tree ~/aula -L 2
-```
+
 
 
