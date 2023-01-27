@@ -7,16 +7,27 @@ output:
     toc: true
     toc_depth: 2
     toc_float: false
-    theme: bootstrap
+    theme: default
     highlight: zenburn
 editor_options: 
   chunk_output_type: inline
 ---
 
 
+```{r, echo=FALSE}
+htmltools::img(src = knitr::image_uri("misc/HOH-02.png"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; right:0; padding:10px; width:300px; height:300px')
+```
+
+
 # Olá
 
-Bem vind@. Neste canal iremos desbravar o universo da bioinformática. Aqui disponibilizarei os roteiros de aulas práticas produzidos para a disciplina _Bioinformática e Genômica_, da PUC Minas 
+Bem vind@. Neste canal iremos desbravar o universo da bioinformática. 
+
+Aqui disponibilizarei os roteiros de aulas práticas produzidos para 
+a disciplina _Bioinformática e Genômica_, da PUC Minas.
+
 
 ### Aulas práticas
 

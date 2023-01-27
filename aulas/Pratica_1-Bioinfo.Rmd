@@ -8,13 +8,20 @@ output:
     toc: true
     toc_depth: 2
     toc_float: true
-    highlight: breezedark
+    theme: default
+    highlight: zenburn
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+#configurar pros resultados do bash sairem coloridos e não ANSI
+```{r color, echo = FALSE, results='asis'}
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
 
 <style>
 body {
@@ -85,7 +92,7 @@ ls -lh
 
 > 1) mova os arquivos _arquivo_1_, _arquivo_2_ e _arquivo_3_ da pasta de onde eles foram criados para a pasta _pasta_C_.
 
-```{bash, echo=TRUE,eval=TRUE,engine.opts ='-l'}
+```{bash echo=TRUE}
 tree ~/aula -L 2
 ```
 
