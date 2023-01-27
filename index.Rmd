@@ -17,14 +17,11 @@ output:
 [Proxima aula](./aulas/Pratica_1-Bioinfo)
 
 
+[Proxima aulasssss](https://github.com/heronoh/bioinfo/blob/main/aulas/Pratica_1-Bioinfo.html)
 [Proxima aulasssss](./aulas/Pratica_1-Bioinfo.html)
 
 
-### What is this?
-
-If you use [R Markdown](http://rmarkdown.rstudio.com/) for data analysis projects, you might like to put your HTML reports on the web for people to look at. It would be nice if those pages were closely tied to your GitHub repository, but HTML pages render as code on GitHub proper. So this repository is a template for making a GitHub pages version of your analysis. Not that you have to use GitHub pages: you could just as easily rsync your HTML files anywhere else that you want.
-
-For example, here is the table of contents for rendered versions of every R Markdown document in this repository.
+### Teste?
 
 ### Table of contents
 
