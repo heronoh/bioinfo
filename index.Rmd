@@ -21,7 +21,7 @@ htmltools::img(src = knitr::image_uri("misc/HOH-02.png"),
 ```
 
 
-# Olá
+
 
 Bem vind@. Neste canal iremos desbravar o universo da bioinformática. 
 
