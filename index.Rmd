@@ -18,6 +18,8 @@ output:
 
 
 [Proxima aulasssss](https://github.com/heronoh/bioinfo/blob/main/aulas/Pratica_1-Bioinfo.html)
+
+
 [Proxima aulasssss](./aulas/Pratica_1-Bioinfo.html)
 
 
@@ -25,7 +27,9 @@ output:
 
 ### Table of contents
 
-```{r echo=FALSE, results='asis'}
+```{r echo=TRUE, results='asis',eval=TRUE}
+
+rmd <- Sys.glob("aulas/*.Rmd")
 rmd <- Sys.glob("*.Rmd")
 rmd <- rmd[rmd != "index.Rmd"]
 html <- sub(".Rmd", ".html", rmd)
