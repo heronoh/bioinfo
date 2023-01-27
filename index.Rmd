@@ -13,14 +13,11 @@ editor_options:
   chunk_output_type: inline
 ---
 
-
 ```{r, echo=FALSE}
 htmltools::img(src = knitr::image_uri("misc/HOH-02.png"), 
                alt = 'logo', 
                style = 'position:absolute; top:0; right:0; padding:10px; width:100px; height:100px')
 ```
-
-
 
 
 Bem vind@. Neste canal iremos desbravar o universo da bioinformática. 
