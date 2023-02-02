@@ -415,21 +415,20 @@ text-align: justify}
 </blockquote>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> pasta_A</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> arquivo_{1:3}_{A:D}</span></code></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> arquivo_{1..3}_{A..D}</span></code></pre></div>
 <p>     Veja que, com um comando apenas, você criou diversos arquivos (vazios). Isso acontece porque o uso de <strong><em>{}</em></strong> possibilita a representação de múltiplos caracteres. Faça experiencias com o comando <strong><em>echo</em></strong>, que <em>imprime</em> algum texto ou expressão.</p>
 <blockquote>
 <p>Faça experiencias com o comando <strong><em>echo</em></strong>, que <em>imprime</em> algum texto ou expressão.</p>
 </blockquote>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> arquivo_{1:3}_{A:C}</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> arquivo_{1..3}_{A..C}</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1:3}</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1:30}</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span></code></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1..3}</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1..30}</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span></code></pre></div>
 <p>     Agora, vamos remover alguns arquivo. O comando <strong><em>rm</em></strong> é utilizado para remover arquivos. Já o comando <strong><em>rmdir</em></strong>, para remover diretórios, necessáriamente vazios.</p>
 <p>     Não é possível <em>desfazer</em> ações na linha de comando. Uma vez deletado, para sempre perdido. Assim, recomenda-se muita atenção na hora de executar comandos de remoção. Uma opção é utilizar o argumento <em>-i</em> para ativar a confirmação de remoção.</p>
 <blockquote>

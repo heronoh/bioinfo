@@ -150,7 +150,7 @@ Agora vamos criar alguns arquivos.
 ```{bash, echo=TRUE,eval=FALSE}
 cd pasta_A
 
-touch arquivo_{1:3}_{A:D}
+touch arquivo_{1..3}_{A..D}
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp; 
@@ -159,12 +159,11 @@ Veja que, com um comando apenas, você criou diversos arquivos (vazios). Isso ac
 > Faça experiencias com o comando ***echo***, que _imprime_ algum texto ou expressão.
 
 ```{bash, echo=TRUE,eval=FALSE}
-echo arquivo_{1:3}_{A:C}
+echo arquivo_{1..3}_{A..C}
 
+echo {1..3}
 
-echo {1:3}
-
-echo {1:30}
+echo {1..30}
 
 echo {A,T,G,C}{A,T,G,C}
 
