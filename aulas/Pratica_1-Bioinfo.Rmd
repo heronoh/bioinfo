@@ -150,7 +150,7 @@ Agora vamos criar alguns arquivos.
 ```{bash, echo=TRUE,eval=FALSE}
 cd pasta_A
 
-touch arquivo_{1:3}_{A:C}
+touch arquivo_{1:3}_{A:D}
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp; 
@@ -174,6 +174,22 @@ echo {A,T,G,C} {A,T,G,C}
 
 ```
 
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Agora, vamos remover alguns arquivo. O comando ***rm*** é utilizado para remover arquivos. Já o comando ***rmdir***, para remover diretórios, necessáriamente vazios.
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Não é possível _desfazer_ ações na linha de comando. Uma vez deletado, para sempre perdido. Assim, recomenda-se muita atenção na hora de executar comandos de remoção.
+Uma opção é utilizar o argumento _-i_ para ativar a confirmação de remoção.
+
+> Remova todos os arquivos terminados em _D_.
+
+```{bash, echo=TRUE,eval=FALSE}
+rm arquivo_1_D
+rm arquivo_2_D
+rm arquivo_3_D
+
+```
+
 ### Estrutura de diretórios
 
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -183,14 +199,28 @@ echo {A,T,G,C} {A,T,G,C}
 ```{bash echo=TRUE,eval=TRUE}
 tree ~/aula1 -L 2
 ```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
 Note que o seu nome de usuário será diferente do meu, mostrado neste exemplo.
 
 ## Exercícios
 
+&nbsp;&nbsp;&nbsp;&nbsp;
+Utilizando os comandos que você aprendeu, execute as instruções a seguir. Sempre que pssível, utilize a tecla $TAB$ para completar os nomes de arquivos e caminhos. Lembre-se que o caracter $*$ serve como _coringa_, ele representa qualquer outro caracter.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Utilizando os comandos que você aprendeu, .
+> 1) mova os arquivos _arquivo_1_, _arquivo_2_ e _arquivo_3_ da pasta de onde eles foram criados para a pasta correspondente à última letra de seus nomes.
 
-> 1) mova os arquivos _arquivo_1_, _arquivo_2_ e _arquivo_3_ da pasta de onde eles foram criados para a pasta _pasta_C_.
+&nbsp;&nbsp;&nbsp;&nbsp;
+Tente, com um único comando:
+
+> 2) remover os arquivos com numeração _3_ de todas as pastas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, vejamos como ficou a organização.
+
+> 3) visualize a distribuição das subpastas e arquivos dentro da pasta _aula1_.
+
+
 
 
 

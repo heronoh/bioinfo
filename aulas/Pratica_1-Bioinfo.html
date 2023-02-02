@@ -342,20 +342,20 @@ text-align: justify}
 </style>
 <div id="a-linha-de-comando" class="section level2">
 <h2>A linha de comando</h2>
-<p>Todos os sistemas operacionais podem ser operados sem a necessidade de uma interface gráfica, ou seja, sem uma tela com ícones que você selecione clicando (<em>mouse</em>). Isto é realizado apenas atavés do teclado. A linha de comando é a interface por onde você transmite instruções escritas para o computador (<strong><em>input</em></strong>), que te retorna o resultado do processamento dessas instruções (<strong><em>output</em></strong>). Há uma infinidade de <em>comandos</em> que podem ser executados, mas alguns que conheceremos nestas práticas são fundamentais no dia a dia do bioinformata.</p>
+<p>     Todos os sistemas operacionais podem ser operados sem a necessidade de uma interface gráfica, ou seja, sem uma tela com ícones que você selecione clicando (<em>mouse</em>). Isto é realizado apenas atavés do teclado. A linha de comando é a interface por onde você transmite instruções escritas para o computador (<strong><em>input</em></strong>), que te retorna o resultado do processamento dessas instruções (<strong><em>output</em></strong>). Há uma infinidade de <em>comandos</em> que podem ser executados, mas alguns que conheceremos nestas práticas são fundamentais no dia a dia do bioinformata.</p>
 </div>
 <div id="comandos-básicos" class="section level2">
 <h2>Comandos básicos</h2>
 <div id="navegando-em-diretórios" class="section level3">
 <h3>Navegando em diretórios</h3>
-<p>    Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o <strong>diretório raiz</strong>, representado pelo símbolo <em>barra</em> (<strong>/</strong>). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem <em>endereços</em>. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu <em>endereço</em>. Para se evitar a ocorrencia de erros usamos, preferencialmente, <strong><em>endereços completos</em></strong>, ou seja, contendo todas as pastas a partir do diretório raiz, o <strong>/</strong> . Por exemplo:</p>
+<p>     Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o <strong>diretório raiz</strong>, representado pelo símbolo <em>barra</em> (<strong>/</strong>). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem <em>endereços</em>. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu <em>endereço</em>. Para se evitar a ocorrencia de erros usamos, preferencialmente, <strong><em>endereços completos</em></strong>, ou seja, contendo todas as pastas a partir do diretório raiz, o <strong>/</strong> . Por exemplo:</p>
 <blockquote>
 <p>Na sua linha de comando (<em>bash</em>), escreva o seguinte comando e aperte <strong><em>ENTER</em></strong>.</p>
 </blockquote>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
-<p>    O comando <strong><em>pwd</em></strong> retorna o <em>path to the working directory</em>, o caminho para o diretório que você está.</p>
-<p>    Para mudarmos de diretório, utilizamos o comando <strong><em>cd</em></strong>. Quando executado sem argumentos, ele te transporta para a <strong><em>$HOME</em></strong>, o diretório <em>casa</em> do usuário, e que carrega seu nome. Este diretório geralmente está localizado em <strong>/home/$usuário</strong>.</p>
-<p>Você pode identificar qual é o seu usuário com o comando <strong><em>whoami</em></strong></p>
+<p>     O comando <strong><em>pwd</em></strong> retorna o <em>path to the working directory</em>, o caminho para o diretório que você está.</p>
+<p>     Para mudarmos de diretório, utilizamos o comando <strong><em>cd</em></strong>. Quando executado sem argumentos, ele te transporta para a <strong><em>$HOME</em></strong>, o diretório <em>casa</em> do usuário, e que carrega seu nome. Este diretório geralmente está localizado em <strong>/home/$usuário</strong>.</p>
+<p>     Você pode identificar qual é o seu usuário com o comando <strong><em>whoami</em></strong></p>
 <blockquote>
 <p>Identifique seu usuário.</p>
 </blockquote>
@@ -368,7 +368,7 @@ text-align: justify}
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
-<p>    Se você já estava na sua <strong><em>$HOME</em></strong>, você continua no mesmo lugar.</p>
+<p>     Se você já estava na sua <strong><em>$HOME</em></strong>, você continua no mesmo lugar.</p>
 <blockquote>
 <p>Utilize o comando <strong><em>cd</em></strong> com argumentos, e verifique mais uma vez onde você está.</p>
 </blockquote>
@@ -384,7 +384,7 @@ text-align: justify}
 </div>
 <div id="criando-e-modificando-diretórios" class="section level3">
 <h3>Criando e modificando diretórios</h3>
-<p>    Agora vamos criar diretórios para explorar outros comandos. Para criar um diretório, utilizamos o comando <strong><em>mkdir</em></strong>, seguido do nome do diretório a ser criado, com caminhos completos ou não. Caso não seja fornecido um caminho, o novo diretório será criado no diretório onde se está.</p>
+<p>     Agora vamos criar diretórios para explorar outros comandos. Para criar um diretório, utilizamos o comando <strong><em>mkdir</em></strong>, seguido do nome do diretório a ser criado, com caminhos completos ou não. Caso não seja fornecido um caminho, o novo diretório será criado no diretório onde se está.</p>
 <blockquote>
 <p>Utilize o comando <strong><em>mkdir</em></strong> para criar uma pasta <em>aula1</em>, na sua <strong><em>$HOME</em></strong>. Entre nessa pasta com <strong><em>cd</em></strong>.</p>
 </blockquote>
@@ -409,18 +409,35 @@ text-align: justify}
 </blockquote>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span></code></pre></div>
 <p>     Você acaba de listar os arquivos e pastas, bem como outras informações. Da esquerda para a direita: a) tipo de arquivo e permissões; b) contagem de links; c) usuário e grupo proprietários do arquivo; d) tamanho do arquivo (em <em>bytes</em>); e) data da última modificação; f) nome do arquivo.</p>
-</div>
-<div id="caminhos-absolutos-e-relativos" class="section level3">
-<h3>Caminhos absolutos e relativos</h3>
-<p>     Caminhos</p>
+<p>     Agora vamos criar alguns arquivos.</p>
 <blockquote>
-<p>Utilize o comando <strong><em>mkdir</em></strong> para criar 3 pastas, <em>pasta_A</em>, <em>pasta_B</em>, <em>pasta_C</em>,. Liste os arquivos do diretório onde você está com o comando <strong><em>ls</em></strong>.</p>
+<p>Utilize o comando <strong><em>touch</em></strong> para criar dentro da pasta <em>pasta_A</em> alguns arquivos.</p>
 </blockquote>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_A</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_B</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_C</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> pasta_A</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> arquivo_{1:3}_{A:D}</span></code></pre></div>
+<p>     Veja que, com um comando apenas, você criou diversos arquivos (vazios). Isso acontece porque o uso de <strong><em>{}</em></strong> possibilita a representação de múltiplos caracteres. Faça experiencias com o comando <strong><em>echo</em></strong>, que <em>imprime</em> algum texto ou expressão.</p>
+<blockquote>
+<p>Faça experiencias com o comando <strong><em>echo</em></strong>, que <em>imprime</em> algum texto ou expressão.</p>
+</blockquote>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> arquivo_{1:3}_{A:C}</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1:3}</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1:30}</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span></code></pre></div>
+<p>     Agora, vamos remover alguns arquivo. O comando <strong><em>rm</em></strong> é utilizado para remover arquivos. Já o comando <strong><em>rmdir</em></strong>, para remover diretórios, necessáriamente vazios.</p>
+<p>     Não é possível <em>desfazer</em> ações na linha de comando. Uma vez deletado, para sempre perdido. Assim, recomenda-se muita atenção na hora de executar comandos de remoção. Uma opção é utilizar o argumento <em>-i</em> para ativar a confirmação de remoção.</p>
+<blockquote>
+<p>Remova todos os arquivos terminados em <em>D</em>.</p>
+</blockquote>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_1_D</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_2_D</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_3_D</span></code></pre></div>
 </div>
 <div id="estrutura-de-diretórios" class="section level3">
 <h3>Estrutura de diretórios</h3>
@@ -428,23 +445,44 @@ text-align: justify}
 <blockquote>
 <p>Utilize o comando <strong><em>tree</em></strong> para ver a estrutura de pastas a partir da sua <strong><em>$HOME</em></strong>.</p>
 </blockquote>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> ~/aula1 <span class="at">-L</span> 2</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> ~/aula1 <span class="at">-L</span> 2</span></code></pre></div>
 <PRE class="fansi fansi-output"><CODE>## <span style="color: #0000BB; font-weight: bold;">/home/noreh/aula1</span>
 ## ├── <span style="color: #0000BB; font-weight: bold;">pasta_A</span>
+## │   ├── arquivo_1_A
+## │   ├── arquivo_1_B
+## │   ├── arquivo_1_C
+## │   ├── arquivo_2_A
+## │   ├── arquivo_2_B
+## │   ├── arquivo_2_C
+## │   ├── arquivo_3_A
+## │   ├── arquivo_3_B
+## │   └── arquivo_3_C
 ## ├── <span style="color: #0000BB; font-weight: bold;">pasta_B</span>
 ## └── <span style="color: #0000BB; font-weight: bold;">pasta_C</span>
 ## 
-## 3 directories, 0 files
+## 3 directories, 9 files
 </CODE></PRE>
-<p>Note que o seu nome de usuário será diferente do meu, mostrado neste exemplo.</p>
+<p>     Note que o seu nome de usuário será diferente do meu, mostrado neste exemplo.</p>
 </div>
 </div>
 <div id="exercícios" class="section level2">
 <h2>Exercícios</h2>
-<p>    Utilizando os comandos que você aprendeu, .</p>
+<p>     Utilizando os comandos que você aprendeu, execute as instruções a seguir. Sempre que pssível, utilize a tecla <span class="math inline">\(TAB\)</span> para completar os nomes de arquivos e caminhos. Lembre-se que o caracter <span class="math inline">\(*\)</span> serve como <em>coringa</em>, ele representa qualquer outro caracter.</p>
 <blockquote>
 <ol style="list-style-type: decimal">
-<li>mova os arquivos <em>arquivo_1</em>, <em>arquivo_2</em> e <em>arquivo_3</em> da pasta de onde eles foram criados para a pasta <em>pasta_C</em>.</li>
+<li>mova os arquivos <em>arquivo_1</em>, <em>arquivo_2</em> e <em>arquivo_3</em> da pasta de onde eles foram criados para a pasta correspondente à última letra de seus nomes.</li>
+</ol>
+</blockquote>
+<p>     Tente, com um único comando:</p>
+<blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>remover os arquivos com numeração <em>3</em> de todas as pastas.</li>
+</ol>
+</blockquote>
+<p>     Agora, vejamos como ficou a organização.</p>
+<blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>visualize a distribuição das subpastas e arquivos dentro da pasta <em>aula1</em>.</li>
 </ol>
 </blockquote>
 </div>
