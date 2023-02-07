@@ -1,0 +1,82 @@
+---
+#title: "DRY R Package Development"
+format:
+  revealjs:
+    theme: solarized
+    slide-number: true
+    preview-links: auto
+    footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/){target='_blank'}."
+#author: "Indrajeet Patil"
+#affiliation:
+execute:
+  echo: true
+  eval: false
+keywords: ["software-engineering", "r-packages", "best-practices", "DRY"]
+---
+
+## DRY Package Development in R {style="text-align: center;"}
+
+<!-- Don't render this file manually. Run `renderer.R` script instead. -->
+
+::: {style="text-align: center;"}
+
+Indrajeet Patil
+
+:::
+
+![](media/simpsons.png){.absolute width="900" height="500" left="70" top="155"}
+
+<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
+<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
+
+#
+
+*"Copy and paste is a design error."* &nbsp; \- David Parnas
+
+# Why So DRY
+
+Why should you not repeat yourself?
+
+## Don't Repeat Yourself (DRY) Principle {.smaller}
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+The DRY Principle states that:
+
+::: {style="color: red;"}
+
+*Every piece of **knowledge** must have a **single** representation in the codebase.*
+
+:::
+
+That is, you should not express the same thing in multiple places in multiple ways.
+
+:::
+
+::: {.column width='40%'}
+
+```{r, echo=FALSE, eval=TRUE}
+knitr::include_graphics("media/dry.gif")
+```
+
+:::
+
+::::
+
+. . .
+
+:::{.callout-note}
+
+## It's about *knowledge* and not just *code*
+
+The DRY principle is about duplication of knowledge.
+Thus, it applies to all programming entities that encode knowledge:
+
+- You should not duplicate code.
+- You should not duplicate intent across code and comments.
+- You should not duplicate knowledge in data structures.
+- ...
+
+:::

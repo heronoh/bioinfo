@@ -32,6 +32,64 @@ text-align: justify}
 </style>
 
 
+
+## Linux e WSL
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Praticamente todos os computadores dedicados a análises de bioinformática rodam sistemas operacionais do tipo ***Unix***, em especial o ***Linux*** e o ***macOS***. Em nossas práticas na _linha de comando_, utilizaremos o sistema operacional [**Ubuntu**](https://ubuntu.com/). Caso o seu computador seja ***Windows***, você pode _emular_ um sistema operacional ***Unix*** utilizando o ***WSL***, ou _Windows subsystem for linux_.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você pode conferir as instruções de instalação originais da Microsoft [aqui](https://learn.microsoft.com/en-us/windows/wsl/install).
+Mas, resumidamente, para habilitar o ***WSL*** você precisa que o seu computador tenha as aseguintes especificações.
+
+* Windows 10 versão 2004 ou superior.
+* _Build_ 19041 ou superior.
+
+### Compatibildiade com WSL
+
+Para conferir esses atributos, proceda da seguinte maneira:
+
+
+> No seu teclado, aperte conjuntamente as teclas _win key_ (`r knitr::asis_output("\U229E")`) e _R_. Na janela que se abriu, digite _winver_ e pressione $enter$ (`r knitr::asis_output("\U21B5")`).
+
+Compare as informações exibidas com os pré-requisitos acima. 
+
+### Habilitar e instalar o WSL
+
+> Aperte a tecla _win key_ (`r knitr::asis_output("\U229E")`). Uma janela se abrirá, contendo um campo de busca. Basta digitar _powershell_ que a opção do ***Windows Powershell*** será exibida. Clique na mesma com o botão direito e selecione _Abrir como administrador_.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma janela azul se abrirá. Esta é a interface por linha de comando do Windows. Nela iremos digitar os comandos para a instalação do ***WSL***. Para a execução de cada comando, após digitar a instrução, basta apertar $enter$ (`r knitr::asis_output("\U21B5")`).
+
+> Liste as distribuições de Linux disponíveis.
+
+```{bash, echo=TRUE,eval=FALSE}
+wsl --list --online
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você verá uma lista das distribuições de Linux que podem ser instaladas no seu WSL. Utilizaremos a **Ubuntu-20.04**. Prossiga com a instalação.
+
+> Inicie a instalação da distribuição desejada.
+
+```{bash, echo=TRUE,eval=FALSE}
+wsl --install -d Ubuntu-20.04
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Primeiro a distribuição (_distro_) será baixada, e depois instalada. Ao final da instalação, uma nova janela, de fundo preto, se abrirá. Este já é o Ubuntu, e as primeiras mensagens que você vai receber são para configurar o seu usuário.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O primeiro passo será escolher um _login_, um nome para o seu usuário. Para facilitar, recomendo que o seu login:
+
+* Seja curto, com no máximo 8 caracteres.
+* Tenha apenas letras minúsculas.
+* Não contenha caracteres especiais como _~_, _^_, _ç_, ...
+* Não contenha espaços.
+
+
+
 ## A linha de comando
 
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -207,7 +265,7 @@ Note que o seu nome de usuário será diferente do meu, mostrado neste exemplo.
 &nbsp;&nbsp;&nbsp;&nbsp;
 Utilizando os comandos que você aprendeu, execute as instruções a seguir. Sempre que pssível, utilize a tecla $TAB$ para completar os nomes de arquivos e caminhos. Lembre-se que o caracter $*$ serve como _coringa_, ele representa qualquer outro caracter.
 
-> 1) mova os arquivos _arquivo_1_, _arquivo_2_ e _arquivo_3_ da pasta de onde eles foram criados para a pasta correspondente à última letra de seus nomes.
+> 1) mova os arquivos cujo nome começa com _arquivo_1_, _arquivo_2_ e _arquivo_3_ da pasta de onde eles foram criados para a pasta correspondente à última letra de seus nomes.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 Tente, com um único comando:

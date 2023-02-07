@@ -340,6 +340,47 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 body {
 text-align: justify}
 </style>
+<div id="linux-e-wsl" class="section level2">
+<h2>Linux e WSL</h2>
+<p>     Praticamente todos os computadores dedicados a análises de bioinformática rodam sistemas operacionais do tipo <strong><em>Unix</em></strong>, em especial o <strong><em>Linux</em></strong> e o <strong><em>macOS</em></strong>. Em nossas práticas na <em>linha de comando</em>, utilizaremos o sistema operacional <a href="https://ubuntu.com/"><strong>Ubuntu</strong></a>. Caso o seu computador seja <strong><em>Windows</em></strong>, você pode <em>emular</em> um sistema operacional <strong><em>Unix</em></strong> utilizando o <strong><em>WSL</em></strong>, ou <em>Windows subsystem for linux</em>.</p>
+<p>     Você pode conferir as instruções de instalação originais da Microsoft <a href="https://learn.microsoft.com/en-us/windows/wsl/install">aqui</a>. Mas, resumidamente, para habilitar o <strong><em>WSL</em></strong> você precisa que o seu computador tenha as aseguintes especificações.</p>
+<ul>
+<li>Windows 10 versão 2004 ou superior.</li>
+<li><em>Build</em> 19041 ou superior.</li>
+</ul>
+<div id="compatibildiade-com-wsl" class="section level3">
+<h3>Compatibildiade com WSL</h3>
+<p>Para conferir esses atributos, proceda da seguinte maneira:</p>
+<blockquote>
+<p>No seu teclado, aperte conjuntamente as teclas <em>win key</em> (⊞) e <em>R</em>. Na janela que se abriu, digite <em>winver</em> e pressione <span class="math inline">\(enter\)</span> (↵).</p>
+</blockquote>
+<p>Compare as informações exibidas com os pré-requisitos acima.</p>
+</div>
+<div id="habilitar-e-instalar-o-wsl" class="section level3">
+<h3>Habilitar e instalar o WSL</h3>
+<blockquote>
+<p>Aperte a tecla <em>win key</em> (⊞). Uma janela se abrirá, contendo um campo de busca. Basta digitar <em>powershell</em> que a opção do <strong><em>Windows Powershell</em></strong> será exibida. Clique na mesma com o botão direito e selecione <em>Abrir como administrador</em>.</p>
+</blockquote>
+<p>     Uma janela azul se abrirá. Esta é a interface por linha de comando do Windows. Nela iremos digitar os comandos para a instalação do <strong><em>WSL</em></strong>. Para a execução de cada comando, após digitar a instrução, basta apertar <span class="math inline">\(enter\)</span> (↵).</p>
+<blockquote>
+<p>Liste as distribuições de Linux disponíveis.</p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wsl</span> <span class="at">--list</span> <span class="at">--online</span></span></code></pre></div>
+<p>     Você verá uma lista das distribuições de Linux que podem ser instaladas no seu WSL. Utilizaremos a <strong>Ubuntu-20.04</strong>. Prossiga com a instalação.</p>
+<blockquote>
+<p>Inicie a instalação da distribuição desejada.</p>
+</blockquote>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wsl</span> <span class="at">--install</span> <span class="at">-d</span> Ubuntu-20.04</span></code></pre></div>
+<p>     Primeiro a distribuição (<em>distro</em>) será baixada, e depois instalada. Ao final da instalação, uma nova janela, de fundo preto, se abrirá. Este já é o Ubuntu, e as primeiras mensagens que você vai receber são para configurar o seu usuário.</p>
+<p>     O primeiro passo será escolher um <em>login</em>, um nome para o seu usuário. Para facilitar, recomendo que o seu login:</p>
+<ul>
+<li>Seja curto, com no máximo 8 caracteres.</li>
+<li>Tenha apenas letras minúsculas.</li>
+<li>Não contenha caracteres especiais como <em>~</em>, <em>^</em>, <em>ç</em>, …</li>
+<li>Não contenha espaços.</li>
+</ul>
+</div>
+</div>
 <div id="a-linha-de-comando" class="section level2">
 <h2>A linha de comando</h2>
 <p>     Todos os sistemas operacionais podem ser operados sem a necessidade de uma interface gráfica, ou seja, sem uma tela com ícones que você selecione clicando (<em>mouse</em>). Isto é realizado apenas atavés do teclado. A linha de comando é a interface por onde você transmite instruções escritas para o computador (<strong><em>input</em></strong>), que te retorna o resultado do processamento dessas instruções (<strong><em>output</em></strong>). Há uma infinidade de <em>comandos</em> que podem ser executados, mas alguns que conheceremos nestas práticas são fundamentais no dia a dia do bioinformata.</p>
@@ -352,33 +393,33 @@ text-align: justify}
 <blockquote>
 <p>Na sua linha de comando (<em>bash</em>), escreva o seguinte comando e aperte <strong><em>ENTER</em></strong>.</p>
 </blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
 <p>     O comando <strong><em>pwd</em></strong> retorna o <em>path to the working directory</em>, o caminho para o diretório que você está.</p>
 <p>     Para mudarmos de diretório, utilizamos o comando <strong><em>cd</em></strong>. Quando executado sem argumentos, ele te transporta para a <strong><em>$HOME</em></strong>, o diretório <em>casa</em> do usuário, e que carrega seu nome. Este diretório geralmente está localizado em <strong>/home/$usuário</strong>.</p>
 <p>     Você pode identificar qual é o seu usuário com o comando <strong><em>whoami</em></strong></p>
 <blockquote>
 <p>Identifique seu usuário.</p>
 </blockquote>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">whoami</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">whoami</span></span></code></pre></div>
 <pre><code>## noreh</code></pre>
 <p>No meu caso, estou utilizando o usuário <em>noreh</em>.</p>
 <blockquote>
 <p>Agora execute o comando <strong><em>cd</em></strong>, sem argumentos, e verifique mais uma vez onde você está.</p>
 </blockquote>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
 <p>     Se você já estava na sua <strong><em>$HOME</em></strong>, você continua no mesmo lugar.</p>
 <blockquote>
 <p>Utilize o comando <strong><em>cd</em></strong> com argumentos, e verifique mais uma vez onde você está.</p>
 </blockquote>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
 <hr />
 <p>Estes argumentos representam <em>o diretório atual</em> (<strong><em>.</em></strong>) e <em>o diretório acima do atual</em> (<strong><em>..</em></strong>), e são utilizados em <em>caminhos relativos</em>, que em breve veremos com mais detalhes.</p>
 </div>
@@ -388,55 +429,55 @@ text-align: justify}
 <blockquote>
 <p>Utilize o comando <strong><em>mkdir</em></strong> para criar uma pasta <em>aula1</em>, na sua <strong><em>$HOME</em></strong>. Entre nessa pasta com <strong><em>cd</em></strong>.</p>
 </blockquote>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> aula1</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> aula1</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> aula1</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> aula1</span></code></pre></div>
 <blockquote>
 <p>Utilize o comando <strong><em>mkdir</em></strong> para criar 3 pastas, <em>pasta_A</em>, <em>pasta_B</em>, <em>pasta_C</em>, dentro de <em>aula1</em>. Liste os arquivos do diretório onde você está com o comando <strong><em>ls</em></strong>.</p>
 </blockquote>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_A</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_B</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_C</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_A</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_B</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_C</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code></pre></div>
 <blockquote>
 <p>O comando <strong><em>ls</em></strong> (assim como a grande maioria de comandos) aceita argumentos. Argumentos são elementos que modificam a maneira como cada comando funciona. Experimente a variação a seguir e veja a diferença.</p>
 </blockquote>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span></code></pre></div>
 <p>     Você acaba de listar os arquivos e pastas, bem como outras informações. Da esquerda para a direita: a) tipo de arquivo e permissões; b) contagem de links; c) usuário e grupo proprietários do arquivo; d) tamanho do arquivo (em <em>bytes</em>); e) data da última modificação; f) nome do arquivo.</p>
 <p>     Agora vamos criar alguns arquivos.</p>
 <blockquote>
 <p>Utilize o comando <strong><em>touch</em></strong> para criar dentro da pasta <em>pasta_A</em> alguns arquivos.</p>
 </blockquote>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> pasta_A</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> arquivo_{1..3}_{A..D}</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> pasta_A</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> arquivo_{1..3}_{A..D}</span></code></pre></div>
 <p>     Veja que, com um comando apenas, você criou diversos arquivos (vazios). Isso acontece porque o uso de <strong><em>{}</em></strong> possibilita a representação de múltiplos caracteres. Faça experiencias com o comando <strong><em>echo</em></strong>, que <em>imprime</em> algum texto ou expressão.</p>
 <blockquote>
 <p>Faça experiencias com o comando <strong><em>echo</em></strong>, que <em>imprime</em> algum texto ou expressão.</p>
 </blockquote>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> arquivo_{1..3}_{A..C}</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1..3}</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1..30}</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> arquivo_{1..3}_{A..C}</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1..3}</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> {1..30}</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span></code></pre></div>
 <p>     Agora, vamos remover alguns arquivo. O comando <strong><em>rm</em></strong> é utilizado para remover arquivos. Já o comando <strong><em>rmdir</em></strong>, para remover diretórios, necessáriamente vazios.</p>
 <p>     Não é possível <em>desfazer</em> ações na linha de comando. Uma vez deletado, para sempre perdido. Assim, recomenda-se muita atenção na hora de executar comandos de remoção. Uma opção é utilizar o argumento <em>-i</em> para ativar a confirmação de remoção.</p>
 <blockquote>
 <p>Remova todos os arquivos terminados em <em>D</em>.</p>
 </blockquote>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_1_D</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_2_D</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_3_D</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_1_D</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_2_D</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_3_D</span></code></pre></div>
 </div>
 <div id="estrutura-de-diretórios" class="section level3">
 <h3>Estrutura de diretórios</h3>
@@ -444,7 +485,7 @@ text-align: justify}
 <blockquote>
 <p>Utilize o comando <strong><em>tree</em></strong> para ver a estrutura de pastas a partir da sua <strong><em>$HOME</em></strong>.</p>
 </blockquote>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> ~/aula1 <span class="at">-L</span> 2</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> ~/aula1 <span class="at">-L</span> 2</span></code></pre></div>
 <PRE class="fansi fansi-output"><CODE>## <span style="color: #0000BB; font-weight: bold;">/home/noreh/aula1</span>
 ## ├── <span style="color: #0000BB; font-weight: bold;">pasta_A</span>
 ## │   ├── arquivo_1_A
@@ -469,7 +510,7 @@ text-align: justify}
 <p>     Utilizando os comandos que você aprendeu, execute as instruções a seguir. Sempre que pssível, utilize a tecla <span class="math inline">\(TAB\)</span> para completar os nomes de arquivos e caminhos. Lembre-se que o caracter <span class="math inline">\(*\)</span> serve como <em>coringa</em>, ele representa qualquer outro caracter.</p>
 <blockquote>
 <ol style="list-style-type: decimal">
-<li>mova os arquivos <em>arquivo_1</em>, <em>arquivo_2</em> e <em>arquivo_3</em> da pasta de onde eles foram criados para a pasta correspondente à última letra de seus nomes.</li>
+<li>mova os arquivos cujo nome começa com <em>arquivo_1</em>, <em>arquivo_2</em> e <em>arquivo_3</em> da pasta de onde eles foram criados para a pasta correspondente à última letra de seus nomes.</li>
 </ol>
 </blockquote>
 <p>     Tente, com um único comando:</p>
