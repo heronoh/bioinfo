@@ -4,6 +4,8 @@ author: "Prof. Heron OH"
 place: "Biomedicina - PUC Minas"
 date: 2023/01
 output: 
+  rmdformats::readthedown:
+    code_download: yes
   html_document: 
     toc: yes
     toc_depth: 3
@@ -88,6 +90,8 @@ O primeiro passo será escolher um _login_, um nome para o seu usuário. Para fa
 * Não contenha caracteres especiais como _~_, _^_, _ç_, ...
 * Não contenha espaços.
 
+Uma vez definido o seu login, você será solicitado a criar um _password_, uma senha para o seu usuário. Uma vez que você está no seu próprio computador, ou num login institucional, sugiro criar uma senha mais simples, como _o nome do seu usuário + 12345_, pois será de fácil dadução caso você se esqueça durante estes primeiros passos.
+Quando for utilizar usuários em computadores compartilhados ou em servidores, recomendo criar senhas o mais complicadas o possível, sem o nome do seu usuário.
 
 
 ## A linha de comando
@@ -232,7 +236,30 @@ echo {A,T,G,C} {A,T,G,C}
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp; 
-Agora, vamos remover alguns arquivo. O comando ***rm*** é utilizado para remover arquivos. Já o comando ***rmdir***, para remover diretórios, necessáriamente vazios.
+Todos os arquivos e diretórios podem ser movidos. O comando ***mv*** é utilizado para isto. Este comando tem uma sintaxe definida, e para seu funcionamento é preciso especificar duas coisas.
+
+1) arquivo/diretório a ser movido;
+
+2) arquivo/diretório de destino;
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Este comando pode ser utilizado tanto para _mover_ (trocar de local) quanto para _renomear_ um arquivo ou diretório. Por isso, sua sintaxe deve ser analisada com calma antes da execução. Vamos vazer alguns testes.
+
+> Remova todos os arquivos terminados em _D_.
+
+```{bash, echo=TRUE,eval=FALSE}
+ls
+
+mv arquivo_1_D arquivo_1_D_renomeado
+
+ls
+
+
+```
+
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Agora, vamos remover alguns arquivos. O comando ***rm*** é utilizado para remover arquivos. Já o comando ***rmdir***, para remover diretórios, necessáriamente vazios.
 
 &nbsp;&nbsp;&nbsp;&nbsp; 
 Não é possível _desfazer_ ações na linha de comando. Uma vez deletado, para sempre perdido. Assim, recomenda-se muita atenção na hora de executar comandos de remoção.
@@ -243,7 +270,6 @@ Uma opção é utilizar o argumento _-i_ para ativar a confirmação de remoçã
 ```{bash, echo=TRUE,eval=FALSE}
 rm arquivo_1_D
 rm arquivo_2_D
-rm arquivo_3_D
 
 ```
 
