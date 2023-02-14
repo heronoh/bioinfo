@@ -35,6 +35,12 @@ text-align: justify}
 
 
 
+# Práticas em bioinformática
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
+
 ## Linux e WSL
 
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -106,9 +112,16 @@ Todos os sistemas operacionais podem ser operados sem a necessidade de uma inter
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o **diretório raiz**, representado pelo símbolo _barra_ (**/**). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem _endereços_. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu _endereço_. Para se evitar a ocorrencia de erros usamos, preferencialmente, **_endereços completos_**, ou seja, contendo todas as pastas a partir do diretório raiz, o **/** . Por exemplo:
+Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o **diretório raiz**, representado pelo símbolo _barra_ (**/**). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem _endereços_. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu endereço, ou _caminho_, como é mais conhecido. Para se evitar a ocorrencia de erros usamos, preferencialmente, **_caminhos absolutos_**, ou seja, contendo todas as pastas a partir do diretório raiz, o **/** .
 
-> Na sua linha de comando (_bash_), escreva o seguinte comando e aperte ***ENTER***.
+&nbsp;&nbsp;&nbsp;&nbsp;
+Também podem ser utilizados **_caminhos relativos_**, ou seja, que descrever o caminho até o diretório/arquivo a partir de onde o comando está sendo executado, seja iniciando pelo nome de alguma pasta presente neste local, ou utilizando o símbolo ***..***, para iniciar o caminho pelo nome de alguma pasta acima de onde se está. Isto pode ser feito, inclusive, de forma recursiva (ex: **../../../**). 
+
+Utilizando a tecla **Tab** para autocompletar, você pode fazer com que o computador complete automaticamente qualquer caminho, a partir de um início existente. Essa é a melhor maneira de verificar se você está passando o caminho correto, antes de executar um comando.
+
+Por exemplo:
+
+> Na sua linha de comando (_bash_), escreva o seguinte comando e aperte ***ENTER*** para executá-lo.
 
 ```{bash, echo=TRUE,eval=FALSE}
 pwd
@@ -159,10 +172,9 @@ pwd
 
 ```
 
----
-
 Estes argumentos representam _o diretório atual_ (***.***) e _o diretório acima do atual_ (***..***), e são utilizados em *caminhos relativos*, que em breve veremos com mais detalhes.
 
+---
 
 ### Criando e modificando diretórios
 
@@ -245,7 +257,7 @@ Todos os arquivos e diretórios podem ser movidos. O comando ***mv*** é utiliza
 &nbsp;&nbsp;&nbsp;&nbsp; 
 Este comando pode ser utilizado tanto para _mover_ (trocar de local) quanto para _renomear_ um arquivo ou diretório. Por isso, sua sintaxe deve ser analisada com calma antes da execução. Vamos vazer alguns testes.
 
-> Remova todos os arquivos terminados em _D_.
+> Utilize o comando ***mv*** para _renomear_ um arquivo, de acordo com o exemplo a seguir:
 
 ```{bash, echo=TRUE,eval=FALSE}
 ls
@@ -254,12 +266,10 @@ mv arquivo_1_D arquivo_1_D_renomeado
 
 ls
 
-
 ```
 
-
 &nbsp;&nbsp;&nbsp;&nbsp; 
-Agora, vamos remover alguns arquivos. O comando ***rm*** é utilizado para remover arquivos. Já o comando ***rmdir***, para remover diretórios, necessáriamente vazios.
+Agora, vamos remover alguns arquivos. O comando ***rm*** é utilizado para remover arquivos, mas pode remover qualquer coisa (_à força_). Já o comando ***rmdir***, para remover diretórios, necessáriamente vazios.
 
 &nbsp;&nbsp;&nbsp;&nbsp; 
 Não é possível _desfazer_ ações na linha de comando. Uma vez deletado, para sempre perdido. Assim, recomenda-se muita atenção na hora de executar comandos de remoção.
@@ -268,7 +278,7 @@ Uma opção é utilizar o argumento _-i_ para ativar a confirmação de remoçã
 > Remova todos os arquivos terminados em _D_.
 
 ```{bash, echo=TRUE,eval=FALSE}
-rm arquivo_1_D
+rm arquivo_1_D_renomeado
 rm arquivo_2_D
 
 ```
@@ -276,8 +286,9 @@ rm arquivo_2_D
 ### Estrutura de diretórios
 
 &nbsp;&nbsp;&nbsp;&nbsp;
+O comando ***tree*** mostra a distribuição de arquivos e diretórios a partir de um determinado diretório.
 
-> Utilize o comando ***tree*** para ver a estrutura de pastas a partir da sua ***$HOME***.
+> Utilize o comando ***tree*** para ver a estrutura de pastas a partir da pasta _aula1_, contida na sua ***$HOME***.
 
 ```{bash echo=TRUE,eval=TRUE}
 tree ~/aula1 -L 2
@@ -285,6 +296,52 @@ tree ~/aula1 -L 2
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 Note que o seu nome de usuário será diferente do meu, mostrado neste exemplo.
+
+
+### Instalando funcionalidades
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Se a sua tentativa de usar o comando ***tree*** não foi bem sucedida e você recebeu um aviso de _command not found_, nem tudo está perdido. Você pode instalar esse comando (ou praticamente qualquer outro) executando poucas linhas.
+O ***Linux*** tem um sistema de gerenciamento de pacotes e aplicativos, o _apt_. Através dele você interage diretamente com repositórios de códigos de cada versão do ***Linux***.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Vamos fazer a instalação do comando ***tree***, mas antes, vamos atualizar o sistema. Isto é necessário para sincronizar essa sua nova instalação com os repositórios mais recentes. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Todos esses comandos de atualização e instalação precisam ser executados como _super usuário_ (ou como chamamos, _sudo_, que é o mesmo nome que aparece no começo de qualquer comando executado como _super usuário_). Para executá-los, você vai precisar fornecer a sua senha.
+
+
+> Como super usuário, atualize o sistema:
+
+```{bash echo=TRUE,eval=FALSE}
+sudo apt update
+
+sudo apt upgrade
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+É possível que você tenha encontrado alguns erros, a depender do computador onde você está realizando a prática. De qualquer maneira, vamos prosseguir:
+
+
+> Como super usuário, instale o _aplicativo/comando_ ***tree***
+
+```{bash echo=TRUE,eval=FALSE}
+sudo apt install tree
+
+```
+
+> Teste o _comando_ ***tree***. Abra o help do comando para ver as opções de configuração.
+
+```{bash echo=TRUE,eval=FALSE}
+tree --help
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, com o comando instalado, tente executar o passo anterior para visualizar a organização dos seus arquivos e diretórios.
+
+
 
 ## Exercícios
 
