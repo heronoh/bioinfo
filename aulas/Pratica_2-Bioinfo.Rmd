@@ -1,0 +1,318 @@
+---
+title: "Práticas em Bioinfo II"
+author: "Prof. Heron OH"
+place: "Biomedicina - PUC Minas"
+date: 2023/01
+output: 
+  rmdformats::downcute:
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
+    toc_float: yes
+    highlight: zenburn
+    code_download: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo=FALSE, results='asis'}
+#configurar pros resultados do bash sairem coloridos e não ANSI
+
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+# Práticas em bioinformática
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
+
+## Comandos básicos II
+
+### _Inputs_ & _outputs_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+As operações que o computador executa - seja através de programas, _scripts_, aplicativos ou comandos - funcionam a partir do que chamamos de ***input*** (ou _entrada_). ***Inputs*** podem ser tanto arquivos, quanto parâmetros e argumentos necessários para a execução da operação. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+De maneira semelhante, tudo o que é gerado pelo comando (ou programa, _script_, aplicativo, ...) é denominado ***output***.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Na _linha de comando_ é possível encadear diversos comandos sequencialmente, de maneira que o ***input*** do primeiro comando seja o ***output*** do próximo. Isto é conseguido pelo uso do ***pipe***, identificado por uma barra vertical (**|**). Assim, um conjunto de comandos encadeados por ***pipes*** pode ser denominado ***pipe line***, termo que pode ser expandido para representar qualquer conjunto de análise sequenciais para a transformação de um ***input*** em algum ***output***. Mas, antes de trabalharmos com ***pipes***, vamos primeiramente escrever alguns arquivos.  
+
+### Tipos de arquivos 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Um arquivo é uma entidade que pode armazenar qualquer coisa, e pode ser codificado de duas maneiras:
+
+**Arquivos binários:* um arquivo binário contém código legível por máquina que pode ser executado diretamente pelo processador de um computador. Ele armazena dados em [formato binário](https://pt.wikipedia.org/wiki/Arquivo_bin%C3%A1rio), o que significa que usa uma série de 0's e 1's para representar informações. Estes formatos são normalmente usados para _programas executáveis_, _bibliotecas_ e outros arquivos que contêm _código compilado_, ou seja, um conjunto de instruções que já foi transformado da _linguagem de programação_ original para um _código de máquina_, pronto para ser interpretado pelo processador. *Arquivos binários* não podem ser facilmente lidos ou editados por humanos e geralmente requerem ferramentas ou programas especiais para trabalhar com eles.
+
+**Arquivo de texto:* um arquivo de texto armazena dados como uma sequência de caracteres que podem ser lidos e editados por humanos. Os [arquivos de texto](https://pt.wikipedia.org/wiki/Arquivo_de_texto) geralmente são codificados usando conjuntos de caracteres *ASCII* ou *Unicode* e podem ser criados e editados usando uma ampla variedade de editores de texto. Os formatos de arquivo de texto são comumente usados para armazenar arquivos de configuração, arquivos de dados e outros tipos de conteúdo legível por humanos.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Em resumo, os formatos de _arquivo binário_ são otimizados para processamento por máquina, enquanto os formatos de _arquivo de texto_ são otimizados para legibilidade e edição por humanos. Ambos formatos podem ser convertidos um no outro.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Há diferentes maneiras de se organizar as informações contidas em cada tipo de arquivo.  A esses tipos de organização damos o nome de ***formato***. O formato de cada arquivo é evidenciado pela sua extensão, que é uma abreviação incluída ao final do nome de cada arquivo. Por exemplo, arquivos de texto do _Microsoft Word_ são identificados pelo sufixo _.docx_. Mas, além da identificação pelo nome, a estrutura interna é o que realmente determina o formato, sendo o sufixo apenas um facilitador. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Alguns exemplos de formatos de arquivo de texto incluem:
+
+**Arquivos de texto simples:* Esses arquivos contêm apenas texto sem formatação, como arquivos _.txt_. Eles são fáceis de criar e editar, mas não oferecem suporte a recursos avançados de formatação de texto, como negrito, itálico, cores etc.
+
+**Arquivos de texto com marcação:* Esses arquivos incluem texto com marcação, como arquivos _.html_, _.xml_ ou _.markdown_. A marcação é usada para adicionar informações sobre a estrutura do documento, como títulos, parágrafos, listas e links. Os arquivos de texto com marcação são usados principalmente na web para exibir conteúdo em navegadores.
+
+**Arquivos de texto delimitados:* Esses arquivos contêm dados tabulares, onde cada coluna de dados é separada por um caractere de delimitação, como uma vírgula ou um ponto-e-vírgula. Exemplos de formatos de arquivo de texto delimitados incluem _.csv_, _.tsv_ e _.txt_. Eles são amplamente utilizados para armazenar dados em planilhas e bancos de dados.
+
+**Arquivos de texto estruturados:* Esses arquivos contêm dados organizados em uma estrutura específica, como arquivos _.json_, _.yaml_ ou _.ini_. Eles são usados principalmente para armazenar configurações, opções e outros dados que precisam ser organizados hierarquicamente.
+
+### Escrevendo arquivos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Na prática passada ulitizamos alguns comandos para criar e modificar arquivos. Agora, iremos aprender outros comandos para escrever e editar arquivos.
+
+#### Via linha de comando
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O resultado (***output***) de qualquer comando pode ser escrito diretamente em um arquivo. Isto pode ser feito utilizando os sinais ***>*** & ***>>***. Estes sinais representam a ação de adicionar conteúdo a um arquivo. Enquanto o segundo, ***>>***, adiciona conteúdo ao final de um arquivo, o primeiro, ***>***, reescreve totalmente seu conteúdo, apagando qualquer informação existente. Vamos fazer algumas experimentações.
+
+> Com o comando ***echo***, crie algum conteúdo e salve ele num arquivo, utilizando o operadore de escrita em arquivos ***>>***. Em seguida, visualize o conteúdo do arquivo com o comando ***cat***.
+
+```{bash, echo=TRUE,eval=FALSE}
+
+echo "linha 1" >> arquivo.txt
+echo "linha 2" >> arquivo.txt
+echo "linha 3" >> arquivo.txt
+echo "linha 4" >> arquivo.txt
+echo "linha 5" >> arquivo.txt
+
+cat arquivo.txt
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Observe que todas as linhas foram armazenadas no arquivo. Vamos ver o que acontece com o outro operador.
+
+> Com o comando ***echo***, crie algum conteúdo e salve ele num arquivo, utilizando o operadore de escrita em arquivos ***>***. Em seguida, visualize o conteúdo do arquivo com o comando ***cat***.
+
+```{bash, echo=TRUE,eval=FALSE}
+echo "linha 1" > arquivo2.txt
+
+cat arquivo2.txt
+
+echo "linha 2" > arquivo2.txt
+echo "linha 3" > arquivo2.txt
+echo "linha 4" > arquivo2.txt
+echo "linha 5" > arquivo2.txt
+
+cat arquivo2.txt
+```
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Observe que apenas a última linha está armazenada no arquivo. Todas as demais foram armazenadas, porém foram sobreescritas a cada novo comando.
+
+> Agora, remova os arquivos que você gerou, para mantermos a organização de nossas pastas.
+
+
+```{bash, echo=TRUE,eval=FALSE}
+
+rm arquivo.txt
+rm arquivo2.txt
+
+```
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O comando ***pwd*** retorna o _path to the working directory_, o caminho para o diretório que você está.
+
+
+
+
+```{bash, echo=TRUE,eval=FALSE}
+
+#!/bin/bash
+
+# Check if a file is specified
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 fasta_file"
+  exit 1
+fi
+
+# Check if the file exists
+if [ ! -f $1 ]; then
+  echo "Error: $1 does not exist"
+  exit 1
+fi
+
+# Read the file and convert the DNA sequence to RNA
+while read line; do
+  if [[ ${line:0:1} == ">" ]]; then
+    echo $line
+  else
+    echo $line | tr 'T' 'U'
+  fi
+done < $1
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+***ls*** - lista o conteúdo do diretório atual
+***cd*** - muda o diretório atual
+***pwd*** - exibe o caminho completo do diretório atual
+***mkdir*** - cria um novo diretório
+***rm*** - remove um arquivo ou diretório
+***cp*** - copia um arquivo ou diretório
+***mv*** - move ou renomeia um arquivo ou diretório
+***cat*** - exibe o conteúdo de um arquivo
+***less*** - exibe o conteúdo de um arquivo de forma interativa
+***grep*** - procura por um padrão em um arquivo ou em uma saída de comando
+***passwd***
+***ps*** - lista os processos em execução no sistema
+***kill*** - encerra um processo em execução
+***chmod*** - altera as permissões de acesso a um arquivo ou diretório
+***chown*** - altera o proprietário de um arquivo ou diretório
+***ssh*** - estabelece uma conexão segura com outro computador
+***tar*** - cria ou extrai arquivos compactados em formato tar
+***wget*** - baixa arquivos da internet
+***curl*** - transfere dados de ou para um servidor utilizando diversos protocolos
+***top*** - exibe as informações de uso do sistema em tempo real
+***sudo*** - executa um comando com privilégios de superusuário (root)
+***apt*** - gerenciador de pacotes do sistema Debian e derivados, utilizado para instalar, atualizar e remover pacotes de software
+***yum*** - gerenciador de pacotes do sistema Red Hat e derivados, utilizado para instalar, atualizar e remover pacotes de software
+***df*** - exibe informações sobre o espaço em disco utilizado e livre em cada partição do sistema
+***du*** - exibe o espaço em disco utilizado por cada arquivo e diretório no sistema
+***ifconfig*** - exibe informações sobre a configuração de rede do sistema
+***ping*** - testa a conectividade com outro computador ou dispositivo na rede
+***traceroute*** - exibe o caminho que os pacotes de rede percorrem até chegar a um determinado destino
+***netstat*** - exibe informações sobre as conexões de rede em tempo real
+***ssh-keygen*** - gera chaves de criptografia utilizadas para autenticar em um servidor remoto via SSH
+***rsync*** - sincroniza o conteúdo de diretórios e arquivos entre dois computadores ou dispositivos na rede.
+
+
+
+
+Aula 1: Introdução à bioinformática
+
+Definição de bioinformática
+Histórico da bioinformática
+Áreas de aplicação da bioinformática
+Aula 2: Fundamentos de biologia molecular
+
+Estrutura e função do DNA, RNA e proteínas
+Processo de replicação, transcrição e tradução
+Mutação genética
+Aula 3: Bancos de dados biológicos
+
+Tipos de bancos de dados
+Uso e consulta de bancos de dados biológicos
+Introdução ao NCBI e ao Ensembl
+Aula 4: Alinhamento de sequências
+
+Tipos de alinhamentos
+Métodos de alinhamento de sequências
+Análise de similaridade e homologia
+Aula 5: Anotação de sequências
+
+Anotação de sequências genômicas
+Ferramentas de anotação de sequências
+Análise de estrutura gênica e identificação de ORFs
+Aula 6: Filogenia
+
+Construção de árvores filogenéticas
+Métodos de construção de árvores filogenéticas
+Interpretação de árvores filogenéticas
+Aula 7: Modelagem molecular
+
+Métodos de modelagem molecular
+Estrutura e função de proteínas
+Docking molecular
+Aula 8: Análise de expressão gênica
+
+Microarray e RNA-Seq
+Análise de dados de expressão gênica
+Identificação de genes diferencialmente expressos
+Aula 9: Metagenômica
+
+Definição de metagenômica
+Metodologias de sequenciamento metagenômico
+Análise de dados metagenômicos
+Aula 10: Bioinformática de sistemas
+
+Introdução à bioinformática de sistemas
+Modelagem e simulação de vias metabólicas
+Identificação de alvos terapêuticos
+
+
+
+
+
+
+
+
+## Exercícios
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Utilizando os comandos que você aprendeu, execute as instruções a seguir. Sempre que pssível, utilize a tecla $TAB$ para completar os nomes de arquivos e caminhos. Lembre-se que o caracter $*$ serve como _coringa_, ele representa qualquer outro caracter.
+
+> 1) mova os arquivos cujo nome começa com _arquivo_1_, _arquivo_2_ e _arquivo_3_ da pasta de onde eles foram criados para a pasta correspondente à última letra de seus nomes.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Tente, com um único comando:
+
+> 2) remover os arquivos com numeração _3_ de todas as pastas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, vejamos como ficou a organização.
+
+> 3) visualize a distribuição das subpastas e arquivos dentro da pasta _aula1_.
+
+
+
+
+
+
