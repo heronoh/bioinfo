@@ -207,53 +207,30 @@ knitr::kable(atl_vi_tbl,
              format = "pandoc")
 
 ```
-vi atalhos
 
 
-
-
-
-
-
-
-
-
+### Escrevendo _scripts_
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-O comando ***pwd*** retorna o _path to the working directory_, o caminho para o diretório que você está.
+Os ***scripts*** estão para a _bioinformática_ assim como as _receitas_ estão para a _culinária_. Os _ingredientes_ são o ***inputs***, e todos os comandos, programas, funções e possibilidades, que podem ser combinados de diversas maneiras e em ordem variada, para se obter o prato final, o ***output***.
 
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma vez que você tem em mente uma sequência de procedimentos que queira realizar e repetir, você pode organizá-los num _arquivo_ que será lido pelo computador como uma _receita_. Isto te poupará o tempo de ter que ficar repetindo comandos, além de previnir os _erros_ que sempre ocorrem em qualquer repetição _não programática_, quando se faz algo manualmente. Outra vantagem é que os ***scripts*** possibilitam automatização e paralelização, ou seja, o computador pode fazer por você uma mesma tarefa, várias vezes ao mesmo tempo, para um conjunto de ***inputs*** semelhantes.
 
 
 
 ```{bash, echo=TRUE,eval=FALSE}
+echo "linha 1" > arquivo2.txt
 
-#!/bin/bash
+cat arquivo2.txt
 
-# Check if a file is specified
-if [ $# -ne 1 ]; then
-  echo "Usage: $0 fasta_file"
-  exit 1
-fi
+echo "linha 2" > arquivo2.txt
+echo "linha 3" > arquivo2.txt
+echo "linha 4" > arquivo2.txt
+echo "linha 5" > arquivo2.txt
 
-# Check if the file exists
-if [ ! -f $1 ]; then
-  echo "Error: $1 does not exist"
-  exit 1
-fi
-
-# Read the file and convert the DNA sequence to RNA
-while read line; do
-  if [[ ${line:0:1} == ">" ]]; then
-    echo $line
-  else
-    echo $line | tr 'T' 'U'
-  fi
-done < $1
-
-
+cat arquivo2.txt
 ```
-
-
 
 
 
