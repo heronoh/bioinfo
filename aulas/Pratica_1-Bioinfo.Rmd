@@ -5,9 +5,9 @@ place: "Biomedicina - PUC Minas"
 date: 2023/01
 output: 
   rmdformats::downcute:
-  html_document: 
-    toc: yes
-    toc_depth: 4
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
     toc_float: yes
     highlight: zenburn
     code_download: yes
@@ -28,11 +28,33 @@ old_hooks <- fansi::set_knit_hooks(
 )
 ```
 
+
 <style>
 body {
 text-align: justify}
 </style>
 
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
 
 
 
