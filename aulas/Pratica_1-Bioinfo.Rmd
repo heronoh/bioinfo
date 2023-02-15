@@ -1,16 +1,16 @@
 ---
-title: "Práticas em Bioinformática"
+title: "Práticas em Bioinformática I"
 author: "Prof. Heron OH"
 place: "Biomedicina - PUC Minas"
 date: 2023/01
 output: 
-  rmdformats::readthedown:
-    code_download: yes
+  rmdformats::downcute:
   html_document: 
     toc: yes
-    toc_depth: 3
+    toc_depth: 4
     toc_float: yes
     highlight: zenburn
+    code_download: yes
 editor_options: 
   chunk_output_type: console
 ---
@@ -32,6 +32,7 @@ old_hooks <- fansi::set_knit_hooks(
 body {
 text-align: justify}
 </style>
+
 
 
 
@@ -334,13 +335,14 @@ sudo apt install tree
 > Teste o _comando_ ***tree***. Abra o help do comando para ver as opções de configuração.
 
 ```{bash echo=TRUE,eval=FALSE}
+tree 
+
 tree --help
 
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 Agora, com o comando instalado, tente executar o passo anterior para visualizar a organização dos seus arquivos e diretórios.
-
 
 
 ## Exercícios
