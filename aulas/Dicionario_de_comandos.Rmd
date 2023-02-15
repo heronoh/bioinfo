@@ -1,0 +1,125 @@
+---
+title: "Dicionário de comandos em _bash_"
+author: "Prof. Heron OH"
+place: "Biomedicina - PUC Minas"
+date: 2023/01
+output: 
+  rmdformats::downcute:
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
+    toc_float: yes
+    highlight: zenburn
+    code_download: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo=FALSE, results='asis'}
+#configurar pros resultados do bash sairem coloridos e não ANSI
+
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+# Práticas em Bioinfo
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
+
+## Dicionário de comandos em _bash_
+
+
+
+
+
+
+
+
+```{r atalhos_vi, echo=FALSE}
+
+# library(tidyverse)
+
+
+atalhos_bash <-  c(
+
+"***ls***" = "lista o conteúdo do diretório atual",
+"***cd***" = "muda o diretório atual",
+"***pwd***" = "exibe o caminho completo do diretório atual",
+"***mkdir***" = "cria um novo diretório",
+"***rm***" = "remove um arquivo ou diretório",
+"***cp***" = "copia um arquivo ou diretório",
+"***mv***" = "move ou renomeia um arquivo ou diretório",
+"***cat***" = "exibe o conteúdo de um arquivo",
+"***less***" = "exibe o conteúdo de um arquivo de forma interativa",
+"***grep***" = "procura por um padrão em um arquivo ou em uma saída de comando",
+"***passwd***" = "muda seu _password_",
+"***ps***" = "lista os processos em execução no sistema",
+"***kill***" = "encerra um processo em execução",
+"***chmod***" = "altera as permissões de acesso a um arquivo ou diretório",
+"***chown***" = "altera o proprietário de um arquivo ou diretório",
+"***ssh***" = "estabelece uma conexão segura com outro computador",
+"***tar***" = "cria ou extrai arquivos compactados em formato tar",
+"***wget***" = "baixa arquivos da internet",
+"***curl***" = "transfere dados de ou para um servidor utilizando diversos protocolos",
+"***top***" = "exibe as informações de uso do sistema em tempo real",
+"***sudo***" = "executa um comando com privilégios de superusuário (root)",
+"***apt***" = "gerenciador de pacotes do sistema Debian e derivados, utilizado para instalar, atualizar e remover pacotes de software",
+"***yum***" = "gerenciador de pacotes do sistema Red Hat e derivados, utilizado para instalar, atualizar e remover pacotes de software",
+"***df***" = "exibe informações sobre o espaço em disco utilizado e livre em cada partição do sistema",
+"***du***" = "exibe o espaço em disco utilizado por cada arquivo e diretório no sistema",
+"***ifconfig***" = "exibe informações sobre a configuração de rede do sistema",
+"***ping***" = "testa a conectividade com outro computador ou dispositivo na rede",
+"***traceroute***" = "exibe o caminho que os pacotes de rede percorrem até chegar a um determinado destino",
+"***netstat***" = "exibe informações sobre as conexões de rede em tempo real",
+"***ssh-keygen***" = "gera chaves de criptografia utilizadas para autenticar em um servidor remoto via SSH",
+"***rsync***" = "sincroniza o conteúdo de diretórios e arquivos entre dois computadores ou dispositivos na rede"
+
+
+                ) 
+    
+atl_bash_tbl <- dplyr::tibble("Comando" = names(atalhos_bash),
+                            "Ação" = atalhos_bash)
+
+knitr::kable(atl_bash_tbl,
+             format = "pandoc")
+
+```
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+

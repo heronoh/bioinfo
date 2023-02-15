@@ -55,6 +55,7 @@ text-align: justify}
 }
 </style>
 
+
 # Práticas em bioinformática
 
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -146,6 +147,14 @@ cat arquivo2.txt
 &nbsp;&nbsp;&nbsp;&nbsp;
 Observe que apenas a última linha está armazenada no arquivo. Todas as demais foram armazenadas, porém foram sobreescritas a cada novo comando.
 
+> Agora, remova os arquivos que você gerou, para mantermos a organização de nossas pastas.
+
+```{bash, echo=TRUE,eval=FALSE}
+
+rm arquivo.txt
+rm arquivo2.txt
+
+```
 
 #### Com editor de texto (vi)
 
@@ -168,22 +177,20 @@ Mas não se assuste, aqui vai uma relação dos principais atalhos que você vai
 
 > \-- INSERT \-- 
 
-
-
-
-
 ```{r atalhos_vi, echo=FALSE}
 
 # library(tidyverse)
 
 
 atalhos_vi <-  c(
-                "i" = "ativar o **modo de inserção**",
-                "esc" = "sair do **modo de inserção**",
+                "i" = "ativar o ***modo de inserção***",
+                "esc" = "sair do ***modo de inserção***",
                 ":" = "sinalizar uma ação",
                 ":w" = "salvar o arquivo",
                 ":wq" = "salvar o arquivo e sair do programa",
                 ":q!" = "sair do programa SEM salvar o arquivo",
+                "**Del**" = "deletar conteúdo à frente do cursor",
+                "**Backspace**" = "deletar conteúdo para trás do cursor",
                 "botão direito do mouse" = "copiar texto selecionado",
                 "botão direito do mouse" = "colar texto copiado",
                 "dd" = "deletar a linha onde está o cursor",
@@ -194,15 +201,11 @@ atalhos_vi <-  c(
                 ) 
     
 atl_vi_tbl <- dplyr::tibble("Comando" = names(atalhos_vi),
-                     "Ação" = atalhos_vi)
-    
-    # add_column("Comando" = names(.))
-  
-  
-  # as_tibble()
+                            "Ação" = atalhos_vi)
 
 knitr::kable(atl_vi_tbl,
-             format="pandoc")
+             format = "pandoc")
+
 ```
 vi atalhos
 
@@ -214,16 +217,6 @@ vi atalhos
 
 
 
-
-> Agora, remova os arquivos que você gerou, para mantermos a organização de nossas pastas.
-
-
-```{bash, echo=TRUE,eval=FALSE}
-
-rm arquivo.txt
-rm arquivo2.txt
-
-```
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -267,102 +260,6 @@ done < $1
 
 
 
-
-
-
-***ls*** - lista o conteúdo do diretório atual
-***cd*** - muda o diretório atual
-***pwd*** - exibe o caminho completo do diretório atual
-***mkdir*** - cria um novo diretório
-***rm*** - remove um arquivo ou diretório
-***cp*** - copia um arquivo ou diretório
-***mv*** - move ou renomeia um arquivo ou diretório
-***cat*** - exibe o conteúdo de um arquivo
-***less*** - exibe o conteúdo de um arquivo de forma interativa
-***grep*** - procura por um padrão em um arquivo ou em uma saída de comando
-***passwd***
-***ps*** - lista os processos em execução no sistema
-***kill*** - encerra um processo em execução
-***chmod*** - altera as permissões de acesso a um arquivo ou diretório
-***chown*** - altera o proprietário de um arquivo ou diretório
-***ssh*** - estabelece uma conexão segura com outro computador
-***tar*** - cria ou extrai arquivos compactados em formato tar
-***wget*** - baixa arquivos da internet
-***curl*** - transfere dados de ou para um servidor utilizando diversos protocolos
-***top*** - exibe as informações de uso do sistema em tempo real
-***sudo*** - executa um comando com privilégios de superusuário (root)
-***apt*** - gerenciador de pacotes do sistema Debian e derivados, utilizado para instalar, atualizar e remover pacotes de software
-***yum*** - gerenciador de pacotes do sistema Red Hat e derivados, utilizado para instalar, atualizar e remover pacotes de software
-***df*** - exibe informações sobre o espaço em disco utilizado e livre em cada partição do sistema
-***du*** - exibe o espaço em disco utilizado por cada arquivo e diretório no sistema
-***ifconfig*** - exibe informações sobre a configuração de rede do sistema
-***ping*** - testa a conectividade com outro computador ou dispositivo na rede
-***traceroute*** - exibe o caminho que os pacotes de rede percorrem até chegar a um determinado destino
-***netstat*** - exibe informações sobre as conexões de rede em tempo real
-***ssh-keygen*** - gera chaves de criptografia utilizadas para autenticar em um servidor remoto via SSH
-***rsync*** - sincroniza o conteúdo de diretórios e arquivos entre dois computadores ou dispositivos na rede.
-
-
-
-
-Aula 1: Introdução à bioinformática
-
-Definição de bioinformática
-Histórico da bioinformática
-Áreas de aplicação da bioinformática
-Aula 2: Fundamentos de biologia molecular
-
-Estrutura e função do DNA, RNA e proteínas
-Processo de replicação, transcrição e tradução
-Mutação genética
-Aula 3: Bancos de dados biológicos
-
-Tipos de bancos de dados
-Uso e consulta de bancos de dados biológicos
-Introdução ao NCBI e ao Ensembl
-Aula 4: Alinhamento de sequências
-
-Tipos de alinhamentos
-Métodos de alinhamento de sequências
-Análise de similaridade e homologia
-Aula 5: Anotação de sequências
-
-Anotação de sequências genômicas
-Ferramentas de anotação de sequências
-Análise de estrutura gênica e identificação de ORFs
-Aula 6: Filogenia
-
-Construção de árvores filogenéticas
-Métodos de construção de árvores filogenéticas
-Interpretação de árvores filogenéticas
-Aula 7: Modelagem molecular
-
-Métodos de modelagem molecular
-Estrutura e função de proteínas
-Docking molecular
-Aula 8: Análise de expressão gênica
-
-Microarray e RNA-Seq
-Análise de dados de expressão gênica
-Identificação de genes diferencialmente expressos
-Aula 9: Metagenômica
-
-Definição de metagenômica
-Metodologias de sequenciamento metagenômico
-Análise de dados metagenômicos
-Aula 10: Bioinformática de sistemas
-
-Introdução à bioinformática de sistemas
-Modelagem e simulação de vias metabólicas
-Identificação de alvos terapêuticos
-
-
-
-
-
-
-
-
 ## Exercícios
 
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -379,6 +276,10 @@ Tente, com um único comando:
 Agora, vejamos como ficou a organização.
 
 > 3) visualize a distribuição das subpastas e arquivos dentro da pasta _aula1_.
+
+
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
 
 
 
