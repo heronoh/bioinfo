@@ -146,6 +146,75 @@ cat arquivo2.txt
 &nbsp;&nbsp;&nbsp;&nbsp;
 Observe que apenas a última linha está armazenada no arquivo. Todas as demais foram armazenadas, porém foram sobreescritas a cada novo comando.
 
+
+#### Com editor de texto (vi)
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Editores de texto são programas que permitem você abrir arquivos de texto e editar seu conteúdo. Há diversas opções disponíveis, com várias funcionalidades diferentes. Nos sistemas operacionais ***Linux***, o editor de texto padrão é o [Vi](https://pt.wikipedia.org/wiki/Vi), também disponível como ***Vim*** (uma abreviação de _Vi IMproved_). 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como não existe _mouse_ na linha de comando, a interação com o editor de texto é toda feita utilizando _atalhos de teclado_. Atalhos são combinações de teclas que geram ações. Cada programa ou _ambiente_ tem seus próprios atalhos. Na dúvida sobre as opções, utilize ferramentas de busca como o [_Google_](https://www.google.com/) para fazer buscas, utilizando palavras-chave como, neste caso. Estas buscas podem ser feitas em qualquer idioma, mas é mais fácil de conseguir uma variedade maior de resultados quando a busca é feita em _inglês_, visto que esta é a língua atualmente adotada como _universal_, tanto pela ciência quanto pela informática.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Por exemplo, neste caso, façamos a busca com as seguintes _palvras-chave_:
+
+> vi linux atalhos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Explore os resultados e veja que há muitas opções de atalhos. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Mas não se assuste, aqui vai uma relação dos principais atalhos que você vai precisar. Estes comandos só funcionam estando *fora* do **modo de inserção**, que é o modo onde qualquer tecla é escrita como texto no arquivo. Para saber se você está no **modo de inserção**, basta observar o canto inferior esquerdo da tela do editor. Se você estiver no **modo de inserção**, verá lá escrito:
+
+> \-- INSERT \-- 
+
+
+
+
+
+```{r atalhos_vi, echo=FALSE}
+
+# library(tidyverse)
+
+
+atalhos_vi <-  c(
+                "i" = "ativar o **modo de inserção**",
+                "esc" = "sair do **modo de inserção**",
+                ":" = "sinalizar uma ação",
+                ":w" = "salvar o arquivo",
+                ":wq" = "salvar o arquivo e sair do programa",
+                ":q!" = "sair do programa SEM salvar o arquivo",
+                "botão direito do mouse" = "copiar texto selecionado",
+                "botão direito do mouse" = "colar texto copiado",
+                "dd" = "deletar a linha onde está o cursor",
+                "yy" = "copiar a linha onde está o cursor",
+                "p" = "colar a linha onde está o cursor",
+                "/xxx" = "buscar o padrão *xxx* no conteúdo do arquivo"
+                
+                ) 
+    
+atl_vi_tbl <- dplyr::tibble("Comando" = names(atalhos_vi),
+                     "Ação" = atalhos_vi)
+    
+    # add_column("Comando" = names(.))
+  
+  
+  # as_tibble()
+
+knitr::kable(atl_vi_tbl,
+             format="pandoc")
+```
+vi atalhos
+
+
+
+
+
+
+
+
+
+
 > Agora, remova os arquivos que você gerou, para mantermos a organização de nossas pastas.
 
 
