@@ -55,7 +55,6 @@ text-align: justify}
 }
 </style>
 
-
 # Práticas em Bioinfo
 
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -65,16 +64,7 @@ Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioi
 ## Dicionário de comandos em _bash_
 
 
-
-
-
-
-
-
 ```{r atalhos_vi, echo=FALSE}
-
-# library(tidyverse)
-
 
 atalhos_bash <-  c(
 
@@ -89,6 +79,8 @@ atalhos_bash <-  c(
 "***less***" = "exibe o conteúdo de um arquivo de forma interativa",
 "***grep***" = "procura por um padrão em um arquivo ou em uma saída de comando",
 "***passwd***" = "muda seu _password_",
+"***top***" = "exibe as informações de uso do sistema em tempo real",
+"***htop***" = "exibe as informações de uso do sistema em tempo real, com mais opções",
 "***ps***" = "lista os processos em execução no sistema",
 "***kill***" = "encerra um processo em execução",
 "***chmod***" = "altera as permissões de acesso a um arquivo ou diretório",
@@ -97,17 +89,16 @@ atalhos_bash <-  c(
 "***tar***" = "cria ou extrai arquivos compactados em formato tar",
 "***wget***" = "baixa arquivos da internet",
 "***curl***" = "transfere dados de ou para um servidor utilizando diversos protocolos",
-"***top***" = "exibe as informações de uso do sistema em tempo real",
 "***sudo***" = "executa um comando com privilégios de superusuário (root)",
 "***apt***" = "gerenciador de pacotes do sistema Debian e derivados, utilizado para instalar, atualizar e remover pacotes de software",
-"***yum***" = "gerenciador de pacotes do sistema Red Hat e derivados, utilizado para instalar, atualizar e remover pacotes de software",
+# "***yum***" = "gerenciador de pacotes do sistema Red Hat e derivados, utilizado para instalar, atualizar e remover pacotes de software",
 "***df***" = "exibe informações sobre o espaço em disco utilizado e livre em cada partição do sistema",
 "***du***" = "exibe o espaço em disco utilizado por cada arquivo e diretório no sistema",
-"***ifconfig***" = "exibe informações sobre a configuração de rede do sistema",
+# "***ifconfig***" = "exibe informações sobre a configuração de rede do sistema",
 "***ping***" = "testa a conectividade com outro computador ou dispositivo na rede",
-"***traceroute***" = "exibe o caminho que os pacotes de rede percorrem até chegar a um determinado destino",
-"***netstat***" = "exibe informações sobre as conexões de rede em tempo real",
-"***ssh-keygen***" = "gera chaves de criptografia utilizadas para autenticar em um servidor remoto via SSH",
+# "***traceroute***" = "exibe o caminho que os pacotes de rede percorrem até chegar a um determinado destino",
+# "***netstat***" = "exibe informações sobre as conexões de rede em tempo real",
+# "***ssh-keygen***" = "gera chaves de criptografia utilizadas para autenticar em um servidor remoto via SSH",
 "***rsync***" = "sincroniza o conteúdo de diretórios e arquivos entre dois computadores ou dispositivos na rede"
 
 
