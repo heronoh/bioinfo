@@ -56,8 +56,6 @@ text-align: justify}
 </style>
 
 
-# Práticas em bioinformática
-
 &nbsp;&nbsp;&nbsp;&nbsp;
 Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
 Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
@@ -67,13 +65,15 @@ Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioi
 ### _Inputs_ & _outputs_
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-As operações que o computador executa - seja através de programas, _scripts_, aplicativos ou comandos - funcionam a partir do que chamamos de ***input*** (ou _entrada_). ***Inputs*** podem ser tanto arquivos, quanto parâmetros e argumentos necessários para a execução da operação. 
+As operações que o computador executa - seja através de programas, _scripts_, aplicativos ou comandos - funcionam a partir do que chamamos de ***input*** (ou _entrada_). ***Inputs*** podem ser tanto arquivos, quanto parâmetros e argumentos necessários para a execução de uma operação lógica. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-De maneira semelhante, tudo o que é gerado pelo comando (ou programa, _script_, aplicativo, ...) é denominado ***output***.
+De maneira semelhante, tudo o que é gerado por um comando (ou programa, _script_, aplicativo, ...) é denominado ***output***.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 Na _linha de comando_ é possível encadear diversos comandos sequencialmente, de maneira que o ***input*** do primeiro comando seja o ***output*** do próximo. Isto é conseguido pelo uso do ***pipe***, identificado por uma barra vertical (**|**). Assim, um conjunto de comandos encadeados por ***pipes*** pode ser denominado ***pipe line***, termo que pode ser expandido para representar qualquer conjunto de análise sequenciais para a transformação de um ***input*** em algum ***output***. Mas, antes de trabalharmos com ***pipes***, vamos primeiramente escrever alguns arquivos.  
+
+***
 
 ### Tipos de arquivos 
 
@@ -95,11 +95,13 @@ Alguns exemplos de formatos de arquivo de texto incluem:
 
 * **Arquivos de texto simples:** Esses arquivos contêm apenas texto sem formatação, como arquivos _.txt_. Eles são fáceis de criar e editar, mas não oferecem suporte a recursos avançados de formatação de texto, como negrito, itálico, cores etc.
 
-* **Arquivos de texto com marcação:** Esses arquivos incluem texto com marcação, como arquivos _.html_, _.xml_ ou _.markdown_. A marcação é usada para adicionar informações sobre a estrutura do documento, como títulos, parágrafos, listas e links. Os arquivos de texto com marcação são usados principalmente na web para exibir conteúdo em navegadores.
+* **Arquivos de texto com marcação:** Esses arquivos incluem texto com marcação, como arquivos [_.html_](https://pt.wikipedia.org/wiki/HTML), [_.xml_](https://pt.wikipedia.org/wiki/XML) ou _.markdown_. A marcação é usada para adicionar informações sobre a estrutura do documento, como títulos, parágrafos, listas e links. Os arquivos de texto com marcação são usados principalmente na web para exibir conteúdo em navegadores.
 
-* **Arquivos de texto delimitados:** Esses arquivos contêm dados tabulares, onde cada coluna de dados é separada por um caractere de delimitação, como uma vírgula ou um ponto-e-vírgula. Exemplos de formatos de arquivo de texto delimitados incluem _.csv_, _.tsv_ e _.txt_. Eles são amplamente utilizados para armazenar dados em planilhas e bancos de dados.
+* **Arquivos de texto delimitados:** Esses arquivos contêm dados tabulares, onde cada coluna de dados é separada por um caractere de delimitação, como uma vírgula ou um ponto-e-vírgula. Exemplos de formatos de arquivo de texto delimitados incluem [_.csv_](https://pt.wikipedia.org/wiki/Comma-separated_values), _.tsv_ e _.txt_. Eles são amplamente utilizados para armazenar dados em planilhas e bancos de dados.
 
-* **Arquivos de texto estruturados:** Esses arquivos contêm dados organizados em uma estrutura específica, como arquivos _.json_, _.yaml_ ou _.ini_. Eles são usados principalmente para armazenar configurações, opções e outros dados que precisam ser organizados hierarquicamente.
+* **Arquivos de texto estruturados:** Esses arquivos contêm dados organizados em uma estrutura específica, como arquivos [_.json_](https://pt.wikipedia.org/wiki/JSON), _.yaml_ ou _.ini_. Eles são usados principalmente para armazenar configurações, opções e outros dados que precisam ser organizados hierarquicamente.
+
+***
 
 ### Escrevendo arquivos
 
@@ -154,6 +156,8 @@ rm arquivo2.txt
 
 ```
 
+***
+
 #### Com editor de texto (vi)
 
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -170,10 +174,10 @@ Por exemplo, neste caso, façamos a busca com as seguintes _palvras-chave_:
 &nbsp;&nbsp;&nbsp;&nbsp;
 Explore os resultados e veja que há muitas opções de atalhos. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-Mas não se assuste, aqui vai uma relação dos principais atalhos que você vai precisar. Estes comandos só funcionam estando *fora* do **modo de inserção**, que é o modo onde qualquer tecla é escrita como texto no arquivo. Para saber se você está no **modo de inserção**, basta observar o canto inferior esquerdo da tela do editor. Se você estiver no **modo de inserção**, verá lá escrito:
+#### Atalhos do _vi_
 
-> \-- INSERT \-- 
+&nbsp;&nbsp;&nbsp;&nbsp;
+Mas não se assuste, aqui vai uma relação dos principais atalhos que você vai precisar. 
 
 ```{r atalhos_vi, echo=FALSE}
 
@@ -205,6 +209,11 @@ knitr::kable(atl_vi_tbl,
              format = "pandoc")
 
 ```
+Estes comandos só funcionam estando *fora* do **modo de inserção**, que é o modo onde qualquer tecla é escrita como texto no arquivo. Para saber se você está no **modo de inserção**, basta observar o canto inferior esquerdo da tela do editor. Se você estiver no **modo de inserção**, verá lá escrito:
+
+> \-- INSERT \-- 
+
+***
 
 <br><br>
 
@@ -252,6 +261,8 @@ echo "Olá, mundo!"
 Históricamente, o primeiro ***script*** que um informata aprende a fazer é o [_Hello Wolrd!_](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program), que é um ***programa*** que exibe esta mensagem. Mas vamos um pouco além.
 
 <br><br>
+
+***
 
 #### Seu 1&deg; _script_
 
@@ -325,9 +336,9 @@ Observe que, após o **d**, temos três conjuntos de **rwx** repetidos. Esses co
 
 * **1&deg; grupo:** Permissões do _proprietário_, do usuário que criou e possui o arquivo.  
 
-* **1&deg; grupo:** Permissões do _grupo_.
+* **2&deg; grupo:** Permissões do _grupo_.
 
-* **1&deg; grupo:** Permissões dos demais usuários.
+* **3&deg; grupo:** Permissões dos demais usuários.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 Todas essas permissões podem ser modificadas, para _bloquear_ ou _liberar_ acesso de qualquer usuário a qualquer arquivo. Apenas o proprietário ou o ***super usuário***, o usuário _root_, podem modificar as permissões de um arquivo, ou transferir sua propriedade.
@@ -350,7 +361,9 @@ ls -l
 >> Observe a diferença nos atributos do arquivo, antes e depois da modificação.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Veja que agora o nome do arquivo, quando listado, fica <mark style="background-color: #1bbd06">verde</mark> (no esquema de cores _default_). Isto significa que ele agora é um _executável_!
+Veja que agora o nome do arquivo, quando listado, fica <mark style="background-color: #1bbd06">*verde*</mark> (no esquema de cores _default_). Isto significa que ele agora é um _executável_!
+
+***
 
 #### Executando o _script_
 
@@ -379,6 +392,7 @@ bash script1.sh
 
 >> Observe que, com ambas maneiras, chegamos a um mesmo resultado.
 
+***
 
 #### Nomeando o ***script***
 
@@ -403,6 +417,7 @@ ls -l
 &nbsp;&nbsp;&nbsp;&nbsp;
 Por hoje é só! Você agora já tem os conhecimentos que precisa para escrever outros ***scripts***, utilizando os comandos que já sabe e que vai aprender!
 
+***
 
 ## Exercícios
 
@@ -446,6 +461,7 @@ dna2rna "AAAAATTGC"
 GCAAuuuuu
 ```
 
+***
 
 >>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
 

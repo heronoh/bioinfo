@@ -57,9 +57,6 @@ text-align: justify}
 </style>
 
 
-
-# Práticas em bioinformática
-
 &nbsp;&nbsp;&nbsp;&nbsp;
 Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
 Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
