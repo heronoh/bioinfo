@@ -336,8 +336,6 @@ Todos esses comandos de atualização e instalação precisam ser executados com
 ```{bash echo=TRUE,eval=FALSE}
 sudo apt update
 
-sudo apt upgrade
-
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;
