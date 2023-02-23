@@ -446,7 +446,7 @@ echo "AAATTTGGGCCCCCCCCCC" | tr 'ACGT' 'TGCu'
 > Escreva um programa chamado ***dna2rna*** que vai receber uma sequência de DNA e vai gerar seu complemento reverso em RNA.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-**DICA:** dentro do ***script***, o comando **echo "_sequência_"** deve ser substituído por **echo _$1_**. 
+**DICA:** dentro do ***script***, o comando **echo "_sequência_"** deve ser substituído por **echo _$1_**, sem aspas. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 ->**$1** é uma variável que corresponde ao primeiro argumento que um ***script*** recebe. Assim, qualquer sequência que você passar para na linha de comando será encaminhada para _dentro_ do ***script***. Por exemplo:
