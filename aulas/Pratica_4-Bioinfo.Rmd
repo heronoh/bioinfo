@@ -1,5 +1,5 @@
 ---
-title: "Práticas em Bioinfo III"
+title: "Práticas em Bioinfo IV"
 author: "Prof. Heron OH"
 place: "Biomedicina - PUC Minas"
 date: 2023/01
