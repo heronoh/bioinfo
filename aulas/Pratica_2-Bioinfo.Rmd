@@ -95,9 +95,9 @@ Alguns exemplos de formatos de arquivo de texto incluem:
 
 * **Arquivos de texto simples:** Esses arquivos contêm apenas texto sem formatação, como arquivos _.txt_. Eles são fáceis de criar e editar, mas não oferecem suporte a recursos avançados de formatação de texto, como negrito, itálico, cores etc.
 
-* **Arquivos de texto com marcação:** Esses arquivos incluem texto com marcação, como arquivos [_.html_](https://pt.wikipedia.org/wiki/HTML), [_.xml_](https://pt.wikipedia.org/wiki/XML) ou _.markdown_. A marcação é usada para adicionar informações sobre a estrutura do documento, como títulos, parágrafos, listas e links. Os arquivos de texto com marcação são usados principalmente na web para exibir conteúdo em navegadores.
-
 * **Arquivos de texto delimitados:** Esses arquivos contêm dados tabulares, onde cada coluna de dados é separada por um caractere de delimitação, como uma vírgula ou um ponto-e-vírgula. Exemplos de formatos de arquivo de texto delimitados incluem [_.csv_](https://pt.wikipedia.org/wiki/Comma-separated_values), _.tsv_ e _.txt_. Eles são amplamente utilizados para armazenar dados em planilhas e bancos de dados.
+
+* **Arquivos de texto com marcação:** Esses arquivos incluem texto com marcação, como arquivos [_.html_](https://pt.wikipedia.org/wiki/HTML), [_.xml_](https://pt.wikipedia.org/wiki/XML) ou _.markdown_. A marcação é usada para adicionar informações sobre a estrutura do documento, como títulos, parágrafos, listas e links. Os arquivos de texto com marcação são usados principalmente na web para exibir conteúdo em navegadores.
 
 * **Arquivos de texto estruturados:** Esses arquivos contêm dados organizados em uma estrutura específica, como arquivos [_.json_](https://pt.wikipedia.org/wiki/JSON), _.yaml_ ou _.ini_. Eles são usados principalmente para armazenar configurações, opções e outros dados que precisam ser organizados hierarquicamente.
 
