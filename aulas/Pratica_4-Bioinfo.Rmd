@@ -60,176 +60,336 @@ text-align: justify}
 Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
 Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
 
-## _Scripts_ bioinformáticos
+## Arquivos _.fasta_ e _.fastq_
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Na prática passada você aprendeu a construir um _script_ que desempenhava uma função simples, de saudação, utilizando funções/programas (outros _scripts_) existentes na linguagem _bash_. Da mesma maneira, é possível utilizar estes funções/programas para resolver os problemas de bioinformática que vimos nos exercícios, como a transformação de sequências de DNA em seu complemento reverso, em RNA, ou até mesmo em proteínas.
+Na prática passada você aprendeu a utilizar um _script_ bioinformático para realizar a tradução de uma sequência de nucleotídeos na sequência correspondente de AA, a partir de um arquivo _.fasta_. Hoje iremos explorar mais este tipo de arquivo tão utilizado na bioinfo.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-As ferramentas de _linha de comando_ são especialmente eficientes para o processamento de informações de texto e tabelas. Assim, uma vez que a informação genética pode ser bem representada nesses tipos de arquivo, é possível aproveitar todo o poder dessas ferramentas, num contexto biológico.
+Como já vimos, os arquivos _.fasta_ são arquivos que armazenam sequências de DNA, RNA ou proteínas. Cada arquivo pode conter uma única sequência ou várias, sendo ocasionalmente referido como _multifasta_. É neste formato que são armazenados genomas de referência e genes. Este também é o arquivo utilizado para alinhamentos e buscas por similaridade, como o [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi).
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Mas não é necessário que cada bioinformata faça seus próprios programas. À medida que o universo da bioinfo se desenvolve, as ferramentas mais eficientes e práticas acabam se estabelecendo e se difundindo, de maneira semelhante ao que ocorre no mundo da ciência. 
+Já os arquivos _.fastq_ são arquivos que armazenam sequências burtas geradas por sequenciadores de nova geração (NGS), e apresentam, além da sequência das _reads_, identificadores de qualidade baseados na métrica de qualidade [***PHRED***](https://en.wikipedia.org/wiki/Phred_quality_score). Estes arquivos podem armazenar centenas de milhares de sequências, que precisam ser processadas para fornecer alguma informação biológica.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Esta é a grande vantagem da (bio)informática. Por ser baseada (principalmente) em ferramentas de _código aberto_, qualquer pessoa pode fazer melhorias, reformulações, ou construir novas funções a partir das ferramentas existentes. E não é preciso ***reinventar a roda!*** Problemas clássicos, ou recorrentes, tendem a já possuir soluções disponíveis a alguns cliques de distância.
+Como veremos a seguir, há funcionalidades específicas para cada um desses arquivos. No entanto, algumas avaliações mais simples podem ser realizadas com ambos, observando suas diferenças estruturais.
 
-### Tradução: o ribossomo digital
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-Figura central no funcionamento celular e no fluxo da informação biológica, o **ribossomo** é uma máquina perfeita, modelada pela seleção natural. Como um computador na célula, ele é capaz de decodificar a traduzir a informação contida no _RNA mensagiro_ (mRNA) em uma sequência correspondente de _amino ácidos_, produzindo as _proteínas_ que desempenham as mais diversas atividades.
+## Acessando servidores
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Reproduzir um _ribossomo_ no mundo virtual é relativamente simples: basta escrever um _script_ que, para cada trinca de letras de um arquivo _.fasta_ (representando 3 nucleotídeos do _DNA/mRNA_), identifique uma letra (representando um _amino ácido_, ou um _sinal de parada_, correspondentes). Este _script_ precisaria conter um dicionário, com todas as correspondências entre as trincas de nucleotídeos e cada _amino ácido_, utilizando letras como representações, como o [código sequências biológicas da **IUPAC**](https://www.bioinformatics.org/sms/iupac.html) (a _International Union of Pure and Applied Chemistry_).
-
-#### Baixando um tradutor 
+Como sabemos pela prática, a instalação de alguns programas de bioinformática na plataforma _WSL_ requer privilégios de administrador, o que dificulta seu uso em computadores institucionais, como os das aulas práticas. Assim, hoje iremos conectar diretamente a um servidor computacional para realizar nossas análises. ***Servidor*** ou ***Servidora*** é um dos nomes que se dá a um computador em que uma ou mais pessoas trabalham remotamente, ou seja, você conecta a ele a partir do seu computador, que serve apenas como uma interface. Enquanto conectado, todo o processamento computacional é realizado no ***Servidor***. Assim, eventualmente, os arquivos que forem usados, precisam ser tranferidos de um computador para o outro, e aprenderemos como fazer isso hoje.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-A partir de uma busca rápida no [_Google_](https://www.google.com/), com as palavras chave "***DNA protein translate command line***", você observará que há muitas opções pacotes e programas. Um programa de tradução de **DNA|proteína** muito utilizado é o _transeq_, do pacote [**EMBOSS**](http://emboss.open-bio.org/) (o _European Molecular Biology Open Software Suite_). Este é um pacote que reúne [dezenas de programas](https://www.bioinformatics.nl/emboss-explorer/) para trabalhar com arquivos de sequências e outros arquivos comuns na bioinformática. Ele foi desenvolvido em conjunto, por pesquisadores de diferentes centros de pesquisa como o [**EMBL-EBI**](https://www.ebi.ac.uk/about), o [**WSI**](https://www.sanger.ac.uk/), o [**BBSRC**](https://www.ukri.org/councils/bbsrc/) e o [**MRC**](https://www.mrc-bsu.cam.ac.uk/). O pacote **EMBOSS** pode ser instalado de maneira semelhante a qualquer aplicativo da distribuição de _Linux_ que estamos usando (**Ubuntu - Debian**), com o _sistema de gerenciamento de pacotes_ **apt**.
+Os servidores são computadores muito poderosos, e, por isso, muito visados por hackers. Desta maneira, a conexão com eles deve ser realizada de maneira segura, e não se deve compartilhar credenciais de acesso sem os devidos cuidados. Assim, esta prática não apresentará todas as informações necessárias para a conexão. **Estas informações serão transmitidas apenas durante a aula.**Mas, caso você esteja realizando as práticas no seu próprio computador, você pode instalar os programas que utilizaremos sem restrição, e pode realizar todos os passos práticos localmente. Não será uma tarefa simples para iniciantes, mas as instruções para a instalação de cada programa estão disponíveis nos respectivos _links_, e qualquer suporte pode ser solicitado diretametne comigo.
 
-> Instale o pacote **EMBOSS** utilizando o _sistema de gerenciamento de pacotes_ **apt**.
+## Instalando os programas
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Caso você vá realizar a prática durante a aula, no servidor, pode ir para a próxima sessão. Mas **caso você vá realizar a prática no seu própiro computador**, os programas que utilizaremos podem ser encontrados aqui:
+
+* [exonerate](https://www.ebi.ac.uk/about/vertebrate-genomics/software/exonerate): Diversas funcionalidades para arquivos _.fasta_.
+
+* [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/): Gerador de relatórios de qualidade para arquivos _.fastq_ individuais.
+
+* [MultiQC](https://multiqc.info/): Gerador de relatórios de qualidade para arquivos _.fastq_ múltiplos.
+
+* [Tutoriais do ***LGC PUC Minas*** de instalação e uso do _FastQC_ & _MultiQC_](https://www.youtube.com/watch?v=aTlHQNLwg-0)
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Os arquivos que utilizaremos podem ser baixados [aqui](https://drive.google.com/drive/folders/1b8llP47A8yCLgrYEKG-xQgnhgaMUkjQ6?usp=sharing).
+
+## Conexão por _SSH_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+A maneira mais utilizada para a conexão com servidores ou outros computadores é a conexão por [***SSH***](https://pt.wikipedia.org/wiki/Secure_Shell). Este é um protocolo de rede criptografado, que se baseia na utilização de usuários e senhas para tornar segura a conexão entre dois computadores. Assim, cada usuário precisa ter uma conta (_login_ e senha) cadastrada no computador alvo (o Servidor). Para nossas práticas, criei um usuário geral para todos conectarmos simultaneamente num de nossos Servidores.
+
+> Utilizando as credenciais ***fornecidas durante a aula***, conecte no servidor de trabalho via SSH. Quando solicitado, forneça a senha:
 
 ```{bash, echo=TRUE,eval=FALSE}
-sudo apt install emboss
+#ex:
+#ssh usuario@111.222.333.444
 
-```
-
-> Após a instalação, verifique que agora você possui a ferramenta/_script_ _transeq_, e abra seu manual.
-
-```{bash, echo=TRUE,eval=FALSE}
-transeq --help
-
-```
-
-#### Traduzindo um arquivo _.fasta_
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-Antes de começar, vamos organizar uma apsta para trabalhar com os arquivos desta prática.
-
-> Na sua ***home***, crie uma pasta _aula2_ para os arquivos da prática de hoje. Entre nesta pasta.
-
-```{bash, echo=TRUE,eval=FALSE}
-cd
-
-mkdir aula2
-
-cd aula2
-
+ssh $USER@$IP
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Agora, vamos criar o arquivo que utilizaremos. Vamos trabalhar com a sequência do gene [_Citocromo C Oxidase I_](https://en.wikipedia.org/wiki/Cytochrome_c_oxidase_subunit_I), um gene que codifica uma das proteínas da _Cadeia transportadora de elétrons_ da _fosforilação oxidativa_, responsável pela respiração celular, na mitocôndria.
+Caso a conexão seja realizada com sucesso, você verá uma tela de boas vindas com informações sobre o servidor.
 
-> Abra o _vi_, para editar um arquivo de nome **COI.fasta**. Entre no _modo de inserção_.
-
-```{bash, echo=TRUE,eval=FALSE}
-vi mtCOI.fasta
-
-```
-
-> Cole o conteúdo a seguir dentro do seu arquivo no editor de textos _vi_. Depois salve o conteúdo e saia.
+> Utilizando o comando _htop_ verifique as características de _hardware_ e os processos que estão rodando no servidor. 
+Para retornar para a linha de comando, saia utilzando a tecla ***q***.
 
 ```{bash, echo=TRUE,eval=FALSE}
->NC_012920.1:5904-7445 Homo sapiens mitochondrion, complete genome
-ATGTTCGCCGACCGTTGACTATTCTCTACAAACCACAAAGACATTGGAACACTATACCTATTATTCGGCG
-CATGAGCTGGAGTCCTAGGCACAGCTCTAAGCCTCCTTATTCGAGCCGAGCTGGGCCAGCCAGGCAACCT
-TCTAGGTAACGACCACATCTACAACGTTATCGTCACAGCCCATGCATTTGTAATAATCTTCTTCATAGTA
-ATACCCATCATAATCGGAGGCTTTGGCAACTGACTAGTTCCCCTAATAATCGGTGCCCCCGATATGGCGT
-TTCCCCGCATAAACAACATAAGCTTCTGACTCTTACCTCCCTCTCTCCTACTCCTGCTCGCATCTGCTAT
-AGTGGAGGCCGGAGCAGGAACAGGTTGAACAGTCTACCCTCCCTTAGCAGGGAACTACTCCCACCCTGGA
-GCCTCCGTAGACCTAACCATCTTCTCCTTACACCTAGCAGGTGTCTCCTCTATCTTAGGGGCCATCAATT
-TCATCACAACAATTATCAATATAAAACCCCCTGCCATAACCCAATACCAAACGCCCCTCTTCGTCTGATC
-CGTCCTAATCACAGCAGTCCTACTTCTCCTATCTCTCCCAGTCCTAGCTGCTGGCATCACTATACTACTA
-ACAGACCGCAACCTCAACACCACCTTCTTCGACCCCGCCGGAGGAGGAGACCCCATTCTATACCAACACC
-TATTCTGATTTTTCGGTCACCCTGAAGTTTATATTCTTATCCTACCAGGCTTCGGAATAATCTCCCATAT
-TGTAACTTACTACTCCGGAAAAAAAGAACCATTTGGATACATAGGTATGGTCTGAGCTATGATATCAATT
-GGCTTCCTAGGGTTTATCGTGTGAGCACACCATATATTTACAGTAGGAATAGACGTAGACACACGAGCAT
-ATTTCACCTCCGCTACCATAATCATCGCTATCCCCACCGGCGTCAAAGTATTTAGCTGACTCGCCACACT
-CCACGGAAGCAATATGAAATGATCTGCTGCAGTGCTCTGAGCCCTAGGATTCATCTTTCTTTTCACCGTA
-GGTGGCCTGACTGGCATTGTATTAGCAAACTCATCACTAGACATCGTACTACACGACACGTACTACGTTG
-TAGCCCACTTCCACTATGTCCTATCAATAGGAGCTGTATTTGCCATCATAGGAGGCTTCATTCACTGATT
-TCCCCTATTCTCAGGCTACACCCTAGACCAAACCTACGCCAAAATCCATTTCACTATCATATTCATCGGC
-GTAAATCTAACTTTCTTCCCACAACACTTTCTCGGCCTATCCGGAATGCCCCGACGTTACTCGGACTACC
-CCGATGCATACACCACATGAAACATCCTATCATCTGTAGGCTCATTCATTTCTCTAACAGCAGTAATATT
-AATAATTTTCATGATTTGAGAAGCCTTCGCTTCGAAGCGAAAAGTCCTAATAGTAGAAGAACCCTCCATA
-AACCTGGAGTGACTATATGGATGCCCCCCACCCTACCACACATTCGAAGAACCCGTATACATAAAATCTA
-GA
-
+htop
 ```
 
-> Verifique o conteúdo do arquivo que você criou:
-
-```{bash, echo=TRUE,eval=FALSE}
-cat mtCOI.fasta
-
-```
+## Preparativos
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como todos estamos utilizando um mesmo _usuário_ no servidor, todos podemos alterar ou remover os arquivos gerados por outras pessoas. Assim, para evitar ações indesejadas ***iremos criar pastas para cada aluno e sempre realizar os comandos dentro das respectivas pastas***. Além disso, ***sempre utilizar caminhos completos e confira os comandos antes de executá-los, especialmente comandos de remoção.***. Caso tenha dúvida ***não execute o comando sem solicitar ajuda***. E lembre-se:
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Agora, vamos traduzir essa proteína utilizando a função recém-instalada, _transeq_.
+$\underline{NÃO\space EXISTE\space DESFAZER\space NA\space LINHA\space DE\space COMANDO!!!!}$
 
-> Traduza a sequência do arquivo mtCOI.fasta para o arquivo mtCOI.pep.
+### Crie sua pasta
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Cada aluno criará uma pasta para organizar seus arquivos de trabalho.
+
+> Na pasta correspondente à sua $TURMA, dentro da ***home*** do usuário, crie uma pasta com um nome único. Caso haja alguém com nome parecido na sala, use suas iniciais ou apelido para diferenciar:
 
 ```{bash, echo=TRUE,eval=FALSE}
-transeq mtCOI.fasta
+cd #para ir para a home
+
+cd $TURMA
+
+mkdir heronoh #por exemplo, no meu caso
+
+cd heronoh
+
+pwd
 
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-Observe que o programa te perguntou, interativamente, qual nome ele deveria dar ao arquivo de _output_. Isto poderia ser evitado caso você fornecesse o nome desse arquivo como argumento _-outseq $nome-do-arquivo-de-saída_.
+### Copie os arquivos
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Agora, vamos ver o conteúdo do arquivo gerado.
+Copie os arquivos que iremos utilizar para a sua pasta.
 
-> Liste os arquivos e visualize o contaúdo do arquivo gerado pelo _transeq_.
+&nbsp;&nbsp;&nbsp;&nbsp;
+Se estiver trabalhando localmente, ou seja, no seu computador, os arquivos que utilizaremos podem ser baixados [aqui](https://drive.google.com/drive/folders/1b8llP47A8yCLgrYEKG-xQgnhgaMUkjQ6?usp=sharing).
+
+
+> Utilizando ***caminhos completos***, copie os arquivos da pasta principal para a sua pasta, substituindo as variáveis _$ALUNO_ e _$TURMA_ pelos nomes correspondentes:
+
+>> DICA: utilize **tab** para autocompletar e evitar erros!
 
 ```{bash, echo=TRUE,eval=FALSE}
+#confira onde você está
+pwd 
+
+# verifique que sua pasta está vazia
+ls -lh ~/$TURMA/$ALUNO/ 
+
+#copie os arquivos
+cp -r ~/arquivos ~/$TURMA/$ALUNO/
+
+# verifique se foram copiados corretamente
+ls -lh ~/$TURMA/$ALUNO/
+
+#veja a estrutura da pasta que você copiou
+tree ~/$TURMA/$ALUNO/
+
+```
+
+## Contando sequências
+
+### Em arquivos .fasta
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como já sabemos, arquivos _.fasta_ e _.fastq_ são arquivos de texto. Assim, qualquer programa/função/_script_ desenvolvido para trabalhar com arquivos de texto podem ser utilizados nestes arquivos. Vejamos algumas.
+
+> Vamos vizualizar os arquivos fasta presentes na pasta _~/$TURMA/$ALUNO/arquivos/fasta/mito_. Entre nesta pasta e liste os arquivos:
+
+>> DICA: utilize **tab** para autocompletar e evitar erros!
+
+```{bash, echo=TRUE,eval=FALSE}
+#entre na pasta
+cd ~/$TURMA/$ALUNO/arquivos/fasta/mito
+
+#confira onde você está
+pwd
+
+#liste os arquivos
 ls
 
-cat mtCOI.pep
+#liste os arquivos com mais informações
+ls -lah
+```
 
+> Vamos vizualizar o arquivo  _human_mtDNA_genome.fasta_ de 4 maneiras diferentes. Observe o _output_ de cada comando e entenda as diferenças. Varie os argumentos para compreender sua função:
+
+```{bash, echo=TRUE,eval=FALSE}
+#abrir o arquivo inteiro
+cat human_mtDNA_genome.fasta
+
+#abrir o começo do arquivo
+head -10 human_mtDNA_genome.fasta
+
+#abrir o final do arquivo
+tail -14 human_mtDNA_genome.fasta
+
+#abrir o arquivo inteiro, interativamente
+less human_mtDNA_genome.fasta
+#---> utilize as setas para mover, e saia com a tecla "q"
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-**Atenção!** Observe que há algo de estranho na sequência gerada. Note que o símbolo ***\*** aparece algumas vezes em meio à sequência de letras que representa os amino ácidos. Esse símbolo, em _arquivos fasta de amino ácidos_ representa ***códons de parada***, os códons que dizem para o ribossomo que a tradução daquela proteína terminou. 
+Como já sabemos, arquivos _.fasta_ tem uma estrutura definida: uma linha de ***cabeçalho***, **sempre iniciada por _>_** seguida de uma ou mais linhas de ***sequência***. Cada ***cabeçalho*** representa uma sequência no arquivo. Assim, como saber quantas sequências temos num arquivo? O comando ***grep*** é utilizado para localizar/buscar/extrair/contar padrões de texto em arquivos de texto. Vamos usá-lo: 
+
+> Experimente as variações do comando _grep_:
+
+```{bash, echo=TRUE,eval=FALSE}
+#veja o arquivo com que trabalharemos agora
+less human_mtDNA_CDSs.fasta
+
+#extrair linhas de cabeçalho no arquivo fasta
+grep ">" human_mtDNA_CDSs.fasta
+
+#contar linhas de cabeçalho no arquivo fasta
+grep -c ">" human_mtDNA_CDSs.fasta
+
+#extrair uma sequência usando o grep
+#---->extraia apenas a sequência do gene COX1
+grep "COX1" -A10 human_mtDNA_proteins.fasta
+
+grep "COX1" -A8 human_mtDNA_proteins.fasta
+
+#salve a sequência e seu cabeçalho em um novo arquivo
+grep "COX1" -A8 human_mtDNA_proteins.fasta > human_COX1_protein.fasta
+
+#confira o resultado
+cat human_COX1_protein.fasta
+
+```
+
+### Em arquivos .fastq
+
+#### Entendendo os arquivos .fastq
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Mas, sendo o COI uma proteína única e sem íntrons, estes ***códons de parada*** não deveriam estar presentes no meio de sua sequência. Para tentarmos entender melhor, vamos usar um recurso externo.
+Utilizando o mesmo raciocínio da sessão anterior, podemos investigar os arquivos _.fastq_.
 
-#### Trabalhando na internet
+> Vamos vizualizar os arquivos fasta presentes na pasta _~/$TURMA/$ALUNO/arquivos/fastq_. Entre nesta pasta e liste os arquivos:
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-Muitos programas de bioinformática, especialmente os mais utilizados, apresentam versões _online_, e são hospedados em _sites_ onde qualquer pessoa pode ter acesso aos seus recursos. Em última análise, esses programas estão realizando as mesmas operações que quando são rodados no seu próprio computador, mas nesse caso o seu processamento é feito por sevidores remotos (em outro local).
+>> DICA: utilize **tab** para autocompletar e evitar erros!
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-Para a _tradução de arquivos de sequências biológicas_, um serviço online muito bom e muito utilizado é o [_Expasy translate tool_](https://web.expasy.org/translate/), mantido pelo **SBI** (_Swiss Institute of Bioinformatics_). Vamos realizar a tradução da nossa sequência utilizando esse serviço.
+```{bash, echo=TRUE,eval=FALSE}
+#entre na pasta
+cd ~/$TURMA/$ALUNO/arquivos/fastq
 
-> Acesse o site da ferramenta [Expasy translate tool](https://web.expasy.org/translate/).
+#confira onde você está
+pwd
 
-> Cole a sequência do arquivo mtCOI.fasta na caixa de texto para tradução, com ou sem o cabeçalho (>).
+#liste os arquivos
+ls
 
-> Acione o botão ***Translate***, utilizando os parâmetros _default_.
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-Veja que obtivemos um resultado semelhante, porém mais completo. Agora, temos 6 possibilidades de tradução, que correspondem a 3 fases de leitura (_ORFs_ - [_Open Reading Frames_](https://pt.wikipedia.org/wiki/Fase_de_leitura_aberta)) para cada uma das duas fitas, a _fita codificadora_ e a _fita complementar_. 
-
-[![_ORFs - Open Reading Frames_](/home/heron/prjcts/bioinfo/misc/ORFs.png)](https://en.wikipedia.org/wiki/Open_reading_frame)
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-Isso acontece porquê o local de início da tradução pelo ribossomo não é exato, mas sim definido pela própria composição da sequência, em funções de sinais como o primeiro _códon de iniciação_, que também corresponde à incorporação do amino ácido **metionina** (representado por _M_, ou _Met_). Ou seja, todas as protéinas tem sua síntese iniciada por uma **metionina** (em eucariotos e _archea_; e por fenil-metionina (_fMet_) em bactérias, mitocôndrias e plastídeos).
+#liste os arquivos com mais informações
+ls -lah
+```
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Agora, vamos entender os nossos resultados. Na página gerada pelo _Expasy translate tool_, observe que há um campo **Genetic code** que está definido como _Standard_. Veja as outras opções disponíveis. Vamos avaliar outras possivilidades. Lembre-se que: _o gene COI é um gene mitocondrial_.
+Veja os nomes dos arquivos. Observe que eles estão organizados em pares que diferem apenas pelo radical ***R1*** e ***R2***. Esses radicais representam os pares de _reads_, ou seja, duas extremidades de um mesmo DNA sequenciado em uma posição da _flow cell_. Apesar de separados, cada sequência num arquivo tem sua correspondente no outro.
 
-> Altere o **Genetic code** de _Standard_ para _Vertebrate mitochondrial_. Acione o botão ***Translate*** novamente.
+> Vamos vizualizar o arquivo _amostra_137_S135_L001_R1_001.fastq_ de 4 maneiras diferentes. Observe o _output_ de cada comando e entenda as diferenças. Varie os argumentos para compreender sua função:
+
+```{bash, echo=TRUE,eval=FALSE}
+#abrir o arquivo inteiro
+cat amostra_137_S135_L001_R1_001.fastq
+
+#abrir o começo do arquivo
+head -10 amostra_137_S135_L001_R1_001.fastq
+
+#abrir o final do arquivo
+tail -14 amostra_137_S135_L001_R1_001.fastq
+
+#abrir o arquivo inteiro, interativamente
+less amostra_137_S135_L001_R1_001.fastq
+#---> utilize as setas para mover, e saia com a tecla "q"
+```
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Veja que agora temos um resultado mais pertinente com a realidade! O primeiro resultado (correspondente à _fita codificadora_ em sua _primeira fase de leitura_) apresenta uma proteína completa, iniciada por uma metionina, e finalizada por um códon de parada!
+Veja que este é um arquivo bem grande e mais complexo. Não faz sentido vizualizá-lo completamente. Vamos entender sua estrutura: 
+
+> Utilizando o comando _wc_ conte quantas linhas temos em cada arquivo nesta pasta:
+
+```{bash, echo=TRUE,eval=FALSE}
+#contar linhas
+wc -l amostra_*
+```
+
+> Com o comando _head_ abra o começo do arquivo para entendermos sua estrutura
+
+```{bash, echo=TRUE,eval=FALSE}
+#contar linhas
+head amostra_137_S135_L001_R1_001.fastq
+```
+
+<style>
+div.blue pre { background-color:lightblue; }
+</style>
+
+<div class = "blue">
+```{bash fastqfile, echo=TRUE,eval=FALSE}
+###        Estrutura do .fastq
+#  @...........    = cabeçalho
+#  ACTGACTGA...    = sequência
+#  +               = separador
+#  123ABC*&%...    = código ASCII para qualidade PHRED de cada base
+
+@M02913:268:000000000-JGD64:1:1101:21802:2015 1:N:0:ACTGAGCG+CTATTATG
+TCAACCAACCACAAAGACATTGGCACCCTCTACTTAGTATTCGGTGCCTTAGCCGCAATATTTTGCACAGCCCTTAGCCTTCTAATTCGGGCAGAGCTTTCCCAACCTGGCGCCCTCTAGGTGA
++
+AAC-AFGGGGEGGFFAFGGGGFAFGFFGFFGF<FFGGGGGG9,,B,@FC,,;CC@++6@9,CE,,6,,,:<CCEF,,6CCD@F,,EFE<,+@@?,BEF,,9CFE,BCC,,B+8
+```
+</div>
+
+#### Contando seqs em arquivos .fastq
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Ou seja, o nosso resultado estava errado pois estávamos utilizando o _código genético_ (o _dicionário_) errado! Os nossos ribossomos e os ribossomos de nossas mitocôndrias utilizam códigos ligeiramente diferentes.
+Como vimo acima, arquivos _.fastq_ tem uma estrutura definida: uma linha de ***cabeçalho***, **sempre iniciada por _@_** seguida de uma linha de ***sequência***, seguida por uma linha de separador (+) e a última linha de ***indicadores de qualidade PHRED***. Cada _read_ do arquivo é representada por 4 linha sequenciais, contadas a partir do cabeçalho.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Este é um exemplo de que, quando um _script_/programa/código funciona, não significa que ele gerou um resultado correto, biológicamente pertininete. A expertise do bioinformata esta justamente em compreender o que o o computador executou, avaliar se o resultado faz sentido e, caso não, entender o que precisa ser modificado para o funcionamento adequado.
+O comando ***grep*** também pode ser utilizado para contar _reads_ num _.fastq_, mas, como o sinal @ pode ser também um indicador de qualidade, devemos ser mais específicos. Observe:
+
+> Conte o número de _reads_ no arquivo com o comando _grep_:
+
+```{bash, echo=TRUE,eval=FALSE}
+#conte os sinais @ presentes no arquivo
+grep -c "@" amostra_137_S135_L001_R1_001.fastq
+
+#conte os sinais @ presentes NO COMEÇO DAS LINHAS do arquivo
+grep -c "^@" amostra_137_S135_L001_R1_001.fastq
+
+#reveja a estrutura do arquivo. Qual é o próximo caracter após o @ nos cabeçalhos?
+head amostra_137_S135_L001_R1_001.fastq
+
+#conte os sinais @ presentes NO COMEÇO DAS LINHAS do arquivo, seguidos do próximo caracter comum no cabeçalho
+grep -c "^@M" amostra_137_S135_L001_R1_001.fastq
+
+# conte todas as linhas no arquivo .fastq
+wc -l amostra_137_S135_L001_R1_001.fastq
+
+expr 1 + 1
+
+expr 2 * 2
+
+
+# use o comando expr pra calcular o valor obtido dividido por quatro (use espaços entre os termos)
+## entenda o que será o primeiro termo
+cat fastq/amostra_131_S158_L001_R1_001.fastq | wc -l
+
+## substitua o primeiro termo da equação utilizando `` para delimitá-lo
+expr `cat fastq/amostra_131_S158_L001_R1_001.fastq | wc -l` / 4
+
+```
+
+## Controle de qualidade
+
+Em breve!
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Exercícios
 
