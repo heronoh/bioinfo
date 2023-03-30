@@ -379,7 +379,7 @@ expr `cat fastq/amostra_131_S158_L001_R1_001.fastq | wc -l` / 4
 &nbsp;&nbsp;&nbsp;&nbsp;
 Uma máxima da bioinformática e das ciências de dados em geral é ***trash in, trash out***, que se traduz em *onde entra lixo, sai lixo*, ou seja, análises com _inputs_ ruins geram _outputs_ ruins. Assim, é extremamente importante _separar o joio do trigo_. A primeira etapa de uma análise - e talvez a mais importante - é a curadoria da informação que se vai utilizar; sua qualidade irá influenciar todo o resto.
 
-[!_trash in, trash out_](/home/heron/prjcts/bioinfo/misc/trashINtrashOUT.jpg)]
+![_trash in, trash out_](/home/heron/prjcts/bioinfo/misc/trashINtrashOUT.jpg)
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 Uma vez que os arquivos _.fastq_ apresentam indicadores de qualidade para todas as bases de todas as _reads_, é possível selecionar apenas as _reads_ (ou suas partes) que apresentem qualidade satisfatória para utilização nas análises subsequentes, minimizando a propagação de erros através do _pipeline_, que podem resultar em ruído ou mesmo em padrões biológicos inexistentes. Mas, como fazer essa avaliação para tantas sequências e arquivos de uma só vez?
@@ -406,7 +406,7 @@ cd ~/$TURMA/$ALUNO/
 # crie uma subpasta 
 mkdir qualidade
 
-# veja as instuções de uso do programa
+# veja as instuções de uso do programa (saia com "q")
 fastqc  --help | less
 
 # rode o programa, apontando o caminho completo para os arquivos de entrada (input) e para a pasta de saída (output)
@@ -483,30 +483,90 @@ O programa [*MultiQC*](https://multiqc.info/) foi desenvolvido em 2016, e é esc
 [*Python*](https://pt.wikipedia.org/wiki/Python). Ele foi desenvolvido para facilitar a avaliação de múltiplos arquivos _.fastq_ por vez, dado que, com o avanço e barateamento das plataformas NGS, múltiplas amostras e bibliotecas passaram a ser sequenciadas simultâneamente. Este programa utiliza os diversos relatórios gerados pelo *FastQC* e os combina em um único sumário gráfico, também em [*HTML*](https://pt.wikipedia.org/wiki/HTML), com uma apresentação mais moderna e interativa.
 
 
-> Conte o número de _reads_ no arquivo com o comando _grep_:
+&nbsp;&nbsp;&nbsp;&nbsp;
+Vamos criar utilizá-lo para criar um único _report_, desta vez para os _reports_ do *FastQC* para todos arquivos de _reads_.
+
+> Utilizando o *FastQC*, gere _reports_ para todos arquivos _.fastq_, em um único comando:
 
 ```{bash, echo=TRUE,eval=FALSE}
+# volte para a pasta onde estão os primeiros reports
+cd qualidade
 
+# rode o FastQC para todos arquivos simultaneamente
+fastqc $CAMINHO_COMPLETO/arquivos/fastq/*.fastq -o $CAMINHO_COMPLETO/qualidade
+
+# veja os outputs criados
+ls $CAMINHO_COMPLETO/qualidade
 
 ```
 
+> Utilizando o *MultiQC*, gere  um _report_ sumarizando todos arquivos criados pelo *FastQC*:
+
+```{bash, echo=TRUE,eval=FALSE}
+# volte para a pasta onde estão os primeiros reports
+cd qualidade
+
+# crie uma pasta para o multiqc
+mkdir multiqc
+
+# entre na pasta
+cd multiqc
+
+#confira o caminho onde está
+pwd
+
+# veja as instuções de uso do programa (saia com "q")
+multiqc  --help | less
+
+# rode o programa
+multiqc --interactive $CAMINHO_COMPLETO/quality/multiqc --outdir .
+
+# veja os outputs criados
+ls $CAMINHO_COMPLETO/qualidade/multiqc
+
+```
+
+### Transferindo arquivos
 
 
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, de maneira semelhante ao que já fizemos, vamos copiar esse _report_ gerado pelo *MultiQC* para o computador local, para podermos visualizá-lo.
 
 
+> Abra um novo terminal _linux_. Utilize o comando *scp* para copiar os arquivos do servidor para o computador local. Substitua as variáveis _$TURMA_ e _$ALUNO_ pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.
+
+```{bash, echo=TRUE,eval=FALSE}
+#crie uma pasta localmente para armazenar os arquivos
+cd qualidade
+
+mkdir multiqc
+
+cd multiqc
+
+pwd
+
+# utilize o comanod scp para copiar
+# estrutura do comando:
+#     scp               endereço:o_que                                         para_onde
+#     scp -P $PORTA $USUARIO@$IP:$CAMINHO_COMPLETO/$ARQUIVO_QUE_SE_QUER_COPIAR $PASTA_DE_DESTINO_NO_COMPUTADOR_LOCAL
+scp       -P 8722      $USER@$IP:/home/biomed/$TURMA/$ALUNO/arquivos/qualidade/multiqc/*html     .
+
+#lembre-se que . sigifica "aqui, na pasta onde estou"
+
+# liste os arquivos que você copiou
+ls -lh
+
+# abra o navegdor de arquivos do windows na pasta onde está
+explorer.exe .
+
+# clique 2x no arquivo para abrí-lo no navegador
+```
 
 
+&nbsp;&nbsp;&nbsp;&nbsp;
+Pronto! Agora podemos explorar esse _report_! 
 
-
-
-
-
-
-## Exercícios
-
-> Utilizando a  o argumento _--help_.
-
-> Visualize do.
+> Analise o conteúdo do _report_.
 
 
 ***

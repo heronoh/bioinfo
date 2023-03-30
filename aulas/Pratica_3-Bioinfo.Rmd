@@ -212,7 +212,7 @@ Para a _tradução de arquivos de sequências biológicas_, um serviço online m
 &nbsp;&nbsp;&nbsp;&nbsp;
 Veja que obtivemos um resultado semelhante, porém mais completo. Agora, temos 6 possibilidades de tradução, que correspondem a 3 fases de leitura (_ORFs_ - [_Open Reading Frames_](https://pt.wikipedia.org/wiki/Fase_de_leitura_aberta)) para cada uma das duas fitas, a _fita codificadora_ e a _fita complementar_. 
 
-[![_ORFs - Open Reading Frames_](/home/heron/prjcts/bioinfo/misc/ORFs.png)](https://en.wikipedia.org/wiki/Open_reading_frame)
+![_ORFs - Open Reading Frames_](/home/heron/prjcts/bioinfo/misc/ORFs.png)](https://en.wikipedia.org/wiki/Open_reading_frame)
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 Isso acontece porquê o local de início da tradução pelo ribossomo não é exato, mas sim definido pela própria composição da sequência, em funções de sinais como o primeiro _códon de iniciação_, que também corresponde à incorporação do amino ácido **metionina** (representado por _M_, ou _Met_). Ou seja, todas as protéinas tem sua síntese iniciada por uma **metionina** (em eucariotos e _archea_; e por fenil-metionina (_fMet_) em bactérias, mitocôndrias e plastídeos).
