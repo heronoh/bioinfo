@@ -69,7 +69,7 @@ Na prática passada você aprendeu a utilizar um _script_ bioinformático para r
 Como já vimos, os arquivos _.fasta_ são arquivos que armazenam sequências de DNA, RNA ou proteínas. Cada arquivo pode conter uma única sequência ou várias, sendo ocasionalmente referido como _multifasta_. É neste formato que são armazenados genomas de referência e genes. Este também é o arquivo utilizado para alinhamentos e buscas por similaridade, como o [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi).
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Já os arquivos _.fastq_ são arquivos que armazenam sequências burtas geradas por sequenciadores de nova geração (NGS), e apresentam, além da sequência das _reads_, identificadores de qualidade baseados na métrica de qualidade [***PHRED***](https://en.wikipedia.org/wiki/Phred_quality_score). Estes arquivos podem armazenar centenas de milhares de sequências, que precisam ser processadas para fornecer alguma informação biológica.
+Já os arquivos _.fastq_ são arquivos que armazenam sequências burtas geradas por sequenciadores de nova geração (NGS), e apresentam, além da sequência das _reads_, identificadores de qualidade baseados na métrica de qualidade [***PHRED***](https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/QualityScoreEncoding_swBS.htm). Estes arquivos podem armazenar centenas de milhares de sequências, que precisam ser processadas para fornecer alguma informação biológica.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 Como veremos a seguir, há funcionalidades específicas para cada um desses arquivos. No entanto, algumas avaliações mais simples podem ser realizadas com ambos, observando suas diferenças estruturais.
