@@ -159,7 +159,7 @@ Copie os arquivos que iremos utilizar para a sua pasta.
 Se estiver trabalhando localmente, ou seja, no seu computador, os arquivos que utilizaremos podem ser baixados [aqui](https://drive.google.com/drive/folders/1b8llP47A8yCLgrYEKG-xQgnhgaMUkjQ6?usp=sharing).
 
 
-> Utilizando ***caminhos completos***, copie os arquivos da pasta principal para a sua pasta, substituindo as variáveis _$ALUNO_ e _$TURMA_ pelos nomes correspondentes:
+> Utilizando ***caminhos completos***, copie os arquivos da pasta principal para a sua pasta, substituindo as variáveis $ALUNO e $TURMA pelos nomes correspondentes:
 
 >> DICA: utilize **tab** para autocompletar e evitar erros!
 
@@ -188,7 +188,7 @@ tree ~/$TURMA/$ALUNO/
 &nbsp;&nbsp;&nbsp;&nbsp;
 Como já sabemos, arquivos _.fasta_ e _.fastq_ são arquivos de texto. Assim, qualquer programa/função/_script_ desenvolvido para trabalhar com arquivos de texto podem ser utilizados nestes arquivos. Vejamos algumas.
 
-> Vamos vizualizar os arquivos fasta presentes na pasta _~/$TURMA/$ALUNO/arquivos/fasta/mito_. Entre nesta pasta e liste os arquivos:
+> Vamos vizualizar os arquivos fasta presentes na pasta *~/$TURMA/$ALUNO/arquivos/fasta/mito*. Entre nesta pasta e liste os arquivos:
 
 >> DICA: utilize **tab** para autocompletar e evitar erros!
 
@@ -260,7 +260,7 @@ cat human_COX1_protein.fasta
 &nbsp;&nbsp;&nbsp;&nbsp;
 Utilizando o mesmo raciocínio da sessão anterior, podemos investigar os arquivos _.fastq_.
 
-> Vamos vizualizar os arquivos fasta presentes na pasta _~/$TURMA/$ALUNO/arquivos/fastq_. Entre nesta pasta e liste os arquivos:
+> Vamos vizualizar os arquivos fasta presentes na pasta *~/$TURMA/$ALUNO/arquivos/fastq*. Entre nesta pasta e liste os arquivos:
 
 >> DICA: utilize **tab** para autocompletar e evitar erros!
 
@@ -443,7 +443,7 @@ ls $CAMINHO_COMPLETO/qualidade/*html
 
 
 
-> Abra um novo terminal _linux_. Utilize o comando *scp* para copiar os arquivos do servidor para o computador local. Substitua as variáveis _$TURMA_ e _$ALUNO_ pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.
+> Abra um novo terminal _linux_. Utilize o comando *scp* para copiar os arquivos do servidor para o computador local. Substitua as variáveis $TURMA e $ALUNO pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.
 
 ```{bash, echo=TRUE,eval=FALSE}
 #crie uma pasta localmente para armazenar os arquivos
@@ -533,7 +533,7 @@ ls $CAMINHO_COMPLETO/qualidade/multiqc
 Agora, de maneira semelhante ao que já fizemos, vamos copiar esse _report_ gerado pelo *MultiQC* para o computador local, para podermos visualizá-lo.
 
 
-> Abra um novo terminal _linux_. Utilize o comando *scp* para copiar os arquivos do servidor para o computador local. Substitua as variáveis _$TURMA_ e _$ALUNO_ pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.
+> Abra um novo terminal _linux_. Utilize o comando *scp* para copiar os arquivos do servidor para o computador local. Substitua as variáveis $TURMA e $ALUNO pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.
 
 ```{bash, echo=TRUE,eval=FALSE}
 #crie uma pasta localmente para armazenar os arquivos
