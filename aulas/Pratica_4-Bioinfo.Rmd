@@ -337,7 +337,7 @@ AAC-AFGGGGEGGFFAFGGGGFAFGFFGFFGF<FFGGGGGG9,,B,@FC,,;CC@++6@9,CE,,6,,,:<CCEF,,6CC
 #### Contando seqs em arquivos .fastq
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Como vimo acima, arquivos _.fastq_ tem uma estrutura definida: uma linha de ***cabeçalho***, **sempre iniciada por _@_** seguida de uma linha de ***sequência***, seguida por uma linha de separador (+) e a última linha de ***indicadores de qualidade PHRED***. Cada _read_ do arquivo é representada por 4 linha sequenciais, contadas a partir do cabeçalho.
+Como vimos acima, arquivos _.fastq_ tem uma estrutura definida: uma linha de ***cabeçalho***, **sempre iniciada por _@_** seguida de uma linha de ***sequência***, seguida por uma linha de separador (+) e a última linha de ***indicadores de qualidade PHRED***. Cada _read_ do arquivo é representada por 4 linha sequenciais, contadas a partir do cabeçalho.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 O comando ***grep*** também pode ser utilizado para contar _reads_ num _.fastq_, mas, como o sinal @ pode ser também um indicador de qualidade, devemos ser mais específicos. Observe:
@@ -376,8 +376,119 @@ expr `cat fastq/amostra_131_S158_L001_R1_001.fastq | wc -l` / 4
 
 ## Controle de qualidade
 
-Em breve!
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma máxima da bioinformática e das ciências de dados em geral é ***trash in, trash out***, que se traduz em *onde entra lixo, sai lixo*, ou seja, análises com _inputs_ ruins geram _outputs_ ruins. Assim, é extremamente importante _separar o joio do trigo_. A primeira etapa de uma análise - e talvez a mais importante - é a curadoria da informação que se vai utilizar; sua qualidade irá influenciar todo o resto.
 
+[!_trash in, trash out_](/home/heron/prjcts/bioinfo/misc/trashINtrashOUT.jpg)]
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma vez que os arquivos _.fastq_ apresentam indicadores de qualidade para todas as bases de todas as _reads_, é possível selecionar apenas as _reads_ (ou suas partes) que apresentem qualidade satisfatória para utilização nas análises subsequentes, minimizando a propagação de erros através do _pipeline_, que podem resultar em ruído ou mesmo em padrões biológicos inexistentes. Mas, como fazer essa avaliação para tantas sequências e arquivos de uma só vez?
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Os programas *FastQC* & *MultiQC* possibilitam uma inspeção qualitativa e quantitativa de conjuntos de dados provenientes de sequenciadores de nova geração. Estes programas _leem_ todos indicadores de qualidade de todas as _reads_ e os convertem em diversos sumários gráficos que facilitam a avaliação de um ou múltiplos arquivos _.fastq_.
+
+### FastQC
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O programa [*FastQC*](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) foi desenvolvido em 2010, e é escrito na _linguagem de programação_
+[*Java*](https://pt.wikipedia.org/wiki/Java_(linguagem_de_programa%C3%A7%C3%A3o)). Ele gera _reports_ em [*HTML*](https://pt.wikipedia.org/wiki/HTML) para cada arquivo _.fastq_ por vez, o que reflete o _estado da arte_ das aplicações NGS de sua época, onde geralmente uma ou poucas amostras eram sequenciadas por corrida.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Sua utilização é extremamente simples, como veremos a seguir.
+
+> Crie uma pasta _qualidade_ para armazenarmos os resultados do *FastQC*. Em seguida, rode o programa para ambas as _reads_ de um par de arquivos da sua escolha:
+
+```{bash, echo=TRUE,eval=FALSE}
+# entre na pasta correspondente a esta aula
+cd ~/$TURMA/$ALUNO/
+
+# crie uma subpasta 
+mkdir qualidade
+
+# veja as instuções de uso do programa
+fastqc  --help | less
+
+# rode o programa, apontando o caminho completo para os arquivos de entrada (input) e para a pasta de saída (output)
+fastqc $CAMINHO_COMPLETO/$ARQUIVO_FASTQ_R1 -o $CAMINHO_COMPLETO/qualidade
+
+# repita a análise para o arquivo R2 correspondente
+fastqc $CAMINHO_COMPLETO/$ARQUIVO_FASTQ_R2 -o $CAMINHO_COMPLETO/qualidade
+
+# veja os outputs criados
+ls $CAMINHO_COMPLETO/qualidade
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Observe que foram gerados 2 arquivos para cada arquivo _.fastq_. Um deles, o _.zip_, contém as informações geradas na análise, que são sumarizdas no outro arquivo, o _.html_.
+
+#### Transferindo arquivos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Para a visualização desse _report_ em _.html_ é necessário um navegador de internet, que não existe na linha de comando, pois requer uma interface gráfica. Assim, estes arquivos precisam ser copiados para o computador local, via linha de comando, para depois serem abertos num navegador de internet. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Essa transferência de arquivos é feita de maneira semelhante à conexão por SSH do computador local com o servidor, e utiliza o comando ***scp***.
+Vamos fazer isso.
+
+> Identifique o caminho completo, *no servidor*, para os arquivos que se deseja copiar
+
+```{bash, echo=TRUE,eval=FALSE}
+
+# liste os arquivos html usando o caminho completo
+ls $CAMINHO_COMPLETO/qualidade/*html
+
+```
+
+
+
+> Abra um novo terminal _linux_. Utilize o comando *scp* para copiar os arquivos do servidor para o computador local. Substitua as variáveis _$TURMA_ e _$ALUNO_ pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.
+
+```{bash, echo=TRUE,eval=FALSE}
+#crie uma pasta localmente para armazenar os arquivos
+cd
+
+mkdir qualidade
+
+cd qualidade
+
+# utilize o comanod scp para copiar
+# estrutura do comando:
+#     scp               endereço:o_que                                         para_onde
+#     scp -P $PORTA $USUARIO@$IP:$CAMINHO_COMPLETO/$ARQUIVO_QUE_SE_QUER_COPIAR $PASTA_DE_DESTINO_NO_COMPUTADOR_LOCAL
+scp       -P 8722      $USER@$IP:/home/biomed/$TURMA/$ALUNO/arquivos/qualidade/*html     .
+
+#lembre-se que . sigifica "aqui, na pasta onde estou"
+
+# liste os arquivos que você copiou
+ls -lh
+
+# abra o navegdor de arquivos do windows na pasta onde está
+explorer.exe .
+
+# clique 2x no arquivo para abrí-lo no navegador
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Pronto! Agora podemos explorar esse _report_! 
+
+> Analise o conteúdo do _report_.
+
+
+### MultiQC
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O programa [*MultiQC*](https://multiqc.info/) foi desenvolvido em 2016, e é escrito na _linguagem de programação_
+[*Python*](https://pt.wikipedia.org/wiki/Python). Ele foi desenvolvido para facilitar a avaliação de múltiplos arquivos _.fastq_ por vez, dado que, com o avanço e barateamento das plataformas NGS, múltiplas amostras e bibliotecas passaram a ser sequenciadas simultâneamente. Este programa utiliza os diversos relatórios gerados pelo *FastQC* e os combina em um único sumário gráfico, também em [*HTML*](https://pt.wikipedia.org/wiki/HTML), com uma apresentação mais moderna e interativa.
+
+
+> Conte o número de _reads_ no arquivo com o comando _grep_:
+
+```{bash, echo=TRUE,eval=FALSE}
+
+
+```
 
 
 
@@ -393,9 +504,9 @@ Em breve!
 
 ## Exercícios
 
-> Utilizando a ferramenta _transeq_, refaça a tradução da sequência do arquivo mtCOI.fasta. Lembre-se de explorar as possibilidades de configuração com o argumento _--help_.
+> Utilizando a  o argumento _--help_.
 
-> Visualize o arquivo gerado e confira se o resultado esperado foi obtido.
+> Visualize do.
 
 
 ***
