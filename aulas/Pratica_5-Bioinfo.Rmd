@@ -100,7 +100,7 @@ ssh $USER@$IP
 ### Entrando na sua pasta de análises
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Uma vez na **edna**, navegue até o diretório que criamos na prática passada e que tem o seu nome (**\$ALUNO**) e sua turma (**\$TURMA**). Iremos trabalhar com as sequências que estão na pasta **~/$TURMA/$ALUNO/arquivos/fasta/seqs**.
+Uma vez na **edna**, navegue até o diretório que criamos na prática passada e que tem o seu nome (**\$ALUNO**) e sua turma (**\$TURMA**). Iremos trabalhar com as sequências que estão na pasta **~/\$TURMA/\$ALUNO/arquivos/fasta/seqs**.
 
 > Navegue até a sua pasta de análises
 
