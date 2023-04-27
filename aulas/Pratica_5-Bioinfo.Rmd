@@ -184,7 +184,7 @@ Como você pode ver, existem diversas configurações e formatos de saída poss�
 
 ```{bash, echo=TRUE,eval=FALSE}
 #      #seq a ser buscada                              #banco de dados           #formato de saida 
-blastn -query ~/$TURMA/$ALUNO/arquivos/seqs/seqs.fasta -db /data/databases/nt/nt -outfmt 6 -num_alignments 3
+blastn -query ~/$TURMA/$ALUNO/arquivos/fasta/seqs/seqs.fasta -db /data/databases/nt/nt -outfmt 6 -num_alignments 3
 ```
 
 Observe a tabela gerada. Ela contém 12 colunas. Estas são:
