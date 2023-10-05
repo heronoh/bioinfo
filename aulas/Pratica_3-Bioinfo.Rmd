@@ -104,16 +104,16 @@ transeq --help
 #### Traduzindo um arquivo _.fasta_
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Antes de começar, vamos organizar uma apsta para trabalhar com os arquivos desta prática.
+Antes de começar, vamos organizar uma pasta para trabalhar com os arquivos desta prática.
 
-> Na sua ***home***, crie uma pasta _aula2_ para os arquivos da prática de hoje. Entre nesta pasta.
+> Na sua ***home***, crie uma pasta _aula3_ para os arquivos da prática de hoje. Entre nesta pasta.
 
 ```{bash, echo=TRUE,eval=FALSE}
 cd
 
-mkdir aula2
+mkdir aula3
 
-cd aula2
+cd aula3
 
 ```
 
