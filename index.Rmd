@@ -1,7 +1,7 @@
 ---
 title: "Ensino em Bioinformática"
 author: "Heron O.H."
-date: "2023/01"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   rmdformats::downcute:
     self_contained: true

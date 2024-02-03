@@ -2,7 +2,7 @@
 title: "Práticas em Bioinfo V"
 author: "Prof. Heron OH"
 place: "Biomedicina - PUC Minas"
-date: 2023/01
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   rmdformats::downcute:
     code_folding: show
