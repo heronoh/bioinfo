@@ -1,0 +1,472 @@
+---
+title: "Práticas em Bioinfo II"
+author: "Prof. Heron OH"
+place: "Biomedicina - PUC Minas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  rmdformats::downcute:
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
+    toc_float: yes
+    highlight: zenburn
+    code_download: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo=FALSE, results='asis'}
+#configurar pros resultados do bash sairem coloridos e não ANSI
+
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
+
+## Comandos básicos II
+
+### _Inputs_ & _outputs_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+As operações que o computador executa - seja através de programas, _scripts_, aplicativos ou comandos - funcionam a partir do que chamamos de ***input*** (ou _entrada_). ***Inputs*** podem ser tanto arquivos, quanto parâmetros e argumentos necessários para a execução de uma operação lógica. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+De maneira semelhante, tudo o que é gerado por um comando (ou programa, _script_, aplicativo, ...) é denominado ***output***.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Na _linha de comando_ é possível encadear diversos comandos sequencialmente, de maneira que o ***input*** do primeiro comando seja o ***output*** do próximo. Isto é conseguido pelo uso do ***pipe***, identificado por uma barra vertical (**|**). Assim, um conjunto de comandos encadeados por ***pipes*** pode ser denominado ***pipe line***, termo que pode ser expandido para representar qualquer conjunto de análise sequenciais para a transformação de um ***input*** em algum ***output***. Mas, antes de trabalharmos com ***pipes***, vamos primeiramente escrever alguns arquivos.  
+
+***
+
+### Tipos de arquivos 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Um arquivo é uma entidade que pode armazenar qualquer coisa, e pode ser codificado de duas maneiras:
+
+* **Arquivos binários:** um arquivo binário contém código legível por máquina que pode ser executado diretamente pelo processador de um computador. Ele armazena dados em [formato binário](https://pt.wikipedia.org/wiki/Arquivo_bin%C3%A1rio), o que significa que usa uma série de 0's e 1's para representar informações. Estes formatos são normalmente usados para _programas executáveis_, _bibliotecas_ e outros arquivos que contêm _código compilado_, ou seja, um conjunto de instruções que já foi transformado da _linguagem de programação_ original para um _código de máquina_, pronto para ser interpretado pelo processador. *Arquivos binários* não podem ser facilmente lidos ou editados por humanos e geralmente requerem ferramentas ou programas especiais para trabalhar com eles.
+
+* **Arquivo de texto:** um arquivo de texto armazena dados como uma sequência de caracteres que podem ser lidos e editados por humanos. Os [arquivos de texto](https://pt.wikipedia.org/wiki/Arquivo_de_texto) geralmente são codificados usando conjuntos de caracteres *ASCII* ou *Unicode* e podem ser criados e editados usando uma ampla variedade de editores de texto. Os formatos de arquivo de texto são comumente usados para armazenar arquivos de configuração, arquivos de dados e outros tipos de conteúdo legível por humanos.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Em resumo, os formatos de _arquivo binário_ são otimizados para processamento por máquina, enquanto os formatos de _arquivo de texto_ são otimizados para legibilidade e edição por humanos. Ambos formatos podem ser convertidos um no outro.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Há diferentes maneiras de se organizar as informações contidas em cada tipo de arquivo.  A esses tipos de organização damos o nome de ***formato***. O formato de cada arquivo é evidenciado pela sua extensão, que é uma abreviação incluída ao final do nome de cada arquivo. Por exemplo, arquivos de texto do _Microsoft Word_ são identificados pelo sufixo _.docx_. Mas, além da identificação pelo nome, a estrutura interna é o que realmente determina o formato, sendo o sufixo apenas um facilitador. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Alguns exemplos de formatos de arquivo de texto incluem:
+
+* **Arquivos de texto simples:** Esses arquivos contêm apenas texto sem formatação, como arquivos _.txt_. Eles são fáceis de criar e editar, mas não oferecem suporte a recursos avançados de formatação de texto, como negrito, itálico, cores etc.
+
+* **Arquivos de texto delimitados:** Esses arquivos contêm dados tabulares, onde cada coluna de dados é separada por um caractere de delimitação, como uma vírgula ou um ponto-e-vírgula. Exemplos de formatos de arquivo de texto delimitados incluem [_.csv_](https://pt.wikipedia.org/wiki/Comma-separated_values), _.tsv_ e _.txt_. Eles são amplamente utilizados para armazenar dados em planilhas e bancos de dados.
+
+* **Arquivos de texto com marcação:** Esses arquivos incluem texto com marcação, como arquivos [_.html_](https://pt.wikipedia.org/wiki/HTML), [_.xml_](https://pt.wikipedia.org/wiki/XML) ou _.markdown_. A marcação é usada para adicionar informações sobre a estrutura do documento, como títulos, parágrafos, listas e links. Os arquivos de texto com marcação são usados principalmente na web para exibir conteúdo em navegadores.
+
+* **Arquivos de texto estruturados:** Esses arquivos contêm dados organizados em uma estrutura específica, como arquivos [_.json_](https://pt.wikipedia.org/wiki/JSON), _.yaml_ ou _.ini_. Eles são usados principalmente para armazenar configurações, opções e outros dados que precisam ser organizados hierarquicamente.
+
+***
+
+### Escrevendo arquivos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Na prática passada ulitizamos alguns comandos para criar e modificar arquivos. Agora, iremos aprender outros comandos para escrever e editar arquivos.
+
+#### Via linha de comando
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O resultado (***output***) de qualquer comando pode ser escrito diretamente em um arquivo. Isto pode ser feito utilizando os sinais ***>*** & ***>>***. Estes sinais representam a ação de adicionar conteúdo a um arquivo. Enquanto o segundo, ***>>***, adiciona conteúdo ao final de um arquivo, o primeiro, ***>***, reescreve totalmente seu conteúdo, apagando qualquer informação existente. Vamos fazer algumas experimentações.
+
+> Com o comando ***echo***, crie algum conteúdo e salve ele num arquivo, utilizando o operadore de escrita em arquivos ***>>***. Em seguida, visualize o conteúdo do arquivo com o comando ***cat***.
+
+```{bash, echo=TRUE,eval=FALSE}
+echo "linha 1" >> arquivo.txt
+echo "linha 2" >> arquivo.txt
+echo "linha 3" >> arquivo.txt
+echo "linha 4" >> arquivo.txt
+echo "linha 5" >> arquivo.txt
+
+cat arquivo.txt
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Observe que todas as linhas foram armazenadas no arquivo. Vamos ver o que acontece com o outro operador.
+
+> Com o comando ***echo***, crie algum conteúdo e salve ele num arquivo, utilizando o operadore de escrita em arquivos ***>***. Em seguida, visualize o conteúdo do arquivo com o comando ***cat***.
+
+```{bash, echo=TRUE,eval=FALSE}
+echo "linha 1" > arquivo2.txt
+
+cat arquivo2.txt
+
+echo "linha 2" > arquivo2.txt
+echo "linha 3" > arquivo2.txt
+echo "linha 4" > arquivo2.txt
+echo "linha 5" > arquivo2.txt
+
+cat arquivo2.txt
+```
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Observe que apenas a última linha está armazenada no arquivo. Todas as demais foram armazenadas, porém foram sobreescritas a cada novo comando.
+
+> Agora, remova os arquivos que você gerou, para mantermos a organização de nossas pastas.
+
+```{bash, echo=TRUE,eval=FALSE}
+rm arquivo.txt
+rm arquivo2.txt
+
+```
+
+***
+
+#### Com editor de texto (vi)
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Editores de texto são programas que permitem você abrir arquivos de texto e editar seu conteúdo. Há diversas opções disponíveis, com várias funcionalidades diferentes. Nos sistemas operacionais ***Linux***, o editor de texto padrão é o [Vi](https://pt.wikipedia.org/wiki/Vi), também disponível como ***Vim*** (uma abreviação de _Vi IMproved_). 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como não existe _mouse_ na linha de comando, a interação com o editor de texto é toda feita utilizando _atalhos de teclado_. Atalhos são combinações de teclas que geram ações. Cada programa ou _ambiente_ tem seus próprios atalhos. Na dúvida sobre as opções, utilize ferramentas de busca como o [_Google_](https://www.google.com/) para fazer buscas, utilizando palavras-chave como, neste caso. Estas buscas podem ser feitas em qualquer idioma, mas é mais fácil de conseguir uma variedade maior de resultados quando a busca é feita em _inglês_, visto que esta é a língua atualmente adotada como _universal_, tanto pela ciência quanto pela informática.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Por exemplo, neste caso, façamos a busca com as seguintes _palvras-chave_:
+
+> vi linux atalhos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Explore os resultados e veja que há muitas opções de atalhos. 
+
+#### Atalhos do _vi_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Mas não se assuste, aqui vai uma relação dos principais atalhos que você vai precisar. 
+
+```{r atalhos_vi, echo=FALSE}
+
+# library(tidyverse)
+
+
+atalhos_vi <-  c(
+                "i" = "ativar o ***modo de inserção***",
+                "esc" = "sair do ***modo de inserção***",
+                ":" = "sinalizar uma ação",
+                ":w" = "salvar o arquivo",
+                ":wq" = "salvar o arquivo e sair do programa",
+                ":q!" = "sair do programa SEM salvar o arquivo",
+                "**Del**" = "deletar conteúdo à frente do cursor",
+                "**Backspace**" = "deletar conteúdo para trás do cursor",
+                "botão direito do mouse" = "copiar texto selecionado",
+                "botão direito do mouse" = "colar texto copiado",
+                "dd" = "deletar a linha onde está o cursor",
+                "yy" = "copiar a linha onde está o cursor",
+                "p" = "colar a linha onde está o cursor",
+                "/xxx" = "buscar o padrão *xxx* no conteúdo do arquivo"
+                
+                ) 
+    
+atl_vi_tbl <- dplyr::tibble("Comando" = names(atalhos_vi),
+                            "Ação" = atalhos_vi)
+
+knitr::kable(atl_vi_tbl,
+             format = "pandoc")
+
+```
+Estes comandos só funcionam estando *fora* do **modo de inserção**, que é o modo onde qualquer tecla é escrita como texto no arquivo. Para saber se você está no **modo de inserção**, basta observar o canto inferior esquerdo da tela do editor. Se você estiver no **modo de inserção**, verá lá escrito:
+
+> \-- INSERT \-- 
+
+***
+
+<br><br>
+
+### Escrevendo _scripts_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Os ***scripts*** estão para a _bioinformática_ assim como as _receitas_ estão para a _culinária_. Os _ingredientes_ são o ***inputs***, e todos os comandos, programas, funções e possibilidades, que podem ser combinados de diversas maneiras e em ordem variada, para se obter o prato final, o ***output***.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma vez que você tem em mente uma sequência de procedimentos que queira realizar e repetir, você pode organizá-los num _arquivo_ que será lido pelo computador como uma _receita_. Isto te poupará o tempo de ter que ficar repetindo comandos, além de previnir os _erros_ que sempre ocorrem em qualquer repetição _não programática_, quando se faz algo manualmente. Outra vantagem é que os ***scripts*** possibilitam automatização e paralelização, ou seja, o computador pode fazer por você uma mesma tarefa, várias vezes ao mesmo tempo, para um conjunto de ***inputs*** semelhantes.
+
+<br><br>
+
+#### Preparativos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Iremos escrever um  ***script*** em ***bash***, ou seja, na mesma _linguagem_ que estamos exercitanto. Qualquer um dos comando que você já executou pode ser colocado como uma instrução no ***script***. 
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Antes de começarmos, primeiro precisamos definir o que ele vai fazer. Vamos começar com algo simples, um ***scrpt*** que mostre a data do dia e uma mensagem.
+
+> Execute o comando ***date*** para obter a data do dia. Experimente suas variações, e investige seus argumentos.
+
+```{bash, echo=TRUE,eval=FALSE}
+date
+
+date +%F
+
+date +%D
+
+date --help
+
+```
+
+O comando para exibir mensagens você já conhece, é o comando ***echo***.
+
+> Execute o comando ***echo*** para gerar uma mensagem.
+
+```{bash, echo=TRUE,eval=FALSE}
+echo "Olá, mundo!"
+
+```
+
+Históricamente, o primeiro ***script*** que um informata aprende a fazer é o [_Hello Wolrd!_](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program), que é um ***programa*** que exibe esta mensagem. Mas vamos um pouco além.
+
+<br><br>
+
+***
+
+#### Seu 1&deg; _script_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Vamos criar um ***script*** com os comandos que executamos na seção anterior.
+
+> Abra o editor de texto para editar um arquivo com nome _script1.sh_.
+
+```{bash, echo=TRUE,eval=FALSE}
+vi script1.sh
+
+```
+
+> Dentro do texto, entre no _modo de inserção_ (***i***) e digite o seguinte conteúdo:
+
+```{bash, echo=TRUE,eval=FALSE}
+#!/bin/bash
+
+# este script gera uma saudação para o usuário
+echo -e "\n\tBom dia, $USER!!!!\n"
+
+echo "Hoje é dia `date +%D`, um lindo dia para se aprender bioinfo!"
+
+echo -e "\n\n"
+
+```
+
+>> Após incluir o conteúdo, saia do _modo de inserção_ (***Esc***) e saia do editor, salvando o arquivo (***:wq***).
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você deve ter percebido algumas coisas diferentes no conteúdo do ***script***. A primeira linha é iniciada por ***#!*** denominado _shebang_ ou _hashbang_). Esta linha especial explicita em qual linguagem está escrito o ***script***, e também indica o caminho para o _interpretador_ do código no ***script***. No nosso caso, é um ***script*** em ***bash***, cujo interpretador está localizado em _/bin/bash_. Este conteúdo sempre deve estar presente na primeira linha de qualquer ***script***.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Qualquer outra linha iniciada por ***#*** (exceto a $1^{a}$) identifica um _comentário_. Essas linhas não são executadas pelo ***script***, são ignoradas pelo _interpretador_. Você pode colocar qualquer conteúdo em linhas comentadas, seja para explicar partes do ***script***, seja para assinar autoria, adicionar informações de contato, etc.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, o seu ***script*** já está quase pronto para ser executado. Falta apenas um detalhe, ele precisa ser convertido em um ***arquivo executável***.
+
+#### Habilitando execução
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Por padrão, nem todos os arquivos de texto são _executáveis_. Essa característica pode ser observada com o comando ***ls***, utilizando um argumento que você já conhece, o ***-l***.
+
+```{bash, echo=TRUE,eval=FALSE}
+ls -l
+
+# drwxr-x--- 5 heron heron 4096 Feb 15 20:35 ./
+# drwxr-xr-x 4 heron heron 4096 Feb 15 14:46 ../
+# -rwxr-xr-- 1 heron heron  185 Feb 15 20:35 script1.sh*
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Observe o conjunto de letras que aparece no começo de cada linha, estes são os ***atributos*** dos arquivos. Quando todas presentes, elas teriam a seguinte composição:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+***d rwx rwx rwx***
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Cada um desses campos tem um singificado:
+
+* **d:** explicita que o arquivo é um diretório
+
+* **rwx:** explicita as permissões do arquivo, sendo:
+    + **r:** permissão de leitura (_**r**ead_).
+    + **w:** permissão de escrita (_**w**rite_).
+    + **x:** permissão de execução (_e**x**ecute_)
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Observe que, após o **d**, temos três conjuntos de **rwx** repetidos. Esses conjuntos se referem às permissões para, respectivamente:
+
+* **1&deg; grupo:** Permissões do _proprietário_, do usuário que criou e possui o arquivo.  
+
+* **2&deg; grupo:** Permissões do _grupo_.
+
+* **3&deg; grupo:** Permissões dos demais usuários.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Todas essas permissões podem ser modificadas, para _bloquear_ ou _liberar_ acesso de qualquer usuário a qualquer arquivo. Apenas o proprietário ou o ***super usuário***, o usuário _root_, podem modificar as permissões de um arquivo, ou transferir sua propriedade.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Vamos alterar as permissões do nosso ***script***, habilitando sua execução por outros usuários. Isso é feito com o comando ***chmod***.
+
+> Altere as permissões de execução do ***script1.sh*** com o comando ***chmod***.
+
+
+```{bash, echo=TRUE,eval=FALSE}
+ls -l
+
+chmod +x script1.sh
+
+ls -l
+
+```
+
+>> Observe a diferença nos atributos do arquivo, antes e depois da modificação.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Veja que agora o nome do arquivo, quando listado, fica <mark style="background-color: #1bbd06">*verde*</mark> (no esquema de cores _default_). Isto significa que ele agora é um _executável_!
+
+***
+
+#### Executando o _script_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, para executar o ***script***, podemos fazer de duas maneiras:
+
+> Execute o ***script*** chamando o seu interpretador, o _bash_:
+
+```{bash, echo=TRUE,eval=FALSE}
+bash script1.sh
+
+```
+
+> Execute o ***script*** sem chamar o seu interpretador:
+
+```{bash, echo=TRUE,eval=FALSE}
+#executar a partir de qualquer lugar: caminho completo
+/home/$USER/script1.sh
+#ou
+~/script1.sh
+
+#executar estando na mesma pasta que o script: caminho relativo
+./script1.sh
+
+```
+
+>> Observe que, com ambas maneiras, chegamos a um mesmo resultado.
+
+***
+
+#### Nomeando o ***script***
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O nosso ***1&deg; script*** tem o sufixo *.sh*. Mas este sufixo é apenas para facilitar a nossa organização.
+Uma vez que o interpretador está definido dentro do próprio arquivo, este pode ter _qualquer_ nome (desde que seja formado por uma única palavra, sem espaçoes, e não tenha caracteres especiais além de ***-*** ou ***_***). Vamos testar:
+
+> Renomeie e execute o ***script***.:
+
+```{bash, echo=TRUE,eval=FALSE}
+#renomear o script
+mv script1.sh olar
+
+#confira seus atributos
+ls -l
+
+#execute o script com o novo nome
+./olar
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Por hoje é só! Você agora já tem os conhecimentos que precisa para escrever outros ***scripts***, utilizando os comandos que já sabe e que vai aprender!
+
+***
+
+## Exercícios
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Utilizando os comandos que você aprendeu, execute as instruções a seguir. Sempre que pssível, utilize a tecla $TAB$ para completar os nomes de arquivos, caminhos e programas existentes.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma sequência de DNA sempre é representada no sentido ***5' -> 3'***. Quando queremos representar a sequência da fita complementar, ela deve ser exibida no _seu_ sentido ***5' -> 3'***, no sentido inverso da fita principal. Além disso, cada _letra_ que simboliza um base principal deve ser trocada pela correspondente na fita complementar, por exemplo _A -> T_ ou _C -> G_.
+Quando vamos representar o RNA complementar, correspondente à fita principal de DNA, a base _T_ (_timina_) deve ser substituída pela base _U_ (_uracila_).
+
+Observe o seguinte conjunto de comandos:
+
+```{bash, echo=TRUE,eval=FALSE}
+echo "AAATTTGGGCCCCCCCCCC"
+
+echo "AAATTTGGGCCCCCCCCCC" | rev
+
+echo "AAATTTGGGCCCCCCCCCC" | tr 'ACGT' 'TGCu'
+
+```
+>> Com base no ***output*** de cada linha, você consegue compreender o que fazem?
+
+
+### Desafio
+
+> Escreva um programa chamado ***dna2rna*** que vai receber uma sequência de DNA e vai gerar seu complemento reverso em RNA.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+**DICA:** dentro do ***script***, o comando **echo "_sequência_"** deve ser substituído por **echo _$1_**, sem aspas. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+->**$1** é uma variável que corresponde ao primeiro argumento que um ***script*** recebe. Assim, qualquer sequência que você passar para na linha de comando será encaminhada para _dentro_ do ***script***. Por exemplo:
+
+```{bash, echo=TRUE,eval=FALSE}
+#executando o script com uma sequência como 1º argumento
+dna2rna "AAAAATTGC"
+
+# o script dna2rna receberá "AAAAATTGC" como seu argumento $1
+
+#resultado esperado
+GCAAuuuuu
+```
+
+***
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+
+
+
+

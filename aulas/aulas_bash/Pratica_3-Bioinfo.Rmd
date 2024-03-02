@@ -1,0 +1,249 @@
+---
+title: "Práticas em Bioinfo III"
+author: "Prof. Heron OH"
+place: "Biomedicina - PUC Minas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  rmdformats::downcute:
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
+    toc_float: yes
+    highlight: espresso
+    code_download: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo=FALSE, results='asis'}
+#configurar pros resultados do bash sairem coloridos e não ANSI
+
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
+
+## _Scripts_ bioinformáticos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Na prática passada você aprendeu a construir um _script_ que desempenhava uma função simples, de saudação, utilizando funções/programas (outros _scripts_) existentes na linguagem _bash_. Da mesma maneira, é possível utilizar estes funções/programas para resolver os problemas de bioinformática que vimos nos exercícios, como a transformação de sequências de DNA em seu complemento reverso, em RNA, ou até mesmo em proteínas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+As ferramentas de _linha de comando_ são especialmente eficientes para o processamento de informações de texto e tabelas. Assim, uma vez que a informação genética pode ser bem representada nesses tipos de arquivo, é possível aproveitar todo o poder dessas ferramentas, num contexto biológico.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Mas não é necessário que cada bioinformata faça seus próprios programas. À medida que o universo da bioinfo se desenvolve, as ferramentas mais eficientes e práticas acabam se estabelecendo e se difundindo, de maneira semelhante ao que ocorre no mundo da ciência. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Esta é a grande vantagem da (bio)informática. Por ser baseada (principalmente) em ferramentas de _código aberto_, qualquer pessoa pode fazer melhorias, reformulações, ou construir novas funções a partir das ferramentas existentes. E não é preciso ***reinventar a roda!*** Problemas clássicos, ou recorrentes, tendem a já possuir soluções disponíveis a alguns cliques de distância.
+
+### Tradução: o ribossomo digital
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Figura central no funcionamento celular e no fluxo da informação biológica, o **ribossomo** é uma máquina perfeita, modelada pela seleção natural. Como um computador na célula, ele é capaz de decodificar a traduzir a informação contida no _RNA mensagiro_ (mRNA) em uma sequência correspondente de _amino ácidos_, produzindo as _proteínas_ que desempenham as mais diversas atividades.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Reproduzir um _ribossomo_ no mundo virtual é relativamente simples: basta escrever um _script_ que, para cada trinca de letras de um arquivo _.fasta_ (representando 3 nucleotídeos do _DNA/mRNA_), identifique uma letra (representando um _amino ácido_, ou um _sinal de parada_, correspondentes). Este _script_ precisaria conter um dicionário, com todas as correspondências entre as trincas de nucleotídeos e cada _amino ácido_, utilizando letras como representações, como o [código sequências biológicas da **IUPAC**](https://www.bioinformatics.org/sms/iupac.html) (a _International Union of Pure and Applied Chemistry_).
+
+#### Baixando um tradutor 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+A partir de uma busca rápida no [_Google_](https://www.google.com/), com as palavras chave "***DNA protein translate command line***", você observará que há muitas opções pacotes e programas. Um programa de tradução de **DNA|proteína** muito utilizado é o _transeq_, do pacote [**EMBOSS**](http://emboss.open-bio.org/) (o _European Molecular Biology Open Software Suite_). Este é um pacote que reúne [dezenas de programas](https://www.bioinformatics.nl/emboss-explorer/) para trabalhar com arquivos de sequências e outros arquivos comuns na bioinformática. Ele foi desenvolvido em conjunto, por pesquisadores de diferentes centros de pesquisa como o [**EMBL-EBI**](https://www.ebi.ac.uk/about), o [**WSI**](https://www.sanger.ac.uk/), o [**BBSRC**](https://www.ukri.org/councils/bbsrc/) e o [**MRC**](https://www.mrc-bsu.cam.ac.uk/). O pacote **EMBOSS** pode ser instalado de maneira semelhante a qualquer aplicativo da distribuição de _Linux_ que estamos usando (**Ubuntu - Debian**), com o _sistema de gerenciamento de pacotes_ **apt**.
+
+> Instale o pacote **EMBOSS** utilizando o _sistema de gerenciamento de pacotes_ **apt**.
+
+```{bash, echo=TRUE,eval=FALSE}
+sudo apt install emboss
+
+```
+
+> Após a instalação, verifique que agora você possui a ferramenta/_script_ _transeq_, e abra seu manual.
+
+```{bash, echo=TRUE,eval=FALSE}
+transeq --help
+
+```
+
+#### Traduzindo um arquivo _.fasta_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Antes de começar, vamos organizar uma pasta para trabalhar com os arquivos desta prática.
+
+> Na sua ***home***, crie uma pasta _aula3_ para os arquivos da prática de hoje. Entre nesta pasta.
+
+```{bash, echo=TRUE,eval=FALSE}
+cd
+
+mkdir aula3
+
+cd aula3
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, vamos criar o arquivo que utilizaremos. Vamos trabalhar com a sequência do gene [_Citocromo C Oxidase I_](https://en.wikipedia.org/wiki/Cytochrome_c_oxidase_subunit_I), um gene que codifica uma das proteínas da _Cadeia transportadora de elétrons_ da _fosforilação oxidativa_, responsável pela respiração celular, na mitocôndria.
+
+> Abra o _vi_, para editar um arquivo de nome **COI.fasta**. Entre no _modo de inserção_.
+
+```{bash, echo=TRUE,eval=FALSE}
+vi mtCOI.fasta
+
+```
+
+> Cole o conteúdo a seguir dentro do seu arquivo no editor de textos _vi_. Depois salve o conteúdo e saia.
+
+```{bash, echo=TRUE,eval=FALSE}
+>NC_012920.1:5904-7445 Homo sapiens mitochondrion, complete genome
+ATGTTCGCCGACCGTTGACTATTCTCTACAAACCACAAAGACATTGGAACACTATACCTATTATTCGGCG
+CATGAGCTGGAGTCCTAGGCACAGCTCTAAGCCTCCTTATTCGAGCCGAGCTGGGCCAGCCAGGCAACCT
+TCTAGGTAACGACCACATCTACAACGTTATCGTCACAGCCCATGCATTTGTAATAATCTTCTTCATAGTA
+ATACCCATCATAATCGGAGGCTTTGGCAACTGACTAGTTCCCCTAATAATCGGTGCCCCCGATATGGCGT
+TTCCCCGCATAAACAACATAAGCTTCTGACTCTTACCTCCCTCTCTCCTACTCCTGCTCGCATCTGCTAT
+AGTGGAGGCCGGAGCAGGAACAGGTTGAACAGTCTACCCTCCCTTAGCAGGGAACTACTCCCACCCTGGA
+GCCTCCGTAGACCTAACCATCTTCTCCTTACACCTAGCAGGTGTCTCCTCTATCTTAGGGGCCATCAATT
+TCATCACAACAATTATCAATATAAAACCCCCTGCCATAACCCAATACCAAACGCCCCTCTTCGTCTGATC
+CGTCCTAATCACAGCAGTCCTACTTCTCCTATCTCTCCCAGTCCTAGCTGCTGGCATCACTATACTACTA
+ACAGACCGCAACCTCAACACCACCTTCTTCGACCCCGCCGGAGGAGGAGACCCCATTCTATACCAACACC
+TATTCTGATTTTTCGGTCACCCTGAAGTTTATATTCTTATCCTACCAGGCTTCGGAATAATCTCCCATAT
+TGTAACTTACTACTCCGGAAAAAAAGAACCATTTGGATACATAGGTATGGTCTGAGCTATGATATCAATT
+GGCTTCCTAGGGTTTATCGTGTGAGCACACCATATATTTACAGTAGGAATAGACGTAGACACACGAGCAT
+ATTTCACCTCCGCTACCATAATCATCGCTATCCCCACCGGCGTCAAAGTATTTAGCTGACTCGCCACACT
+CCACGGAAGCAATATGAAATGATCTGCTGCAGTGCTCTGAGCCCTAGGATTCATCTTTCTTTTCACCGTA
+GGTGGCCTGACTGGCATTGTATTAGCAAACTCATCACTAGACATCGTACTACACGACACGTACTACGTTG
+TAGCCCACTTCCACTATGTCCTATCAATAGGAGCTGTATTTGCCATCATAGGAGGCTTCATTCACTGATT
+TCCCCTATTCTCAGGCTACACCCTAGACCAAACCTACGCCAAAATCCATTTCACTATCATATTCATCGGC
+GTAAATCTAACTTTCTTCCCACAACACTTTCTCGGCCTATCCGGAATGCCCCGACGTTACTCGGACTACC
+CCGATGCATACACCACATGAAACATCCTATCATCTGTAGGCTCATTCATTTCTCTAACAGCAGTAATATT
+AATAATTTTCATGATTTGAGAAGCCTTCGCTTCGAAGCGAAAAGTCCTAATAGTAGAAGAACCCTCCATA
+AACCTGGAGTGACTATATGGATGCCCCCCACCCTACCACACATTCGAAGAACCCGTATACATAAAATCTA
+GA
+
+```
+
+> Verifique o conteúdo do arquivo que você criou:
+
+```{bash, echo=TRUE,eval=FALSE}
+cat mtCOI.fasta
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, vamos traduzir essa proteína utilizando a função recém-instalada, _transeq_.
+
+> Traduza a sequência do arquivo mtCOI.fasta para o arquivo mtCOI.pep.
+
+```{bash, echo=TRUE,eval=FALSE}
+transeq mtCOI.fasta
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Observe que o programa te perguntou, interativamente, qual nome ele deveria dar ao arquivo de _output_. Isto poderia ser evitado caso você fornecesse o nome desse arquivo como argumento _-outseq $nome-do-arquivo-de-saída_.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, vamos ver o conteúdo do arquivo gerado.
+
+> Liste os arquivos e visualize o contaúdo do arquivo gerado pelo _transeq_.
+
+```{bash, echo=TRUE,eval=FALSE}
+ls
+
+cat mtCOI.pep
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+**Atenção!** Observe que há algo de estranho na sequência gerada. Note que o símbolo ***\*** aparece algumas vezes em meio à sequência de letras que representa os amino ácidos. Esse símbolo, em _arquivos fasta de amino ácidos_ representa ***códons de parada***, os códons que dizem para o ribossomo que a tradução daquela proteína terminou. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Mas, sendo o COI uma proteína única e sem íntrons, estes ***códons de parada*** não deveriam estar presentes no meio de sua sequência. Para tentarmos entender melhor, vamos usar um recurso externo.
+
+#### Trabalhando na internet
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Muitos programas de bioinformática, especialmente os mais utilizados, apresentam versões _online_, e são hospedados em _sites_ onde qualquer pessoa pode ter acesso aos seus recursos. Em última análise, esses programas estão realizando as mesmas operações que quando são rodados no seu próprio computador, mas nesse caso o seu processamento é feito por sevidores remotos (em outro local).
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Para a _tradução de arquivos de sequências biológicas_, um serviço online muito bom e muito utilizado é o [_Expasy translate tool_](https://web.expasy.org/translate/), mantido pelo **SBI** (_Swiss Institute of Bioinformatics_). Vamos realizar a tradução da nossa sequência utilizando esse serviço.
+
+> Acesse o site da ferramenta [Expasy translate tool](https://web.expasy.org/translate/).
+
+> Cole a sequência do arquivo mtCOI.fasta na caixa de texto para tradução, com ou sem o cabeçalho (>).
+
+> Acione o botão ***Translate***, utilizando os parâmetros _default_.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Veja que obtivemos um resultado semelhante, porém mais completo. Agora, temos 6 possibilidades de tradução, que correspondem a 3 fases de leitura (_ORFs_ - [_Open Reading Frames_](https://pt.wikipedia.org/wiki/Fase_de_leitura_aberta)) para cada uma das duas fitas, a _fita codificadora_ e a _fita complementar_. 
+
+![_ORFs - Open Reading Frames_](/home/heron/prjcts/bioinfo/misc/ORFs.png)](https://en.wikipedia.org/wiki/Open_reading_frame)
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Isso acontece porquê o local de início da tradução pelo ribossomo não é exato, mas sim definido pela própria composição da sequência, em funções de sinais como o primeiro _códon de iniciação_, que também corresponde à incorporação do amino ácido **metionina** (representado por _M_, ou _Met_). Ou seja, todas as protéinas tem sua síntese iniciada por uma **metionina** (em eucariotos e _archea_; e por fenil-metionina (_fMet_) em bactérias, mitocôndrias e plastídeos).
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, vamos entender os nossos resultados. Na página gerada pelo _Expasy translate tool_, observe que há um campo **Genetic code** que está definido como _Standard_. Veja as outras opções disponíveis. Vamos avaliar outras possivilidades. Lembre-se que: _o gene COI é um gene mitocondrial_.
+
+> Altere o **Genetic code** de _Standard_ para _Vertebrate mitochondrial_. Acione o botão ***Translate*** novamente.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Veja que agora temos um resultado mais pertinente com a realidade! O primeiro resultado (correspondente à _fita codificadora_ em sua _primeira fase de leitura_) apresenta uma proteína completa, iniciada por uma metionina, e finalizada por um códon de parada!
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Ou seja, o nosso resultado estava errado pois estávamos utilizando o _código genético_ (o _dicionário_) errado! Os nossos ribossomos e os ribossomos de nossas mitocôndrias utilizam códigos ligeiramente diferentes.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Este é um exemplo de que, quando um _script_/programa/código funciona, não significa que ele gerou um resultado correto, biológicamente pertininete. A expertise do bioinformata esta justamente em compreender o que o o computador executou, avaliar se o resultado faz sentido e, caso não, entender o que precisa ser modificado para o funcionamento adequado.
+
+## Exercícios
+
+> Utilizando a ferramenta _transeq_, refaça a tradução da sequência do arquivo mtCOI.fasta. Lembre-se de explorar as possibilidades de configuração com o argumento _--help_.
+
+> Visualize o arquivo gerado e confira se o resultado esperado foi obtido.
+
+
+***
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+
+
+
+

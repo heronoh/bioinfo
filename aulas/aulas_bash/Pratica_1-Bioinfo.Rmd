@@ -1,0 +1,388 @@
+---
+title: "Práticas em Bioinfo I"
+author: "Prof. Heron OH"
+place: "Biomedicina - PUC Minas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  rmdformats::downcute:
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
+    toc_float: yes
+    highlight: zenburn
+    code_download: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo=FALSE, results='asis'}
+#configurar pros resultados do bash sairem coloridos e não ANSI
+
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
+
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
+
+## Linux e WSL
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Praticamente todos os computadores dedicados a análises de bioinformática rodam sistemas operacionais do tipo ***Unix***, em especial o ***Linux*** e o ***macOS***. Em nossas práticas na _linha de comando_, utilizaremos o sistema operacional [**Ubuntu**](https://ubuntu.com/). Caso o seu computador seja ***Windows***, você pode _emular_ um sistema operacional ***Unix*** utilizando o ***WSL***, ou _Windows subsystem for linux_.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você pode conferir as instruções de instalação originais da Microsoft [aqui](https://learn.microsoft.com/en-us/windows/wsl/install).
+Mas, resumidamente, para habilitar o ***WSL*** você precisa que o seu computador tenha as aseguintes especificações.
+
+* Windows 10 versão 2004 ou superior.
+* _Build_ 19041 ou superior.
+
+### Compatibildiade com WSL
+
+Para conferir esses atributos, proceda da seguinte maneira:
+
+
+> No seu teclado, aperte conjuntamente as teclas _win key_ (`r knitr::asis_output("\U229E")`) e _R_. Na janela que se abriu, digite _winver_ e pressione $enter$ (`r knitr::asis_output("\U21B5")`).
+
+Compare as informações exibidas com os pré-requisitos acima. 
+
+### Habilitar e instalar o WSL
+
+> Aperte a tecla _win key_ (`r knitr::asis_output("\U229E")`). Uma janela se abrirá, contendo um campo de busca. Basta digitar _powershell_ que a opção do ***Windows Powershell*** será exibida. Clique na mesma com o botão direito e selecione _Abrir como administrador_.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma janela azul se abrirá. Esta é a interface por linha de comando do Windows. Nela iremos digitar os comandos para a instalação do ***WSL***. Para a execução de cada comando, após digitar a instrução, basta apertar $enter$ (`r knitr::asis_output("\U21B5")`).
+
+> Liste as distribuições de Linux disponíveis.
+
+```{bash, echo=TRUE,eval=FALSE}
+wsl --list --online
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você verá uma lista das distribuições de Linux que podem ser instaladas no seu WSL. Utilizaremos a **Ubuntu-20.04**. Prossiga com a instalação.
+
+> Inicie a instalação da distribuição desejada.
+
+```{bash, echo=TRUE,eval=FALSE}
+wsl --install -d Ubuntu-20.04
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Primeiro a distribuição (_distro_) será baixada, e depois instalada. Ao final da instalação, uma nova janela, de fundo preto, se abrirá. Este já é o Ubuntu, e as primeiras mensagens que você vai receber são para configurar o seu usuário.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O primeiro passo será escolher um _login_, um nome para o seu usuário. Para facilitar, recomendo que o seu login:
+
+* Seja curto, com no máximo 8 caracteres.
+* Tenha apenas letras minúsculas.
+* Não contenha caracteres especiais como _~_, _^_, _ç_, ...
+* Não contenha espaços.
+
+Uma vez definido o seu login, você será solicitado a criar um _password_, uma senha para o seu usuário. Uma vez que você está no seu próprio computador, ou num login institucional, sugiro criar uma senha mais simples, como _o nome do seu usuário + 12345_, pois será de fácil dadução caso você se esqueça durante estes primeiros passos.
+Quando for utilizar usuários em computadores compartilhados ou em servidores, recomendo criar senhas o mais complicadas o possível, sem o nome do seu usuário.
+
+
+## A linha de comando
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Todos os sistemas operacionais podem ser operados sem a necessidade de uma interface gráfica, ou seja, sem uma tela com ícones que você selecione clicando (_mouse_). Isto é realizado apenas atavés do teclado. A linha de comando é a interface por onde você transmite instruções escritas para o computador (***input***), que te retorna o resultado do processamento dessas instruções (***output***). Há uma infinidade de _comandos_ que podem ser executados, mas alguns que conheceremos nestas práticas são fundamentais no dia a dia do bioinformata.
+
+
+## Comandos básicos
+
+### Navegando em diretórios
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o **diretório raiz**, representado pelo símbolo _barra_ (**/**). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem _endereços_. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu endereço, ou _caminho_, como é mais conhecido. Para se evitar a ocorrencia de erros usamos, preferencialmente, **_caminhos absolutos_**, ou seja, contendo todas as pastas a partir do diretório raiz, o **/** .
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Também podem ser utilizados **_caminhos relativos_**, ou seja, que descrever o caminho até o diretório/arquivo a partir de onde o comando está sendo executado, seja iniciando pelo nome de alguma pasta presente neste local, ou utilizando o símbolo ***..***, para iniciar o caminho pelo nome de alguma pasta acima de onde se está. Isto pode ser feito, inclusive, de forma recursiva (ex: **../../../**). 
+
+Utilizando a tecla **Tab** para autocompletar, você pode fazer com que o computador complete automaticamente qualquer caminho, a partir de um início existente. Essa é a melhor maneira de verificar se você está passando o caminho correto, antes de executar um comando.
+
+Por exemplo:
+
+> Na sua linha de comando (_bash_), escreva o seguinte comando e aperte ***ENTER*** para executá-lo.
+
+```{bash, echo=TRUE,eval=FALSE}
+pwd
+```
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O comando ***pwd*** retorna o _path to the working directory_, o caminho para o diretório que você está.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Para mudarmos de diretório, utilizamos o comando ***cd***. Quando executado sem argumentos, ele te transporta para a ***\$HOME***, o diretório _casa_ do usuário, e que carrega seu nome. Este diretório geralmente está localizado em **/home/$usuário**.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você pode identificar qual é o seu usuário com o comando ***whoami***
+
+> Identifique seu usuário.  
+
+```{bash, echo=TRUE,eval=TRUE}
+whoami
+
+```
+ No meu caso, estou utilizando o usuário _noreh_.
+
+> Agora execute o comando ***cd***, sem argumentos, e verifique mais uma vez onde você está. 
+
+```{bash, echo=TRUE,eval=FALSE}
+cd
+
+pwd
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Se você já estava na sua ***\$HOME***, você continua no mesmo lugar.
+
+
+
+> Utilize o comando ***cd*** com argumentos, e verifique mais uma vez onde você está. 
+
+```{bash, echo=TRUE,eval=FALSE}
+cd ..
+
+pwd
+
+cd .
+
+pwd
+
+```
+
+Estes argumentos representam _o diretório atual_ (***.***) e _o diretório acima do atual_ (***..***), e são utilizados em *caminhos relativos*, que em breve veremos com mais detalhes.
+
+---
+
+### Criando e modificando diretórios
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora vamos criar diretórios para explorar outros comandos. Para criar um diretório, utilizamos o comando ***mkdir***, seguido do nome do diretório a ser criado, com caminhos completos ou não. Caso não seja fornecido um caminho, o novo diretório será criado no diretório onde se está.
+
+> Utilize o comando ***mkdir*** para criar uma pasta _aula1_, na sua ***$HOME***. Entre nessa pasta com ***cd***.
+
+```{bash, echo=TRUE,eval=FALSE}
+cd
+
+mkdir aula1
+
+cd aula1
+
+```
+
+> Utilize o comando ***mkdir*** para criar 3 pastas, _pasta_A_, _pasta_B_, _pasta_C_, dentro de _aula1_. Liste os arquivos do diretório onde você está com o comando ***ls***.
+
+```{bash, echo=TRUE,eval=FALSE}
+
+ls
+
+mkdir pasta_A
+mkdir pasta_B
+mkdir pasta_C
+
+ls
+```
+
+> O comando ***ls*** (assim como a grande maioria de comandos) aceita argumentos. Argumentos são elementos que modificam a maneira como cada comando funciona. Experimente a variação a seguir e veja a diferença.
+
+```{bash, echo=TRUE,eval=FALSE}
+ls -lh
+```
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você acaba de listar os arquivos e pastas, bem como outras informações. Da esquerda para a direita: a) tipo de arquivo e permissões; b) contagem de links; c) usuário e grupo proprietários do arquivo; d) tamanho do arquivo (em _bytes_); e) data da última modificação; f) nome do arquivo.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Agora vamos criar alguns arquivos. 
+
+> Utilize o comando ***touch*** para criar dentro da pasta _pasta_A_ alguns arquivos.
+
+```{bash, echo=TRUE,eval=FALSE}
+cd pasta_A
+
+touch arquivo_{1..3}_{A..D}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Veja que, com um comando apenas, você criou diversos arquivos (vazios). Isso acontece porque o uso de ***{}*** possibilita a representação de múltiplos caracteres. Faça experiencias com o comando ***echo***, que _imprime_ algum texto ou expressão.
+
+> Faça experiencias com o comando ***echo***, que _imprime_ algum texto ou expressão.
+
+```{bash, echo=TRUE,eval=FALSE}
+echo arquivo_{1..3}_{A..C}
+
+echo {1..3}
+
+echo {1..30}
+
+echo {A,T,G,C}{A,T,G,C}
+
+echo {A,T,G,C} {A,T,G,C}
+
+
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Todos os arquivos e diretórios podem ser movidos. O comando ***mv*** é utilizado para isto. Este comando tem uma sintaxe definida, e para seu funcionamento é preciso especificar duas coisas.
+
+1) arquivo/diretório a ser movido;
+
+2) arquivo/diretório de destino;
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Este comando pode ser utilizado tanto para _mover_ (trocar de local) quanto para _renomear_ um arquivo ou diretório. Por isso, sua sintaxe deve ser analisada com calma antes da execução. Vamos vazer alguns testes.
+
+> Utilize o comando ***mv*** para _renomear_ um arquivo, de acordo com o exemplo a seguir:
+
+```{bash, echo=TRUE,eval=FALSE}
+ls
+
+mv arquivo_1_D arquivo_1_D_renomeado
+
+ls
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Agora, vamos remover alguns arquivos. O comando ***rm*** é utilizado para remover arquivos, mas pode remover qualquer coisa (_à força_). Já o comando ***rmdir***, para remover diretórios, necessáriamente vazios.
+
+&nbsp;&nbsp;&nbsp;&nbsp; 
+Não é possível _desfazer_ ações na linha de comando. Uma vez deletado, para sempre perdido. Assim, recomenda-se muita atenção na hora de executar comandos de remoção.
+Uma opção é utilizar o argumento _-i_ para ativar a confirmação de remoção.
+
+> Remova todos os arquivos terminados em _D_.
+
+```{bash, echo=TRUE,eval=FALSE}
+rm arquivo_1_D_renomeado
+rm arquivo_2_D
+
+```
+
+### Estrutura de diretórios
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O comando ***tree*** mostra a distribuição de arquivos e diretórios a partir de um determinado diretório.
+
+> Utilize o comando ***tree*** para ver a estrutura de pastas a partir da pasta _aula1_, contida na sua ***$HOME***.
+
+```{bash echo=TRUE,eval=TRUE}
+tree ~/aula1 -L 2
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Note que o seu nome de usuário será diferente do meu, mostrado neste exemplo.
+
+
+### Instalando funcionalidades
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Se a sua tentativa de usar o comando ***tree*** não foi bem sucedida e você recebeu um aviso de _command not found_, nem tudo está perdido. Você pode instalar esse comando (ou praticamente qualquer outro) executando poucas linhas.
+O ***Linux*** tem um sistema de gerenciamento de pacotes e aplicativos, o _apt_. Através dele você interage diretamente com repositórios de códigos de cada versão do ***Linux***.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Vamos fazer a instalação do comando ***tree***, mas antes, vamos atualizar o sistema. Isto é necessário para sincronizar essa sua nova instalação com os repositórios mais recentes. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Todos esses comandos de atualização e instalação precisam ser executados como _super usuário_ (ou como chamamos, _sudo_, que é o mesmo nome que aparece no começo de qualquer comando executado como _super usuário_). Para executá-los, você vai precisar fornecer a sua senha.
+
+
+> Como super usuário, atualize o sistema:
+
+```{bash echo=TRUE,eval=FALSE}
+sudo apt update
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+É possível que você tenha encontrado alguns erros, a depender do computador onde você está realizando a prática. De qualquer maneira, vamos prosseguir:
+
+
+> Como super usuário, instale o _aplicativo/comando_ ***tree***
+
+```{bash echo=TRUE,eval=FALSE}
+sudo apt install tree
+
+```
+
+> Teste o _comando_ ***tree***. Abra o help do comando para ver as opções de configuração.
+
+```{bash echo=TRUE,eval=FALSE}
+tree 
+
+tree --help
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, com o comando instalado, tente executar o passo anterior para visualizar a organização dos seus arquivos e diretórios.
+
+
+## Exercícios
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Utilizando os comandos que você aprendeu, execute as instruções a seguir. Sempre que pssível, utilize a tecla $TAB$ para completar os nomes de arquivos e caminhos. Lembre-se que o caracter $*$ serve como _coringa_, ele representa qualquer outro caracter.
+
+> 1) mova os arquivos cujo nome começa com _arquivo_1_, _arquivo_2_ e _arquivo_3_ da pasta de onde eles foram criados para a pasta correspondente à última letra de seus nomes.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Tente, com um único comando:
+
+> 2) remover os arquivos com numeração _3_ de todas as pastas.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, vejamos como ficou a organização.
+
+> 3) visualize a distribuição das subpastas e arquivos dentro da pasta _aula1_.
+
+
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+
+

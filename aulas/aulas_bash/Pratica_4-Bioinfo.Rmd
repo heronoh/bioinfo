@@ -1,0 +1,580 @@
+---
+title: "Práticas em Bioinfo IV"
+author: "Prof. Heron OH"
+place: "Biomedicina - PUC Minas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  rmdformats::downcute:
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
+    toc_float: yes
+    highlight: zenburn
+    code_download: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo=FALSE, results='asis'}
+#configurar pros resultados do bash sairem coloridos e não ANSI
+
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
+
+## Arquivos _.fasta_ e _.fastq_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Na prática passada você aprendeu a utilizar um _script_ bioinformático para realizar a tradução de uma sequência de nucleotídeos na sequência correspondente de AA, a partir de um arquivo _.fasta_. Hoje iremos explorar mais este tipo de arquivo tão utilizado na bioinfo.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como já vimos, os arquivos _.fasta_ são arquivos que armazenam sequências de DNA, RNA ou proteínas. Cada arquivo pode conter uma única sequência ou várias, sendo ocasionalmente referido como _multifasta_. É neste formato que são armazenados genomas de referência e genes. Este também é o arquivo utilizado para alinhamentos e buscas por similaridade, como o [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi).
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Já os arquivos _.fastq_ são arquivos que armazenam sequências burtas geradas por sequenciadores de nova geração (NGS), e apresentam, além da sequência das _reads_, identificadores de qualidade baseados na métrica de qualidade [***PHRED***](https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/QualityScoreEncoding_swBS.htm). Estes arquivos podem armazenar centenas de milhares de sequências, que precisam ser processadas para fornecer alguma informação biológica.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como veremos a seguir, há funcionalidades específicas para cada um desses arquivos. No entanto, algumas avaliações mais simples podem ser realizadas com ambos, observando suas diferenças estruturais.
+
+
+## Acessando servidores
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como sabemos pela prática, a instalação de alguns programas de bioinformática na plataforma _WSL_ requer privilégios de administrador, o que dificulta seu uso em computadores institucionais, como os das aulas práticas. Assim, hoje iremos conectar diretamente a um servidor computacional para realizar nossas análises. ***Servidor*** ou ***Servidora*** é um dos nomes que se dá a um computador em que uma ou mais pessoas trabalham remotamente, ou seja, você conecta a ele a partir do seu computador, que serve apenas como uma interface. Enquanto conectado, todo o processamento computacional é realizado no ***Servidor***. Assim, eventualmente, os arquivos que forem usados, precisam ser tranferidos de um computador para o outro, e aprenderemos como fazer isso hoje.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Os servidores são computadores muito poderosos, e, por isso, muito visados por hackers. Desta maneira, a conexão com eles deve ser realizada de maneira segura, e não se deve compartilhar credenciais de acesso sem os devidos cuidados. Assim, esta prática não apresentará todas as informações necessárias para a conexão. **Estas informações serão transmitidas apenas durante a aula.**Mas, caso você esteja realizando as práticas no seu próprio computador, você pode instalar os programas que utilizaremos sem restrição, e pode realizar todos os passos práticos localmente. Não será uma tarefa simples para iniciantes, mas as instruções para a instalação de cada programa estão disponíveis nos respectivos _links_, e qualquer suporte pode ser solicitado diretametne comigo.
+
+## Instalando os programas
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Caso você vá realizar a prática durante a aula, no servidor, pode ir para a próxima sessão. Mas **caso você vá realizar a prática no seu própiro computador**, os programas que utilizaremos podem ser encontrados aqui:
+
+* [exonerate](https://www.ebi.ac.uk/about/vertebrate-genomics/software/exonerate): Diversas funcionalidades para arquivos _.fasta_.
+
+* [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/): Gerador de relatórios de qualidade para arquivos _.fastq_ individuais.
+
+* [MultiQC](https://multiqc.info/): Gerador de relatórios de qualidade para arquivos _.fastq_ múltiplos.
+
+* [Tutoriais do ***LGC PUC Minas*** de instalação e uso do _FastQC_ & _MultiQC_](https://www.youtube.com/watch?v=aTlHQNLwg-0)
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Os arquivos que utilizaremos podem ser baixados [aqui](https://drive.google.com/drive/folders/1b8llP47A8yCLgrYEKG-xQgnhgaMUkjQ6?usp=sharing).
+
+## Conexão por _SSH_
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+A maneira mais utilizada para a conexão com servidores ou outros computadores é a conexão por [***SSH***](https://pt.wikipedia.org/wiki/Secure_Shell). Este é um protocolo de rede criptografado, que se baseia na utilização de usuários e senhas para tornar segura a conexão entre dois computadores. Assim, cada usuário precisa ter uma conta (_login_ e senha) cadastrada no computador alvo (o Servidor). Para nossas práticas, criei um usuário geral para todos conectarmos simultaneamente num de nossos Servidores.
+
+> Utilizando as credenciais ***fornecidas durante a aula***, conecte no servidor de trabalho via SSH. Quando solicitado, forneça a senha:
+
+```{bash, echo=TRUE,eval=FALSE}
+#ex:
+#ssh usuario@111.222.333.444
+
+ssh $USER@$IP
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Caso a conexão seja realizada com sucesso, você verá uma tela de boas vindas com informações sobre o servidor.
+
+> Utilizando o comando _htop_ verifique as características de _hardware_ e os processos que estão rodando no servidor. 
+Para retornar para a linha de comando, saia utilzando a tecla ***q***.
+
+```{bash, echo=TRUE,eval=FALSE}
+htop
+```
+
+## Preparativos
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como todos estamos utilizando um mesmo _usuário_ no servidor, todos podemos alterar ou remover os arquivos gerados por outras pessoas. Assim, para evitar ações indesejadas ***iremos criar pastas para cada aluno e sempre realizar os comandos dentro das respectivas pastas***. Além disso, ***sempre utilizar caminhos completos e confira os comandos antes de executá-los, especialmente comandos de remoção.***. Caso tenha dúvida ***não execute o comando sem solicitar ajuda***. E lembre-se:
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+$\underline{NÃO\space EXISTE\space DESFAZER\space NA\space LINHA\space DE\space COMANDO!!!!}$
+
+### Crie sua pasta
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Cada aluno criará uma pasta para organizar seus arquivos de trabalho.
+
+> Na pasta correspondente à sua $TURMA, dentro da ***home*** do usuário, crie uma pasta com um nome único. Caso haja alguém com nome parecido na sala, use suas iniciais ou apelido para diferenciar:
+
+```{bash, echo=TRUE,eval=FALSE}
+cd #para ir para a home
+
+cd $TURMA
+
+mkdir heronoh #por exemplo, no meu caso
+
+cd heronoh
+
+pwd
+
+```
+
+### Copie os arquivos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Copie os arquivos que iremos utilizar para a sua pasta.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Se estiver trabalhando localmente, ou seja, no seu computador, os arquivos que utilizaremos podem ser baixados [aqui](https://drive.google.com/drive/folders/1b8llP47A8yCLgrYEKG-xQgnhgaMUkjQ6?usp=sharing).
+
+
+> Utilizando ***caminhos completos***, copie os arquivos da pasta principal para a sua pasta, substituindo as variáveis $ALUNO e $TURMA pelos nomes correspondentes:
+
+>> DICA: utilize **tab** para autocompletar e evitar erros!
+
+```{bash, echo=TRUE,eval=FALSE}
+#confira onde você está
+pwd 
+
+# verifique que sua pasta está vazia
+ls -lh ~/$TURMA/$ALUNO/ 
+
+#copie os arquivos
+cp -r ~/arquivos ~/$TURMA/$ALUNO/
+
+# verifique se foram copiados corretamente
+ls -lh ~/$TURMA/$ALUNO/
+
+#veja a estrutura da pasta que você copiou
+tree ~/$TURMA/$ALUNO/
+
+```
+
+## Contando sequências
+
+### Em arquivos .fasta
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como já sabemos, arquivos _.fasta_ e _.fastq_ são arquivos de texto. Assim, qualquer programa/função/_script_ desenvolvido para trabalhar com arquivos de texto podem ser utilizados nestes arquivos. Vejamos algumas.
+
+> Vamos vizualizar os arquivos fasta presentes na pasta *~/$TURMA/$ALUNO/arquivos/fasta/mito*. Entre nesta pasta e liste os arquivos:
+
+>> DICA: utilize **tab** para autocompletar e evitar erros!
+
+```{bash, echo=TRUE,eval=FALSE}
+#entre na pasta
+cd ~/$TURMA/$ALUNO/arquivos/fasta/mito
+
+#confira onde você está
+pwd
+
+#liste os arquivos
+ls
+
+#liste os arquivos com mais informações
+ls -lah
+```
+
+> Vamos vizualizar o arquivo  _human_mtDNA_genome.fasta_ de 4 maneiras diferentes. Observe o _output_ de cada comando e entenda as diferenças. Varie os argumentos para compreender sua função:
+
+```{bash, echo=TRUE,eval=FALSE}
+#abrir o arquivo inteiro
+cat human_mtDNA_genome.fasta
+
+#abrir o começo do arquivo
+head -10 human_mtDNA_genome.fasta
+
+#abrir o final do arquivo
+tail -14 human_mtDNA_genome.fasta
+
+#abrir o arquivo inteiro, interativamente
+less human_mtDNA_genome.fasta
+#---> utilize as setas para mover, e saia com a tecla "q"
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como já sabemos, arquivos _.fasta_ tem uma estrutura definida: uma linha de ***cabeçalho***, **sempre iniciada por _>_** seguida de uma ou mais linhas de ***sequência***. Cada ***cabeçalho*** representa uma sequência no arquivo. Assim, como saber quantas sequências temos num arquivo? O comando ***grep*** é utilizado para localizar/buscar/extrair/contar padrões de texto em arquivos de texto. Vamos usá-lo: 
+
+> Experimente as variações do comando _grep_:
+
+```{bash, echo=TRUE,eval=FALSE}
+#veja o arquivo com que trabalharemos agora
+less human_mtDNA_CDSs.fasta
+
+#extrair linhas de cabeçalho no arquivo fasta
+grep ">" human_mtDNA_CDSs.fasta
+
+#contar linhas de cabeçalho no arquivo fasta
+grep -c ">" human_mtDNA_CDSs.fasta
+
+#extrair uma sequência usando o grep
+#---->extraia apenas a sequência do gene COX1
+grep "COX1" -A10 human_mtDNA_proteins.fasta
+
+grep "COX1" -A8 human_mtDNA_proteins.fasta
+
+#salve a sequência e seu cabeçalho em um novo arquivo
+grep "COX1" -A8 human_mtDNA_proteins.fasta > human_COX1_protein.fasta
+
+#confira o resultado
+cat human_COX1_protein.fasta
+
+```
+
+### Em arquivos .fastq
+
+#### Entendendo os arquivos .fastq
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Utilizando o mesmo raciocínio da sessão anterior, podemos investigar os arquivos _.fastq_.
+
+> Vamos vizualizar os arquivos fasta presentes na pasta *~/$TURMA/$ALUNO/arquivos/fastq*. Entre nesta pasta e liste os arquivos:
+
+>> DICA: utilize **tab** para autocompletar e evitar erros!
+
+```{bash, echo=TRUE,eval=FALSE}
+#entre na pasta
+cd ~/$TURMA/$ALUNO/arquivos/fastq
+
+#confira onde você está
+pwd
+
+#liste os arquivos
+ls
+
+#liste os arquivos com mais informações
+ls -lah
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Veja os nomes dos arquivos. Observe que eles estão organizados em pares que diferem apenas pelo radical ***R1*** e ***R2***. Esses radicais representam os pares de _reads_, ou seja, duas extremidades de um mesmo DNA sequenciado em uma posição da _flow cell_. Apesar de separados, cada sequência num arquivo tem sua correspondente no outro.
+
+> Vamos vizualizar o arquivo _amostra_137_S135_L001_R1_001.fastq_ de 4 maneiras diferentes. Observe o _output_ de cada comando e entenda as diferenças. Varie os argumentos para compreender sua função:
+
+```{bash, echo=TRUE,eval=FALSE}
+#abrir o arquivo inteiro
+cat amostra_137_S135_L001_R1_001.fastq
+
+#abrir o começo do arquivo
+head -10 amostra_137_S135_L001_R1_001.fastq
+
+#abrir o final do arquivo
+tail -14 amostra_137_S135_L001_R1_001.fastq
+
+#abrir o arquivo inteiro, interativamente
+less amostra_137_S135_L001_R1_001.fastq
+#---> utilize as setas para mover, e saia com a tecla "q"
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Veja que este é um arquivo bem grande e mais complexo. Não faz sentido vizualizá-lo completamente. Vamos entender sua estrutura: 
+
+> Utilizando o comando _wc_ conte quantas linhas temos em cada arquivo nesta pasta:
+
+```{bash, echo=TRUE,eval=FALSE}
+#contar linhas
+wc -l amostra_*
+```
+
+> Com o comando _head_ abra o começo do arquivo para entendermos sua estrutura
+
+```{bash, echo=TRUE,eval=FALSE}
+#contar linhas
+head amostra_137_S135_L001_R1_001.fastq
+```
+
+<style>
+div.blue pre { background-color:lightblue; }
+</style>
+
+<div class = "blue">
+```{bash fastqfile, echo=TRUE,eval=FALSE}
+###        Estrutura do .fastq
+#  @...........    = cabeçalho
+#  ACTGACTGA...    = sequência
+#  +               = separador
+#  123ABC*&%...    = código ASCII para qualidade PHRED de cada base
+
+@M02913:268:000000000-JGD64:1:1101:21802:2015 1:N:0:ACTGAGCG+CTATTATG
+TCAACCAACCACAAAGACATTGGCACCCTCTACTTAGTATTCGGTGCCTTAGCCGCAATATTTTGCACAGCCCTTAGCCTTCTAATTCGGGCAGAGCTTTCCCAACCTGGCGCCCTCTAGGTGA
++
+AAC-AFGGGGEGGFFAFGGGGFAFGFFGFFGF<FFGGGGGG9,,B,@FC,,;CC@++6@9,CE,,6,,,:<CCEF,,6CCD@F,,EFE<,+@@?,BEF,,9CFE,BCC,,B+8
+```
+</div>
+
+#### Contando seqs em arquivos .fastq
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como vimos acima, arquivos _.fastq_ tem uma estrutura definida: uma linha de ***cabeçalho***, **sempre iniciada por _@_** seguida de uma linha de ***sequência***, seguida por uma linha de separador (+) e a última linha de ***indicadores de qualidade PHRED***. Cada _read_ do arquivo é representada por 4 linha sequenciais, contadas a partir do cabeçalho.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O comando ***grep*** também pode ser utilizado para contar _reads_ num _.fastq_, mas, como o sinal @ pode ser também um indicador de qualidade, devemos ser mais específicos. Observe:
+
+> Conte o número de _reads_ no arquivo com o comando _grep_:
+
+```{bash, echo=TRUE,eval=FALSE}
+#conte os sinais @ presentes no arquivo
+grep -c "@" amostra_137_S135_L001_R1_001.fastq
+
+#conte os sinais @ presentes NO COMEÇO DAS LINHAS do arquivo
+grep -c "^@" amostra_137_S135_L001_R1_001.fastq
+
+#reveja a estrutura do arquivo. Qual é o próximo caracter após o @ nos cabeçalhos?
+head amostra_137_S135_L001_R1_001.fastq
+
+#conte os sinais @ presentes NO COMEÇO DAS LINHAS do arquivo, seguidos do próximo caracter comum no cabeçalho
+grep -c "^@M" amostra_137_S135_L001_R1_001.fastq
+
+# conte todas as linhas no arquivo .fastq
+wc -l amostra_137_S135_L001_R1_001.fastq
+
+expr 1 + 1
+
+expr 2 * 2
+
+
+# use o comando expr pra calcular o valor obtido dividido por quatro (use espaços entre os termos)
+## entenda o que será o primeiro termo
+cat fastq/amostra_131_S158_L001_R1_001.fastq | wc -l
+
+## substitua o primeiro termo da equação utilizando `` para delimitá-lo
+expr `cat fastq/amostra_131_S158_L001_R1_001.fastq | wc -l` / 4
+
+```
+
+## Controle de qualidade
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma máxima da bioinformática e das ciências de dados em geral é ***trash in, trash out***, que se traduz em *onde entra lixo, sai lixo*, ou seja, análises com _inputs_ ruins geram _outputs_ ruins. Assim, é extremamente importante _separar o joio do trigo_. A primeira etapa de uma análise - e talvez a mais importante - é a curadoria da informação que se vai utilizar; sua qualidade irá influenciar todo o resto.
+
+![_trash in, trash out_](/home/heron/prjcts/bioinfo/misc/trashINtrashOUT.jpg)
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma vez que os arquivos _.fastq_ apresentam indicadores de qualidade para todas as bases de todas as _reads_, é possível selecionar apenas as _reads_ (ou suas partes) que apresentem qualidade satisfatória para utilização nas análises subsequentes, minimizando a propagação de erros através do _pipeline_, que podem resultar em ruído ou mesmo em padrões biológicos inexistentes. Mas, como fazer essa avaliação para tantas sequências e arquivos de uma só vez?
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Os programas *FastQC* & *MultiQC* possibilitam uma inspeção qualitativa e quantitativa de conjuntos de dados provenientes de sequenciadores de nova geração. Estes programas _leem_ todos indicadores de qualidade de todas as _reads_ e os convertem em diversos sumários gráficos que facilitam a avaliação de um ou múltiplos arquivos _.fastq_.
+
+### FastQC
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O programa [*FastQC*](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) foi desenvolvido em 2010, e é escrito na _linguagem de programação_
+[*Java*](https://pt.wikipedia.org/wiki/Java_(linguagem_de_programa%C3%A7%C3%A3o)). Ele gera _reports_ em [*HTML*](https://pt.wikipedia.org/wiki/HTML) para cada arquivo _.fastq_ por vez, o que reflete o _estado da arte_ das aplicações NGS de sua época, onde geralmente uma ou poucas amostras eram sequenciadas por corrida.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Sua utilização é extremamente simples, como veremos a seguir.
+
+> Crie uma pasta _qualidade_ para armazenarmos os resultados do *FastQC*. Em seguida, rode o programa para ambas as _reads_ de um par de arquivos da sua escolha:
+
+```{bash, echo=TRUE,eval=FALSE}
+# entre na pasta correspondente a esta aula
+cd ~/$TURMA/$ALUNO/
+
+# crie uma subpasta 
+mkdir qualidade
+
+# veja as instuções de uso do programa (saia com "q")
+fastqc  --help | less
+
+# rode o programa, apontando o caminho completo para os arquivos de entrada (input) e para a pasta de saída (output)
+fastqc $CAMINHO_COMPLETO/$ARQUIVO_FASTQ_R1 -o $CAMINHO_COMPLETO/qualidade
+
+# repita a análise para o arquivo R2 correspondente
+fastqc $CAMINHO_COMPLETO/$ARQUIVO_FASTQ_R2 -o $CAMINHO_COMPLETO/qualidade
+
+# veja os outputs criados
+ls $CAMINHO_COMPLETO/qualidade
+
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Observe que foram gerados 2 arquivos para cada arquivo _.fastq_. Um deles, o _.zip_, contém as informações geradas na análise, que são sumarizdas no outro arquivo, o _.html_.
+
+#### Transferindo arquivos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Para a visualização desse _report_ em _.html_ é necessário um navegador de internet, que não existe na linha de comando, pois requer uma interface gráfica. Assim, estes arquivos precisam ser copiados para o computador local, via linha de comando, para depois serem abertos num navegador de internet. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Essa transferência de arquivos é feita de maneira semelhante à conexão por SSH do computador local com o servidor, e utiliza o comando ***scp***.
+Vamos fazer isso.
+
+> Identifique o caminho completo, *no servidor*, para os arquivos que se deseja copiar
+
+```{bash, echo=TRUE,eval=FALSE}
+
+# liste os arquivos html usando o caminho completo
+ls $CAMINHO_COMPLETO/qualidade/*html
+
+```
+
+
+
+> Abra um novo terminal _linux_. Utilize o comando *scp* para copiar os arquivos do servidor para o computador local. Substitua as variáveis $TURMA e $ALUNO pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.
+
+```{bash, echo=TRUE,eval=FALSE}
+#crie uma pasta localmente para armazenar os arquivos
+cd
+
+mkdir qualidade
+
+cd qualidade
+
+# utilize o comanod scp para copiar
+# estrutura do comando:
+#     scp               endereço:o_que                                         para_onde
+#     scp -P $PORTA $USUARIO@$IP:$CAMINHO_COMPLETO/$ARQUIVO_QUE_SE_QUER_COPIAR $PASTA_DE_DESTINO_NO_COMPUTADOR_LOCAL
+scp       -P 8722      $USER@$IP:/home/biomed/$TURMA/$ALUNO/arquivos/qualidade/*html     .
+
+#lembre-se que . sigifica "aqui, na pasta onde estou"
+
+# liste os arquivos que você copiou
+ls -lh
+
+# abra o navegdor de arquivos do windows na pasta onde está
+explorer.exe .
+
+# clique 2x no arquivo para abrí-lo no navegador
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Pronto! Agora podemos explorar esse _report_! 
+
+> Analise o conteúdo do _report_.
+
+
+### MultiQC
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O programa [*MultiQC*](https://multiqc.info/) foi desenvolvido em 2016, e é escrito na _linguagem de programação_
+[*Python*](https://pt.wikipedia.org/wiki/Python). Ele foi desenvolvido para facilitar a avaliação de múltiplos arquivos _.fastq_ por vez, dado que, com o avanço e barateamento das plataformas NGS, múltiplas amostras e bibliotecas passaram a ser sequenciadas simultâneamente. Este programa utiliza os diversos relatórios gerados pelo *FastQC* e os combina em um único sumário gráfico, também em [*HTML*](https://pt.wikipedia.org/wiki/HTML), com uma apresentação mais moderna e interativa.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Vamos criar utilizá-lo para criar um único _report_, desta vez para os _reports_ do *FastQC* para todos arquivos de _reads_.
+
+> Utilizando o *FastQC*, gere _reports_ para todos arquivos _.fastq_, em um único comando:
+
+```{bash, echo=TRUE,eval=FALSE}
+# volte para a pasta onde estão os primeiros reports
+cd qualidade
+
+# rode o FastQC para todos arquivos simultaneamente
+fastqc $CAMINHO_COMPLETO/arquivos/fastq/*.fastq -o $CAMINHO_COMPLETO/qualidade
+
+# veja os outputs criados
+ls $CAMINHO_COMPLETO/qualidade
+
+```
+
+> Utilizando o *MultiQC*, gere  um _report_ sumarizando todos arquivos criados pelo *FastQC*:
+
+```{bash, echo=TRUE,eval=FALSE}
+# volte para a pasta onde estão os primeiros reports
+cd qualidade
+
+# crie uma pasta para o multiqc
+mkdir multiqc
+
+# entre na pasta
+cd multiqc
+
+#confira o caminho onde está
+pwd
+
+# veja as instuções de uso do programa (saia com "q")
+multiqc  --help | less
+
+# rode o programa
+multiqc --interactive $CAMINHO_COMPLETO/quality/multiqc --outdir .
+
+# veja os outputs criados
+ls $CAMINHO_COMPLETO/qualidade/multiqc
+
+```
+
+### Transferindo arquivos
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora, de maneira semelhante ao que já fizemos, vamos copiar esse _report_ gerado pelo *MultiQC* para o computador local, para podermos visualizá-lo.
+
+
+> Abra um novo terminal _linux_. Utilize o comando *scp* para copiar os arquivos do servidor para o computador local. Substitua as variáveis $TURMA e $ALUNO pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.
+
+```{bash, echo=TRUE,eval=FALSE}
+#crie uma pasta localmente para armazenar os arquivos
+cd qualidade
+
+mkdir multiqc
+
+cd multiqc
+
+pwd
+
+# utilize o comanod scp para copiar
+# estrutura do comando:
+#     scp               endereço:o_que                                         para_onde
+#     scp -P $PORTA $USUARIO@$IP:$CAMINHO_COMPLETO/$ARQUIVO_QUE_SE_QUER_COPIAR $PASTA_DE_DESTINO_NO_COMPUTADOR_LOCAL
+scp       -P 8722      $USER@$IP:/home/biomed/$TURMA/$ALUNO/arquivos/qualidade/multiqc/*html     .
+
+#lembre-se que . sigifica "aqui, na pasta onde estou"
+
+# liste os arquivos que você copiou
+ls -lh
+
+# abra o navegdor de arquivos do windows na pasta onde está
+explorer.exe .
+
+# clique 2x no arquivo para abrí-lo no navegador
+```
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Pronto! Agora podemos explorar esse _report_! 
+
+> Analise o conteúdo do _report_.
+
+
+***
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+
+
+
+

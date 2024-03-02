@@ -1,0 +1,294 @@
+---
+title: "A **linguagem R** e o **RStudio**"
+author: "Prof. Heron OH"
+place: "Biomedicina - PUC Minas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  rmdformats::downcute:
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
+    toc_float: yes
+    highlight: zenburn
+    code_download: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo=FALSE, results='asis'}
+#configurar pros **R**esultados do bash sairem coloridos e não ANSI
+
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Hoje você vai conhercer a **linguagem R** e o **RStudio**. 
+
+
+# Introdução
+
+## Sobre o **R** e o **RStudio**
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+A **linguagem de programação R**, criada por *Ross Ihaka* e *Robert Gentleman* na *Universidade de Auckland*, Nova Zelândia, no início dos anos 90, foi concebida inicialmente como uma linguagem e ambiente para análise estatística e gráficos[r-project](https://www.r-project.org/about.html). Inspirada na *linguagem S*, desenvolvida nos Laboratórios Bell, o **R** rapidamente ganhou popularidade devido à sua capacidade de realizar complexas manipulações de dados, análises estatísticas e produzir gráficos de alta qualidade. Com o tempo, a comunidade em torno da **R** cresceu exponencialmente, contribuindo com uma vasta coleção de pacotes para o [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/), expandindo assim suas capacidades para além da estatística básica, para áreas como aprendizado de máquina, visualização de dados, análise de séries temporais, bioinformática, entre outras.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O **RStudio**, por sua vez, é um ambiente de desenvolvimento integrado (IDE) para **R**. Lançado em 2011, que facilitou ainda mais o uso da **linguagem R**, oferecendo uma interface amigável e diversas ferramentas que melhoram a produtividade dos usuários, como editor de código, console, visualização de dados e gestão de pacotes. A popularidade do **R** e do **RStudio** na pesquisa científica e na ciência de dados deve-se à sua natureza _open-source_, permitindo que pesquisadores e cientistas de dados compartilhem facilmente seus códigos e análises, promovendo a reprodutibilidade e a colaboração na pesquisa. Além disso, a capacidade de **R** em lidar com grandes volumes de dados, realizar análises complexas e produzir visualizações de dados detalhadas torna-a uma ferramenta indispensável em diversas áreas, desde a genética à economia, reforçando sua posição como uma das principais linguagens na ciência de dados e pesquisa científica contemporâneas. O **RStudio** e as funcionalidades do **R** podem ser utilizados para diversas outras aplicações. Por exemplo, este site foi criado no **RStudio**, utilizando o formato **R Mark Down** [**.Rmd**](https://rmarkdown.rstudio.com/).
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+A facilidade de transformar vetores e tabelas em gráficos é um dos pontos fortes do **R**. Veja alguns exemplos possíveis nesta galeria de gráficos, a [*The R Graph Gallery*](https://r-graph-gallery.com/).
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Recentemente o **RStudio** passou por uma mudança significativa ao adotar o novo nome [**Posit**](https://posit.co/blog/rstudio-is-now-posit/). Essa alteração simboliza a expansão dos objetivos da empresa, que agora incluem o suporte a outras linguagens de programação além do **R**, como [**Python**](https://www.python.org/), outra linguagem também muito utilizada na bioinformática. A mudança reflete o desejo da empresa de abraçar uma comunidade de usuários mais ampla, sem abandonar seu compromisso com a **linguagem R**.
+
+## O **R** e a **Bioinformática**
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+A comunidade de **R** dedicada à análise de dados biológicos é vasta e ativa, com diversas iniciativas e projetos que visam o desenvolvimento e compartilhamento de softwares de código aberto para análises precisas e repetíveis de dados biológicos. Um dos projetos mais destacados nesse contexto é o Bioconductor, que se propõe a desenvolver e compartilhar softwares de código aberto para bioinformática. O **Bioconductor** é conhecido por sua abordagem inclusiva e colaborativa, reunindo uma comunidade de desenvolvedores e cientistas de dados engajados em criar soluções bioinformáticas utilizando o **R**.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Além disso, o **R** oferece uma gama de pacotes adicionais que podem ser utilizados para ampliar suas capacidades centrais. Qualquer usuário pode criar ou publiar funções e pacotes para serem utilizados por outros usuários.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Esses esforços coletivos dentro da comunidade de **R** enfatizam não apenas o desenvolvimento técnico de ferramentas analíticas, mas também a promoção de uma cultura de colaboração e compartilhamento de conhecimento, o que é crucial para avançar nas pesquisas biológicas e bioinformáticas.
+
+
+
+## Instalando o **R** e o **RStudio**
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você encontrar os instaladores do **R** e do **RStudio** [*aqui*](https://posit.co/download/rstudio-desktop/). Uma vez baixados, você deve
+executar o instalador da ****linguagem **R**** _primeiro_, e em seguida o do **RStudio**. Pode seguir com a instalação padrão sem modificar nada, apenas clicando _sim/ok/avançar_.
+
+## Pimeiro contato com o **R**
+
+### Conhecendo o **RStudio**
+
+#### Os painéis do **RStudio**
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Antes de mais continuarmos, abra um novo **script em **R**. Você pode fazer isso clicando no quadrado branco com um **+** branco e verde, no canto superior esquerdo do **RStudio**, e sem seguida selecionando a opção `R script` ou clicando em:
+
+> `File` **->** `New File` **->** `R script`
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+A interface do **RStudio** é dividida em quatro painéis principais, cada um desempenhando um papel distinto para melhorar a produtividade e eficiência nas suas tarefas de programação em **R**:
+
+  * **Janela do Console**: Localizada no canto inferior esquerdo, o _console_ é onde você pode inserir comandos **R** diretamente e visualizar suas saídas. É essencialmente o centro de interação do **R**, mostrando os **R**esultados das computações ou execuções de código. Você também pode limpar o console usando um ícone de vassoura para melhorar a legibilidade quando ele fica cheio【28†source】.
+
+  * **Janela de Código (Source)**: Normalmente situada no canto superior esquerdo, esta área é o seu espaço de trabalho para editar e gerenciar arquivos, como **R scripts**, arquivos de texto, entre outros. É onde você pode escrever, editar e executar seus scripts **R**. Os arquivos abertos aqui aparecem em abas, facilitando a troca entre múltiplos arquivos. Este painel suporta vários tipos de arquivo, incluindo  **R scripts**(.R), **RMarkdown** (.Rmd), scripts **Python** (.py) e mais.
+
+  * **Janela de Ambiente/Histórico/Conexões/Tutorial**: Localizada tipicamente no canto superior direito, este painel é multifuncional. A aba 'Ambiente' mostra os conjuntos de dados e variáveis atualmente na memória, 'Histórico' registra todos os comandos anteriores, 'Conexões' exibe conexões de banco de dados, e 'Tutorial' pode guiar você através de recursos de aprendizagem. É um local central para gerenciar os objetos do seu espaço de trabalho e revisar atividades passadas【28†source】【29†source】.
+
+  * **Janela de Arquivos/Gráficos/Pacotes/Ajuda/Visualizador**: Geralmente localizada no canto inferior direito, este painel versátil permite que você navegue pelos arquivos do seu projeto, visualize gráficos gerados pelos seus  **R scripts**, gerencie pacotes em **R**, acesse documentação e arquivos de ajuda do **R**, e veja conteúdo web ou visualizações geradas pelo **R**. É uma ferramenta essencial para gerenciar recursos, visualizar dados e acessar ajuda quando necessário.
+
+Estes painéis são projetados para trabalhar juntos de forma integrada, fornecendo um ambiente de desenvolvimento abrangente para programação em **R**. Você pode personalizar o *layout* de acordo com suas preferências e necessidades de fluxo de trabalho, melhorando sua eficiência em tarefas de análise de dados e desenvolvimento.
+
+
+
+
+# Prática
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Vamos ter o nosso primeiro contato com o R
+
+```{R, echo=TRUE,eval=FALSE}
+##                 Introdução à introdução ao **R** e ao **RStudio**                  ##
+##                                                                            ##
+##                             Prof. Heron Hilário                            ##
+####                               março/2024                               ####
+##                                                                            ##
+#_______________________________________________________________________________
+
+## 0 - **RStudio**! ----
+#        0a - Console/Terminal
+
+#        0b - Source (arquivos abertos, variáveis, tabelas)
+
+#        0c - Global environment/...
+
+#        0d - Files/Plots/Help/...
+
+# Tools -> Global Options (tudo pode ser configurável)
+
+## 1 - a **linguagem **R**  ----
+#          <-              atribuir o que está na esquerda ao que está na direita   
+ 
+#       function()         executar a função "function" no que está dentro do ()
+
+#        %>% ou |>         pipe!  este é o pipe (|) do **R**   (dplyr)
+
+#      ?function()         abrir o manual/documentação da função  (ou, aperte F1
+#                          com o cursor na função)
+
+## 0f - atalhos!
+
+#             ctrl  +    ENTER               Executar linha com o cursor ou pró-
+#                                            ximo bloco de código
+#             ctrl  +    s                   salvar
+#             tab                            autocompleta coisas existentes
+#             ctrl  +    d                   deletar a linha com o cursor/
+#                                            selecionada
+#             ctrl  +  shift +  c            comentar/descomentar a linha com o 
+#                                            cursor/selecionada
+#             ctrl  +  shift +  d            duplicar a linha com o cursor/
+#                                            selecionada
+#             ctrl  +  setas(l/r)            caminhar pelas palavras
+#             ctrl  +  shift + setas(l/r)    caminhar pelas palavras
+#             ctrl  +  alt   + setas(u/d)    caminhar pelas palavras
+#             ctrl  +  z                     desfazer
+#             ,   ou  \   ou  +              continua na próxima linha
+
+
+```
+
+Você pode encontrar a lista de todos os atalhos do **RStudio** [**aqui**](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts-in-the-RStudio-IDE).
+
+### Primeiro contato
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como você pode ver, existem diversas configurações e formatos de saída possíveis. Vamos aprender a fazer uma busca simples. Para isto você precisa de:
+
+ - Uma ou alguamas sequências a serem buscadas, no formato fasta, que chamamos de ***query***;
+ 
+
+
+> Copie todo o conteúdo a seguir para o seu **R script**. Coloque o cursor (esta barra | que pisca onde você está digitando) na primeira linha. Aperte `ctrl + ENTER` para executar a instrução escrita nessa linha, ou na próxima ativa
+
+>> DICA: Linhas que começam com `**#**` são ignoradas pelo computador. Servem apenas para os **humanos**.  Você pode inserir comentários em qualquer parte do código, e escrever lembretes ou explicações que podem te ajudar a estudar, ou ajudar futuros usuários a entender como o código funciona.
+
+```{r, echo=TRUE,eval=FALSE}
+
+# neste código vamos criar objetos e tabelas
+
+# objetos ----
+## criar objeto a ----
+# este comando cria um objeto objA
+
+objA <- 3
+# objA <- 238
+# objA <- c(238, 55, 10)
+# objA <- c(238, 55, 10, 3, 28, -1, 0.33)
+
+objA
+
+## criar objeto objB ----
+objB <- 35
+
+objB
+
+## operações matemáticas com os objetos ---
+
+objA*objB
+## criar o objeto objD ----
+objD <- objA*objB
+objD
+
+
+## testando funções ----
+mean(objD)
+max(objD)
+min(objD)
+sum(objD)
+
+
+######-> repita todos os passos anteriores com diferentes valores armazenados no objA
+
+
+# trabalhando com tabelas ----
+
+# vamos criar uma tabela com a função data.frame()
+tabela <- data.frame(antes = c(130, 100, 90,150,130,120),
+                     depois = c(56,  88, 32, 28, 40, 20),
+                     controle = c(0,  5,  2,  1,  5,  1))
+
+tabela$antes
+tabela$depois
+
+
+# gráficos ----
+## o mais simples ----
+
+# veja o poder do R, de uma tabela a um gráfico em uma linha!
+
+boxplot(tabela)
+
+
+
+
+
+
+## outras possibilidades
+
+
+# fazer um grafico customizável com o ggplot ---- 
+install.packages("ggplot2") # este só precisa ser executado uma vez!
+
+library(ggplot2)
+
+
+tabela
+stack(tabela1)
+
+ggplot(stack(tabela1),
+       aes(x = ind,
+           y = values,
+           fill = ind,
+           # col = ind 
+           )) +
+         geom_boxplot() +
+  geom_point()+
+  scale_fill_manual(values = c("#ab3310","#2000b0"))+
+  theme_bw()
+
+```
+
+
+***
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+
+
+
+

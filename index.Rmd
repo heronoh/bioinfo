@@ -28,10 +28,11 @@ a disciplina _Bioinformática e Genômica_, da PUC Minas. Estes roteiros tem com
 
 
 ### Aulas práticas
+#### bash (WSL/Ubuntu)
 
 ```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=FALSE, results='asis'}
 
-rmd <- Sys.glob("aulas/*.Rmd")
+rmd <- Sys.glob("aulas/aulas_bash/*.Rmd")
 # rmd <- Sys.glob("*.Rmd")
 rmd <- rmd[rmd != "index.Rmd"]
 html <- sub(".Rmd", ".html", rmd)
@@ -45,4 +46,21 @@ for (i in seq_along(rmd)) {
 cat("</ul>")
 ```
 
+#### R (RStudio)
 
+
+```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=FALSE, results='asis'}
+
+rmd <- Sys.glob("aulas/aulas_R/*.Rmd")
+# rmd <- Sys.glob("*.Rmd")
+rmd <- rmd[rmd != "index.Rmd"]
+html <- sub(".Rmd", ".html", rmd)
+lines <- lapply(rmd, readLines)
+yaml <- lapply(lines, rmarkdown:::parse_yaml_front_matter)
+cat("<ul>")
+for (i in seq_along(rmd)) {
+  cat(paste0("<li><a href='", html[i], "'>", yaml[[i]]$title, "</a><br/>",
+             "<code>", rmd[i], "</code>", "</li>"))
+}
+cat("</ul>")
+```

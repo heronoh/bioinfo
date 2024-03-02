@@ -1,0 +1,315 @@
+---
+title: "Práticas em Bioinfo V"
+author: "Prof. Heron OH"
+place: "Biomedicina - PUC Minas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  rmdformats::downcute:
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
+    toc_float: yes
+    highlight: zenburn
+    code_download: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo=FALSE, results='asis'}
+#configurar pros resultados do bash sairem coloridos e não ANSI
+
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo).
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Na prática passada você aprendeu as características dos arquivos _.fasta_ e _.fastq_, e as suas aplicações. Na prática de hoje daremos sentido biológico as sequências guardadas nesses arquivos, e aprenderemos sobre alinhamento e idetificação de sequências.
+
+## Bancos de dados de sequências biológicas
+&nbsp;&nbsp;&nbsp;&nbsp;
+Após a identificação do DNA como a molécula responsável pelo armazenamento da informação genética dos organismos, e a compreensão de que entidades biológicas chamadas **genes** tem sequências definida, os esforços dos geneticistas se direcionaram para a caracterização da diversidade dessas entidades, e de como suas variações refletem na biologia de cada organismo. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Todas tecnologias de sequenciamento de DNA - sejam de Sanger, _short reads_ ou _long reads_ - tem sido utilizadas para alcançar este objetivo. E se as primeiras gerações de sequenciadores demoravam dias para caracterizar um gene ou um pedaço dele, as gerações mais recentes possibilitam conhecer genomas e transcriptomas inteiros em algums horas. À medida que tantas informações começaram a ser acumuladas, compreendeu-se que tão importante quando sequenciar, é armazenar essas sequências e os diversos metadados a elas relacionados. Quaisquer informações extrínsecas à sequência são importantes pois agregam conhecimento, e permitem comparações, a busca por padrões, e outras análises que possibilitam evidenciar padrões biológicos. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Existem diversos bancos de dados biológicos, providos tanto de informações quanto de propósitos diferentes e complementares. Estes bancos são geralmente **públicos**, o que significa que qualquer um pode tanto _submeter_ quanto _baixar depósitos_ (sequências e suas informações associadas). o ***National Center for Biotechnology Information*** (***NCBI***) é um conjunto é um centro nacional de informações em biotecnologia dos Estados Unidos. Ele é parte do ***National Institute of Health*** (***NIH***) e é um importante recurso para pesquisadores, cientistas e profissionais da área de biologia e biomedicina. Seu principal objetivo do NCBI é fornecer acesso a uma ampla gama de informações biológicas, incluindo sequências de DNA, sequências de proteínas, literatura científica, dados genômicos, ferramentas de análise e recursos para pesquisa biomédica. O NCBI mantém diversos bancos de dados, como  o [**PubMed**](https://pubmed.ncbi.nlm.nih.gov/) (que indexa artigos científicos), o [**Protein Data Bank**](https://www.rcsb.org/) (que armazena informações sobre estruturas tridimensionais de proteínas), e o [**GenBank**](https://www.ncbi.nlm.nih.gov/genbank/) (que contém sequências), além muitos outros.
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Além disso, o NCBI desenvolve e disponibiliza várias ferramentas online para análise de sequências, busca de informações e pesquisa. Essas ferramentas são amplamente utilizadas por cientistas e pesquisadores em todo o mundo para realizar análises de bioinformática, estudar genes, proteínas e doenças, e realizar descobertas científicas importantes.  
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O **GenBank** é considerado o repositório universal das sequências biológicas conhecias. Ele é integrado com e recebe atualizações diárias dos bancos de dados de sequências da Europa - o [ **European Nucleotide Archive** ](https://www.ebi.ac.uk/ena/browser/home) (**ENA**) -  e do Japão - o [**DNA Data Bank of Japan**](https://www.ddbj.nig.ac.jp/index-e.html) (**DDBJ**). Desta maneira, praticamente todas as sequências conhecidas, sejam de DNA, RNA, proteína, ou outros tipos podem ser encontradas lá, e atualmente este banco possui mais de 2.9 bilhões de sequências únicas, correspondentes a mais de 504.000 espécies diferentes ([ ^REF^ ](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9825519/)).
+
+## Identificando sequências biológicas
+
+### Conectando no servidor
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Nesta aula trabalharemos novamente na **edna**, nosso servidor computacional para análises bioinformáticas. 
+
+> Utilizando as credenciais ***fornecidas durante a aula***, conecte no servidor de trabalho via SSH. Quando solicitado, forneça a senha:
+
+```{bash, echo=TRUE,eval=FALSE}
+#ex:
+#ssh usuario@111.222.333.444
+
+ssh $USER@$IP
+```
+
+>> **DICA:** Lembre-se que as palavras iniciadas com um **$** são **variáveis**, ou seja, são palavras cujo significado depende da informação que armazenam. Assim, no comando acima você deve substituir **\$USER** e **IP** pelas credenciais correspondentes.
+
+### Entrando na sua pasta de análises
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Uma vez na **edna**, navegue até o diretório que criamos na prática passada e que tem o seu nome (**\$ALUNO**) e sua turma (**\$TURMA**). Iremos trabalhar com as sequências que estão na pasta **~/\$TURMA/\$ALUNO/arquivos/fasta/seqs**.
+
+> Navegue até a sua pasta de análises
+
+```{bash, echo=TRUE,eval=FALSE}
+cd ~/$TURMA/$ALUNO/arquivos/fasta/seqs
+
+ls
+```
+
+### Selecionando sequências
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Você recebeu estas 3 sequências diferentes. Qual gene elas representam? Vieram de qual organismo? Estas informações não estão intrínsecas à sequência, e precisamos recorrer a recursos externos para saber estas respostas.
+
+> Utilize algum comando de visualização para conhecer o conteúdo destes arquivos.
+
+```{bash, echo=TRUE,eval=FALSE}
+# ver uma seq
+cat seq1.fasta
+
+# ver todas
+cat seq*
+```
+
+> Combine todos os arquivos em um só para análise conjunta.
+
+```{bash, echo=TRUE,eval=FALSE}
+# combinar todas seqs
+cat seq* > seqs.fasta
+```
+
+> Dentro da sua pasta (**~/\$TURMA/\$ALUNO**) crie uma pasta para realisarmos a análise de hoje. Entre na pasta criada.
+
+```{bash, echo=TRUE,eval=FALSE}
+cd ~/$TURMA/$ALUNO/
+
+mkdir analises
+
+cd analises
+```
+
+
+### Identificando sequências com o BLAST
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O [**BLAST**](https://blast.ncbi.nlm.nih.gov/Blast.cgi) (***Basic Local Alignment Search Tool***) é uma ferramenta de busca de similaridade baseada em alinhamento de sequências. É possivelmente o programa de bioinformática mais utilizado no mundo, e tem diversas aplicações, dependendo de como é utilizado. 
+Este algorítmo tem diferentes variações, que vão depender basicamente do formato da sequência buscada e das sequências de referência. Ambas podem ser ser tanto sequências de nucleotídeo quanto de aminoácidos. Os tipos de **BLAST** são:
+
+ - **BLASTn:** É usado para alinhar sequências de DNA com o objetivo de encontrar similaridades nucleotídicas. É útil para identificar homologias entre genes ou regiões genômicas.
+
+ - **BLASTp:** É usado para comparar sequências de aminoácidos (proteínas) em bancos de dados de proteínas. O **BLASTp** é útil para identificar proteínas similares e determinar a função de proteínas desconhecidas com base em proteínas homólogas.
+
+ - **BLASTx:** É usado para comparar sequências de DNA com bancos de dados de proteínas traduzidas. Ele traduz a sequência de DNA em todas as seis possíveis molduras de leitura e, em seguida, compara as sequências traduzidas com as proteínas no banco de dados. O **BLASTx** é útil para encontrar sequências codificadoras de proteínas em regiões de DNA desconhecidas.
+
+- **tBLASTx:** É usado para comparar sequências de DNA traduzidas em AA, com bancos de dados de DNA traduzidas em AA. Ou seja, os *inputs* são em nucleotídeos, mas a comparação é feita na de aminoácidos. Ele é muito utilizado na anotação de novos genes, que é o processo pelo qual se identifica uma possível função de um gene codificador de proteína através de sua semelhança com outros genes conhecidos.
+
+ - **tBLASTn:** É usado para comparar sequências de proteínas com bancos de dados de DNA traduzidos. Ele traduz as sequências de DNA no banco de dados e, em seguida, compara-as com as sequências de proteínas de consulta. O **tBLASTn** é útil para encontrar sequências de DNA que possam estar codificando proteínas semelhantes.
+
+ - **BLASTz:** É uma versão do **BLAST** projetada especificamente para alinhar regiões genômicas maiores. Ele é frequentemente usado para comparar genomas inteiros de espécies diferentes.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como a nossa sequência é de nucleotídeos, podemos utilizar o **BLASTn**. Vamos conhecê-lo melhor. 
+
+> Conheça os possíveis argumentos e parâmetros do blastn.
+
+```{bash, echo=TRUE,eval=FALSE}
+blastn -help | less
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como você pode ver, existem diversas configurações e formatos de saída possíveis. Vamos aprender a fazer uma busca simples. Para isto você precisa de:
+
+ - Uma ou alguamas sequências a serem buscadas, no formato fasta, que chamamos de ***query***;
+ 
+ - Um banco de dados contendo outras sequências conhecidas, que chamamos de ***subject***. No caso do BLAST na linha de comando, este banco de dados precisa ser **local**, ou seja, deve estar no computador onde se está fazendo a análise;
+ 
+ - Um formato de saída da sua escolha, para a exibição dos resultados.
+
+> Rode o blastn para identificar a que pertencem as sequências que você tem.
+
+```{bash, echo=TRUE,eval=FALSE}
+#      #seq a ser buscada                              #banco de dados           #formato de saida 
+blastn -query ~/$TURMA/$ALUNO/arquivos/fasta/seqs/seqs.fasta -db /data/databases/nt/nt -outfmt 6 -num_alignments 3
+```
+
+Observe a tabela gerada. Ela contém 12 colunas. Estas são:
+
+ - **Query ID:** O identificador da sequência de buscada.
+ 
+ - **Subject ID:** O identificador da sequência do banco de dados que corresponde ao **subject**.
+ 
+ - **% de identidade:** A porcentagem de identidade entre a sequência buscada **query** e a sequência **subject** do banco de dados.
+ 
+ - **Tamanho do alinhamento:** O comprimento do alinhamento a sequência buscada **query** e a sequência **subject** do banco de dados.
+ 
+ - **Mismatches:** O número de bases que não correspondem a sequência buscada **query** e a sequência **subject** do banco de dados.
+ 
+ - **Gap Opens:** O número de lacunas (*gaps*) no alinhamento entra a **query** e o **subject**.
+ 
+ - **Query Start:** A posição inicial da sequência buscada **query** que corresponde ao alinhamento.
+ 
+ - **Query End:** A posição final da sequência buscada **query** que corresponde ao alinhamento.
+ 
+ - **Subject Start:** A posição inicial da sequência **subject** do banco de dados que corresponde ao alinhamento.
+ 
+ - **Subject End:** A posição final da sequência **subject** do banco de dados que corresponde ao alinhamento.
+ 
+ - **E-value:** O valor de significância (*E-value*) do alinhamento, que indica a probabilidade de encontrar um alinhamento semelhante por acaso.
+ 
+ - **Bit Score:** O escore do alinhamento, que é uma medida da qualidade e também da significância do alinhamento, mas depende do banco de dados usado.
+ 
+> Analise o resultado. O que você consegue entender a partir dessas colunas?
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Apesar de já termos uma identificaçã positiva, esse formato de resultados não tem a informação completa sobre a qual organismo/gene se refere o **subject**. Para sabermos isso, precisamos usar outro comando.
+
+> No comando a seguir, substitua \$HIT pela palavra na segunda coluna, que corresponde ao **subject**.
+
+```{bash, echo=TRUE,eval=FALSE}
+#      #seq a ser buscada                              #banco de dados           #formato de saida 
+blastdbcmd -db /data/databases/nt/nt -entry $HIT -outfmt %t
+
+```
+
+> Interprete o resultado. De que são as sequências?
+
+### Utilizando a versão online do BLAST
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Entre no site do [**BLAST**](https://blast.ncbi.nlm.nih.gov/Blast.cgi) e realize a mesma busca. 
+
+> Use algum comando para visalizar uma das suas 3 sequências. Copie a sequência e cole na caixa de buscas do site do BLAST. Rode uma análise com os parâmetros _default_, ou seja, sem fazer alterações.
+
+> Compare estes resultados com os que você obteve na análise local.
+
+
+
+## Alinhado sequências
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Assim como o BLAST busca por sequências semelhantes utilizando alinhamentos locais entre **query** e **subject**, existem diversas outras análises que podem utilizar essa estratégia. Por exemplo, apesar de serem semelhantes, qual a diferença entre estas 3 sequências com as quais estamos trabalhando? Podemos responder esta pergunta com um alinhamento. Há dois tipos principais de alinhamentos, o **Alinhamento local** e o **Alinhamento global**:
+ 
+ - **Alinhamento Global:** Este alinhamento compara duas sequências biológicas em sua totalidade, desde o início até o final. Ele identifica as regiões conservadas e as diferenças entre as sequências, alinhando todos os caracteres em ambos os conjuntos de dados. Esse tipo de alinhamento é útil quando as sequências têm comprimentos semelhantes e quando se deseja comparar as sequências como um todo. O alinhamento global é frequentemente usado para identificar similaridades entre proteínas ou genes de diferentes espécies, o que ajuda a inferir relações evolutivas e descobrir funções conservadas.
+
+ 
+ - **Alinhamento Local:** Este alinhamento compara apenas as regiões mais semelhantes entre as sequências biológicas. Em vez de alinhar as sequências inteiras, ele identifica subsequências semelhantes, chamadas de alinhamentos locais, dentro das sequências maiores. Esse tipo de alinhamento é útil quando as sequências são de comprimentos diferentes ou quando se deseja identificar regiões específicas de similaridade, como motivos funcionais ou domínios conservados em proteínas. O alinhamento local é frequentemente usado para identificar regiões de homologia em sequências de DNA, RNA ou proteínas, permitindo inferências sobre estrutura e função. Este é o alinhamento utilizado pelo **BLAST**.
+ 
+ 
+![_Alinhamentos local e global_](/home/heron/prjcts/bioinfo/misc/alinhamentos.jpg)
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Agora vamos alinhar nossas sequências. Faremos isso com o programa **MUSCLE**, um alinhador clássico. Seu nome significa *MUltiple Sequence Comparison by Log- Expectation*. Ele pode ser encontrado em versão _online_ [aqui](https://www.ebi.ac.uk/Tools/msa/muscle/).
+
+
+> Entenda o funcionamento do programa. Em seguida, alinhe as sequências do arquivo combinado que você construiu.
+
+```{bash, echo=TRUE,eval=FALSE}
+muscle --help
+
+# com output na tela
+muscle -in ~/$TURMA/$ALUNO/arquivos/seqs/seqs.fasta -clw
+
+# com output salvo em arquivo
+muscle -in ~/$TURMA/$ALUNO/arquivos/seqs/seqs.fasta -clw -out seqs.algn
+
+ls
+
+less -S seqs.algn
+
+```
+
+> Observe o alinhamento. Onde estão as diferenças?
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Esta sequência é de nucleotídeos. Você consegue perceber alguma diferença? Essas sequências geram proteínas iguais? Como seria o alinhamento com a de aminoácidos? Vamos traduzir:
+
+> Traduza as sequencias do seu arquivo combinado.
+
+```{bash, echo=TRUE,eval=FALSE}
+transeq  -sequence ~/$TURMA/$ALUNO/arquivos/seqs/seqs.fasta -outseq ~/$TURMA/$ALUNO/arquivos/seqs/seqs.pep
+
+```
+
+
+> Alinhe as sequências do arquivo combinado que você traduziu em aminoácidos.
+
+```{bash, echo=TRUE,eval=FALSE}
+
+muscle -in ~/$TURMA/$ALUNO/arquivos/seqs/seqs.pep -clw
+
+# com output salvo em arquivo
+muscle -in ~/$TURMA/$ALUNO/arquivos/seqs/seqs.pep -clw -out seqs_pep.algn
+
+ls
+
+less -S seqs_pep.algn
+
+```
+
+> Observe o alinhamento. O que as diferenças podem significar, conhecendo a origem e a função da proteínas que estamos analisando?
+
+***
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+
+
+
+
