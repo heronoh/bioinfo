@@ -267,9 +267,9 @@ library(ggplot2)
 
 
 tabela
-stack(tabela1)
+stack(tabela)
 
-ggplot(stack(tabela1),
+ggplot(stack(tabela),
        aes(x = ind,
            y = values,
            fill = ind,
@@ -277,7 +277,7 @@ ggplot(stack(tabela1),
            )) +
          geom_boxplot() +
   geom_point()+
-  scale_fill_manual(values = c("#ab3310","#2000b0"))+
+  scale_fill_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
   theme_bw()
 
 ```
