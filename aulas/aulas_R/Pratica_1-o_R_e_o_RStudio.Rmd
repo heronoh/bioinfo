@@ -97,7 +97,7 @@ Esses esforços coletivos dentro da comunidade de **R** enfatizam não apenas o 
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 Você encontrar os instaladores do **R** e do **RStudio** [*aqui*](https://posit.co/download/rstudio-desktop/). Uma vez baixados, você deve
-executar o instalador da ****linguagem **R**** _primeiro_, e em seguida o do **RStudio**. Pode seguir com a instalação padrão sem modificar nada, apenas clicando _sim/ok/avançar_.
+executar o instalador da **linguagem R** _primeiro_, e em seguida o do **RStudio**. Pode seguir com a instalação padrão sem modificar nada, apenas clicando _sim/ok/avançar_.
 
 ## Pimeiro contato com o **R**
 
@@ -106,18 +106,18 @@ executar o instalador da ****linguagem **R**** _primeiro_, e em seguida o do **R
 #### Os painéis do **RStudio**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Antes de mais continuarmos, abra um novo **script em **R**. Você pode fazer isso clicando no quadrado branco com um **+** branco e verde, no canto superior esquerdo do **RStudio**, e sem seguida selecionando a opção `R script` ou clicando em:
+Antes de mais continuarmos, abra um novo **script em R**. Você pode fazer isso clicando no quadrado branco com um **+** branco e verde, no canto superior esquerdo do **RStudio**, e sem seguida selecionando a opção `R script` ou clicando em:
 
 > `File` **->** `New File` **->** `R script`
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 A interface do **RStudio** é dividida em quatro painéis principais, cada um desempenhando um papel distinto para melhorar a produtividade e eficiência nas suas tarefas de programação em **R**:
 
-  * **Janela do Console**: Localizada no canto inferior esquerdo, o _console_ é onde você pode inserir comandos **R** diretamente e visualizar suas saídas. É essencialmente o centro de interação do **R**, mostrando os **R**esultados das computações ou execuções de código. Você também pode limpar o console usando um ícone de vassoura para melhorar a legibilidade quando ele fica cheio【28†source】.
+  * **Janela do Console**: Localizada no canto inferior esquerdo, o _console_ é onde você pode inserir comandos **R** diretamente e visualizar suas saídas. É essencialmente o centro de interação do **R**, mostrando os **R**esultados das computações ou execuções de código. Você também pode limpar o console usando um ícone de vassoura para melhorar a legibilidade quando ele fica cheio.
 
   * **Janela de Código (Source)**: Normalmente situada no canto superior esquerdo, esta área é o seu espaço de trabalho para editar e gerenciar arquivos, como **R scripts**, arquivos de texto, entre outros. É onde você pode escrever, editar e executar seus scripts **R**. Os arquivos abertos aqui aparecem em abas, facilitando a troca entre múltiplos arquivos. Este painel suporta vários tipos de arquivo, incluindo  **R scripts**(.R), **RMarkdown** (.Rmd), scripts **Python** (.py) e mais.
 
-  * **Janela de Ambiente/Histórico/Conexões/Tutorial**: Localizada tipicamente no canto superior direito, este painel é multifuncional. A aba 'Ambiente' mostra os conjuntos de dados e variáveis atualmente na memória, 'Histórico' registra todos os comandos anteriores, 'Conexões' exibe conexões de banco de dados, e 'Tutorial' pode guiar você através de recursos de aprendizagem. É um local central para gerenciar os objetos do seu espaço de trabalho e revisar atividades passadas【28†source】【29†source】.
+  * **Janela de Ambiente/Histórico/Conexões/Tutorial**: Localizada tipicamente no canto superior direito, este painel é multifuncional. A aba 'Ambiente' mostra os conjuntos de dados e variáveis atualmente na memória, 'Histórico' registra todos os comandos anteriores, 'Conexões' exibe conexões de banco de dados, e 'Tutorial' pode guiar você através de recursos de aprendizagem. É um local central para gerenciar os objetos do seu espaço de trabalho e revisar atividades passadas.
 
   * **Janela de Arquivos/Gráficos/Pacotes/Ajuda/Visualizador**: Geralmente localizada no canto inferior direito, este painel versátil permite que você navegue pelos arquivos do seu projeto, visualize gráficos gerados pelos seus  **R scripts**, gerencie pacotes em **R**, acesse documentação e arquivos de ajuda do **R**, e veja conteúdo web ou visualizações geradas pelo **R**. É uma ferramenta essencial para gerenciar recursos, visualizar dados e acessar ajuda quando necessário.
 
@@ -190,11 +190,10 @@ Como você pode ver, existem diversas configurações e formatos de saída poss�
 
  - Uma ou alguamas sequências a serem buscadas, no formato fasta, que chamamos de ***query***;
  
-
-
+    
 > Copie todo o conteúdo a seguir para o seu **R script**. Coloque o cursor (esta barra | que pisca onde você está digitando) na primeira linha. Aperte `ctrl + ENTER` para executar a instrução escrita nessa linha, ou na próxima ativa
 
->> DICA: Linhas que começam com `**#**` são ignoradas pelo computador. Servem apenas para os **humanos**.  Você pode inserir comentários em qualquer parte do código, e escrever lembretes ou explicações que podem te ajudar a estudar, ou ajudar futuros usuários a entender como o código funciona.
+>> DICA: Linhas que começam com **#** são ignoradas pelo computador. Servem apenas para os **humanos**.  Você pode inserir comentários em qualquer parte do código, e escrever lembretes ou explicações que podem te ajudar a estudar, ou ajudar futuros usuários a entender como o código funciona.
 
 ```{r, echo=TRUE,eval=FALSE}
 
