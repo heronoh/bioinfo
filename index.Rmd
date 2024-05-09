@@ -1,5 +1,5 @@
 ---
-title: "Ensino em Bioinformática"
+title: "Análises de Heron Hilário"
 author: "Heron O.H."
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
@@ -19,48 +19,19 @@ htmltools::img(src = knitr::image_uri("misc/HOH-02.png"),
 ```
 
 
-**Bem vind\*! **
 
-**Neste canal iremos desbravar o universo da bioinformática.**
+### **Bem vind\∞! **
 
-Aqui disponibilizarei os roteiros de aulas práticas produzidos para 
-a disciplina _Bioinformática e Genômica_, da PUC Minas. Estes roteiros tem como objetivo facilitar o primeiro contato com a bioinformática, através de explicações e exercícios.
-
-
-### Aulas práticas
-#### bash (WSL/Ubuntu)
+#### **Esta é uma página dedicada à publicação de materiais didáticos e análises de bioinfo, utilizando _bash_ e _R_,  realizadas por mim. Todos os códigos aqui disponibilizados são de livre reprodução, mas peço gentilmente que referenciem este site ou os artigos publicados relativos a cada um dos _scripts_.**
 
 ```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=FALSE, results='asis'}
-
-rmd <- Sys.glob("aulas/aulas_bash/*.Rmd")
-# rmd <- Sys.glob("*.Rmd")
-rmd <- rmd[rmd != "index.Rmd"]
-html <- sub(".Rmd", ".html", rmd)
-lines <- lapply(rmd, readLines)
-yaml <- lapply(lines, rmarkdown:::parse_yaml_front_matter)
-cat("<ul>")
-for (i in seq_along(rmd)) {
-  cat(paste0("<li><a href='", html[i], "'>", yaml[[i]]$title, "</a><br/>",
-             "<code>", rmd[i], "</code>", "</li>"))
-}
 cat("</ul>")
+cat("<li><a href='eDNA/index.html'><b><i>scripts</i> de <i>eDNA metabarcoding</i></b></a><br/><Cite><i>scripts</i> bioinformáticos em <i>Rmd<i/> para análises de <b>eDNA metabarcoding</b> desenvolvidos por nosso grupo de pesquisa para estudos de detecção e monitoramento de vertebrados e invertebrados.</Cite></li>")
+cat("</ul>")
+
+cat("</ul>")
+cat("<li><a href='aulas/index.html'><b>Aulas práticas de Bioinformática</b></a><br/><Cite>Conteúdo destinado a iniciantes que querem dar os primeiros passos na interface de linha de comando <b>Linux</b> na utilização de programas e scripts bioinformáticos, e também na linguagem <b>R</b>.</Cite></li>")
+cat("</ul>")
+
 ```
 
-#### R (RStudio)
-
-
-```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=FALSE, results='asis'}
-
-rmd <- Sys.glob("aulas/aulas_R/*.Rmd")
-# rmd <- Sys.glob("*.Rmd")
-rmd <- rmd[rmd != "index.Rmd"]
-html <- sub(".Rmd", ".html", rmd)
-lines <- lapply(rmd, readLines)
-yaml <- lapply(lines, rmarkdown:::parse_yaml_front_matter)
-cat("<ul>")
-for (i in seq_along(rmd)) {
-  cat(paste0("<li><a href='", html[i], "'>", yaml[[i]]$title, "</a><br/>",
-             "<code>", rmd[i], "</code>", "</li>"))
-}
-cat("</ul>")
-```
