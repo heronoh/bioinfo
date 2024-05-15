@@ -13,7 +13,7 @@ editor_options:
 ---
 
 ```{r, echo=FALSE}
-htmltools::img(src = knitr::image_uri("misc/HOH-02.png"), 
+htmltools::img(src = knitr::image_uri("../misc/HOH-02.png"), 
                alt = 'logo', 
                style = 'position:absolute; top:0; right:0; padding:10px; width:100px; height:100px')
 ```
@@ -32,7 +32,7 @@ a disciplina _Bioinformática e Genômica_, da PUC Minas. Estes roteiros tem com
 
 ```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=FALSE, results='asis'}
 
-rmd <- Sys.glob("aulas/aulas_bash/*.Rmd")
+rmd <- Sys.glob("aulas_bash/*.Rmd")
 # rmd <- Sys.glob("*.Rmd")
 rmd <- rmd[rmd != "index.Rmd"]
 html <- sub(".Rmd", ".html", rmd)
@@ -51,7 +51,7 @@ cat("</ul>")
 
 ```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=FALSE, results='asis'}
 
-rmd <- Sys.glob("aulas/aulas_R/*.Rmd")
+rmd <- Sys.glob("aulas_R/*.Rmd")
 # rmd <- Sys.glob("*.Rmd")
 rmd <- rmd[rmd != "index.Rmd"]
 html <- sub(".Rmd", ".html", rmd)
