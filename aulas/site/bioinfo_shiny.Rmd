@@ -1,0 +1,103 @@
+---
+title: "Interactive Plot with File Upload"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+# Load necessary libraries
+library(shiny)
+library(ggplot2)
+library(plotly)
+```
+
+
+
+```{r, include=FALSE}
+# Define UI for the Shiny app
+ui <- fluidPage(
+    titlePanel("Interactive Plot with CSV Upload"),
+    
+    # Tab structure
+    tabsetPanel(
+        # First tab: File upload
+        tabPanel("Upload CSV",
+                 sidebarLayout(
+                     sidebarPanel(
+                         fileInput("file1", "Choose CSV File",
+                                   accept = c(
+                                       "text/csv",
+                                       "text/comma-separated-values,text/plain",
+                                       ".csv")),
+                         tags$hr(),
+                         checkboxInput("header", "Header", TRUE)
+                     ),
+                     mainPanel(
+                         tableOutput("contents")
+                     )
+                 )
+        ),
+        
+        # Second tab: Plot
+        tabPanel("Plot",
+                 sidebarLayout(
+                     sidebarPanel(
+                         # Input: Slider for the number of observations
+                         sliderInput(inputId = "n",
+                                     label = "Number of observations:",
+                                     min = 10,
+                                     max = 1000,
+                                     value = 100)
+                     ),
+                     mainPanel(
+                         # Output: Plotly plot
+                         plotlyOutput(outputId = "distPlot")
+                     )
+                 )
+        )
+    )
+)
+
+# Define server logic for the Shiny app
+server <- function(input, output) {
+    
+    # Function to read the uploaded file
+    dataInput <- reactive({
+        req(input$file1)
+        read.csv(input$file1$datapath, header = input$header)
+    })
+    
+    # Display contents of the uploaded file
+    output$contents <- renderTable({
+        dataInput()
+    })
+    
+    # Generate plot based on uploaded data or randomly generated data
+    output$distPlot <- renderPlotly({
+        if (is.null(input$file1)) {
+            # If no file is uploaded, generate random data
+            data <- data.frame(x = rnorm(input$n))
+        } else {
+            # Use the uploaded data
+            data <- dataInput()
+            if (!"x" %in% names(data)) {
+                stop("The uploaded CSV file must contain a column named 'x'")
+            }
+        }
+        
+        # Create ggplot
+        p <- ggplot(data, aes(x = x)) +
+            geom_histogram(binwidth = 0.2, fill = "blue", color = "white") +
+            labs(title = "Histogram",
+                 x = "Value", y = "Frequency")
+        
+        # Convert ggplot to plotly
+        ggplotly(p)
+    })
+}
+
+# Run the Shiny app
+shinyApp(ui = ui, server = server)
+```
+
+
