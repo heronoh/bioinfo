@@ -153,7 +153,12 @@ library("dplyr")
 
 ### Para a prática
 
-Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser baixado [aqui](https://drive.google.com/file/d/1cBdH54Ri8CYDb1wdXE5dgd6UWQqbdEiU/view?usp=sharing). Você irá fazer download do arquivo e em seguida iremos carregar esse arquivo para o R. Para as análises da desta aula prática, você pode pular a próxima sessão.
+Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser baixado [aqui](https://drive.google.com/file/d/1cBdH54Ri8CYDb1wdXE5dgd6UWQqbdEiU/view?usp=sharing). Você irá fazer download do arquivo e em seguida iremos carregar esse arquivo para o R. 
+
+
+Vamos ver o arquivo no formato tabular clássico, nesta [tabela](https://docs.google.com/spreadsheets/d/1z46ZbQUn74_zI0IJG8RrNI096Y0VYPHebm0Ubg5CT8Y/edit?usp=drive_link).
+
+Para as análises da desta aula prática, você pode pular a próxima sessão.
 
 
 > DICA 1: Para prosseguir na análise que vamos desenvolver, copie e cole os blocos de código num novo documento do tipo *.R*.
