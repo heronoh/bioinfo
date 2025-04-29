@@ -17,6 +17,11 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library("ggplot2")
+library("dplyr")
+dados_SUS <-  read.csv(file = "~/prjcts/bioinfo/misc/dados_SUS_filt.csv",
+                             sep = ",") %>% tibble::tibble()
 ```
 
 ```{r color, echo=FALSE, results='asis'}
@@ -118,7 +123,7 @@ O uso integrado desses sistemas permite compreender a situação de saúde da po
 
 # Prática
 
-Nesta prática iremos explorar um subconjunto de dados do sistema SIM-DO, mais especificamente analisando óbitos relacionados à.
+Nesta prática iremos explorar um subconjunto de dados do sistema SIM-DO, mais especificamente analisando óbitos relacionados ao *CID J159*: _"Pneumonia bacteriana, não especificada"_.
 Aproveitaremos também para revisar alguns consceitos importantes sobre a linguagem R e seu funcionamento.
 
 ## Preparação
@@ -126,7 +131,7 @@ Aproveitaremos também para revisar alguns consceitos importantes sobre a lingua
 ### Carregar pacotes
 
 
-```{r import_data_susrados, echo=TRUE,eval=FALSE}
+```{r import_dados_SUSrados, echo=TRUE,eval=FALSE}
 # para instalar o pacote, caso ainda não tenha (só se instala uma vez)
 install.packages("ggplot2")
 install.packages("dplyr")
@@ -148,7 +153,7 @@ library("dplyr")
 
 ### Para a prática
 
-Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser baixado [aqui](https://drive.google.com/file/d/1JKU12N-x_8_PcdRJHX6MzRtrZZDRqvET/view?usp=sharing). Você irá fazer download do arquivo e em seguida iremos carregar esse arquivo para o R. Para as análises da desta aula prática, você pode pular a próxima sessão.
+Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser baixado [aqui](https://drive.google.com/file/d/1cBdH54Ri8CYDb1wdXE5dgd6UWQqbdEiU/view?usp=sharing). Você irá fazer download do arquivo e em seguida iremos carregar esse arquivo para o R. Para as análises da desta aula prática, você pode pular a próxima sessão.
 
 
 > DICA 1: Para prosseguir na análise que vamos desenvolver, copie e cole os blocos de código num novo documento do tipo *.R*.
@@ -158,9 +163,9 @@ Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser
 ```{r import_dados_SUS, echo=TRUE,eval=FALSE}
                              #complete usando a tecla TAB até chegar ao arquivo que você baixou
 dados_SUS <- read.csv(file = "",
-                      sep = ";",
-                      ""
-                      )
+                      sep = ","
+                      ) %>% 
+  tibble::tibble()
 ```
 
 ### Para outros projetos
@@ -192,7 +197,7 @@ dados_SUS
 
 
 &nbsp;&nbsp;
-Nossos dados estão no formato _tabular_, ou seja, organizados em *linhas* e *colunas*. As linhas são as observações de qualquer tabela. No nosso caso elas correspondem a indivíduos. Já as colunas são conjuntos definidos de informação. Cada coluna armazena um tipo de informação única, como a _idade_, _sexo_, _município de nascimento_, entre outros. Assim, uma coluna que armazena a _idade_ terá apenas valores numéricos positivos, já a de _município de nascimento_ terá apenas nomes de cidade, e a coluna _sexo_ terá apenas as classes de valores *masculino*, *feminino* ou *não informado*. Desta maneira, *idade* é uma variável contínua e numérica. Por outro lado, *sexo* é uma variável discreta e categórica. Vamos entender isso melhor.
+Nossos dados estão no formato _tabular_, ou seja, organizados em *linhas* e *colunas*. As linhas são as observações de qualquer tabela. No nosso caso elas correspondem a indivíduos. Já as colunas são conjuntos definidos de informação. Cada coluna armazena um tipo de informação única, como a _idade_, _Sexo_, _município de nascimento_, entre outros. Assim, uma coluna que armazena a _idade_ terá apenas valores numéricos positivos, já a de _município de nascimento_ terá apenas nomes de cidade, e a coluna _Sexo_ terá apenas as classes de valores *masculino*, *feminino* ou *não informado*. Desta maneira, *idade* é uma variável contínua e numérica. Por outro lado, *Sexo* é uma variável discreta e categórica. Vamos entender isso melhor.
 
 ```{r, echo=TRUE,eval=FALSE}
 # ver a tabela de dados
@@ -205,17 +210,17 @@ dim(dados_SUS)
 colnames(dados_SUS)
 
 # quais os valores de uma coluna
-dados_SUS$IDADEanos 
-dados_SUS$SEXO 
+dados_SUS$Idade_anos 
+dados_SUS$Sexo 
 
 # quantas observações temos de cada tipo? 
-dados_SUS$IDADEanos %>% table()
-dados_SUS$SEXO %>% table()
+dados_SUS$Idade_anos %>% table()
+dados_SUS$Sexo %>% table()
 
 
 # visualizar quantas observações temos de cada tipo
-dados_SUS$IDADEanos %>% table() %>% plot()
-dados_SUS$SEXO %>% table() %>% plot()
+dados_SUS$Idade_anos %>% table() %>% plot()
+dados_SUS$Sexo %>% table() %>% barplot()
 
 
 
@@ -226,19 +231,23 @@ dados_SUS[1:10,]
 dados_SUS[,2]
 
 
+#qual a média de idades?
+dados_SUS$Idade_anos %>% mean(na.rm = T)
+
+
 ```
 
 
 ### Gráficos exploratórios
 
 
+#### Gráfico escolaridade por Sexo
+
+```{r graficos1, echo=TRUE,eval=TRUE}
 
 
-```{r graficos, echo=TRUE,eval=FALSE}
-
-
-# grágico escolaridade por sexo
- data_sus %>%
+# grágico escolaridade por Sexo
+ dados_SUS %>%
   mutate(Idade_anos = as.numeric(Idade_anos) ) %>% 
   filter(Sexo %in% c("Masculino", "Feminino")) %>% 
   ggplot(aes(x = CID_significado,
@@ -249,9 +258,12 @@ dados_SUS[,2]
   facet_grid(cols = vars(Sexo))
 
 
+```
+#### Gráfico de Sexo e escolaridade 
 
-# grágico de sexo  escolaridade 
- data_sus %>%
+```{r graficos2, echo=TRUE,eval=TRUE}
+
+ dados_SUS %>%
   mutate(Idade_anos = as.numeric(Idade_anos) ) %>% 
   filter(Sexo %in% c("Masculino", "Feminino")) %>% 
   ggplot(aes(x = CID_significado,
@@ -262,8 +274,12 @@ dados_SUS[,2]
   facet_grid(cols = vars(Escolaridade))
 
 
-# aumento de mortes
- data_sus %>%
+
+```
+#### Gráfico aumento de mortes por grupo de escolaridade
+
+```{r graficos3, echo=TRUE,eval=TRUE}
+ dados_SUS %>%
   filter(Sexo %in% c("Masculino", "Feminino")) %>% 
   ggplot(aes(x = Ano_obito,
              group = Sexo,
@@ -275,8 +291,12 @@ dados_SUS[,2]
 
 
 
-# aumento de mortes
- data_sus %>%
+```
+#### Gráfico aumento de mortes total
+
+```{r graficos4, echo=TRUE,eval=TRUE}
+
+ dados_SUS %>%
   filter(Sexo %in% c("Masculino", "Feminino")) %>% 
   ggplot(aes(x = Ano_obito,
              group = Sexo,
@@ -286,9 +306,11 @@ dados_SUS[,2]
    theme(axis.text.x = element_text(angle = 90))
 
 
+```
+#### Gráfico aumento de mortes por ano e estado civil
 
-# aumento de mortes
- data_sus %>%
+```{r graficos5, echo=TRUE,eval=TRUE}
+ dados_SUS %>%
   filter(Sexo %in% c("Masculino", "Feminino")) %>% 
   ggplot(aes(x = Ano_obito,
              group = Estado_civil,
@@ -298,10 +320,11 @@ dados_SUS[,2]
    theme(axis.text.x = element_text(angle = 90)) +
   facet_grid(cols = vars(Sexo)) 
 
+```
+#### Gráfico de média de idades por grupo de escolaridade
 
-
-# média de idade por morte
- data_sus %>%
+```{r graficos6, echo=TRUE,eval=TRUE}
+ dados_SUS %>%
   filter(Sexo %in% c("Masculino", "Feminino")) %>% 
   ggplot(aes(y = Idade_anos,
              x = Sexo,
