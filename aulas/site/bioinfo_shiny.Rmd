@@ -11,8 +11,6 @@ library(ggplot2)
 library(plotly)
 ```
 
-
-
 ```{r, include=FALSE}
 # Define UI for the Shiny app
 ui <- fluidPage(
@@ -99,5 +97,3 @@ server <- function(input, output) {
 # Run the Shiny app
 shinyApp(ui = ui, server = server)
 ```
-
-

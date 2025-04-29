@@ -1,0 +1,372 @@
+---
+title: "Visualização de dados do SUS"
+author: "Prof. Heron OH"
+place: "Biomedicina - PUC Minas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  rmdformats::downcute:
+    code_folding: show
+    self_contained: true
+    toc_depth: 5
+    toc_float: yes
+    highlight: zenburn
+    code_download: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo=FALSE, results='asis'}
+#configurar pros **R**esultados do bash sairem coloridos e não ANSI
+
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks, 
+  which = c("output", "message", "error")
+)
+```
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da *PUC-MG*.
+Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo/aulas).
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Hoje nós vamos trabalhar com dados obtidos do _Sistema Único de Saúde_, o _*SUS*_. 
+
+
+# Introdução
+
+## Os dados do SUS
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+O _*SUS*_ mantém e disponibiliza diversos sistemas de informação contendo dados relacionados à doenças, condições, causas de óbito, quadros hospitalares e características de indivíduos brasileiros. Estes dados são _anonimizados_, o que significa que não se é possível associá-los ao indivíduo fonte, desta maneira garantindo a privacidade do cidadão.
+
+O *_DATASUS_* disponibiliza informações que podem servir para subsidiar  análises objetivas da situação sanitária, tomadas de decisão baseadas em evidências e elaboração de programas e ações em saúde. Estes dados podem ser coletados manualmente, através da interface [*TABNET*](https://datasus.saude.gov.br/informacoes-de-saude-tabnet/), ou diversas outras fontes. 
+Recentemente foi desenvolvido o pacote de R [*_microdatasus_*](https://github.com/rfsaldanha/microdatasus), que possibilita baixar os dados através de interface programática, facilitando enormemente o processo.
+
+Existem diversos sistemas distintos, vamos conhecer os principais:
+
+## Principais Sistemas
+
+### SIM - Sistema de Informações sobre Mortalidade
+
+- **Objetivo:** Registrar e monitorar os óbitos ocorridos no Brasil.
+- **Fonte de dados:** Declarações de Óbito (DO).
+- **Informações coletadas:** 
+  - Causa básica da morte (CID-10),
+  - Idade,
+  - Sexo,
+  - Escolaridade,
+  - Local de ocorrência.
+
+O SIM é usado para análises de mortalidade por causas específicas, como doenças crônicas, infecções e causas externas (acidentes, homicídios).
+
+### SINASC - Sistema de Informações sobre Nascidos Vivos
+
+- **Objetivo:** Registrar todos os nascimentos vivos no país.
+- **Fonte de dados:** Declarações de Nascido Vivo (DNV).
+- **Informações coletadas:**
+  - Peso ao nascer,
+  - Idade gestacional,
+  - Tipo de parto,
+  - Escolaridade da mãe,
+  - Local do parto.
+
+O SINASC é importante para estudar indicadores como prematuridade, baixo peso ao nascer e saúde materno-infantil.
+
+### Outros Sistemas Relevantes
+
+- **SIH-SUS** (Sistema de Informações Hospitalares): registros de internações hospitalares no SUS.
+- **SIA-SUS** (Sistema de Informações Ambulatoriais): registros de atendimentos ambulatoriais no SUS.
+- **SINAN** (Sistema de Informação de Agravos de Notificação): monitora doenças de notificação obrigatória, como dengue, tuberculose e HIV.
+- **CNES** (Cadastro Nacional de Estabelecimentos de Saúde): registra informações sobre hospitais, postos de saúde e outros estabelecimentos de saúde.
+
+
+O uso integrado desses sistemas permite compreender a situação de saúde da população brasileira, monitorar tendências e embasar decisões em saúde pública.
+
+
+
+# Prática
+
+Nesta prática iremos explorar um subconjunto de dados do sistema SIM-DO, mais especificamente analisando óbitos relacionados à.
+Aproveitaremos também para revisar alguns consceitos importantes sobre a linguagem R e seu funcionamento.
+
+## Preparação
+
+### Carregar pacotes
+
+
+```{r import_data_susrados, echo=TRUE,eval=FALSE}
+# para instalar o pacote, caso ainda não tenha (só se instala uma vez)
+install.packages("ggplot2")
+install.packages("dplyr")
+
+# execute para carregar o pacote, caso já instalado
+library("ggplot2")
+library("dplyr")
+
+```
+
+
+> DICA 1: toda vez que você for reiniciar um sessão é necessário carregar os pacotes. Eles são a primeira coisa de qualquer código.
+
+> DICA 2: Se ao carregar o pacote você tiver uma mensagem de erro como _pacote não disponível, package not available, etc_, praticamente qualquer pacore pode ser instalado com o comando intall.packages("nome_do_pacote").
+
+> DICA 3: Cada pacote só precisa ser instalado uma única vez.
+
+## Obtendo os dados
+
+### Para a prática
+
+Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser baixado [aqui](https://drive.google.com/file/d/1JKU12N-x_8_PcdRJHX6MzRtrZZDRqvET/view?usp=sharing). Você irá fazer download do arquivo e em seguida iremos carregar esse arquivo para o R. Para as análises da desta aula prática, você pode pular a próxima sessão.
+
+
+> DICA 1: Para prosseguir na análise que vamos desenvolver, copie e cole os blocos de código num novo documento do tipo *.R*.
+
+> DICA 2: utilize a tecla **tab** para autocompletar e evitar erros!
+
+```{r import_dados_SUS, echo=TRUE,eval=FALSE}
+                             #complete usando a tecla TAB até chegar ao arquivo que você baixou
+dados_SUS <- read.csv(file = "",
+                      sep = ";",
+                      ""
+                      )
+```
+
+### Para outros projetos
+
+Caso você tenha interesse em investigar outras questões sanitárias da população brasileira, você pode obter diferentes conjuntos de dados assim:
+
+```{r intall_microdatasus, echo=TRUE,eval=FALSE}
+# executar apenas se estiver instalando em um computador windows ----
+install.packages("read.dbc", repos = "https://packagemanager.posit.co/cran/2024-07-05")
+
+#instalar pacotes necessários ----
+install.packages("remotes")
+remotes::install_github("rfsaldanha/microdatasus")
+
+library(microdatasus)
+
+# baixar dados ----
+dados_brutos_SUS <- fetch_datasus(year_start = 2020,
+                       year_end = 2023, 
+                       uf = "MG", 
+                       information_system = "SIM-DO")
+
+dados_SUS <- process_sim(dados_brutos_SUS)
+
+dados_SUS
+```
+
+## Investigando os dados
+
+
+&nbsp;&nbsp;
+Nossos dados estão no formato _tabular_, ou seja, organizados em *linhas* e *colunas*. As linhas são as observações de qualquer tabela. No nosso caso elas correspondem a indivíduos. Já as colunas são conjuntos definidos de informação. Cada coluna armazena um tipo de informação única, como a _idade_, _sexo_, _município de nascimento_, entre outros. Assim, uma coluna que armazena a _idade_ terá apenas valores numéricos positivos, já a de _município de nascimento_ terá apenas nomes de cidade, e a coluna _sexo_ terá apenas as classes de valores *masculino*, *feminino* ou *não informado*. Desta maneira, *idade* é uma variável contínua e numérica. Por outro lado, *sexo* é uma variável discreta e categórica. Vamos entender isso melhor.
+
+```{r, echo=TRUE,eval=FALSE}
+# ver a tabela de dados
+dados_SUS
+
+# qual o tamanho da tabela
+dim(dados_SUS)
+
+# qual o nome das colunas
+colnames(dados_SUS)
+
+# quais os valores de uma coluna
+dados_SUS$IDADEanos 
+dados_SUS$SEXO 
+
+# quantas observações temos de cada tipo? 
+dados_SUS$IDADEanos %>% table()
+dados_SUS$SEXO %>% table()
+
+
+# visualizar quantas observações temos de cada tipo
+dados_SUS$IDADEanos %>% table() %>% plot()
+dados_SUS$SEXO %>% table() %>% plot()
+
+
+
+#quais as 10 primeiras observações dessa tabela
+dados_SUS[1:10,]
+
+#quais asegunda coluna
+dados_SUS[,2]
+
+
+```
+
+
+### Gráficos exploratórios
+
+
+
+
+```{r graficos, echo=TRUE,eval=FALSE}
+
+
+# grágico escolaridade por sexo
+ data_sus %>%
+  mutate(Idade_anos = as.numeric(Idade_anos) ) %>% 
+  filter(Sexo %in% c("Masculino", "Feminino")) %>% 
+  ggplot(aes(x = CID_significado,
+             group = Escolaridade,
+             col = Escolaridade,
+             fill  = Escolaridade)) +
+  geom_bar(stat = "count",position = "dodge") +
+  facet_grid(cols = vars(Sexo))
+
+
+
+# grágico de sexo  escolaridade 
+ data_sus %>%
+  mutate(Idade_anos = as.numeric(Idade_anos) ) %>% 
+  filter(Sexo %in% c("Masculino", "Feminino")) %>% 
+  ggplot(aes(x = CID_significado,
+             group = Sexo,
+             col = Sexo,
+             fill  = Sexo)) +
+  geom_bar(stat = "count",position = "dodge") +
+  facet_grid(cols = vars(Escolaridade))
+
+
+# aumento de mortes
+ data_sus %>%
+  filter(Sexo %in% c("Masculino", "Feminino")) %>% 
+  ggplot(aes(x = Ano_obito,
+             group = Sexo,
+             col = Sexo,
+             fill  = Sexo)) +
+  geom_density(stat = "count",position = "stack") +
+  facet_grid(cols = vars(Escolaridade)) +
+   theme(axis.text.x = element_text(angle = 90))
+
+
+
+# aumento de mortes
+ data_sus %>%
+  filter(Sexo %in% c("Masculino", "Feminino")) %>% 
+  ggplot(aes(x = Ano_obito,
+             group = Sexo,
+             col = Sexo,
+             fill  = Sexo)) +
+  geom_density(stat = "count",position = "stack") +
+   theme(axis.text.x = element_text(angle = 90))
+
+
+
+# aumento de mortes
+ data_sus %>%
+  filter(Sexo %in% c("Masculino", "Feminino")) %>% 
+  ggplot(aes(x = Ano_obito,
+             group = Estado_civil,
+             col = Estado_civil,
+             fill  = Estado_civil)) +
+  geom_density(stat = "count",position = "stack") +
+   theme(axis.text.x = element_text(angle = 90)) +
+  facet_grid(cols = vars(Sexo)) 
+
+
+
+# média de idade por morte
+ data_sus %>%
+  filter(Sexo %in% c("Masculino", "Feminino")) %>% 
+  ggplot(aes(y = Idade_anos,
+             x = Sexo,
+             group = Sexo,
+             fill  = Sexo)) +
+  geom_boxplot() +
+   # geom_jitter() +
+   theme(axis.text.x = element_text(angle = 90)) +
+  facet_grid(cols = vars(Escolaridade)) 
+
+
+
+```
+
+
+E por hoje ficamos por aqui!
+
+
+***
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+cat('
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var codeBlocks = document.querySelectorAll("pre code");
+  codeBlocks.forEach(function(codeBlock) {
+    var button = document.createElement("button");
+    button.className = "copy-button";
+    button.type = "button";
+    button.innerText = "Copiar";
+    
+    button.addEventListener("click", function() {
+      navigator.clipboard.writeText(codeBlock.innerText);
+      button.innerText = "Copiado!";
+      setTimeout(function() {
+        button.innerText = "Copiar";
+      }, 2000);
+    });   
+
+    var pre = codeBlock.parentNode;
+    pre.parentNode.insertBefore(button, pre);
+  });
+});
+</script>
+
+<style>
+.copy-button {
+  float: right;
+  margin: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background-color: #406dde;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.copy-button:hover {
+  background-color: #45a049;
+}
+</style>
+')
+
+
+
+
