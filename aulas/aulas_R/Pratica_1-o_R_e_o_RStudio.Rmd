@@ -265,6 +265,7 @@ install.packages("ggplot2") # este só precisa ser executado uma vez!
 library(ggplot2)
 
 
+
 tabela
 stack(tabela)
 
