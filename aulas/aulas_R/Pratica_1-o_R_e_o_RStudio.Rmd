@@ -69,7 +69,7 @@ Hoje você vai conhercer a **linguagem R** e o **RStudio**.
 ## Sobre o **R** e o **RStudio**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-A **linguagem de programação R**, criada por *Ross Ihaka* e *Robert Gentleman* na *Universidade de Auckland*, Nova Zelândia, no início dos anos 90, foi concebida inicialmente como uma linguagem e ambiente para análise estatística e gráficos[r-project](https://www.r-project.org/about.html). Inspirada na *linguagem S*, desenvolvida nos Laboratórios Bell, o **R** rapidamente ganhou popularidade devido à sua capacidade de realizar complexas manipulações de dados, análises estatísticas e produzir gráficos de alta qualidade. Com o tempo, a comunidade em torno da **R** cresceu exponencialmente, contribuindo com uma vasta coleção de pacotes para o [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/), expandindo assim suas capacidades para além da estatística básica, para áreas como aprendizado de máquina, visualização de dados, análise de séries temporais, bioinformática, entre outras.
+A **linguagem de programação R**, criada por *Ross Ihaka* e *Robert Gentleman* na *Universidade de Auckland*, Nova Zelândia, no início dos anos 90, foi concebida inicialmente como uma linguagem e ambiente para análise estatística e gráficos (veja aqui em r-project[r-project](https://www.r-project.org/about.html)). Inspirada na *linguagem S*, desenvolvida nos Laboratórios Bell, o **R** rapidamente ganhou popularidade devido à sua capacidade de realizar complexas manipulações de dados, análises estatísticas e produzir gráficos de alta qualidade. Com o tempo, a comunidade em torno da **R** cresceu exponencialmente, contribuindo com uma vasta coleção de pacotes para o [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/), expandindo assim suas capacidades para além da estatística básica, para áreas como aprendizado de máquina, visualização de dados, análise de séries temporais, bioinformática, entre outras.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 O **RStudio**, por sua vez, é um ambiente de desenvolvimento integrado (IDE) para **R**. Lançado em 2011, que facilitou ainda mais o uso da **linguagem R**, oferecendo uma interface amigável e diversas ferramentas que melhoram a produtividade dos usuários, como editor de código, console, visualização de dados e gestão de pacotes. A popularidade do **R** e do **RStudio** na pesquisa científica e na ciência de dados deve-se à sua natureza _open-source_, permitindo que pesquisadores e cientistas de dados compartilhem facilmente seus códigos e análises, promovendo a reprodutibilidade e a colaboração na pesquisa. Além disso, a capacidade de **R** em lidar com grandes volumes de dados, realizar análises complexas e produzir visualizações de dados detalhadas torna-a uma ferramenta indispensável em diversas áreas, desde a genética à economia, reforçando sua posição como uma das principais linguagens na ciência de dados e pesquisa científica contemporâneas. O **RStudio** e as funcionalidades do **R** podem ser utilizados para diversas outras aplicações. Por exemplo, este site foi criado no **RStudio**, utilizando o formato **R Mark Down** [**.Rmd**](https://rmarkdown.rstudio.com/).
@@ -106,12 +106,7 @@ executar o instalador da **linguagem R** _primeiro_, e em seguida o do **RStudio
 #### Os painéis do **RStudio**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-Antes de mais continuarmos, abra um novo **script em R**. Você pode fazer isso clicando no quadrado branco com um **+** branco e verde, no canto superior esquerdo do **RStudio**, e sem seguida selecionando a opção `R script` ou clicando em:
-
-> `File` **->** `New File` **->** `R script`
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-A interface do **RStudio** é dividida em quatro painéis principais, cada um desempenhando um papel distinto para melhorar a produtividade e eficiência nas suas tarefas de programação em **R**:
+A interface do **RStudio** é dividida em quatro painéis principais (veja mais em [painéis do RStudio](https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html)), cada um desempenhando um papel distinto para melhorar a produtividade e eficiência nas suas tarefas de programação em **R**:
 
   * **Janela do Console**: Localizada no canto inferior esquerdo, o _console_ é onde você pode inserir comandos **R** diretamente e visualizar suas saídas. É essencialmente o centro de interação do **R**, mostrando os **R**esultados das computações ou execuções de código. Você também pode limpar o console usando um ícone de vassoura para melhorar a legibilidade quando ele fica cheio.
 
@@ -128,11 +123,274 @@ Estes painéis são projetados para trabalhar juntos de forma integrada, fornece
 
 # Prática
 
+## Preparando um documento de código
+
 &nbsp;&nbsp;&nbsp;&nbsp;
-Vamos ter o nosso primeiro contato com o R
+Antes de mais continuarmos, abra um novo **script em R**. Você pode fazer isso clicando no quadrado branco com um **+** branco e verde, no canto superior esquerdo do **RStudio**, e sem seguida selecionando a opção `R script` ou clicando em:
+
+> `File` **->** `New File` **->** `R script`
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Vamos ter o nosso primeiro contato com o R. A partir de agora, tudo que estiver nesses quadro coloridos, você deve copiar (pode usar o botão no canto superior direito) e colar no seu _R script_.
 
 ```{R, echo=TRUE,eval=FALSE}
-##                 Introdução à introdução ao **R** e ao **RStudio**                  ##
+##                 Introdução à introdução ao **R** e ao **RStudio**          ##
+##                                                                            ##
+##                             Prof. Heron Hilário                            ##
+##                                                                            ##
+#_______________________________________________________________________________
+
+```
+
+### Criando objetos
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+Como você pode ver, existem diversas configurações e formatos de saída possíveis. Vamos aprender a fazer uma busca simples. Para isto você precisa de:
+
+ - Uma ou alguamas sequências a serem buscadas, no formato fasta, que chamamos de ***query***;
+ 
+    
+> Copie todo o conteúdo a seguir para o seu **R script**. Coloque o cursor (esta barra | que pisca onde você está digitando) na primeira linha. Aperte `ctrl + ENTER` para executar a instrução escrita nessa linha, ou na próxima ativa
+
+>> DICA: Linhas que começam com **#** são ignoradas pelo computador. Servem apenas para os **humanos**.  Você pode inserir comentários em qualquer parte do código, e escrever lembretes ou explicações que podem te ajudar a estudar, ou ajudar futuros usuários a entender como o código funciona. 
+
+>> DICA: Quando uma linhas que começa com **#** tem **----** no final, ela vira uma seção, que pode ser buscada no índice de seções do código.
+
+
+Um objeto é uma caixinha que você cria e que pode armazenar qualquer coisa: números, texto, dados, funções, vetores, listas, tabelas, modelos, gráficos, etc.
+
+Ao nomear um objeto, você deve usar apenas **letras (maiúsculas ou minúsculas), números e o sublinhado _ ou ponto .**.
+
+  - meu objeto: &#x274C;
+  - meu_lindo_objetinho: &#x2714;
+
+Nunca começe o nome de um objeto com um número:
+
+  - 1_objeto: &#x274C;
+  - objeto_1: &#x2714;
+  
+Use nomes que te ajudam a entender o que está armazenado no objeto:
+
+  - coisa: &#x274C;
+  - blablabla: &#x274C;
+  - tabela_medias: &#x2714;
+  - idades_alunos: &#x2714;
+  - peso_kg: &#x2714;
+
+Vamos criar nosso primeiro objeto:
+
+```{r, echo=TRUE,eval=FALSE}
+# criando objetos ----
+# neste código vamos criar objetos e tabelas
+
+## criar objeto a ----
+# este comando cria um objeto objA
+
+objA <- 3
+
+objA
+
+``` 
+
+Vamos criar mais um objeto, e armazenar outro número nele.
+
+```{r, echo=TRUE,eval=FALSE}
+## criar objeto objB ----
+objB <- 35
+
+objB
+
+## operações matemáticas com os objetos ---
+
+``` 
+
+### Utilizando objetos em operações lógicas
+
+Agora vamos multiplicar esses objetos? O cálculo será feito com os valores armazenados em cada um.
+
+```{r, echo=TRUE,eval=FALSE}
+## multiplicar objetos ----
+objA*objB
+
+## criar o objeto objD ----
+objD <- objA*objB
+
+objD
+
+``` 
+
+Agora você tem um código que pega dois números quaisquer e te dá a multiplicação deles.
+
+E se você alterar os números iniciais, o que acontece? Vamos refazer o **objA** com mais números. 
+
+```{r, echo=TRUE,eval=FALSE}
+## recriar o objA ----
+
+objA <- c(238, 55, 10, 3, 28, -1, 0.33)
+
+objA
+
+## multiplicar objetos ----
+objA*objB
+
+## criar o objeto objD ----
+objD <- objA*objB
+
+objD
+
+``` 
+
+Veja só! Você calculou diversas multiplicações com a mesma faciliade que você fez o cálculo com apenas dois números!
+
+Esse é o poder do computador, ele repete ações com muita facilicade.
+
+
+### Funções
+
+Funções são ferramentas que recebem um objeto ( _input_ ) de entrada, processam sua informação e devolvem um resultado ( _output_ ). Também podem receber *argumentos* que complementam as instruções para o funcionamento da função.
+
+Vamos conhecer algumas funções básicas
+
+```{r, echo=TRUE,eval=FALSE}
+## testando funções ----
+length(objD)
+max(objD)
+min(objD)
+sum(objD)
+
+
+######-> repita todos os passos anteriores com diferentes valores armazenados no objA
+
+
+``` 
+
+
+### Tabelas
+
+Grande parte dos dados que um cientista de dados investiga vem na forma de **tabelas**. Se você pensar bem, consegue organizar qualquer informação de um estudo, experimento, área do conhecimento, ..., na forma de uma tabela.
+
+O **R** é uma ferramenta perfeita para trabalahr com tabelas, pois realiza operações demaneira organizada para dados com esta estrutura.
+
+```{r, echo=TRUE,eval=FALSE}
+# trabalhando com tabelas ----
+
+# vamos criar uma tabela com a função data.frame()
+tabela_exp <- data.frame(antes = c(130, 100, 90,150,130,120),
+                     depois = c(56,  88, 32, 28, 40, 20),
+                     controle = c(0,  5,  2,  1,  5,  1))
+
+tabela_exp$antes
+tabela_exp$depois
+
+
+``` 
+
+
+### Gráficos simples
+
+```{r, echo=TRUE,eval=FALSE}
+# gráficos ----
+## o mais simples ----
+
+# veja o poder do R, de uma tabela a um gráfico em uma linha!
+
+boxplot(tabela_exp)
+
+
+
+
+
+``` 
+
+### Gráficos customizáveis
+
+O [**ggplot2**](https://ggplot2-book.org/) é um pacote do R amplamente utilizado para visualização de dados, criado por [**Hadley Wickham**](https://hadley.nz/) e lançado em 2005 como parte de seu trabalho para o RStudio e a comunidade R, é baseado na gramática dos gráficos, que permite construir gráficos de forma estruturada, consistente e altamente personalizável. 
+
+Sua importância reside na capacidade de transformar conjuntos de dados complexos em representações visuais claras, facilitando a exploração, interpretação e comunicação de resultados em áreas como Bioinformática e Genômica. 
+
+A flexibilidade do **ggplot2** permite combinar diferentes camadas de informação, como pontos, linhas, barras, textos, cores e facetas, oferecendo controle detalhado sobre estética, layout e facetas, o que torna o pacote uma ferramenta essencial para análises gráficas sofisticadas e reprodutíveis.
+
+Algumas **funções** não vem por padrão no R, e precisam ser instaladas. As **funções** geralmente pertencem a pacotes (conjunto de várias funções para um propósito específico), e a intalação destes é bem simples, com apenas um comando para instalar e outro para carregar o pacote, sempre que você for usar. Vamos instalar o pacote do **ggplot2** para usarmos:
+
+#### Instalando pacotes
+
+```{r, echo=TRUE,eval=FALSE}
+
+# fazer um grafico customizável com o ggplot ---- 
+install.packages("ggplot2") # este só precisa ser executado uma vez!
+
+library(ggplot2) #este você executa sempre que for usar
+
+
+```
+
+#### Usando pacotes
+
+
+```{r, echo=TRUE,eval=FALSE}
+# transformando a tabela para facilicar a entrada na função de gráfico
+
+tabela_exp
+stack(tabela_exp)
+
+#gráfico simples ----
+
+ggplot(stack(tabela_exp),
+       aes(x = ind,
+           y = values,
+           fill = ind,
+           )) +
+         geom_boxplot() 
+
+
+#adicionando camaad de pontos ----
+
+ggplot(stack(tabela_exp),
+       aes(x = ind,
+           y = values,
+           fill = ind,
+           )) +
+         geom_boxplot() +
+  geom_jitter()
+
+# customizando as cores ----
+ggplot(stack(tabela_exp),
+       aes(x = ind,
+           y = values,
+           fill = ind,
+           # col = ind
+           )) +
+         geom_boxplot() +
+  geom_jitter()+
+  # scale_fill_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
+  scale_colour_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
+  theme_bw()
+
+# salvando o gráfico em um objeto ----
+meu_1_boxplot <- ggplot(stack(tabela_exp),
+       aes(x = ind,
+           y = values,
+           fill = ind,
+           # col = ind
+           )) +
+         geom_boxplot() +
+  geom_jitter()+
+  # scale_fill_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
+  scale_colour_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
+  theme_bw()
+
+
+meu_1_boxplot
+
+```
+
+
+#### Outras dicas e atalhos
+
+
+```{R, echo=TRUE,eval=FALSE}
+##                 Introdução à introdução ao **R** e ao **RStudio**          ##
 ##                                                                            ##
 ##                             Prof. Heron Hilário                            ##
 ####                               março/2024                               ####
@@ -183,109 +441,57 @@ Vamos ter o nosso primeiro contato com o R
 
 Você pode encontrar a lista de todos os atalhos do **RStudio** [**aqui**](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts-in-the-RStudio-IDE).
 
-### Primeiro contato
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-Como você pode ver, existem diversas configurações e formatos de saída possíveis. Vamos aprender a fazer uma busca simples. Para isto você precisa de:
-
- - Uma ou alguamas sequências a serem buscadas, no formato fasta, que chamamos de ***query***;
- 
-    
-> Copie todo o conteúdo a seguir para o seu **R script**. Coloque o cursor (esta barra | que pisca onde você está digitando) na primeira linha. Aperte `ctrl + ENTER` para executar a instrução escrita nessa linha, ou na próxima ativa
-
->> DICA: Linhas que começam com **#** são ignoradas pelo computador. Servem apenas para os **humanos**.  Você pode inserir comentários em qualquer parte do código, e escrever lembretes ou explicações que podem te ajudar a estudar, ou ajudar futuros usuários a entender como o código funciona.
-
-```{r, echo=TRUE,eval=FALSE}
-
-# neste código vamos criar objetos e tabelas
-
-# objetos ----
-## criar objeto a ----
-# este comando cria um objeto objA
-
-objA <- 3
-# objA <- 238
-# objA <- c(238, 55, 10)
-# objA <- c(238, 55, 10, 3, 28, -1, 0.33)
-
-objA
-
-## criar objeto objB ----
-objB <- 35
-
-objB
-
-## operações matemáticas com os objetos ---
-
-objA*objB
-## criar o objeto objD ----
-objD <- objA*objB
-objD
-
-
-## testando funções ----
-mean(objD)
-max(objD)
-min(objD)
-sum(objD)
-
-
-######-> repita todos os passos anteriores com diferentes valores armazenados no objA
-
-
-# trabalhando com tabelas ----
-
-# vamos criar uma tabela com a função data.frame()
-tabela <- data.frame(antes = c(130, 100, 90,150,130,120),
-                     depois = c(56,  88, 32, 28, 40, 20),
-                     controle = c(0,  5,  2,  1,  5,  1))
-
-tabela$antes
-tabela$depois
-
-
-# gráficos ----
-## o mais simples ----
-
-# veja o poder do R, de uma tabela a um gráfico em uma linha!
-
-boxplot(tabela)
-
-
-
-
-
-
-## outras possibilidades
-
-
-# fazer um grafico customizável com o ggplot ---- 
-install.packages("ggplot2") # este só precisa ser executado uma vez!
-
-library(ggplot2)
-
-
-
-tabela
-stack(tabela)
-
-ggplot(stack(tabela),
-       aes(x = ind,
-           y = values,
-           fill = ind,
-           # col = ind 
-           )) +
-         geom_boxplot() +
-  geom_point()+
-  scale_fill_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
-  theme_bw()
-
-```
-
 
 ***
 
 >>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+
+
+
+cat('
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var codeBlocks = document.querySelectorAll("pre code");
+  codeBlocks.forEach(function(codeBlock) {
+    var button = document.createElement("button");
+    button.className = "copy-button";
+    button.type = "button";
+    button.innerText = "Copiar";
+    
+    button.addEventListener("click", function() {
+      navigator.clipboard.writeText(codeBlock.innerText);
+      button.innerText = "Copiado!";
+      setTimeout(function() {
+        button.innerText = "Copiar";
+      }, 2000);
+    });   
+
+    var pre = codeBlock.parentNode;
+    pre.parentNode.insertBefore(button, pre);
+  });
+});
+</script>
+
+<style>
+.copy-button {
+  float: right;
+  margin: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background-color: #406dde;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.copy-button:hover {
+  background-color: #45a049;
+}
+</style>
+')
+
 
 
 
