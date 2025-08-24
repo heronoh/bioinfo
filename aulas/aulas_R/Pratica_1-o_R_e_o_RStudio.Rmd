@@ -69,7 +69,7 @@ Hoje você vai conhercer a **linguagem R** e o **RStudio**.
 ## Sobre o **R** e o **RStudio**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-A **linguagem de programação R**, criada por *Ross Ihaka* e *Robert Gentleman* na *Universidade de Auckland*, Nova Zelândia, no início dos anos 90, foi concebida inicialmente como uma linguagem e ambiente para análise estatística e gráficos (veja aqui em r-project[r-project](https://www.r-project.org/about.html)). Inspirada na *linguagem S*, desenvolvida nos Laboratórios Bell, o **R** rapidamente ganhou popularidade devido à sua capacidade de realizar complexas manipulações de dados, análises estatísticas e produzir gráficos de alta qualidade. Com o tempo, a comunidade em torno da **R** cresceu exponencialmente, contribuindo com uma vasta coleção de pacotes para o [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/), expandindo assim suas capacidades para além da estatística básica, para áreas como aprendizado de máquina, visualização de dados, análise de séries temporais, bioinformática, entre outras.
+A **linguagem de programação R**, criada por *Ross Ihaka* e *Robert Gentleman* na *Universidade de Auckland*, Nova Zelândia, no início dos anos 90, foi concebida inicialmente como uma linguagem e ambiente para análise estatística e gráficos (veja aqui em [r-project](https://www.r-project.org/about.html)). Inspirada na *linguagem S*, desenvolvida nos Laboratórios Bell, o **R** rapidamente ganhou popularidade devido à sua capacidade de realizar complexas manipulações de dados, análises estatísticas e produzir gráficos de alta qualidade. Com o tempo, a comunidade em torno da **R** cresceu exponencialmente, contribuindo com uma vasta coleção de pacotes para o [**Comprehensive R Archive Network (CRAN)**](https://cran.r-project.org/), expandindo assim suas capacidades para além da estatística básica, para áreas como aprendizado de máquina, visualização de dados, análise de séries temporais, bioinformática, entre outras.
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 O **RStudio**, por sua vez, é um ambiente de desenvolvimento integrado (IDE) para **R**. Lançado em 2011, que facilitou ainda mais o uso da **linguagem R**, oferecendo uma interface amigável e diversas ferramentas que melhoram a produtividade dos usuários, como editor de código, console, visualização de dados e gestão de pacotes. A popularidade do **R** e do **RStudio** na pesquisa científica e na ciência de dados deve-se à sua natureza _open-source_, permitindo que pesquisadores e cientistas de dados compartilhem facilmente seus códigos e análises, promovendo a reprodutibilidade e a colaboração na pesquisa. Além disso, a capacidade de **R** em lidar com grandes volumes de dados, realizar análises complexas e produzir visualizações de dados detalhadas torna-a uma ferramenta indispensável em diversas áreas, desde a genética à economia, reforçando sua posição como uma das principais linguagens na ciência de dados e pesquisa científica contemporâneas. O **RStudio** e as funcionalidades do **R** podem ser utilizados para diversas outras aplicações. Por exemplo, este site foi criado no **RStudio**, utilizando o formato **R Mark Down** [**.Rmd**](https://rmarkdown.rstudio.com/).
@@ -363,8 +363,8 @@ ggplot(stack(tabela_exp),
            )) +
          geom_boxplot() +
   geom_jitter()+
-  # scale_fill_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
-  scale_colour_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
+  scale_fill_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
+  # scale_colour_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
   theme_bw()
 
 # salvando o gráfico em um objeto ----
@@ -376,8 +376,8 @@ meu_1_boxplot <- ggplot(stack(tabela_exp),
            )) +
          geom_boxplot() +
   geom_jitter()+
-  # scale_fill_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
-  scale_colour_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
+  scale_fill_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
+  # scale_colour_manual(values = c("#ab3310","#2000b0","#2aa0b0"))+
   theme_bw()
 
 
