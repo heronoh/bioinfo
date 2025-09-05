@@ -1,0 +1,17 @@
+project:
+  type: website
+
+website:
+  title: "Ensino em Bioinformática"
+  search: true
+  navbar:
+    logo: misc/HOH-02.png   # caminho relativo à raiz do projeto (onde fica o _quarto.yml)
+    left:
+      - text: "Aulas (Shell)"
+        href: aulas/index.html#sec-aulas-bash
+      - text: "Aulas (R)"
+        href: aulas/index.html#sec-aulas-r
+
+format:
+  html:
+    theme: cosmo
