@@ -1,0 +1,343 @@
+---
+title: 'Prática 3 — Sequências biológicas: Arquivos fasta e fastq'
+lang: pt-BR
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-copy: true
+    df-print: paged
+    smooth-scroll: true
+    theme:
+      light: cosmo
+      dark: darkly
+    date-format: D [de] MMMM [de] YYYY
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+# Define locale para meses/datas em português
+try({ Sys.setlocale('LC_TIME', 'pt_BR.UTF-8') }, silent = TRUE)
+try({ Sys.setlocale('LC_TIME', 'Portuguese_Brazil.1252') }, silent = TRUE)
+```
+
+::: {.callout-tip}
+**Nota:** Este material foi escrito para práticas em R usando o RStudio.
+:::
+
+
+```{r}
+#| label: setup
+#| include: false
+#| out-width: 100%
+knitr::opts_chunk$set(echo = TRUE)
+
+library("ggplot2")
+library("Biostrings")
+library("stringr")
+library("dplyr")
+library("DECIPHER")
+library("tibble")
+
+seqs_DNA <-  Biostrings::readDNAStringSet(filepath = "/data/databases/LGC12Sdb/mai25/LGC12Sdb_complete_noGaps-2025-05-21.fasta")
+
+
+seqs_DNA_tbl <- seqs_DNA %>% 
+  as.character() %>% 
+  tibble::enframe(name = "Header",
+          value = "Sequence")
+
+
+doce_seqs <- seqs_DNA_tbl %>% dplyr::filter(stringr::str_detect(Header,
+                                                   pattern = "DC"))
+
+
+getwd()
+setwd("~/prjcts/bioinfo/aulas/aulas_R/arquivos")
+
+
+doce_seqs %>%
+  select(Header, Sequence) %>%  # garanta só 2 colunas na ordem: nomes, valores
+  tibble::deframe() %>% 
+  Biostrings::DNAStringSet() %>% 
+  Biostrings::writeXStringSet(filepath = "LGC12Sdb_peixes_Doce.fasta")
+
+
+
+
+
+
+```
+
+
+```{r hooks}
+#| label: color
+#| echo: false
+#| results: asis
+#| out-width: 100%
+#configurar pros **R**esultados do bash sairem coloridos e não ANSI
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks,
+  which = c("output", "message", "error"))
+```
+
+```{r}
+#| label: db
+#| eval: false
+#| echo: false
+#| results: asis
+#| out-width: 100%
+#configurar pros **R**esultados do bash sairem coloridos e não ANSI
+"/data/databases/LGC12Sdb/mai25/LGC12Sdb_complete_noGaps-2025-05-21.fasta"
+```
+
+
+# Objetivos da prática
+
+- Entender por que **DNA**, **RNA** e **proteínas** são **polímeros sequenciais** que podem ser representados por **letras**.
+- Conhecer os formatos **FASTA** e **FASTQ**, e suas **estruturas**.
+- Relacionar **sequências** a aplicações em **taxonomia molecular**, **filogenia**, **genômica**, **transcriptômica** e **proteômica**.
+- Reconhecer a importância da **bioinformática** na análise, integração e **reprodutibilidade** desses dados.
+
+# Conceitos fundamentais
+
+## Polímeros biológicos como **sequências**
+
+**DNA**, **RNA** e **proteínas** são **polímeros** formados por **monômeros** ordenados:
+- **DNA** e **RNA**: cadeias de **nucleotídeos** (alfabeto **A**, **C**, **G**, **T** no **DNA**; **U** no **RNA**).
+- **Proteínas**: cadeias de **aminoácidos** (alfabeto de **20** letras padrão).
+
+A **ordem** dos **monômeros** determina **função** e **estrutura**: a **sequência** de **DNA** codifica **RNAs** e **proteínas**; a **sequência** de **aminoácidos** determina **estrutura tridimensional** e **atividade**.
+
+## Representação por **letras** (alfabetos)
+
+- **DNA/RNA**: letras **A**, **C**, **G**, **T**/**U**; códigos **IUPAC** para **ambiguidade** (ex.: **N** para base **desconhecida**).
+- **Proteínas**: letras para **aminoácidos** (ex.: **M** = **Metionina**, **W** = **Triptofano**); **X** para **aminoácido desconhecido**.
+
+**Resumo:** a representação por **letras** facilita **armazenamento**, **busca**, **alinhamento** e **análise computacional** em **bioinformática**.
+
+# Formatos de arquivo
+
+## Formato **FASTA**
+
+O **FASTA** armazena **sequências** (de **DNA**, **RNA** ou **proteínas**) **sem** **qualidade por base**.
+
+- **Cabeçalho**: linha iniciada por **>** com um **identificador** e, opcionalmente, **metadados**.
+- **Sequência**: linhas subsequentes com as **letras** do **alfabeto** correspondente.
+
+**Exemplo (FASTA de DNA):**
+~~~text
+>seq1 organismo=Homo_sapiens gene=MT-ND1
+ATGCCCTCGGCTTCTGGTAATA...
+~~~
+
+## Formato **FASTQ**
+
+O **FASTQ** é o formato de saída de dados dos sequenciadores de nova geração. Este arquivo representa cada uma dos milhões de _reads_ resultantes do sequenciamento, utilizando 4 linhas para cada _read_. Nestas linhas temos identificadores das sequências e também a **qualidade** de cada base da sequência (em escala **Q**, ou **Phred**):
+
+1. Linha 1: cabeçalho: iniciada por **\@** e seguida do nome do **identificador**.
+2. Linha 2: **sequência** (letras ACTG ou N).
+3. Linha 3: **+**
+4. Linha 4: **qualidade** em **ASCII** (**Sanger/Phred+33** é a mais comum).
+
+**Exemplo (FASTQ):**
+
+~~~text
+@read42 sample=SRRXXXXXX lane=1
+ACGTNNACGTACGT
++
+FFIII!!FHGGEEDC
+~~~
+
+
+
+**Qualidade Phred (Q)** indica **confiabilidade**: \( Q = -10 \log_{10}(p_{\text{erro}}) \).  
+**Q30** ≈ **0,1%** de erro por base; **Q20** ≈ **1%**.
+
+**Dica:** use **FASTQ** quando precisar de **qualidade por base** (ex.: **genômica** e **transcriptômica**); converta para **FASTA** quando bastar apenas a **sequência** (ex.: etapas de **filogenia**).
+
+# De **sequências** a **conhecimento biológico**
+
+## **Taxonomia molecular** (**DNA barcoding**)
+
+A **identificação** de **espécies** por **sequências curtas** (ex.: **COI** em **animais**, **rbcL/matK** em **plantas**, **16S rRNA** em **bactérias**) permite:
+- **Classificação** rápida a partir de **leituras** em **FASTA/FASTQ**.
+- Uso de **bancos de referência** e **alinhadores**/**classificadores** para inferir **táxons**.
+
+## **Filogenia**
+
+A partir de **alinhamentos múltiplos** de **sequências** (**FASTA**), inferimos **árvores filogenéticas**:
+- Escolha de **modelos evolutivos**, **métodos** (**Máxima Verossimilhança**, **Bayesiano**) e **avaliações** (**bootstrap**).
+- Integração de **genes** ou **genomas** completos para maior **resolução**.
+
+## **Genômica**
+
+Em **genômica**, as **leituras (reads)** em **FASTQ** são:
+- **Filtradas** por **qualidade** (**Phred**), **aparadas** (**trimming**) e **mapeadas** a um **genoma de referência** **ou** **montadas** **de novo** em **contigs/scaffolds**.
+- Resultados em **BAM/CRAM** (alinhamentos) e **VCF** (**variantes**) para **diversidade**, **associação** e **evolução**.
+
+## **Transcriptômica** (**RNA-seq**)
+
+**FASTQ** de **RNA** é:
+- **Limpo**, **mapeado** a **transcritos**/**genoma** e **quantificado** (ex.: **TPM**, **counts**).
+- Usado para **expressão diferencial**, **anotação** de **isoformas** e **descoberta** de **splicing alternativo**.
+
+## **Proteômica** (sequências de **proteínas**)
+
+**Proteômica** integra **sequências** de **proteínas** (em **FASTA**) com **espectrometria de massas**:
+- **Busca** contra **bancos** de **proteínas** preditas, **identificação** de **peptídeos** e **inferência** **proteica**.
+- Apoia **anotação funcional** e **vias** de **sinalização**.
+
+# Papel da **bioinformática**
+
+A **bioinformática** fornece:
+- **Algoritmos** (ex.: **alinhamento**, **montagem**, **chamada de variantes**).
+- **Pipelines reprodutíveis** (ex.: **workflow managers**) e **contêineres**.
+- **Estatística** e **visualização** para **interpretação** e **comunicação** dos resultados.
+- **Padronização** de **formatos** (**FASTA**, **FASTQ**, **BAM**, **VCF**) e **metadados**, garantindo **integração** entre **estudos**.
+
+**Atenção:** sempre avalie **qualidade** (**Phred**), **contaminação**, **viés de GC**, **profundidade** e **completude** antes de conclusões **biológicas**.
+
+# Exercícios práticos (guiados)
+
+## Ler **FASTA** e **FASTQ** e extrair **informação**
+
+1. Carregue um arquivo **FASTA** e conte o **comprimento** de cada **sequência**.  
+2. Carregue um arquivo **FASTQ** e calcule a **distribuição de Q-scores** por **posição**.  
+3. Converta **FASTQ → FASTA** e observe o que se **perde** (**qualidade**).
+
+~~~bash
+# Exemplos com ferramentas de linha de comando (opcionais)
+# 1) Estatísticas rápidas
+seqkit stats seu.fasta
+seqkit stats seu.fastq
+
+# 2) Converter FASTQ para FASTA
+seqkit fq2fa seu.fastq > seu.fasta
+
+# 3) Filtrar por qualidade média (ex.: Q>=20)
+seqkit fqchk seu.fastq
+~~~
+
+## Mini-pipeline de **taxonomia molecular** e **filogenia**
+
+1. **Barcoding**: filtre **reads** por **qualidade**, extraia o **alvo** (ex.: **16S**), gere um **FASTA** por **amostra**.  
+2. **Filogenia**: faça **alinhamento múltiplo** e reconstrua a **árvore** (**máxima verossimilhança**):
+
+~~~bash
+# Alinhamento (MAFFT) e árvore (IQ-TREE 2)
+mafft --auto sequencias.fasta > alinhamento.fasta
+iqtree2 -s alinhamento.fasta -m MFP -B 1000 -T AUTO
+~~~
+
+## Esboço de **genômica/transcriptômica**
+
+- **Genômica**: **mapeie** **FASTQ** em **genoma** (**BWA**/**Minimap2**), gere **BAM** e **VCF**.  
+- **Transcriptômica**: **quantifique** **RNA-seq** (ex.: **Salmon**/**Kallisto**), obtenha **matriz** de **contagens** e faça **expressão diferencial**.
+
+# Boas práticas e **reprodutibilidade**
+
+- Mantenha **metadados** claros (ex.: **amostra**, **plataforma**, **biblioteca**).
+- Use **contêineres**/**ambientes** controlados e **controle de versão** de **código** e **parâmetros**.
+- Documente **formatos** (**FASTA**, **FASTQ**) e **versões** de **ferramentas** para **transparência** e **comparabilidade**.
+
+# Checklist final
+
+- [ ] Entende a natureza **sequencial** de **DNA**, **RNA** e **proteínas** e sua representação por **letras**.  
+- [ ] Sabe diferenciar **FASTA** (sem **qualidade**) e **FASTQ** (com **qualidade Phred**).  
+- [ ] Conecta **sequências** às áreas de **taxonomia molecular**, **filogenia**, **genômica**, **transcriptômica** e **proteômica**.  
+- [ ] Reconhece o papel da **bioinformática** em **eficiência**, **escala** e **reprodutibilidade**.
+
+
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+
+E por hoje ficamos por aqui!
+
+
+***
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+cat('
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var codeBlocks = document.querySelectorAll("pre code");
+  codeBlocks.forEach(function(codeBlock) {
+    var button = document.createElement("button");
+    button.className = "copy-button";
+    button.type = "button";
+    button.innerText = "Copiar";
+    
+    button.addEventListener("click", function() {
+      navigator.clipboard.writeText(codeBlock.innerText);
+      button.innerText = "Copiado!";
+      setTimeout(function() {
+        button.innerText = "Copiar";
+      }, 2000);
+    });   
+
+    var pre = codeBlock.parentNode;
+    pre.parentNode.insertBefore(button, pre);
+  });
+});
+</script>
+
+<style>
+.copy-button {
+  float: right;
+  margin: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background-color: #406dde;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.copy-button:hover {
+  background-color: #45a049;
+}
+</style>
+')
+
+
+
+
