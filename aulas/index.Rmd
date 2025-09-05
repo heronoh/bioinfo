@@ -38,7 +38,7 @@ a disciplina _Bioinformática e Genômica_, da PUC Minas. Estes roteiros tem com
 rmd <- c(Sys.glob("aulas_R/*.Rmd"),Sys.glob("aulas_R/*.qmd"))
 # rmd <- Sys.glob("*.Rmd")
 rmd <- rmd[rmd != "index.Rmd"]
-html <- sub(".Rmd", ".html", rmd)
+html <- sub(".Rmd|.qmd", ".html", rmd)
 lines <- lapply(rmd, readLines)
 yaml <- lapply(lines, rmarkdown:::parse_yaml_front_matter)
 cat("<ul>")
