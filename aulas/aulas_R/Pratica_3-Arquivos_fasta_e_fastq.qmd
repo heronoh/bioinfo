@@ -229,7 +229,7 @@ download.file(
 
 ```{r}
 #| label: read_fasta
-#| include: false
+#| include: true
 #| eval: false
 #| out-width: 100%
 knitr::opts_chunk$set(echo = TRUE)
