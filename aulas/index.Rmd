@@ -9,7 +9,7 @@ output:
     highlight: zenburn
     code_download: yes
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ```{r, echo=FALSE}
@@ -35,7 +35,7 @@ a disciplina _Bioinformática e Genômica_, da PUC Minas. Estes roteiros tem com
 
 ```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=FALSE, results='asis'}
 
-rmd <- c(Sys.glob("aulas_R/*.Rmd"),Sys.glob("aulas_R/*.qmd"))
+rmd <- c(Sys.glob("~/prjcts/bioinfo/aulas/aulas_R/*.Rmd"),Sys.glob("~/prjcts/bioinfo/aulas/aulas_R/*.qmd"))
 # rmd <- Sys.glob("*.Rmd")
 rmd <- rmd[rmd != "index.Rmd"]
 html <- sub(".Rmd|.qmd", ".html", rmd)
@@ -53,7 +53,7 @@ cat("</ul>")
 
 ```{r echo=FALSE, message=TRUE, warning=TRUE, paged.print=FALSE, results='asis'}
 
-rmd <- Sys.glob("aulas_bash/*.Rmd")
+rmd <- Sys.glob("~/prjcts/bioinfo/aulas/aulas_bash/*.Rmd")
 # rmd <- Sys.glob("*.Rmd")
 rmd <- rmd[rmd != "index.Rmd"]
 html <- sub(".Rmd", ".html", rmd)
