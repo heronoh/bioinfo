@@ -1,0 +1,478 @@
+---
+title: 'Prática 3 — Sequências biológicas: Arquivos fasta e fastq'
+lang: pt-BR
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-copy: true
+    df-print: paged
+    smooth-scroll: true
+    theme:
+      light: cosmo
+      dark: darkly
+    date-format: D [de] MMMM [de] YYYY
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+# Define locale para meses/datas em português
+try({ Sys.setlocale('LC_TIME', 'pt_BR.UTF-8') }, silent = TRUE)
+try({ Sys.setlocale('LC_TIME', 'Portuguese_Brazil.1252') }, silent = TRUE)
+```
+
+::: {.callout-tip}
+**Nota:** Este material foi escrito para práticas em R usando o RStudio.
+:::
+
+
+```{r}
+#| label: setup
+#| include: false
+#| out-width: 100%
+knitr::opts_chunk$set(echo = TRUE)
+
+library("ggplot2")
+library("Biostrings")
+library("stringr")
+library("dplyr")
+library("DECIPHER")
+library("tibble")
+
+seqs_DNA <-  Biostrings::readDNAStringSet(filepath = "/data/databases/LGC12Sdb/mai25/LGC12Sdb_complete_noGaps-2025-05-21.fasta")
+
+
+seqs_DNA_tbl <- seqs_DNA %>% 
+  as.character() %>% 
+  tibble::enframe(name = "Header",
+          value = "Sequence")
+
+
+doce_seqs <- seqs_DNA_tbl %>% dplyr::filter(stringr::str_detect(Header,
+                                                   pattern = "DC"))
+
+
+getwd()
+setwd("~/prjcts/bioinfo/aulas/aulas_R/arquivos")
+
+
+doce_seqs %>%
+  select(Header, Sequence) %>%  # garanta só 2 colunas na ordem: nomes, valores
+  tibble::deframe() %>% 
+  Biostrings::DNAStringSet() %>% 
+  Biostrings::writeXStringSet(filepath = "LGC12Sdb_peixes_Doce.fasta")
+
+
+
+download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/aulas_R/arquivos/LGC12Sdb_peixes_Doce.fasta",
+              destfile = "LGC12Sdb_peixes_Doce.fasta", mode = "wb")
+
+
+
+
+```
+
+```{r hooks}
+#| label: color
+#| echo: false
+#| results: asis
+#| out-width: 100%
+#configurar pros **R**esultados do bash sairem coloridos e não ANSI
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks,
+  which = c("output", "message", "error"))
+```
+
+# Conceitos fundamentais
+
+## Polímeros biológicos como **sequências**
+
+**DNA**, **RNA** e **proteínas** são **polímeros** formados por **monômeros** ordenados:
+- **DNA** e **RNA**: cadeias de **nucleotídeos**
+- **Proteínas**: cadeias de **aminoácidos**
+
+A **ordem** dos **monômeros** determina **função** e **estrutura**: a **sequência** de **DNA** codifica **RNAs** e **proteínas**; a **sequência** de **aminoácidos** determina **estrutura tridimensional** das *proteínas* e sua atividade.
+
+# Formatos de arquivo
+
+## Formato **fasta**
+
+
+O **fasta** armazena **sequências** (de **DNA**, **RNA** ou **proteínas**).
+
+Como os nucleotídeos e aminoácidos são moléculas definidas e fácilmente representadas por letras, a _International Union of Pure and Applied Chemistry_ [**IUPAC**](https://iupac.org/) padronizou o [código de uma letra](https://www.bioinformatics.org/sms2/iupac.html), que toda a área da *Bioinformática de sequências* utiliza em suas análises de *genômica*, *transcriptômica*, *proteômica* e outras áras afins.
+
+O arquivo **fasta** é muito simples, composto por múltiplas linhas que podem ser apenas de 2 tipos:
+
+- **Cabeçalho**: linha iniciada por **>** com um **identificador único da sequência** e, opcionalmente, **metadados**.
+- **Sequência**: linhas subsequentes com as **letras** do **alfabeto** correspondente (aminoácidos ou nucleotídeos).
+
+
+
+**Exemplo (fasta de DNA):**
+
+~~~text
+>seq1 organismo=Homo_sapiens gene=MT-ND1
+ATGCCCTCGGCTTCTGGTAATACACCGCGGACATCGGCGTAAAGAGTGGTTAGGAAGTCTTTCAAACTACGGTTACGGAC
+ATCGGCGTAAAGAGTGGTTAGGAAGTCTTTCAAACTATACGAATACGGACATCGGCGTAAAGAGTGGTTAGGAAGTCTTT
+CAAACTACGGACATCGGCGTAAAGAGTGGTTAGGAAGTCTTTCAAACTAGGCCCAAGTTGATGAACATCGGCGTAAAAAG
+TGGTTAGGAACAGAGCTAGATACTAAA
+~~~
+
+## Repositórios de sequências
+
+Muitos *Bancos de Dados* são dedicados para o armazenamento de sequências de **DNA**, **RNA** e **proteínas**. 
+O principal destes é o [**_NCBI nucleotide_**](https://www.ncbi.nlm.nih.gov/nucleotide/)
+
+
+# Prática
+
+Vamos conhecer um arquivo **fasta**? Siga as instruções a seguir no seu **Rstudio**. Copie, cole e execute os comandos abaixo
+
+## Preparativos
+
+### Carregando pacotes
+
+```{r}
+#| label: packages
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+#instale apenas caso você ainda não tenha o pacote ----
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("DECIPHER")
+BiocManager::install("Biostrings")
+install.packages("pheatmap")
+install.packages("ggseqlogo")
+
+
+# carregando pacotes ----
+library("ggplot2")
+library("Biostrings")
+library("stringr")
+library("dplyr")
+library("DECIPHER")
+library("tibble")
+library("RColorBrewer")
+library("pheatmap")
+library("ggseqlogo")
+
+
+```
+
+> ::: Dica: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:
+
+
+~~~r
+install.packages("pacote")
+~~~
+
+
+### Definindo seu diretório de trabalho
+
+No comando abaixo, coloque dentro das aspas o caminho para o seu diretório de trabalho.
+
+> ::: Sempre utilize a tecla `TAB` para autocompletar os caminhos a partir do **~** ou **/** (ou **\**, caso no windows)
+
+
+```{r}
+#| label: wd
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+getwd()
+
+setwd("")
+
+
+```
+
+
+### Obtendo os dados
+
+Baixe o arquivo **.fasta** que utilizaremos.
+
+```{r}
+#| label: get_fasta
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+
+download.file(
+  "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/aulas_R/arquivos/LGC12Sdb_peixes_Doce.fasta",
+  destfile = "LGC12Sdb_peixes_Doce.fasta",
+  mode = "wb",            # seguro no Windows/macOS/Linux
+  method = "libcurl"      # segue redirecionamentos HTTPS direitinho
+)
+
+
+```
+
+### carregar o **.fasta** como objeto no R
+
+
+```{r}
+#| label: read_fasta
+#| include: true
+#| eval: false
+#| out-width: 100%
+knitr::opts_chunk$set(echo = TRUE)
+
+
+
+
+fasta_seqs <-  Biostrings::readDNAStringSet(filepath = "LGC12Sdb_peixes_Doce.fasta")
+
+
+
+
+```
+
+
+```{r}
+#| label: read_fasta_to_obj
+#| include: true
+#| eval: false
+#| out-width: 100%
+knitr::opts_chunk$set(echo = TRUE)
+
+fasta_seqs
+
+DECIPHER::BrowseSeqs(fasta_seqs)
+
+## 3 - alinhamentos ----
+
+### a - preparo ----
+# orientar todas sequências na mesma direção (sobrescrevendo o objeto fasta_seqs)
+#              (se alguma estiver no complemento reverso?)
+
+fasta_seqs <- DECIPHER::OrientNucleotides(fasta_seqs)
+
+### b - alinhar sequências ----
+
+fasta_seqs_alg <- DECIPHER::AlignSeqs(myXStringSet = fasta_seqs, 
+                                      refinements = 100,
+                                      iterations = 100,
+                                      verbose = TRUE)
+
+fasta_seqs_alg
+
+DECIPHER::BrowseSeqs(fasta_seqs_alg)
+
+## 4 - Core alignment ----
+
+# devemos utilizar apenas a parte comum a todos alinhamentos, jogar o resto fora!
+
+
+
+fasta_seqs_alg 
+
+Biostrings::subseq(fasta_seqs_alg,43,658)
+
+
+fasta_seqs_alg_sub <- Biostrings::subseq(fasta_seqs_alg,43,658)
+DECIPHER::BrowseSeqs(fasta_seqs_alg_sub)
+
+## 5 - Distâncias ----
+
+### a - calcular as distâncias ----
+
+fasta_seqs_dist <- DECIPHER::DistanceMatrix(myXStringSet = fasta_seqs_alg_sub,
+                                            includeTerminalGaps = FALSE,
+                                            correction = "Jukes-Cantor",
+                                            processors = 20)
+
+# esta é a matriz de distâncias genéticas entre essas sequências
+View(fasta_seqs_dist)
+
+
+# vamos ver como fica a matriz
+
+pheatmap::pheatmap(fasta_seqs_dist,fontsize = 10,color = brewer.pal(n = 9,name = "Greens"))
+
+
+## 6 -  plotar proporção de bases para uma subsequência (ggseq logo)
+
+### a - selecionar apenas uma pequena região parcialmente conservada
+
+
+
+fasta_sub_char <- Biostrings::subseq(fasta_seqs_alg,180,220) %>% as.character()
+
+seqs_logo_plot <- ggplot2::ggplot() +
+  ggseqlogo::geom_logo(data = fasta_sub_char,
+                       method = "probability") +
+  ggplot2::annotate(geom = "rect",
+                    xmin = 12.5,xmax = 33.5,
+                    ymin = -0.1,ymax = 1.1,
+                    fill="#3cff00", alpha=0.25)
+
+seqs_logo_plot
+
+ggplot2::ggsave(filename = "seqs_logo.png",
+                device = "png",
+                width = 30, height = 10,
+                units = "cm")
+
+
+# Referências ----
+# https://www.bioconductor.org/help/course-materials/2016/BioC2016/ConcurrentWorkshops2/Wright/BigBioSeqData.pdf
+# https://www.bioconductor.org/packages/release/bioc/vignettes/DECIPHER/inst/doc/DECIPHERing.pdf
+# http://www2.decipher.codes/RLessons/RLesson14.html
+# https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12687
+# http://www2.decipher.codes/OligoDesign.html
+# http://www2.decipher.codes/Bioinformatics/BigBioSeqData/BigBioSeqData2.html
+# https://cran.r-project.org/web/packages/ggdendro/vignettes/ggdendro.html
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+#| label: make_fasta
+#| include: false
+#| out-width: 100%
+knitr::opts_chunk$set(echo = TRUE)
+
+seqs_DNA_tbl <- seqs_DNA %>% 
+  as.character() %>% 
+  tibble::enframe(name = "Header",
+          value = "Sequence")
+
+
+doce_seqs <- seqs_DNA_tbl %>% dplyr::filter(stringr::str_detect(Header,
+                                                   pattern = "DC"))
+
+
+getwd()
+setwd("~/prjcts/bioinfo/aulas/aulas_R/arquivos")
+
+
+doce_seqs %>%
+  select(Header, Sequence) %>%  # garanta só 2 colunas na ordem: nomes, valores
+  tibble::deframe() %>% 
+  Biostrings::DNAStringSet() %>% 
+  Biostrings::writeXStringSet(filepath = "LGC12Sdb_peixes_Doce.fasta")
+
+
+
+download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/aulas_R/arquivos/LGC12Sdb_peixes_Doce.fasta",
+              destfile = "LGC12Sdb_peixes_Doce.fasta", mode = "wb")
+
+
+
+
+```
+
+
+
+<style>
+body {
+text-align: justify}
+</style>
+
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+
+
+
+E por hoje ficamos por aqui!
+
+
+***
+
+>>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+
+
+cat('
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var codeBlocks = document.querySelectorAll("pre code");
+  codeBlocks.forEach(function(codeBlock) {
+    var button = document.createElement("button");
+    button.className = "copy-button";
+    button.type = "button";
+    button.innerText = "Copiar";
+    
+    button.addEventListener("click", function() {
+      navigator.clipboard.writeText(codeBlock.innerText);
+      button.innerText = "Copiado!";
+      setTimeout(function() {
+        button.innerText = "Copiar";
+      }, 2000);
+    });   
+
+    var pre = codeBlock.parentNode;
+    pre.parentNode.insertBefore(button, pre);
+  });
+});
+</script>
+
+<style>
+.copy-button {
+  float: right;
+  margin: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background-color: #406dde;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.copy-button:hover {
+  background-color: #45a049;
+}
+</style>
+')
+
+
+
+

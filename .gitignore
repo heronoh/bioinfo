@@ -4,5 +4,9 @@
 .Ruserdata
 .Rproj
 *Rproj
+*png
+*css
 misc
 
+
+/.quarto/

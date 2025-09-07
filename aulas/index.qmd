@@ -1,82 +1,183 @@
 ---
-#title: "DRY R Package Development"
+title: "Ensino em Bioinformática"
+author: "Heron O.H."
+date: today
+page-layout: full
 format:
-  revealjs:
-    theme: solarized
-    slide-number: true
-    preview-links: auto
-    footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/){target='_blank'}."
-#author: "Indrajeet Patil"
-#affiliation:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    date-format: D [de] MMMM [de] YYYY
+    toc: false
+    code-copy: true
+    smooth-scroll: true
+    anchor-sections: false
+    embed-resources: true
+editor_options: 
+  chunk_output_type: console
 execute:
-  echo: true
-  eval: false
-keywords: ["software-engineering", "r-packages", "best-practices", "DRY"]
+  echo: false
+  warning: false
+  message: false
 ---
 
-## DRY Package Development in R {style="text-align: center;"}
+<!-- ====== ESTILOS (cards + busca) ====== -->
+<style>
+.hero {
+  display:flex; align-items:center; justify-content:space-between;
+  gap: 1.25rem; padding: 1.25rem 0;
+}
+.hero h1 { margin:0; }
+.hero .tagline { font-size:1.1rem; opacity:.85; margin:.25rem 0 0 0; }
+.brand img { height:90px; width:auto; opacity:.95; }
+.filterbar { margin: 1rem 0 1.25rem 0; }
+.filterbar input {
+  width:100%; max-width:520px; padding:.6rem .8rem; border:1px solid #ddd; border-radius:.5rem;
+}
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+         gap: 16px; align-items:stretch; }
+.card-link {
+  display:block; height:100%; text-decoration:none; border:1px solid #e6e6e6; border-radius:14px;
+  padding:16px; background:#fff; transition: all .18s ease-in-out;
+  box-shadow: 0 6px 16px rgba(0,0,0,.04);
+}
+.card-link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,0,0,.08); }
+.card-title { font-weight:700; margin:0 0 .35rem 0; color:#2b2b2b; }
+.card-path { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+             font-size:.8rem; color:#777; word-break: break-all; }
+.badge { display:inline-block; padding:.2rem .5rem; font-size:.75rem; border-radius:.35rem; background:#f1f3f5; color:#555; margin-right:.35rem;}
+.section-title { margin-top: 1.75rem; }
+.empty-hint { color:#999; font-style:italic; }
+</style>
 
-<!-- Don't render this file manually. Run `renderer.R` script instead. -->
 
-::: {style="text-align: center;"}
 
-Indrajeet Patil
-
-:::
-
-![](media/simpsons.png){.absolute width="900" height="500" left="70" top="155"}
-
-<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
-<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
-
-#
-
-*"Copy and paste is a design error."* &nbsp; \- David Parnas
-
-# Why So DRY
-
-Why should you not repeat yourself?
-
-## Don't Repeat Yourself (DRY) Principle {.smaller}
-
-:::: {.columns}
-
-::: {.column width='60%'}
-
-The DRY Principle states that:
-
-::: {style="color: red;"}
-
-*Every piece of **knowledge** must have a **single** representation in the codebase.*
-
-:::
-
-That is, you should not express the same thing in multiple places in multiple ways.
-
-:::
-
-::: {.column width='40%'}
-
-```{r, echo=FALSE, eval=TRUE}
-knitr::include_graphics("media/dry.gif")
+```{r}
+# getwd()
+setwd("/home/heron/prjcts/bioinfo")
+htmltools::img(src = knitr::image_uri("misc/HOH-02.png"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:-1; right:0; padding:10px; width:100px; height:100px')
 ```
 
-:::
+---
 
-::::
+```{r setup, include=FALSE}
+suppressWarnings({
+  if (!requireNamespace("fs", quietly = TRUE)) try(install.packages("fs"), silent = TRUE)
+  if (!requireNamespace("rmarkdown", quietly = TRUE)) try(install.packages("rmarkdown"), silent = TRUE)
+  if (!requireNamespace("htmltools", quietly = TRUE)) try(install.packages("htmltools"), silent = TRUE)
+})
+library(fs)
+`%nin%` <- function(x, y) !x %in% y
 
-. . .
+# Varre uma seção e emite cards HTML
+scan_and_emit <- function(section_dir, container_id) {
+  root <- getwd()  # se este index.qmd estiver em 'aulas/', root == 'aulas'
+  if (!dir_exists(section_dir)) {
+    cat(sprintf('<p class="empty-hint">Pasta não encontrada: <code>%s</code></p>', htmltools::htmlEscape(section_dir)))
+    return(invisible(NULL))
+  }
 
-:::{.callout-note}
+  # 1) fontes .qmd/.Rmd e HTML já existentes
+  src  <- fs::dir_ls(section_dir, recurse = TRUE, type = "file",
+                     regexp = "(?i)\\.(qmd|Rmd)$")
+  html_manual <- fs::dir_ls(section_dir, recurse = TRUE, type = "file",
+                            regexp = "(?i)\\.html$")
 
-## It's about *knowledge* and not just *code*
+  # 2) excluir builds e arquivos especiais
+  bad <- "/(_site|_freeze|\\.quarto|renv|\\.git)/"
+  src  <- src[!grepl(bad, src)]
+  html_manual <- html_manual[!grepl(bad, html_manual)]
+  src  <- src[basename(src)  %nin% c("index.qmd","index.Rmd","README.qmd","README.Rmd")]
+  html_manual <- html_manual[basename(html_manual) %nin% c("index.html","README.html")]
 
-The DRY principle is about duplication of knowledge.
-Thus, it applies to all programming entities that encode knowledge:
+  # 3) títulos (YAML -> title; fallback = nome)
+  get_title <- function(f) {
+    t <- tryCatch(rmarkdown::yaml_front_matter(f)$title, error = function(e) NULL)
+    if (is.null(t) || !nzchar(t)) tools::file_path_sans_ext(basename(f)) else t
+  }
+  titles <- if (length(src)) vapply(src, get_title, character(1)) else character(0)
 
-- You should not duplicate code.
-- You should not duplicate intent across code and comments.
-- You should not duplicate knowledge in data structures.
-- ...
+  # 4) caminhos relativos ao index e html alvo
+  rel_src      <- if (length(src)) fs::path_rel(src, start = root) else character(0)
+  rel_html_from_src <- sub("(?i)\\.(qmd|Rmd)$", ".html", rel_src, perl = TRUE)
 
-:::
+  # 5) checar existência dos .html (renderizados)
+  rel_html_manual <- if (length(html_manual)) fs::path_rel(html_manual, start = root) else character(0)
+  exists_map <- file_exists(fs::path(root, rel_html_from_src)) | rel_html_from_src %in% rel_html_manual
+
+  # 6) ordenar
+  ord <- if (length(src)) order(dirname(rel_src), tools::file_path_sans_ext(basename(rel_src)), titles) else integer(0)
+
+  cat(sprintf('<div class="cards" id="%s">\n', container_id))
+  if (length(src)) {
+    for (i in ord) {
+      lab   <- htmltools::htmlEscape(titles[i])
+      src_r <- htmltools::htmlEscape(rel_src[i])
+      href  <- utils::URLencode(rel_html_from_src[i])
+      badge <- if (isTRUE(exists_map[i])) "" else '<span class="badge">a renderizar</span> '
+      cat(sprintf(
+        "<a class='card-link' href='%s'><div class='card-title'>%s</div><div class='card-path'>%s</div>%s</a>\n",
+        href, lab, src_r, badge
+      ))
+    }
+  } else {
+    cat("<p class='empty-hint'>Nenhum arquivo encontrado nesta seção.</p>\n")
+  }
+  cat("</div>\n")
+}
+```
+
+## Aulas práticas — Shell (Bash) {#sec-aulas-bash}
+
+<div class="filterbar">
+  <input id="filter-bash" type="search" placeholder="Filtrar por título ou caminho…">
+</div>
+
+```{r index-bash, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+scan_and_emit("aulas_bash", "cards-bash")
+```
+
+<script>
+(function(){
+  const input = document.getElementById('filter-bash');
+  const cards = () => document.querySelectorAll('#cards-bash .card-link');
+  if(!input) return;
+  input.addEventListener('input', function(){
+    const q = this.value.trim().toLowerCase();
+    cards().forEach(el => {
+      const text = el.textContent.toLowerCase();
+      el.style.display = text.indexOf(q) >= 0 ? 'block' : 'none';
+    });
+  });
+})();
+</script>
+
+---
+
+## Aulas práticas — R (RStudio) {#sec-aulas-r}
+
+<div class="filterbar">
+  <input id="filter-r" type="search" placeholder="Filtrar por título ou caminho…">
+</div>
+
+```{r index-r, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+scan_and_emit("aulas_R", "cards-r")
+```
+
+<script>
+(function(){
+  const input = document.getElementById('filter-r');
+  const cards = () => document.querySelectorAll('#cards-r .card-link');
+  if(!input) return;
+  input.addEventListener('input', function(){
+    const q = this.value.trim().toLowerCase();
+    cards().forEach(el => {
+      const text = el.textContent.toLowerCase();
+      el.style.display = text.indexOf(q) >= 0 ? 'block' : 'none';
+    });
+  });
+})();
+</script>

@@ -2178,6 +2178,55 @@ writexl::write_xlsx(x = ASVs_per_sample,
 
 ```
 
+#### export list of ASVs and identifications
+```{r, eval=FALSE}
+
+smp_abd_ID %>% 
+  dplyr::select(c(Primer,`ASV (Sequence)`,`ASV header`,`ASV size (pb)`,
+                  `Kingdom`, `Phylum`, `Class`, `Order`,
+                  `Family`, `Genus`, `Species`, `Specimen`,OTU)) %>% 
+  unique() %>% 
+  View()
+
+
+
+
+
+#all ----
+all_asv_seqs_ID <- smp_abd_ID %>% 
+  dplyr::select(c(Primer,`ASV (Sequence)`,`ASV header`,`ASV size (pb)`,
+                  `Kingdom`, `Phylum`, `Class`, `Order`,
+                  `Family`, `Genus`, `Species`, `Specimen`,OTU)) %>% 
+  unique() 
+
+# making and writing out a fasta of our final ASV seqs with tax
+  
+  all_asv_seqs_ID <- all_asv_seqs_ID %>% 
+    rowwise() %>% 
+    mutate("Tax_header" = paste0(`ASV header`,"-", 
+           "OTU_",OTU,"-",
+           Primer,"-ID:",
+           `Kingdom`, "|", 
+           `Phylum`, "|",
+           `Class`, "|",
+           `Order`, "|",
+           `Family`, "|",
+           `Genus`, "|",
+           `Species`, "|",
+           `Specimen`)) 
+  
+
+#write fasta file with ASVs and Taxonomy
+all_asv_fasta_ID <- c(rbind(all_asv_seqs_ID$Tax_header, all_asv_seqs_ID$`ASV (Sequence)`))
+
+write(all_asv_fasta_ID, "~/prjcts/fish_eDNA/mock_communities/results/Hilario_et_al_2023-SFJQ-all_IDed_ASVs_by_primer.fasta")
+
+
+
+
+
+```
+
 ## curing: manual checking of the species assignment
 ```{r, eval=FALSE}
 
