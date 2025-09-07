@@ -13,3 +13,5 @@ _freeze/
 _site/
 docs/              # se for gerar docs no CI, pode deixar; localmente é descartável
 *.html             # (opcional) se você não quer versionar HTML gerado
+
+/.quarto/
