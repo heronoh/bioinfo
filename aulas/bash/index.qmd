@@ -1,0 +1,15 @@
+---
+title: "Aulas — Shell (Bash)"
+page-layout: full
+listing:
+  contents: "."
+  type: grid
+  sort: "title"
+  filter-ui: true
+  fields: [title, description]
+format:
+  html:
+    allow-html: true
+---
+
+> Abaixo você encontra as práticas em Shell. Cada página deve ter ao menos `title:` no YAML.

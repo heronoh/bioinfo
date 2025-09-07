@@ -1,0 +1,15 @@
+---
+title: "Aulas — R (RStudio)"
+page-layout: full
+listing:
+  contents: "."            # lista os arquivos desta pasta
+  type: grid               # grid bonito
+  sort: "title"
+  filter-ui: true          # caixa de filtro
+  fields: [title, description]  # usa YAML de cada aula, se houver
+format:
+  html:
+    allow-html: true
+---
+
+> Abaixo você encontra as práticas de R. Cada página deve ter ao menos `title:` no YAML.

@@ -1,0 +1,23 @@
+---
+title: "Ensino em Bioinformática"
+author: Heron O Hilário
+page-layout: full
+format:
+  html:
+    allow-html: true
+---
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
+  <div>
+    <h1>Ensino em Bioinformática</h1>
+    <p><strong>Roteiros</strong> e <strong>materiais</strong> da disciplina <em>Bioinformática e Genômica</em> (PUC Minas).</p>
+  </div>
+  <img src="misc/HOH-02.png" alt="logo" style="height:90px;">
+</div>
+
+---
+
+## Aulas
+
+- 👉 **R (RStudio):** [ver aulas](aulas/r/index.qmd)
+- 👉 **Shell (Bash):** [ver aulas](aulas/bash/index.qmd)

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof.&nbsp;Heron OH">
+<meta name="dcterms.date" content="2025-09-07">
+<meta name="description" content="Breve resumo (aparece no card do listing).">
+
+<title>Ensino em Bioinformática - Práticas em Bioinfo IV</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../misc/HOH-02.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">true</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../aulas/r/index.html">
+ <span class="menu-text">Aulas (R)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../aulas/bash/index.html">
+ <span class="menu-text">Aulas (Shell)</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Práticas em Bioinfo IV</h1>
+</div>
+
+<div>
+  <div class="description">
+    Breve resumo (aparece no card do listing).
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Prof.&nbsp;Heron OH </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<style type="text/css" scoped="">
+PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
+</style>
+<style>
+body {
+text-align: justify}
+</style>
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG. Você pode encontrar as demais práticas <a href="https://heronoh.github.io/bioinfo"><em>aqui</em></a>.</p>
+<section id="arquivos-.fasta-e-.fastq" class="level2">
+<h2 data-anchor-id="arquivos-.fasta-e-.fastq">Arquivos <em>.fasta</em> e <em>.fastq</em></h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Na prática passada você aprendeu a utilizar um <em>script</em> bioinformático para realizar a tradução de uma sequência de nucleotídeos na sequência correspondente de AA, a partir de um arquivo <em>.fasta</em>. Hoje iremos explorar mais este tipo de arquivo tão utilizado na bioinfo.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Como já vimos, os arquivos <em>.fasta</em> são arquivos que armazenam sequências de DNA, RNA ou proteínas. Cada arquivo pode conter uma única sequência ou várias, sendo ocasionalmente referido como <em>multifasta</em>. É neste formato que são armazenados genomas de referência e genes. Este também é o arquivo utilizado para alinhamentos e buscas por similaridade, como o <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST</a>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Já os arquivos <em>.fastq</em> são arquivos que armazenam sequências burtas geradas por sequenciadores de nova geração (NGS), e apresentam, além da sequência das <em>reads</em>, identificadores de qualidade baseados na métrica de qualidade <a href="https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/QualityScoreEncoding_swBS.htm"><strong><em>PHRED</em></strong></a>. Estes arquivos podem armazenar centenas de milhares de sequências, que precisam ser processadas para fornecer alguma informação biológica.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Como veremos a seguir, há funcionalidades específicas para cada um desses arquivos. No entanto, algumas avaliações mais simples podem ser realizadas com ambos, observando suas diferenças estruturais.</p>
+</section>
+<section id="acessando-servidores" class="level2">
+<h2 data-anchor-id="acessando-servidores">Acessando servidores</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Como sabemos pela prática, a instalação de alguns programas de bioinformática na plataforma <em>WSL</em> requer privilégios de administrador, o que dificulta seu uso em computadores institucionais, como os das aulas práticas. Assim, hoje iremos conectar diretamente a um servidor computacional para realizar nossas análises. <strong><em>Servidor</em></strong> ou <strong><em>Servidora</em></strong> é um dos nomes que se dá a um computador em que uma ou mais pessoas trabalham remotamente, ou seja, você conecta a ele a partir do seu computador, que serve apenas como uma interface. Enquanto conectado, todo o processamento computacional é realizado no <strong><em>Servidor</em></strong>. Assim, eventualmente, os arquivos que forem usados, precisam ser tranferidos de um computador para o outro, e aprenderemos como fazer isso hoje.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Os servidores são computadores muito poderosos, e, por isso, muito visados por hackers. Desta maneira, a conexão com eles deve ser realizada de maneira segura, e não se deve compartilhar credenciais de acesso sem os devidos cuidados. Assim, esta prática não apresentará todas as informações necessárias para a conexão. <strong>Estas informações serão transmitidas apenas durante a aula.</strong>Mas, caso você esteja realizando as práticas no seu próprio computador, você pode instalar os programas que utilizaremos sem restrição, e pode realizar todos os passos práticos localmente. Não será uma tarefa simples para iniciantes, mas as instruções para a instalação de cada programa estão disponíveis nos respectivos <em>links</em>, e qualquer suporte pode ser solicitado diretametne comigo.</p>
+</section>
+<section id="instalando-os-programas" class="level2">
+<h2 data-anchor-id="instalando-os-programas">Instalando os programas</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Caso você vá realizar a prática durante a aula, no servidor, pode ir para a próxima sessão. Mas <strong>caso você vá realizar a prática no seu própiro computador</strong>, os programas que utilizaremos podem ser encontrados aqui:</p>
+<ul>
+<li><p><a href="https://www.ebi.ac.uk/about/vertebrate-genomics/software/exonerate">exonerate</a>: Diversas funcionalidades para arquivos <em>.fasta</em>.</p></li>
+<li><p><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a>: Gerador de relatórios de qualidade para arquivos <em>.fastq</em> individuais.</p></li>
+<li><p><a href="https://multiqc.info/">MultiQC</a>: Gerador de relatórios de qualidade para arquivos <em>.fastq</em> múltiplos.</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=aTlHQNLwg-0">Tutoriais do <strong><em>LGC PUC Minas</em></strong> de instalação e uso do <em>FastQC</em> &amp; <em>MultiQC</em></a></p></li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Os arquivos que utilizaremos podem ser baixados <a href="https://drive.google.com/drive/folders/1b8llP47A8yCLgrYEKG-xQgnhgaMUkjQ6?usp=sharing">aqui</a>.</p>
+</section>
+<section id="conexão-por-ssh" class="level2">
+<h2 data-anchor-id="conexão-por-ssh">Conexão por <em>SSH</em></h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; A maneira mais utilizada para a conexão com servidores ou outros computadores é a conexão por <a href="https://pt.wikipedia.org/wiki/Secure_Shell"><strong><em>SSH</em></strong></a>. Este é um protocolo de rede criptografado, que se baseia na utilização de usuários e senhas para tornar segura a conexão entre dois computadores. Assim, cada usuário precisa ter uma conta (<em>login</em> e senha) cadastrada no computador alvo (o Servidor). Para nossas práticas, criei um usuário geral para todos conectarmos simultaneamente num de nossos Servidores.</p>
+<blockquote class="blockquote">
+<p>Utilizando as credenciais <strong><em>fornecidas durante a aula</em></strong>, conecte no servidor de trabalho via SSH. Quando solicitado, forneça a senha:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ex:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#ssh usuario@111.222.333.444</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="va">$USER</span>@<span class="va">$IP</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Caso a conexão seja realizada com sucesso, você verá uma tela de boas vindas com informações sobre o servidor.</p>
+<blockquote class="blockquote">
+<p>Utilizando o comando <em>htop</em> verifique as características de <em>hardware</em> e os processos que estão rodando no servidor. Para retornar para a linha de comando, saia utilzando a tecla <strong><em>q</em></strong>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">htop</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="preparativos" class="level2">
+<h2 data-anchor-id="preparativos">Preparativos</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Como todos estamos utilizando um mesmo <em>usuário</em> no servidor, todos podemos alterar ou remover os arquivos gerados por outras pessoas. Assim, para evitar ações indesejadas <strong><em>iremos criar pastas para cada aluno e sempre realizar os comandos dentro das respectivas pastas</em></strong>. Além disso, <strong><em>sempre utilizar caminhos completos e confira os comandos antes de executá-los, especialmente comandos de remoção.</em></strong>. Caso tenha dúvida <strong><em>não execute o comando sem solicitar ajuda</em></strong>. E lembre-se:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; <span class="math inline">\(\underline{NÃO\space EXISTE\space DESFAZER\space NA\space LINHA\space DE\space COMANDO!!!!}\)</span></p>
+<section id="crie-sua-pasta" class="level3">
+<h3 data-anchor-id="crie-sua-pasta">Crie sua pasta</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Cada aluno criará uma pasta para organizar seus arquivos de trabalho.</p>
+<blockquote class="blockquote">
+<p>Na pasta correspondente à sua $TURMA, dentro da <strong><em>home</em></strong> do usuário, crie uma pasta com um nome único. Caso haja alguém com nome parecido na sala, use suas iniciais ou apelido para diferenciar:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="co">#para ir para a home</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$TURMA</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> heronoh <span class="co">#por exemplo, no meu caso</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> heronoh</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="copie-os-arquivos" class="level3">
+<h3 data-anchor-id="copie-os-arquivos">Copie os arquivos</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Copie os arquivos que iremos utilizar para a sua pasta.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Se estiver trabalhando localmente, ou seja, no seu computador, os arquivos que utilizaremos podem ser baixados <a href="https://drive.google.com/drive/folders/1b8llP47A8yCLgrYEKG-xQgnhgaMUkjQ6?usp=sharing">aqui</a>.</p>
+<blockquote class="blockquote">
+<p>Utilizando <strong><em>caminhos completos</em></strong>, copie os arquivos da pasta principal para a sua pasta, substituindo as variáveis $ALUNO e $TURMA pelos nomes correspondentes:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>DICA: utilize <strong>tab</strong> para autocompletar e evitar erros!</p>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#confira onde você está</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># verifique que sua pasta está vazia</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> ~/<span class="va">$TURMA</span>/<span class="va">$ALUNO</span>/ </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#copie os arquivos</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> ~/arquivos ~/<span class="va">$TURMA</span>/<span class="va">$ALUNO</span>/</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># verifique se foram copiados corretamente</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> ~/<span class="va">$TURMA</span>/<span class="va">$ALUNO</span>/</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#veja a estrutura da pasta que você copiou</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> ~/<span class="va">$TURMA</span>/<span class="va">$ALUNO</span>/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="contando-sequências" class="level2">
+<h2 data-anchor-id="contando-sequências">Contando sequências</h2>
+<section id="em-arquivos-.fasta" class="level3">
+<h3 data-anchor-id="em-arquivos-.fasta">Em arquivos .fasta</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Como já sabemos, arquivos <em>.fasta</em> e <em>.fastq</em> são arquivos de texto. Assim, qualquer programa/função/<em>script</em> desenvolvido para trabalhar com arquivos de texto podem ser utilizados nestes arquivos. Vejamos algumas.</p>
+<blockquote class="blockquote">
+<p>Vamos vizualizar os arquivos fasta presentes na pasta <em>~/<span class="math inline">\(TURMA/\)</span>ALUNO/arquivos/fasta/mito</em>. Entre nesta pasta e liste os arquivos:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>DICA: utilize <strong>tab</strong> para autocompletar e evitar erros!</p>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#entre na pasta</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/<span class="va">$TURMA</span>/<span class="va">$ALUNO</span>/arquivos/fasta/mito</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#confira onde você está</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#liste os arquivos</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#liste os arquivos com mais informações</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lah</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Vamos vizualizar o arquivo <em>human_mtDNA_genome.fasta</em> de 4 maneiras diferentes. Observe o <em>output</em> de cada comando e entenda as diferenças. Varie os argumentos para compreender sua função:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#abrir o arquivo inteiro</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> human_mtDNA_genome.fasta</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#abrir o começo do arquivo</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-10</span> human_mtDNA_genome.fasta</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#abrir o final do arquivo</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-14</span> human_mtDNA_genome.fasta</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#abrir o arquivo inteiro, interativamente</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> human_mtDNA_genome.fasta</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#---&gt; utilize as setas para mover, e saia com a tecla "q"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Como já sabemos, arquivos <em>.fasta</em> tem uma estrutura definida: uma linha de <strong><em>cabeçalho</em></strong>, <strong>sempre iniciada por <em>&gt;</em></strong> seguida de uma ou mais linhas de <strong><em>sequência</em></strong>. Cada <strong><em>cabeçalho</em></strong> representa uma sequência no arquivo. Assim, como saber quantas sequências temos num arquivo? O comando <strong><em>grep</em></strong> é utilizado para localizar/buscar/extrair/contar padrões de texto em arquivos de texto. Vamos usá-lo:</p>
+<blockquote class="blockquote">
+<p>Experimente as variações do comando <em>grep</em>:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#veja o arquivo com que trabalharemos agora</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> human_mtDNA_CDSs.fasta</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#extrair linhas de cabeçalho no arquivo fasta</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"&gt;"</span> human_mtDNA_CDSs.fasta</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#contar linhas de cabeçalho no arquivo fasta</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"&gt;"</span> human_mtDNA_CDSs.fasta</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#extrair uma sequência usando o grep</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#----&gt;extraia apenas a sequência do gene COX1</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"COX1"</span> <span class="at">-A10</span> human_mtDNA_proteins.fasta</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"COX1"</span> <span class="at">-A8</span> human_mtDNA_proteins.fasta</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#salve a sequência e seu cabeçalho em um novo arquivo</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"COX1"</span> <span class="at">-A8</span> human_mtDNA_proteins.fasta <span class="op">&gt;</span> human_COX1_protein.fasta</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#confira o resultado</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> human_COX1_protein.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="em-arquivos-.fastq" class="level3">
+<h3 data-anchor-id="em-arquivos-.fastq">Em arquivos .fastq</h3>
+<section id="entendendo-os-arquivos-.fastq" class="level4">
+<h4 data-anchor-id="entendendo-os-arquivos-.fastq">Entendendo os arquivos .fastq</h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Utilizando o mesmo raciocínio da sessão anterior, podemos investigar os arquivos <em>.fastq</em>.</p>
+<blockquote class="blockquote">
+<p>Vamos vizualizar os arquivos fasta presentes na pasta <em>~/<span class="math inline">\(TURMA/\)</span>ALUNO/arquivos/fastq</em>. Entre nesta pasta e liste os arquivos:</p>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>DICA: utilize <strong>tab</strong> para autocompletar e evitar erros!</p>
+</blockquote>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#entre na pasta</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/<span class="va">$TURMA</span>/<span class="va">$ALUNO</span>/arquivos/fastq</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#confira onde você está</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#liste os arquivos</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#liste os arquivos com mais informações</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lah</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Veja os nomes dos arquivos. Observe que eles estão organizados em pares que diferem apenas pelo radical <strong><em>R1</em></strong> e <strong><em>R2</em></strong>. Esses radicais representam os pares de <em>reads</em>, ou seja, duas extremidades de um mesmo DNA sequenciado em uma posição da <em>flow cell</em>. Apesar de separados, cada sequência num arquivo tem sua correspondente no outro.</p>
+<blockquote class="blockquote">
+<p>Vamos vizualizar o arquivo <em>amostra_137_S135_L001_R1_001.fastq</em> de 4 maneiras diferentes. Observe o <em>output</em> de cada comando e entenda as diferenças. Varie os argumentos para compreender sua função:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#abrir o arquivo inteiro</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> amostra_137_S135_L001_R1_001.fastq</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#abrir o começo do arquivo</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-10</span> amostra_137_S135_L001_R1_001.fastq</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#abrir o final do arquivo</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> <span class="at">-14</span> amostra_137_S135_L001_R1_001.fastq</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#abrir o arquivo inteiro, interativamente</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">less</span> amostra_137_S135_L001_R1_001.fastq</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#---&gt; utilize as setas para mover, e saia com a tecla "q"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Veja que este é um arquivo bem grande e mais complexo. Não faz sentido vizualizá-lo completamente. Vamos entender sua estrutura:</p>
+<blockquote class="blockquote">
+<p>Utilizando o comando <em>wc</em> conte quantas linhas temos em cada arquivo nesta pasta:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#contar linhas</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> amostra_<span class="pp">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Com o comando <em>head</em> abra o começo do arquivo para entendermos sua estrutura</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#contar linhas</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> amostra_137_S135_L001_R1_001.fastq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<style>
+div.blue pre { background-color:lightblue; }
+</style>
+<div class="blue">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">###        Estrutura do .fastq</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  @...........    = cabeçalho</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ACTGACTGA...    = sequência</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  +               = separador</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  123ABC*&amp;%...    = código ASCII para qualidade PHRED de cada base</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">@M02913:268:000000000-JGD64:1:1101:21802:2015</span> 1:N:0:ACTGAGCG+CTATTATG</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ex">TCAACCAACCACAAAGACATTGGCACCCTCTACTTAGTATTCGGTGCCTTAGCCGCAATATTTTGCACAGCCCTTAGCCTTCTAATTCGGGCAGAGCTTTCCCAACCTGGCGCCCTCTAGGTGA</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="ex">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="ex">AAC-AFGGGGEGGFFAFGGGGFAFGFFGFFGF</span><span class="op">&lt;</span>FFGGGGGG9,,B,@FC,,<span class="kw">;</span><span class="ex">CC@++6@9,CE,,6,,,:</span><span class="op">&lt;</span>CCEF,,6CCD@F,,EFE<span class="op">&lt;</span>,+@@<span class="pp">?</span>,BEF,,9CFE,BCC,,B+8</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="contando-seqs-em-arquivos-.fastq" class="level4">
+<h4 data-anchor-id="contando-seqs-em-arquivos-.fastq">Contando seqs em arquivos .fastq</h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Como vimos acima, arquivos <em>.fastq</em> tem uma estrutura definida: uma linha de <strong><em>cabeçalho</em></strong>, **sempre iniciada por _<span class="citation" data-cites="_">@_</span>** seguida de uma linha de <strong><em>sequência</em></strong>, seguida por uma linha de separador (+) e a última linha de <strong><em>indicadores de qualidade PHRED</em></strong>. Cada <em>read</em> do arquivo é representada por 4 linha sequenciais, contadas a partir do cabeçalho.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; O comando <strong><em>grep</em></strong> também pode ser utilizado para contar <em>reads</em> num <em>.fastq</em>, mas, como o sinal @ pode ser também um indicador de qualidade, devemos ser mais específicos. Observe:</p>
+<blockquote class="blockquote">
+<p>Conte o número de <em>reads</em> no arquivo com o comando <em>grep</em>:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#conte os sinais @ presentes no arquivo</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"@"</span> amostra_137_S135_L001_R1_001.fastq</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#conte os sinais @ presentes NO COMEÇO DAS LINHAS do arquivo</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^@"</span> amostra_137_S135_L001_R1_001.fastq</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#reveja a estrutura do arquivo. Qual é o próximo caracter após o @ nos cabeçalhos?</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> amostra_137_S135_L001_R1_001.fastq</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#conte os sinais @ presentes NO COMEÇO DAS LINHAS do arquivo, seguidos do próximo caracter comum no cabeçalho</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"^@M"</span> amostra_137_S135_L001_R1_001.fastq</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># conte todas as linhas no arquivo .fastq</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> amostra_137_S135_L001_R1_001.fastq</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="fu">expr</span> 1 + 1</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="fu">expr</span> 2 <span class="pp">*</span> 2</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># use o comando expr pra calcular o valor obtido dividido por quatro (use espaços entre os termos)</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co">## entenda o que será o primeiro termo</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> fastq/amostra_131_S158_L001_R1_001.fastq <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co">## substitua o primeiro termo da equação utilizando `` para delimitá-lo</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="fu">expr</span> <span class="kw">`</span><span class="fu">cat</span> fastq/amostra_131_S158_L001_R1_001.fastq <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span><span class="kw">`</span> / 4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="controle-de-qualidade" class="level2">
+<h2 data-anchor-id="controle-de-qualidade">Controle de qualidade</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Uma máxima da bioinformática e das ciências de dados em geral é <strong><em>trash in, trash out</em></strong>, que se traduz em <em>onde entra lixo, sai lixo</em>, ou seja, análises com <em>inputs</em> ruins geram <em>outputs</em> ruins. Assim, é extremamente importante <em>separar o joio do trigo</em>. A primeira etapa de uma análise - e talvez a mais importante - é a curadoria da informação que se vai utilizar; sua qualidade irá influenciar todo o resto.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../../home/heron/prjcts/bioinfo/misc/trashINtrashOUT.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><em>trash in, trash out</em></figcaption><p></p>
+</figure>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Uma vez que os arquivos <em>.fastq</em> apresentam indicadores de qualidade para todas as bases de todas as <em>reads</em>, é possível selecionar apenas as <em>reads</em> (ou suas partes) que apresentem qualidade satisfatória para utilização nas análises subsequentes, minimizando a propagação de erros através do <em>pipeline</em>, que podem resultar em ruído ou mesmo em padrões biológicos inexistentes. Mas, como fazer essa avaliação para tantas sequências e arquivos de uma só vez?</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Os programas <em>FastQC</em> &amp; <em>MultiQC</em> possibilitam uma inspeção qualitativa e quantitativa de conjuntos de dados provenientes de sequenciadores de nova geração. Estes programas <em>leem</em> todos indicadores de qualidade de todas as <em>reads</em> e os convertem em diversos sumários gráficos que facilitam a avaliação de um ou múltiplos arquivos <em>.fastq</em>.</p>
+<section id="fastqc" class="level3">
+<h3 data-anchor-id="fastqc">FastQC</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; O programa <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><em>FastQC</em></a> foi desenvolvido em 2010, e é escrito na <em>linguagem de programação</em> <a href="https://pt.wikipedia.org/wiki/Java_(linguagem_de_programa%C3%A7%C3%A3o)"><em>Java</em></a>. Ele gera <em>reports</em> em <a href="https://pt.wikipedia.org/wiki/HTML"><em>HTML</em></a> para cada arquivo <em>.fastq</em> por vez, o que reflete o <em>estado da arte</em> das aplicações NGS de sua época, onde geralmente uma ou poucas amostras eram sequenciadas por corrida.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Sua utilização é extremamente simples, como veremos a seguir.</p>
+<blockquote class="blockquote">
+<p>Crie uma pasta <em>qualidade</em> para armazenarmos os resultados do <em>FastQC</em>. Em seguida, rode o programa para ambas as <em>reads</em> de um par de arquivos da sua escolha:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># entre na pasta correspondente a esta aula</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/<span class="va">$TURMA</span>/<span class="va">$ALUNO</span>/</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># crie uma subpasta </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> qualidade</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># veja as instuções de uso do programa (saia com "q")</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span>  <span class="at">--help</span> <span class="kw">|</span> <span class="fu">less</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># rode o programa, apontando o caminho completo para os arquivos de entrada (input) e para a pasta de saída (output)</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="va">$CAMINHO_COMPLETO</span>/<span class="va">$ARQUIVO_FASTQ_R1</span> <span class="at">-o</span> <span class="va">$CAMINHO_COMPLETO</span>/qualidade</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># repita a análise para o arquivo R2 correspondente</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="va">$CAMINHO_COMPLETO</span>/<span class="va">$ARQUIVO_FASTQ_R2</span> <span class="at">-o</span> <span class="va">$CAMINHO_COMPLETO</span>/qualidade</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co"># veja os outputs criados</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="va">$CAMINHO_COMPLETO</span>/qualidade</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Observe que foram gerados 2 arquivos para cada arquivo <em>.fastq</em>. Um deles, o <em>.zip</em>, contém as informações geradas na análise, que são sumarizdas no outro arquivo, o <em>.html</em>.</p>
+<section id="transferindo-arquivos" class="level4">
+<h4 data-anchor-id="transferindo-arquivos">Transferindo arquivos</h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Para a visualização desse <em>report</em> em <em>.html</em> é necessário um navegador de internet, que não existe na linha de comando, pois requer uma interface gráfica. Assim, estes arquivos precisam ser copiados para o computador local, via linha de comando, para depois serem abertos num navegador de internet.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Essa transferência de arquivos é feita de maneira semelhante à conexão por SSH do computador local com o servidor, e utiliza o comando <strong><em>scp</em></strong>. Vamos fazer isso.</p>
+<blockquote class="blockquote">
+<p>Identifique o caminho completo, <em>no servidor</em>, para os arquivos que se deseja copiar</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># liste os arquivos html usando o caminho completo</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="va">$CAMINHO_COMPLETO</span>/qualidade/<span class="pp">*</span>html</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Abra um novo terminal <em>linux</em>. Utilize o comando <em>scp</em> para copiar os arquivos do servidor para o computador local. Substitua as variáveis $TURMA e $ALUNO pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#crie uma pasta localmente para armazenar os arquivos</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> qualidade</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> qualidade</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># utilize o comanod scp para copiar</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># estrutura do comando:</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     scp               endereço:o_que                                         para_onde</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     scp -P $PORTA $USUARIO@$IP:$CAMINHO_COMPLETO/$ARQUIVO_QUE_SE_QUER_COPIAR $PASTA_DE_DESTINO_NO_COMPUTADOR_LOCAL</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span>       <span class="at">-P</span> 8722      <span class="va">$USER</span>@<span class="va">$IP</span>:/home/biomed/<span class="va">$TURMA</span>/<span class="va">$ALUNO</span>/arquivos/qualidade/<span class="pp">*</span>html     .</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#lembre-se que . sigifica "aqui, na pasta onde estou"</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co"># liste os arquivos que você copiou</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co"># abra o navegdor de arquivos do windows na pasta onde está</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="ex">explorer.exe</span> .</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co"># clique 2x no arquivo para abrí-lo no navegador</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Pronto! Agora podemos explorar esse <em>report</em>!</p>
+<blockquote class="blockquote">
+<p>Analise o conteúdo do <em>report</em>.</p>
+</blockquote>
+</section>
+</section>
+<section id="multiqc" class="level3">
+<h3 data-anchor-id="multiqc">MultiQC</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; O programa <a href="https://multiqc.info/"><em>MultiQC</em></a> foi desenvolvido em 2016, e é escrito na <em>linguagem de programação</em> <a href="https://pt.wikipedia.org/wiki/Python"><em>Python</em></a>. Ele foi desenvolvido para facilitar a avaliação de múltiplos arquivos <em>.fastq</em> por vez, dado que, com o avanço e barateamento das plataformas NGS, múltiplas amostras e bibliotecas passaram a ser sequenciadas simultâneamente. Este programa utiliza os diversos relatórios gerados pelo <em>FastQC</em> e os combina em um único sumário gráfico, também em <a href="https://pt.wikipedia.org/wiki/HTML"><em>HTML</em></a>, com uma apresentação mais moderna e interativa.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Vamos criar utilizá-lo para criar um único <em>report</em>, desta vez para os <em>reports</em> do <em>FastQC</em> para todos arquivos de <em>reads</em>.</p>
+<blockquote class="blockquote">
+<p>Utilizando o <em>FastQC</em>, gere <em>reports</em> para todos arquivos <em>.fastq</em>, em um único comando:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># volte para a pasta onde estão os primeiros reports</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> qualidade</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rode o FastQC para todos arquivos simultaneamente</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ex">fastqc</span> <span class="va">$CAMINHO_COMPLETO</span>/arquivos/fastq/<span class="pp">*</span>.fastq <span class="at">-o</span> <span class="va">$CAMINHO_COMPLETO</span>/qualidade</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># veja os outputs criados</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="va">$CAMINHO_COMPLETO</span>/qualidade</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Utilizando o <em>MultiQC</em>, gere um <em>report</em> sumarizando todos arquivos criados pelo <em>FastQC</em>:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># volte para a pasta onde estão os primeiros reports</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> qualidade</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># crie uma pasta para o multiqc</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> multiqc</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># entre na pasta</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> multiqc</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#confira o caminho onde está</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># veja as instuções de uso do programa (saia com "q")</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span>  <span class="at">--help</span> <span class="kw">|</span> <span class="fu">less</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># rode o programa</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span> <span class="at">--interactive</span> <span class="va">$CAMINHO_COMPLETO</span>/quality/multiqc <span class="at">--outdir</span> .</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co"># veja os outputs criados</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="va">$CAMINHO_COMPLETO</span>/qualidade/multiqc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="transferindo-arquivos-1" class="level3">
+<h3 data-anchor-id="transferindo-arquivos-1">Transferindo arquivos</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Agora, de maneira semelhante ao que já fizemos, vamos copiar esse <em>report</em> gerado pelo <em>MultiQC</em> para o computador local, para podermos visualizá-lo.</p>
+<blockquote class="blockquote">
+<p>Abra um novo terminal <em>linux</em>. Utilize o comando <em>scp</em> para copiar os arquivos do servidor para o computador local. Substitua as variáveis $TURMA e $ALUNO pelo conteúdo respectivo à suas pastas, ou use o caminho completo que você identificou no passo anterior.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#crie uma pasta localmente para armazenar os arquivos</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> qualidade</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> multiqc</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> multiqc</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># utilize o comanod scp para copiar</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># estrutura do comando:</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     scp               endereço:o_que                                         para_onde</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#     scp -P $PORTA $USUARIO@$IP:$CAMINHO_COMPLETO/$ARQUIVO_QUE_SE_QUER_COPIAR $PASTA_DE_DESTINO_NO_COMPUTADOR_LOCAL</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span>       <span class="at">-P</span> 8722      <span class="va">$USER</span>@<span class="va">$IP</span>:/home/biomed/<span class="va">$TURMA</span>/<span class="va">$ALUNO</span>/arquivos/qualidade/multiqc/<span class="pp">*</span>html     .</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#lembre-se que . sigifica "aqui, na pasta onde estou"</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co"># liste os arquivos que você copiou</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="co"># abra o navegdor de arquivos do windows na pasta onde está</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="ex">explorer.exe</span> .</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="co"># clique 2x no arquivo para abrí-lo no navegador</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Pronto! Agora podemos explorar esse <em>report</em>!</p>
+<blockquote class="blockquote">
+<p>Analise o conteúdo do <em>report</em>.</p>
+</blockquote>
+<hr>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Voltar para a <a href="https://heronoh.github.io/bioinfo"><em>página inicial</em></a></p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

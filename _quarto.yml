@@ -1,17 +1,30 @@
 project:
   type: website
+  output-dir: docs              # ← para GitHub Pages (opcional)
+  resources:
+    - misc/**                   # garanta que a logo e imagens entrem no build
+    - data/**
 
 website:
   title: "Ensino em Bioinformática"
   search: true
   navbar:
-    logo: misc/HOH-02.png   # caminho relativo à raiz do projeto (onde fica o _quarto.yml)
+    logo: misc/HOH-02.png
+    title: true
     left:
-      - text: "Aulas (Shell)"
-        href: aulas/index.html#sec-aulas-bash
       - text: "Aulas (R)"
-        href: aulas/index.html#sec-aulas-r
+        href: aulas/r/index.qmd
+      - text: "Aulas (Shell)"
+        href: aulas/bash/index.qmd
 
 format:
   html:
     theme: cosmo
+    toc: false
+    code-copy: true
+    smooth-scroll: true
+    anchor-sections: false
+    # deixe false aqui; use embed-resources: true só quando precisar 1 arquivo solto
+    # embed-resources: true
+execute:
+  freeze: auto                  # builds reprodutíveis e mais rápidos (cache)

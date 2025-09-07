@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof.&nbsp;Heron OH">
+<meta name="dcterms.date" content="2025-09-07">
+<meta name="description" content="Breve resumo (aparece no card do listing).">
+
+<title>Ensino em Bioinformática - Práticas em Bioinfo II</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../misc/HOH-02.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">true</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../aulas/r/index.html">
+ <span class="menu-text">Aulas (R)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../aulas/bash/index.html">
+ <span class="menu-text">Aulas (Shell)</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Práticas em Bioinfo II</h1>
+</div>
+
+<div>
+  <div class="description">
+    Breve resumo (aparece no card do listing).
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Prof.&nbsp;Heron OH </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<style type="text/css" scoped="">
+PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
+</style>
+<style>
+body {
+text-align: justify}
+</style>
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG. Você pode encontrar as demais práticas <a href="https://heronoh.github.io/bioinfo"><em>aqui</em></a>.</p>
+<section id="comandos-básicos-ii" class="level2">
+<h2 data-anchor-id="comandos-básicos-ii">Comandos básicos II</h2>
+<section id="inputs-outputs" class="level3">
+<h3 data-anchor-id="inputs-outputs"><em>Inputs</em> &amp; <em>outputs</em></h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; As operações que o computador executa - seja através de programas, <em>scripts</em>, aplicativos ou comandos - funcionam a partir do que chamamos de <strong><em>input</em></strong> (ou <em>entrada</em>). <strong><em>Inputs</em></strong> podem ser tanto arquivos, quanto parâmetros e argumentos necessários para a execução de uma operação lógica.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; De maneira semelhante, tudo o que é gerado por um comando (ou programa, <em>script</em>, aplicativo, …) é denominado <strong><em>output</em></strong>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Na <em>linha de comando</em> é possível encadear diversos comandos sequencialmente, de maneira que o <strong><em>input</em></strong> do primeiro comando seja o <strong><em>output</em></strong> do próximo. Isto é conseguido pelo uso do <strong><em>pipe</em></strong>, identificado por uma barra vertical (<strong>|</strong>). Assim, um conjunto de comandos encadeados por <strong><em>pipes</em></strong> pode ser denominado <strong><em>pipe line</em></strong>, termo que pode ser expandido para representar qualquer conjunto de análise sequenciais para a transformação de um <strong><em>input</em></strong> em algum <strong><em>output</em></strong>. Mas, antes de trabalharmos com <strong><em>pipes</em></strong>, vamos primeiramente escrever alguns arquivos.</p>
+<hr>
+</section>
+<section id="tipos-de-arquivos" class="level3">
+<h3 data-anchor-id="tipos-de-arquivos">Tipos de arquivos</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Um arquivo é uma entidade que pode armazenar qualquer coisa, e pode ser codificado de duas maneiras:</p>
+<ul>
+<li><p><strong>Arquivos binários:</strong> um arquivo binário contém código legível por máquina que pode ser executado diretamente pelo processador de um computador. Ele armazena dados em <a href="https://pt.wikipedia.org/wiki/Arquivo_bin%C3%A1rio">formato binário</a>, o que significa que usa uma série de 0’s e 1’s para representar informações. Estes formatos são normalmente usados para <em>programas executáveis</em>, <em>bibliotecas</em> e outros arquivos que contêm <em>código compilado</em>, ou seja, um conjunto de instruções que já foi transformado da <em>linguagem de programação</em> original para um <em>código de máquina</em>, pronto para ser interpretado pelo processador. <em>Arquivos binários</em> não podem ser facilmente lidos ou editados por humanos e geralmente requerem ferramentas ou programas especiais para trabalhar com eles.</p></li>
+<li><p><strong>Arquivo de texto:</strong> um arquivo de texto armazena dados como uma sequência de caracteres que podem ser lidos e editados por humanos. Os <a href="https://pt.wikipedia.org/wiki/Arquivo_de_texto">arquivos de texto</a> geralmente são codificados usando conjuntos de caracteres <em>ASCII</em> ou <em>Unicode</em> e podem ser criados e editados usando uma ampla variedade de editores de texto. Os formatos de arquivo de texto são comumente usados para armazenar arquivos de configuração, arquivos de dados e outros tipos de conteúdo legível por humanos.</p></li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Em resumo, os formatos de <em>arquivo binário</em> são otimizados para processamento por máquina, enquanto os formatos de <em>arquivo de texto</em> são otimizados para legibilidade e edição por humanos. Ambos formatos podem ser convertidos um no outro.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Há diferentes maneiras de se organizar as informações contidas em cada tipo de arquivo. A esses tipos de organização damos o nome de <strong><em>formato</em></strong>. O formato de cada arquivo é evidenciado pela sua extensão, que é uma abreviação incluída ao final do nome de cada arquivo. Por exemplo, arquivos de texto do <em>Microsoft Word</em> são identificados pelo sufixo <em>.docx</em>. Mas, além da identificação pelo nome, a estrutura interna é o que realmente determina o formato, sendo o sufixo apenas um facilitador.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Alguns exemplos de formatos de arquivo de texto incluem:</p>
+<ul>
+<li><p><strong>Arquivos de texto simples:</strong> Esses arquivos contêm apenas texto sem formatação, como arquivos <em>.txt</em>. Eles são fáceis de criar e editar, mas não oferecem suporte a recursos avançados de formatação de texto, como negrito, itálico, cores etc.</p></li>
+<li><p><strong>Arquivos de texto delimitados:</strong> Esses arquivos contêm dados tabulares, onde cada coluna de dados é separada por um caractere de delimitação, como uma vírgula ou um ponto-e-vírgula. Exemplos de formatos de arquivo de texto delimitados incluem <a href="https://pt.wikipedia.org/wiki/Comma-separated_values"><em>.csv</em></a>, <em>.tsv</em> e <em>.txt</em>. Eles são amplamente utilizados para armazenar dados em planilhas e bancos de dados.</p></li>
+<li><p><strong>Arquivos de texto com marcação:</strong> Esses arquivos incluem texto com marcação, como arquivos <a href="https://pt.wikipedia.org/wiki/HTML"><em>.html</em></a>, <a href="https://pt.wikipedia.org/wiki/XML"><em>.xml</em></a> ou <em>.markdown</em>. A marcação é usada para adicionar informações sobre a estrutura do documento, como títulos, parágrafos, listas e links. Os arquivos de texto com marcação são usados principalmente na web para exibir conteúdo em navegadores.</p></li>
+<li><p><strong>Arquivos de texto estruturados:</strong> Esses arquivos contêm dados organizados em uma estrutura específica, como arquivos <a href="https://pt.wikipedia.org/wiki/JSON"><em>.json</em></a>, <em>.yaml</em> ou <em>.ini</em>. Eles são usados principalmente para armazenar configurações, opções e outros dados que precisam ser organizados hierarquicamente.</p></li>
+</ul>
+<hr>
+</section>
+<section id="escrevendo-arquivos" class="level3">
+<h3 data-anchor-id="escrevendo-arquivos">Escrevendo arquivos</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Na prática passada ulitizamos alguns comandos para criar e modificar arquivos. Agora, iremos aprender outros comandos para escrever e editar arquivos.</p>
+<section id="via-linha-de-comando" class="level4">
+<h4 data-anchor-id="via-linha-de-comando">Via linha de comando</h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; O resultado (<strong><em>output</em></strong>) de qualquer comando pode ser escrito diretamente em um arquivo. Isto pode ser feito utilizando os sinais <strong><em>&gt;</em></strong> &amp; <strong><em>&gt;&gt;</em></strong>. Estes sinais representam a ação de adicionar conteúdo a um arquivo. Enquanto o segundo, <strong><em>&gt;&gt;</em></strong>, adiciona conteúdo ao final de um arquivo, o primeiro, <strong><em>&gt;</em></strong>, reescreve totalmente seu conteúdo, apagando qualquer informação existente. Vamos fazer algumas experimentações.</p>
+<blockquote class="blockquote">
+<p>Com o comando <strong><em>echo</em></strong>, crie algum conteúdo e salve ele num arquivo, utilizando o operadore de escrita em arquivos <strong><em>&gt;&gt;</em></strong>. Em seguida, visualize o conteúdo do arquivo com o comando <strong><em>cat</em></strong>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 1"</span> <span class="op">&gt;&gt;</span> arquivo.txt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 2"</span> <span class="op">&gt;&gt;</span> arquivo.txt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 3"</span> <span class="op">&gt;&gt;</span> arquivo.txt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 4"</span> <span class="op">&gt;&gt;</span> arquivo.txt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 5"</span> <span class="op">&gt;&gt;</span> arquivo.txt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> arquivo.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Observe que todas as linhas foram armazenadas no arquivo. Vamos ver o que acontece com o outro operador.</p>
+<blockquote class="blockquote">
+<p>Com o comando <strong><em>echo</em></strong>, crie algum conteúdo e salve ele num arquivo, utilizando o operadore de escrita em arquivos <strong><em>&gt;</em></strong>. Em seguida, visualize o conteúdo do arquivo com o comando <strong><em>cat</em></strong>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 1"</span> <span class="op">&gt;</span> arquivo2.txt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> arquivo2.txt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 2"</span> <span class="op">&gt;</span> arquivo2.txt</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 3"</span> <span class="op">&gt;</span> arquivo2.txt</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 4"</span> <span class="op">&gt;</span> arquivo2.txt</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"linha 5"</span> <span class="op">&gt;</span> arquivo2.txt</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> arquivo2.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Observe que apenas a última linha está armazenada no arquivo. Todas as demais foram armazenadas, porém foram sobreescritas a cada novo comando.</p>
+<blockquote class="blockquote">
+<p>Agora, remova os arquivos que você gerou, para mantermos a organização de nossas pastas.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo.txt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo2.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="com-editor-de-texto-vi" class="level4">
+<h4 data-anchor-id="com-editor-de-texto-vi">Com editor de texto (vi)</h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Editores de texto são programas que permitem você abrir arquivos de texto e editar seu conteúdo. Há diversas opções disponíveis, com várias funcionalidades diferentes. Nos sistemas operacionais <strong><em>Linux</em></strong>, o editor de texto padrão é o <a href="https://pt.wikipedia.org/wiki/Vi">Vi</a>, também disponível como <strong><em>Vim</em></strong> (uma abreviação de <em>Vi IMproved</em>).</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Como não existe <em>mouse</em> na linha de comando, a interação com o editor de texto é toda feita utilizando <em>atalhos de teclado</em>. Atalhos são combinações de teclas que geram ações. Cada programa ou <em>ambiente</em> tem seus próprios atalhos. Na dúvida sobre as opções, utilize ferramentas de busca como o <a href="https://www.google.com/"><em>Google</em></a> para fazer buscas, utilizando palavras-chave como, neste caso. Estas buscas podem ser feitas em qualquer idioma, mas é mais fácil de conseguir uma variedade maior de resultados quando a busca é feita em <em>inglês</em>, visto que esta é a língua atualmente adotada como <em>universal</em>, tanto pela ciência quanto pela informática.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Por exemplo, neste caso, façamos a busca com as seguintes <em>palvras-chave</em>:</p>
+<blockquote class="blockquote">
+<p>vi linux atalhos</p>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Explore os resultados e veja que há muitas opções de atalhos.</p>
+</section>
+<section id="atalhos-do-vi" class="level4">
+<h4 data-anchor-id="atalhos-do-vi">Atalhos do <em>vi</em></h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Mas não se assuste, aqui vai uma relação dos principais atalhos que você vai precisar.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Comando</th>
+<th style="text-align: left;">Ação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">i</td>
+<td style="text-align: left;">ativar o <strong><em>modo de inserção</em></strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">esc</td>
+<td style="text-align: left;">sair do <strong><em>modo de inserção</em></strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">:</td>
+<td style="text-align: left;">sinalizar uma ação</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">:w</td>
+<td style="text-align: left;">salvar o arquivo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">:wq</td>
+<td style="text-align: left;">salvar o arquivo e sair do programa</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">:q!</td>
+<td style="text-align: left;">sair do programa SEM salvar o arquivo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Del</strong></td>
+<td style="text-align: left;">deletar conteúdo à frente do cursor</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Backspace</strong></td>
+<td style="text-align: left;">deletar conteúdo para trás do cursor</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">botão direito do mouse</td>
+<td style="text-align: left;">copiar texto selecionado</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">botão direito do mouse</td>
+<td style="text-align: left;">colar texto copiado</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dd</td>
+<td style="text-align: left;">deletar a linha onde está o cursor</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">yy</td>
+<td style="text-align: left;">copiar a linha onde está o cursor</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">p</td>
+<td style="text-align: left;">colar a linha onde está o cursor</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">/xxx</td>
+<td style="text-align: left;">buscar o padrão <em>xxx</em> no conteúdo do arquivo</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Estes comandos só funcionam estando <em>fora</em> do <strong>modo de inserção</strong>, que é o modo onde qualquer tecla é escrita como texto no arquivo. Para saber se você está no <strong>modo de inserção</strong>, basta observar o canto inferior esquerdo da tela do editor. Se você estiver no <strong>modo de inserção</strong>, verá lá escrito:</p>
+<blockquote class="blockquote">
+<p>-- INSERT --</p>
+</blockquote>
+<hr>
+<p><br><br></p>
+</section>
+</section>
+<section id="escrevendo-scripts" class="level3">
+<h3 data-anchor-id="escrevendo-scripts">Escrevendo <em>scripts</em></h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Os <strong><em>scripts</em></strong> estão para a <em>bioinformática</em> assim como as <em>receitas</em> estão para a <em>culinária</em>. Os <em>ingredientes</em> são o <strong><em>inputs</em></strong>, e todos os comandos, programas, funções e possibilidades, que podem ser combinados de diversas maneiras e em ordem variada, para se obter o prato final, o <strong><em>output</em></strong>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Uma vez que você tem em mente uma sequência de procedimentos que queira realizar e repetir, você pode organizá-los num <em>arquivo</em> que será lido pelo computador como uma <em>receita</em>. Isto te poupará o tempo de ter que ficar repetindo comandos, além de previnir os <em>erros</em> que sempre ocorrem em qualquer repetição <em>não programática</em>, quando se faz algo manualmente. Outra vantagem é que os <strong><em>scripts</em></strong> possibilitam automatização e paralelização, ou seja, o computador pode fazer por você uma mesma tarefa, várias vezes ao mesmo tempo, para um conjunto de <strong><em>inputs</em></strong> semelhantes.</p>
+<p><br><br></p>
+<section id="preparativos" class="level4">
+<h4 data-anchor-id="preparativos">Preparativos</h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Iremos escrever um <strong><em>script</em></strong> em <strong><em>bash</em></strong>, ou seja, na mesma <em>linguagem</em> que estamos exercitanto. Qualquer um dos comando que você já executou pode ser colocado como uma instrução no <strong><em>script</em></strong>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Antes de começarmos, primeiro precisamos definir o que ele vai fazer. Vamos começar com algo simples, um <strong><em>scrpt</em></strong> que mostre a data do dia e uma mensagem.</p>
+<blockquote class="blockquote">
+<p>Execute o comando <strong><em>date</em></strong> para obter a data do dia. Experimente suas variações, e investige seus argumentos.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span> +%F</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span> +%D</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>O comando para exibir mensagens você já conhece, é o comando <strong><em>echo</em></strong>.</p>
+<blockquote class="blockquote">
+<p>Execute o comando <strong><em>echo</em></strong> para gerar uma mensagem.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Olá, mundo!"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Históricamente, o primeiro <strong><em>script</em></strong> que um informata aprende a fazer é o <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program"><em>Hello Wolrd!</em></a>, que é um <strong><em>programa</em></strong> que exibe esta mensagem. Mas vamos um pouco além.</p>
+<p><br><br></p>
+<hr>
+</section>
+<section id="seu-1-script" class="level4">
+<h4 data-anchor-id="seu-1-script">Seu 1° <em>script</em></h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Vamos criar um <strong><em>script</em></strong> com os comandos que executamos na seção anterior.</p>
+<blockquote class="blockquote">
+<p>Abra o editor de texto para editar um arquivo com nome <em>script1.sh</em>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vi</span> script1.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Dentro do texto, entre no <em>modo de inserção</em> (<strong><em>i</em></strong>) e digite o seguinte conteúdo:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># este script gera uma saudação para o usuário</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n\tBom dia, </span><span class="va">$USER</span><span class="st">!!!!\n"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Hoje é dia </span><span class="kw">`</span><span class="fu">date</span> +%D<span class="kw">`</span><span class="st">, um lindo dia para se aprender bioinfo!"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">"\n\n"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Após incluir o conteúdo, saia do <em>modo de inserção</em> (<strong><em>Esc</em></strong>) e saia do editor, salvando o arquivo (<strong><em>:wq</em></strong>).</p>
+</blockquote>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Você deve ter percebido algumas coisas diferentes no conteúdo do <strong><em>script</em></strong>. A primeira linha é iniciada por <strong><em>#!</em></strong> denominado <em>shebang</em> ou <em>hashbang</em>). Esta linha especial explicita em qual linguagem está escrito o <strong><em>script</em></strong>, e também indica o caminho para o <em>interpretador</em> do código no <strong><em>script</em></strong>. No nosso caso, é um <strong><em>script</em></strong> em <strong><em>bash</em></strong>, cujo interpretador está localizado em <em>/bin/bash</em>. Este conteúdo sempre deve estar presente na primeira linha de qualquer <strong><em>script</em></strong>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Qualquer outra linha iniciada por <strong><em>#</em></strong> (exceto a <span class="math inline">\(1^{a}\)</span>) identifica um <em>comentário</em>. Essas linhas não são executadas pelo <strong><em>script</em></strong>, são ignoradas pelo <em>interpretador</em>. Você pode colocar qualquer conteúdo em linhas comentadas, seja para explicar partes do <strong><em>script</em></strong>, seja para assinar autoria, adicionar informações de contato, etc.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Agora, o seu <strong><em>script</em></strong> já está quase pronto para ser executado. Falta apenas um detalhe, ele precisa ser convertido em um <strong><em>arquivo executável</em></strong>.</p>
+</section>
+<section id="habilitando-execução" class="level4">
+<h4 data-anchor-id="habilitando-execução">Habilitando execução</h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Por padrão, nem todos os arquivos de texto são <em>executáveis</em>. Essa característica pode ser observada com o comando <strong><em>ls</em></strong>, utilizando um argumento que você já conhece, o <strong><em>-l</em></strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># drwxr-x--- 5 heron heron 4096 Feb 15 20:35 ./</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># drwxr-xr-x 4 heron heron 4096 Feb 15 14:46 ../</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># -rwxr-xr-- 1 heron heron  185 Feb 15 20:35 script1.sh*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Observe o conjunto de letras que aparece no começo de cada linha, estes são os <strong><em>atributos</em></strong> dos arquivos. Quando todas presentes, elas teriam a seguinte composição:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><em>d rwx rwx rwx</em></strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Cada um desses campos tem um singificado:</p>
+<ul>
+<li><p><strong>d:</strong> explicita que o arquivo é um diretório</p></li>
+<li><p><strong>rwx:</strong> explicita as permissões do arquivo, sendo:</p>
+<ul>
+<li><strong>r:</strong> permissão de leitura (<em><strong>r</strong>ead</em>).</li>
+<li><strong>w:</strong> permissão de escrita (<em><strong>w</strong>rite</em>).</li>
+<li><strong>x:</strong> permissão de execução (<em>e<strong>x</strong>ecute</em>)</li>
+</ul></li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Observe que, após o <strong>d</strong>, temos três conjuntos de <strong>rwx</strong> repetidos. Esses conjuntos se referem às permissões para, respectivamente:</p>
+<ul>
+<li><p><strong>1° grupo:</strong> Permissões do <em>proprietário</em>, do usuário que criou e possui o arquivo.</p></li>
+<li><p><strong>2° grupo:</strong> Permissões do <em>grupo</em>.</p></li>
+<li><p><strong>3° grupo:</strong> Permissões dos demais usuários.</p></li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Todas essas permissões podem ser modificadas, para <em>bloquear</em> ou <em>liberar</em> acesso de qualquer usuário a qualquer arquivo. Apenas o proprietário ou o <strong><em>super usuário</em></strong>, o usuário <em>root</em>, podem modificar as permissões de um arquivo, ou transferir sua propriedade.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Vamos alterar as permissões do nosso <strong><em>script</em></strong>, habilitando sua execução por outros usuários. Isso é feito com o comando <strong><em>chmod</em></strong>.</p>
+<blockquote class="blockquote">
+<p>Altere as permissões de execução do <strong><em>script1.sh</em></strong> com o comando <strong><em>chmod</em></strong>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x script1.sh</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Observe a diferença nos atributos do arquivo, antes e depois da modificação.</p>
+</blockquote>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Veja que agora o nome do arquivo, quando listado, fica <mark style="background-color: #1bbd06"><em>verde</em></mark> (no esquema de cores <em>default</em>). Isto significa que ele agora é um <em>executável</em>!</p>
+<hr>
+</section>
+<section id="executando-o-script" class="level4">
+<h4 data-anchor-id="executando-o-script">Executando o <em>script</em></h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Agora, para executar o <strong><em>script</em></strong>, podemos fazer de duas maneiras:</p>
+<blockquote class="blockquote">
+<p>Execute o <strong><em>script</em></strong> chamando o seu interpretador, o <em>bash</em>:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> script1.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Execute o <strong><em>script</em></strong> sem chamar o seu interpretador:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#executar a partir de qualquer lugar: caminho completo</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/</span><span class="va">$USER</span><span class="ex">/script1.sh</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#ou</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">~/script1.sh</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#executar estando na mesma pasta que o script: caminho relativo</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">./script1.sh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Observe que, com ambas maneiras, chegamos a um mesmo resultado.</p>
+</blockquote>
+</blockquote>
+<hr>
+</section>
+<section id="nomeando-o-script" class="level4">
+<h4 data-anchor-id="nomeando-o-script">Nomeando o <strong><em>script</em></strong></h4>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; O nosso <strong><em>1° script</em></strong> tem o sufixo <em>.sh</em>. Mas este sufixo é apenas para facilitar a nossa organização. Uma vez que o interpretador está definido dentro do próprio arquivo, este pode ter <em>qualquer</em> nome (desde que seja formado por uma única palavra, sem espaçoes, e não tenha caracteres especiais além de <strong><em>-</em></strong> ou ***_***). Vamos testar:</p>
+<blockquote class="blockquote">
+<p>Renomeie e execute o <strong><em>script</em></strong>.:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#renomear o script</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> script1.sh olar</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#confira seus atributos</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#execute o script com o novo nome</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ex">./olar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Por hoje é só! Você agora já tem os conhecimentos que precisa para escrever outros <strong><em>scripts</em></strong>, utilizando os comandos que já sabe e que vai aprender!</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="exercícios" class="level2">
+<h2 data-anchor-id="exercícios">Exercícios</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Utilizando os comandos que você aprendeu, execute as instruções a seguir. Sempre que pssível, utilize a tecla <span class="math inline">\(TAB\)</span> para completar os nomes de arquivos, caminhos e programas existentes.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Uma sequência de DNA sempre é representada no sentido <strong><em>5’ -&gt; 3’</em></strong>. Quando queremos representar a sequência da fita complementar, ela deve ser exibida no <em>seu</em> sentido <strong><em>5’ -&gt; 3’</em></strong>, no sentido inverso da fita principal. Além disso, cada <em>letra</em> que simboliza um base principal deve ser trocada pela correspondente na fita complementar, por exemplo <em>A -&gt; T</em> ou <em>C -&gt; G</em>. Quando vamos representar o RNA complementar, correspondente à fita principal de DNA, a base <em>T</em> (<em>timina</em>) deve ser substituída pela base <em>U</em> (<em>uracila</em>).</p>
+<p>Observe o seguinte conjunto de comandos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"AAATTTGGGCCCCCCCCCC"</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"AAATTTGGGCCCCCCCCCC"</span> <span class="kw">|</span> <span class="fu">rev</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"AAATTTGGGCCCCCCCCCC"</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">'ACGT'</span> <span class="st">'TGCu'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Com base no <strong><em>output</em></strong> de cada linha, você consegue compreender o que fazem?</p>
+</blockquote>
+</blockquote>
+<section id="desafio" class="level3">
+<h3 data-anchor-id="desafio">Desafio</h3>
+<blockquote class="blockquote">
+<p>Escreva um programa chamado <strong><em>dna2rna</em></strong> que vai receber uma sequência de DNA e vai gerar seu complemento reverso em RNA.</p>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; <strong>DICA:</strong> dentro do <strong><em>script</em></strong>, o comando <strong>echo “<em>sequência</em>”</strong> deve ser substituído por <strong>echo <em>$1</em></strong>, sem aspas.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; -&gt;<strong>$1</strong> é uma variável que corresponde ao primeiro argumento que um <strong><em>script</em></strong> recebe. Assim, qualquer sequência que você passar para na linha de comando será encaminhada para <em>dentro</em> do <strong><em>script</em></strong>. Por exemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#executando o script com uma sequência como 1º argumento</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">dna2rna</span> <span class="st">"AAAAATTGC"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># o script dna2rna receberá "AAAAATTGC" como seu argumento $1</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#resultado esperado</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">GCAAuuuuu</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Voltar para a <a href="https://heronoh.github.io/bioinfo"><em>página inicial</em></a></p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

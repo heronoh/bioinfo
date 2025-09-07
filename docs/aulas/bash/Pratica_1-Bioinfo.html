@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof.&nbsp;Heron OH">
+<meta name="dcterms.date" content="2025-09-07">
+<meta name="description" content="Breve resumo (aparece no card do listing).">
+
+<title>Ensino em Bioinformática - Práticas em Bioinfo I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../misc/HOH-02.png" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">true</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../aulas/r/index.html">
+ <span class="menu-text">Aulas (R)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../aulas/bash/index.html">
+ <span class="menu-text">Aulas (Shell)</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Práticas em Bioinfo I</h1>
+</div>
+
+<div>
+  <div class="description">
+    Breve resumo (aparece no card do listing).
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Prof.&nbsp;Heron OH </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 7, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<style type="text/css" scoped="">
+PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
+</style>
+<style>
+body {
+text-align: justify}
+</style>
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da PUC MG. Você pode encontrar as demais práticas <a href="https://heronoh.github.io/bioinfo"><em>aqui</em></a>.</p>
+<section id="linux-e-wsl" class="level2">
+<h2 data-anchor-id="linux-e-wsl">Linux e WSL</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Praticamente todos os computadores dedicados a análises de bioinformática rodam sistemas operacionais do tipo <strong><em>Unix</em></strong>, em especial o <strong><em>Linux</em></strong> e o <strong><em>macOS</em></strong>. Em nossas práticas na <em>linha de comando</em>, utilizaremos o sistema operacional <a href="https://ubuntu.com/"><strong>Ubuntu</strong></a>. Caso o seu computador seja <strong><em>Windows</em></strong>, você pode <em>emular</em> um sistema operacional <strong><em>Unix</em></strong> utilizando o <strong><em>WSL</em></strong>, ou <em>Windows subsystem for linux</em>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Você pode conferir as instruções de instalação originais da Microsoft <a href="https://learn.microsoft.com/en-us/windows/wsl/install">aqui</a>. Mas, resumidamente, para habilitar o <strong><em>WSL</em></strong> você precisa que o seu computador tenha as aseguintes especificações.</p>
+<ul>
+<li>Windows 10 versão 2004 ou superior.</li>
+<li><em>Build</em> 19041 ou superior.</li>
+</ul>
+<section id="compatibildiade-com-wsl" class="level3">
+<h3 data-anchor-id="compatibildiade-com-wsl">Compatibildiade com WSL</h3>
+<p>Para conferir esses atributos, proceda da seguinte maneira:</p>
+<blockquote class="blockquote">
+<p>No seu teclado, aperte conjuntamente as teclas <em>win key</em> (⊞) e <em>R</em>. Na janela que se abriu, digite <em>winver</em> e pressione <span class="math inline">\(enter\)</span> (↵).</p>
+</blockquote>
+<p>Compare as informações exibidas com os pré-requisitos acima.</p>
+</section>
+<section id="habilitar-e-instalar-o-wsl" class="level3">
+<h3 data-anchor-id="habilitar-e-instalar-o-wsl">Habilitar e instalar o WSL</h3>
+<blockquote class="blockquote">
+<p>Aperte a tecla <em>win key</em> (⊞). Uma janela se abrirá, contendo um campo de busca. Basta digitar <em>powershell</em> que a opção do <strong><em>Windows Powershell</em></strong> será exibida. Clique na mesma com o botão direito e selecione <em>Abrir como administrador</em>.</p>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Uma janela azul se abrirá. Esta é a interface por linha de comando do Windows. Nela iremos digitar os comandos para a instalação do <strong><em>WSL</em></strong>. Para a execução de cada comando, após digitar a instrução, basta apertar <span class="math inline">\(enter\)</span> (↵).</p>
+<blockquote class="blockquote">
+<p>Liste as distribuições de Linux disponíveis.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wsl</span> <span class="at">--list</span> <span class="at">--online</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Você verá uma lista das distribuições de Linux que podem ser instaladas no seu WSL. Utilizaremos a <strong>Ubuntu-20.04</strong>. Prossiga com a instalação.</p>
+<blockquote class="blockquote">
+<p>Inicie a instalação da distribuição desejada.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">wsl</span> <span class="at">--install</span> <span class="at">-d</span> Ubuntu-20.04</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Primeiro a distribuição (<em>distro</em>) será baixada, e depois instalada. Ao final da instalação, uma nova janela, de fundo preto, se abrirá. Este já é o Ubuntu, e as primeiras mensagens que você vai receber são para configurar o seu usuário.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; O primeiro passo será escolher um <em>login</em>, um nome para o seu usuário. Para facilitar, recomendo que o seu login:</p>
+<ul>
+<li>Seja curto, com no máximo 8 caracteres.</li>
+<li>Tenha apenas letras minúsculas.</li>
+<li>Não contenha caracteres especiais como <em>~</em>, <em>^</em>, <em>ç</em>, …</li>
+<li>Não contenha espaços.</li>
+</ul>
+<p>Uma vez definido o seu login, você será solicitado a criar um <em>password</em>, uma senha para o seu usuário. Uma vez que você está no seu próprio computador, ou num login institucional, sugiro criar uma senha mais simples, como <em>o nome do seu usuário + 12345</em>, pois será de fácil dadução caso você se esqueça durante estes primeiros passos. Quando for utilizar usuários em computadores compartilhados ou em servidores, recomendo criar senhas o mais complicadas o possível, sem o nome do seu usuário.</p>
+</section>
+</section>
+<section id="a-linha-de-comando" class="level2">
+<h2 data-anchor-id="a-linha-de-comando">A linha de comando</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Todos os sistemas operacionais podem ser operados sem a necessidade de uma interface gráfica, ou seja, sem uma tela com ícones que você selecione clicando (<em>mouse</em>). Isto é realizado apenas atavés do teclado. A linha de comando é a interface por onde você transmite instruções escritas para o computador (<strong><em>input</em></strong>), que te retorna o resultado do processamento dessas instruções (<strong><em>output</em></strong>). Há uma infinidade de <em>comandos</em> que podem ser executados, mas alguns que conheceremos nestas práticas são fundamentais no dia a dia do bioinformata.</p>
+</section>
+<section id="comandos-básicos" class="level2">
+<h2 data-anchor-id="comandos-básicos">Comandos básicos</h2>
+<section id="navegando-em-diretórios" class="level3">
+<h3 data-anchor-id="navegando-em-diretórios">Navegando em diretórios</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Para se trabalhar na linha de comando, é muito importante saber onde se está. O computador é organizado em diretórios (também chamados de pastas). Todos os diretórios estão contidos dentro de um diretório principal, o <strong>diretório raiz</strong>, representado pelo símbolo <em>barra</em> (<strong>/</strong>). Todos os arquivos ou pastas do computador tem uma localização definida, e portanto, tem <em>endereços</em>. Para a execução de qualquer comando que atua sobre um arquivo deve ser fornecido o seu endereço, ou <em>caminho</em>, como é mais conhecido. Para se evitar a ocorrencia de erros usamos, preferencialmente, <strong><em>caminhos absolutos</em></strong>, ou seja, contendo todas as pastas a partir do diretório raiz, o <strong>/</strong> .</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Também podem ser utilizados <strong><em>caminhos relativos</em></strong>, ou seja, que descrever o caminho até o diretório/arquivo a partir de onde o comando está sendo executado, seja iniciando pelo nome de alguma pasta presente neste local, ou utilizando o símbolo <strong><em>..</em></strong>, para iniciar o caminho pelo nome de alguma pasta acima de onde se está. Isto pode ser feito, inclusive, de forma recursiva (ex: <strong>../../../</strong>).</p>
+<p>Utilizando a tecla <strong>Tab</strong> para autocompletar, você pode fazer com que o computador complete automaticamente qualquer caminho, a partir de um início existente. Essa é a melhor maneira de verificar se você está passando o caminho correto, antes de executar um comando.</p>
+<p>Por exemplo:</p>
+<blockquote class="blockquote">
+<p>Na sua linha de comando (<em>bash</em>), escreva o seguinte comando e aperte <strong><em>ENTER</em></strong> para executá-lo.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; O comando <strong><em>pwd</em></strong> retorna o <em>path to the working directory</em>, o caminho para o diretório que você está.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Para mudarmos de diretório, utilizamos o comando <strong><em>cd</em></strong>. Quando executado sem argumentos, ele te transporta para a <strong><em>$HOME</em></strong>, o diretório <em>casa</em> do usuário, e que carrega seu nome. Este diretório geralmente está localizado em <strong>/home/$usuário</strong>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Você pode identificar qual é o seu usuário com o comando <strong><em>whoami</em></strong></p>
+<blockquote class="blockquote">
+<p>Identifique seu usuário.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">whoami</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>heron</code></pre>
+</div>
+</div>
+<p>No meu caso, estou utilizando o usuário <em>noreh</em>.</p>
+<blockquote class="blockquote">
+<p>Agora execute o comando <strong><em>cd</em></strong>, sem argumentos, e verifique mais uma vez onde você está.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Se você já estava na sua <strong><em>$HOME</em></strong>, você continua no mesmo lugar.</p>
+<blockquote class="blockquote">
+<p>Utilize o comando <strong><em>cd</em></strong> com argumentos, e verifique mais uma vez onde você está.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Estes argumentos representam <em>o diretório atual</em> (<strong><em>.</em></strong>) e <em>o diretório acima do atual</em> (<strong><em>..</em></strong>), e são utilizados em <em>caminhos relativos</em>, que em breve veremos com mais detalhes.</p>
+<hr>
+</section>
+<section id="criando-e-modificando-diretórios" class="level3">
+<h3 data-anchor-id="criando-e-modificando-diretórios">Criando e modificando diretórios</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Agora vamos criar diretórios para explorar outros comandos. Para criar um diretório, utilizamos o comando <strong><em>mkdir</em></strong>, seguido do nome do diretório a ser criado, com caminhos completos ou não. Caso não seja fornecido um caminho, o novo diretório será criado no diretório onde se está.</p>
+<blockquote class="blockquote">
+<p>Utilize o comando <strong><em>mkdir</em></strong> para criar uma pasta <em>aula1</em>, na sua <strong><em>$HOME</em></strong>. Entre nessa pasta com <strong><em>cd</em></strong>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> aula1</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> aula1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Utilize o comando <strong><em>mkdir</em></strong> para criar 3 pastas, <em>pasta_A</em>, <em>pasta_B</em>, <em>pasta_C</em>, dentro de <em>aula1</em>. Liste os arquivos do diretório onde você está com o comando <strong><em>ls</em></strong>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_A</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_B</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> pasta_C</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>O comando <strong><em>ls</em></strong> (assim como a grande maioria de comandos) aceita argumentos. Argumentos são elementos que modificam a maneira como cada comando funciona. Experimente a variação a seguir e veja a diferença.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Você acaba de listar os arquivos e pastas, bem como outras informações. Da esquerda para a direita: a) tipo de arquivo e permissões; b) contagem de links; c) usuário e grupo proprietários do arquivo; d) tamanho do arquivo (em <em>bytes</em>); e) data da última modificação; f) nome do arquivo.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Agora vamos criar alguns arquivos.</p>
+<blockquote class="blockquote">
+<p>Utilize o comando <strong><em>touch</em></strong> para criar dentro da pasta <em>pasta_A</em> alguns arquivos.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> pasta_A</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> arquivo_<span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">3</span><span class="dt">}</span>_<span class="dt">{</span>A<span class="dt">..</span>D<span class="dt">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Veja que, com um comando apenas, você criou diversos arquivos (vazios). Isso acontece porque o uso de <strong><em>{}</em></strong> possibilita a representação de múltiplos caracteres. Faça experiencias com o comando <strong><em>echo</em></strong>, que <em>imprime</em> algum texto ou expressão.</p>
+<blockquote class="blockquote">
+<p>Faça experiencias com o comando <strong><em>echo</em></strong>, que <em>imprime</em> algum texto ou expressão.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> arquivo_<span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">3</span><span class="dt">}</span>_<span class="dt">{</span>A<span class="dt">..</span>C<span class="dt">}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">3</span><span class="dt">}</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">30</span><span class="dt">}</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span> <span class="dt">{A</span><span class="op">,</span><span class="dt">T</span><span class="op">,</span><span class="dt">G</span><span class="op">,</span><span class="dt">C}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Todos os arquivos e diretórios podem ser movidos. O comando <strong><em>mv</em></strong> é utilizado para isto. Este comando tem uma sintaxe definida, e para seu funcionamento é preciso especificar duas coisas.</p>
+<ol type="1">
+<li><p>arquivo/diretório a ser movido;</p></li>
+<li><p>arquivo/diretório de destino;</p></li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Este comando pode ser utilizado tanto para <em>mover</em> (trocar de local) quanto para <em>renomear</em> um arquivo ou diretório. Por isso, sua sintaxe deve ser analisada com calma antes da execução. Vamos vazer alguns testes.</p>
+<blockquote class="blockquote">
+<p>Utilize o comando <strong><em>mv</em></strong> para <em>renomear</em> um arquivo, de acordo com o exemplo a seguir:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> arquivo_1_D arquivo_1_D_renomeado</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Agora, vamos remover alguns arquivos. O comando <strong><em>rm</em></strong> é utilizado para remover arquivos, mas pode remover qualquer coisa (<em>à força</em>). Já o comando <strong><em>rmdir</em></strong>, para remover diretórios, necessáriamente vazios.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Não é possível <em>desfazer</em> ações na linha de comando. Uma vez deletado, para sempre perdido. Assim, recomenda-se muita atenção na hora de executar comandos de remoção. Uma opção é utilizar o argumento <em>-i</em> para ativar a confirmação de remoção.</p>
+<blockquote class="blockquote">
+<p>Remova todos os arquivos terminados em <em>D</em>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_1_D_renomeado</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> arquivo_2_D</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="estrutura-de-diretórios" class="level3">
+<h3 data-anchor-id="estrutura-de-diretórios">Estrutura de diretórios</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; O comando <strong><em>tree</em></strong> mostra a distribuição de arquivos e diretórios a partir de um determinado diretório.</p>
+<blockquote class="blockquote">
+<p>Utilize o comando <strong><em>tree</em></strong> para ver a estrutura de pastas a partir da pasta <em>aula1</em>, contida na sua <strong><em>$HOME</em></strong>.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> ~/aula1 <span class="at">-L</span> 2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Note que o seu nome de usuário será diferente do meu, mostrado neste exemplo.</p>
+</section>
+<section id="instalando-funcionalidades" class="level3">
+<h3 data-anchor-id="instalando-funcionalidades">Instalando funcionalidades</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Se a sua tentativa de usar o comando <strong><em>tree</em></strong> não foi bem sucedida e você recebeu um aviso de <em>command not found</em>, nem tudo está perdido. Você pode instalar esse comando (ou praticamente qualquer outro) executando poucas linhas. O <strong><em>Linux</em></strong> tem um sistema de gerenciamento de pacotes e aplicativos, o <em>apt</em>. Através dele você interage diretamente com repositórios de códigos de cada versão do <strong><em>Linux</em></strong>.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Vamos fazer a instalação do comando <strong><em>tree</em></strong>, mas antes, vamos atualizar o sistema. Isto é necessário para sincronizar essa sua nova instalação com os repositórios mais recentes.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Todos esses comandos de atualização e instalação precisam ser executados como <em>super usuário</em> (ou como chamamos, <em>sudo</em>, que é o mesmo nome que aparece no começo de qualquer comando executado como <em>super usuário</em>). Para executá-los, você vai precisar fornecer a sua senha.</p>
+<blockquote class="blockquote">
+<p>Como super usuário, atualize o sistema:</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; É possível que você tenha encontrado alguns erros, a depender do computador onde você está realizando a prática. De qualquer maneira, vamos prosseguir:</p>
+<blockquote class="blockquote">
+<p>Como super usuário, instale o <em>aplicativo/comando</em> <strong><em>tree</em></strong></p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install tree</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Teste o <em>comando</em> <strong><em>tree</em></strong>. Abra o help do comando para ver as opções de configuração.</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tree</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Agora, com o comando instalado, tente executar o passo anterior para visualizar a organização dos seus arquivos e diretórios.</p>
+</section>
+</section>
+<section id="exercícios" class="level2">
+<h2 data-anchor-id="exercícios">Exercícios</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Utilizando os comandos que você aprendeu, execute as instruções a seguir. Sempre que pssível, utilize a tecla <span class="math inline">\(TAB\)</span> para completar os nomes de arquivos e caminhos. Lembre-se que o caracter <span class="math inline">\(*\)</span> serve como <em>coringa</em>, ele representa qualquer outro caracter.</p>
+<blockquote class="blockquote">
+<ol type="1">
+<li>mova os arquivos cujo nome começa com <em>arquivo_1</em>, <em>arquivo_2</em> e <em>arquivo_3</em> da pasta de onde eles foram criados para a pasta correspondente à última letra de seus nomes.</li>
+</ol>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Tente, com um único comando:</p>
+<blockquote class="blockquote">
+<ol start="2" type="1">
+<li>remover os arquivos com numeração <em>3</em> de todas as pastas.</li>
+</ol>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; Agora, vejamos como ficou a organização.</p>
+<blockquote class="blockquote">
+<ol start="3" type="1">
+<li>visualize a distribuição das subpastas e arquivos dentro da pasta <em>aula1</em>.</li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Voltar para a <a href="https://heronoh.github.io/bioinfo"><em>página inicial</em></a></p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
