@@ -21,6 +21,7 @@ website:
 format:
   html:
     theme: cosmo
+    embed-resources: true
     toc: false
     code-copy: true
     smooth-scroll: true
