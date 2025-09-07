@@ -58,7 +58,7 @@ execute:
 setwd("/home/heron/prjcts/bioinfo")
 htmltools::img(src = knitr::image_uri("misc/HOH-02.png"), 
                alt = 'logo', 
-               style = 'position:absolute; top:-1; right:0; padding:10px; width:100px; height:100px')
+               style = 'position:absolute; top:-0.25; right:0; padding:10px; width:100px; height:100px')
 ```
 
 ---
@@ -137,7 +137,7 @@ scan_and_emit <- function(section_dir, container_id) {
 </div>
 
 ```{r index-bash, echo=FALSE, results='asis', message=FALSE, warning=FALSE}
-scan_and_emit("aulas_bash", "cards-bash")
+scan_and_emit(section_dir = "aulas_bash",container_id =  "cards-bash")
 ```
 
 <script>
