@@ -1,0 +1,103 @@
+---
+title: "Apresentação — Heron O. Hilário"
+author: "Heron O. Hilário"
+date: today
+    # logo opcional (canto superior direito):
+    # logo: misc/HOH-02.png
+    # título em "banner" opcional:
+    # title-slide-attributes:
+    #   data-background-image: misc/HOH-02.png
+    #   data-background-size: contain
+
+---
+
+<style>
+.photo {
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+}
+.badges a {
+  display:inline-block;
+  margin: 0 .5rem .5rem 0;
+  padding: .35rem .6rem;
+  border-radius: .5rem;
+  background: rgba(0,0,0,.06);
+  text-decoration: none;
+}
+.badges a:hover { background: rgba(0,0,0,.12); }
+.small { font-size: .95rem; }
+</style>
+
+# Olá!
+
+::: columns
+::: column
+## Quem sou
+Sou **Heron O. Hilário** — atuo em **Bioinformática**, **Genômica** e **Ensino**.
+
+- **Interesses:** *genômica*, *metabarcoding*, *transcriptômica*, *reprodutibilidade*  
+- **Afiliação:** PUC Minas  
+- **Onde ajudo:** prática de R, Quarto, pipelines e boas práticas
+
+<div class="badges small">
+  <a href="mailto:seu.email@exemplo.com">✉️ E-mail</a>
+  <a href="https://github.com/SEU-USUARIO" target="_blank">🐙 GitHub</a>
+  <a href="https://scholar.google.com/citations?user=SEU_ID" target="_blank">📚 Google Scholar</a>
+  <a href="https://orcid.org/0000-0000-0000-0000" target="_blank">🧬 ORCID</a>
+  <a href="http://lattes.cnpq.br/SEU_ID" target="_blank">📄 Lattes</a>
+  <a href="https://SEU-USUARIO.github.io/NOME-DO-REPO/" target="_blank">🌐 Site</a>
+</div>
+:::
+
+::: column
+<!-- Substitua o caminho abaixo pela sua foto -->
+![](misc/foto-autor.jpg){.photo alt="Foto de perfil de Heron O. Hilário"}
+:::
+:::
+
+---
+
+## O que faço
+
+- **Docência**: *Bioinformática e Genômica*  
+- **Pesquisa**: análise de dados **ômicos**, bancos **FASTA/FASTQ**, **filogenia**, **taxonomia molecular**  
+- **Ferramentas**: **R**, **Quarto**, **git/GitHub**, **Linux/Shell**
+
+> **Missão:** simplificar o acesso a métodos computacionais na biologia usando materiais claros, reproduzíveis e abertos.
+
+---
+
+## Currículo & Links
+
+- **Currículo Lattes:** <http://lattes.cnpq.br/SEU_ID>  
+- **ORCID:** <https://orcid.org/0000-0000-0000-0000>  
+- **Google Scholar:** <https://scholar.google.com/citations?user=SEU_ID>  
+- **CV (PDF):** `docs/CV_HeronOH.pdf` (adicione ao repositório e linke: <https://SEU-SITE/docs/CV_HeronOH.pdf>)  
+- **GitHub:** <https://github.com/SEU-USUARIO>  
+
+::: {.small}
+Dica: mantenha o **CV em PDF** dentro do projeto (ex.: `docs/`) para facilitar o versionamento e o link público.
+:::
+
+---
+
+## Aulas & Materiais
+
+- **Aulas (R):** `aulas/r/index.html`  
+- **Aulas (Shell):** `aulas/bash/index.html`  
+- **Repositório do curso:** <https://SEU-USUARIO.github.io/NOME-DO-REPO/>
+
+> Todos os roteiros são escritos em **Quarto**/**R Markdown**, com foco em **reprodutibilidade** e **acessibilidade**.
+
+---
+
+## Contato
+
+- ✉️ **E-mail:** `seu.email@exemplo.com`  
+- 🐙 **GitHub:** `github.com/SEU-USUARIO`  
+- 🧬 **ORCID:** `0000-0000-0000-0000`  
+
+Obrigado!

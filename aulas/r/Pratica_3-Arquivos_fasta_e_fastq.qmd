@@ -1,19 +1,8 @@
 ---
-title: 'Prática 3 — Sequências biológicas: Arquivos fasta e fastq'
+title: 'Sequências biológicas: Arquivos fasta e fastq'
+description: "Conhecimentos básicos para lidar com sequências de DNA, RNA e proteínas utilizando ferramentas de R"
 lang: pt-BR
 date: last-modified
-format:
-  html:
-    toc: true
-    toc-depth: 3
-    number-sections: true
-    code-copy: true
-    df-print: paged
-    smooth-scroll: true
-    theme:
-      light: cosmo
-      dark: darkly
-    date-format: D [de] MMMM [de] YYYY
 execute:
   echo: true
   warning: false

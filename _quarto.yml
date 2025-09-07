@@ -4,29 +4,41 @@ project:
   resources:
     - misc/**                   # garanta que a logo e imagens entrem no build
     - data/**
-
+lang: pt-BR
+date: last-modified
 website:
-  title: "Ensino em Bioinformática"
+  title: "Bioinformática"
   site-url: https://heronoh.github.io/bioinfo/
   search: true
   navbar:
     logo: misc/HOH-02.png
-    title: true
     left:
       - text: "Aulas (R)"
         href: aulas/r/index.qmd
-      - text: "Aulas (Shell)"
+      - text: "Aulas (bash)"
         href: aulas/bash/index.qmd
+      - text: "Sobre mim"
+        href: author/author.qmd
+      - text: "eDNA scripts"
+        href: eDNA/scripts/*.Rmd
 
 format:
   html:
-    theme: cosmo
-    embed-resources: true
-    toc: false
+    theme:
+      light: flatly
+      dark: darkly
+    respect-user-color-scheme: true
+    toc: true
+    toc-depth: 3
     code-copy: true
+    allow-html: true
+    embed-resources: true
     smooth-scroll: true
     anchor-sections: false
     # deixe false aqui; use embed-resources: true só quando precisar 1 arquivo solto
     # embed-resources: true
 execute:
   freeze: auto                  # builds reprodutíveis e mais rápidos (cache)
+editor: source
+editor_options:
+  chunk_output_type: console

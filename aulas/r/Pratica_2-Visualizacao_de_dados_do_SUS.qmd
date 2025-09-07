@@ -1,19 +1,23 @@
 ---
-title: "Visualização de dados do SUS"
-author: "Prof. Heron OH"
-place: "Biomedicina - PUC Minas"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: 
-  rmdformats::downcute:
-    code_folding: show
-    self_contained: true
-    toc_depth: 5
-    toc_float: yes
-    highlight: zenburn
-    code_download: yes
+title: 'Visualização de dados do SUS'
+description: "Utilizando o R para obter dados do SUS e realizar análises exploratórias utilizando visualização de dados"
+lang: pt-BR
+date: last-modified
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
 editor_options: 
   chunk_output_type: console
 ---
+
+```{r}
+#| include: false
+# Define locale para meses/datas em português
+try({ Sys.setlocale('LC_TIME', 'pt_BR.UTF-8') }, silent = TRUE)
+try({ Sys.setlocale('LC_TIME', 'Portuguese_Brazil.1252') }, silent = TRUE)
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

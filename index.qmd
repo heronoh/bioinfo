@@ -1,23 +1,99 @@
 ---
-title: "Ensino em Bioinformática"
-author: Heron O Hilário
+title: "Bioinformática - Heron O Hilário"
+author: "Heron O Hilário"
+date: today
 page-layout: full
-format:
-  html:
-    allow-html: true
+
+listing:
+  - id: grid-r
+    contents:
+      - "aulas/r/P*.qmd"
+      - "aulas/r/P*.Rmd"
+    type: grid
+    sort: "title"
+    filter-ui: true
+    fields: [title, description]
+
+  - id: grid-bash
+    contents:
+      - "aulas/bash/P*.qmd"
+      - "aulas/bash/P*.Rmd"
+    type: grid
+    sort: "title"
+    filter-ui: true
+    fields: [title, description]
+  - id: grid-jobs
+    contents:
+      - "eDNA/scripts/*.Rmd"
+    type: grid
+    sort: "title"
+    filter-ui: true
+    fields: [title, description]
 ---
 
-<div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;">
-  <div>
-    <h1>Ensino em Bioinformática</h1>
-    <p><strong>Roteiros</strong> e <strong>materiais</strong> da disciplina <em>Bioinformática e Genômica</em> (PUC Minas).</p>
-  </div>
-  <img src="misc/HOH-02.png" alt="logo" style="height:90px;">
-</div>
+
+<!-- ====== ESTILOS (cards + busca) ====== -->
+<style>
+.hero {
+  display:flex; align-items:center; justify-content:space-between;
+  gap: 1.25rem; padding: 1.25rem 0;
+}
+.hero h1 { margin:0; }
+.hero .tagline { font-size:1.1rem; opacity:.85; margin:.25rem 0 0 0; }
+.brand img { height:90px; width:auto; opacity:.95; }
+
+.filterbar { margin: 1rem 0 1.25rem 0; }
+.filterbar input {
+  width:100%; max-width:520px; padding:.6rem .8rem;
+  border:1px solid var(--bs-border-color);
+  border-radius:.5rem;
+  background: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  caret-color: var(--bs-emphasis-color);
+}
+.filterbar input::placeholder { color: var(--bs-secondary-color); }
+
+.cards {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px; align-items:stretch;
+}
+
+.card-link {
+  display:block; height:100%; text-decoration:none; color: inherit;
+  border:1px solid var(--bs-border-color); border-radius:14px;
+  padding:16px; background: var(--bs-card-bg);
+  transition: all .18s ease-in-out;
+  box-shadow: 0 6px 16px rgba(0,0,0,.04);
+}
+.card-link:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0,0,0,.08); }
+
+.card-title {
+  font-weight:700; margin:0 0 .35rem 0;
+  color: var(--bs-emphasis-color);
+}
+.card-path {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+  font-size:.8rem; color: var(--bs-secondary-color); word-break: break-all;
+}
+
+.badge {
+  display:inline-block; padding:.2rem .5rem; font-size:.75rem; border-radius:.35rem;
+  background: var(--bs-secondary-bg); color: var(--bs-secondary-color);
+  margin-right:.35rem;
+}
+
+.section-title { margin-top: 1.75rem; }
+.empty-hint { color: var(--bs-secondary-color); font-style:italic; }
+</style>
+
 
 ---
 
-## Aulas
 
-- 👉 **R (RStudio):** [ver aulas](aulas/r/index.qmd)
-- 👉 **Shell (Bash):** [ver aulas](aulas/bash/index.qmd)
+## Aulas de R
+:::{#grid-r}
+:::
+
+## Aulas de Shell
+:::{#grid-bash}
+:::
