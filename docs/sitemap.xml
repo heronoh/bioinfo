@@ -1,67 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/r/Pratica_2-Visualizacao_de_dados_do_SUS_quarto_clean.html</loc>
-    <lastmod>2025-09-07T03:32:42.807Z</lastmod>
+    <loc>https://heronoh.github.io/bioinfo/index.html</loc>
+    <lastmod>2025-09-07T19:11:29.932Z</lastmod>
   </url>
   <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/r/Pratica_3-Arquivos_fasta_e_fastq.html</loc>
-    <lastmod>2025-09-07T19:02:25.123Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/r/Pratica_2-Visualizacao_de_dados_do_SUS.html</loc>
-    <lastmod>2025-09-07T19:05:41.061Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/r/index.html</loc>
+    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_2-Bioinfo.html</loc>
     <lastmod>2025-09-07T17:54:07.399Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/r/Pratica_1-o_R_e_o_RStudio.html</loc>
-    <lastmod>2025-09-07T18:58:34.219Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_1-Bioinfo.html</loc>
-    <lastmod>2025-09-07T03:33:09.892Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_3-Bioinfo.html</loc>
-    <lastmod>2025-09-07T03:33:14.108Z</lastmod>
   </url>
   <url>
     <loc>https://heronoh.github.io/bioinfo/aulas/bash/index.html</loc>
     <lastmod>2025-09-07T17:54:07.399Z</lastmod>
   </url>
   <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_5-Bioinfo.html</loc>
-    <lastmod>2025-09-07T03:33:20.984Z</lastmod>
+    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_1-Bioinfo.html</loc>
+    <lastmod>2025-09-07T17:54:07.399Z</lastmod>
   </url>
   <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_4-Bioinfo.html</loc>
-    <lastmod>2025-09-07T03:33:25.661Z</lastmod>
+    <loc>https://heronoh.github.io/bioinfo/aulas/r/Pratica_3-Arquivos_fasta_e_fastq.html</loc>
+    <lastmod>2025-09-07T19:02:25.123Z</lastmod>
   </url>
   <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Dicionario_de_comandos.html</loc>
-    <lastmod>2025-09-07T03:33:29.833Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_2-Bioinfo.html</loc>
-    <lastmod>2025-09-07T03:33:34.733Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heronoh.github.io/bioinfo/index.html</loc>
-    <lastmod>2025-09-07T19:11:29.932Z</lastmod>
+    <loc>https://heronoh.github.io/bioinfo/aulas/r/index.html</loc>
+    <lastmod>2025-09-07T17:54:07.399Z</lastmod>
   </url>
   <url>
     <loc>https://heronoh.github.io/bioinfo/eDNA/index.html</loc>
-    <lastmod>2025-09-07T03:33:44.902Z</lastmod>
-  </url>
-  <url>
-    <loc>https://heronoh.github.io/bioinfo/eDNA/scripts/fish_eDNA-mock_communities-HilarioOH_et_al_2023.html</loc>
-    <lastmod>2025-09-07T03:33:55.202Z</lastmod>
+    <lastmod>2024-04-24T11:57:28.407Z</lastmod>
   </url>
   <url>
     <loc>https://heronoh.github.io/bioinfo/author/author.html</loc>
     <lastmod>2025-09-10T14:48:14.464Z</lastmod>
+  </url>
+  <url>
+    <loc>https://heronoh.github.io/bioinfo/eDNA/scripts/fish_eDNA-mock_communities-HilarioOH_et_al_2023.html</loc>
+    <lastmod>2024-08-27T17:02:12.332Z</lastmod>
+  </url>
+  <url>
+    <loc>https://heronoh.github.io/bioinfo/aulas/r/Pratica_1-o_R_e_o_RStudio.html</loc>
+    <lastmod>2025-09-07T19:02:55.108Z</lastmod>
+  </url>
+  <url>
+    <loc>https://heronoh.github.io/bioinfo/aulas/r/Pratica_2-Visualizacao_de_dados_do_SUS.html</loc>
+    <lastmod>2025-09-10T14:57:10.866Z</lastmod>
+  </url>
+  <url>
+    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_3-Bioinfo.html</loc>
+    <lastmod>2025-09-07T17:54:07.399Z</lastmod>
+  </url>
+  <url>
+    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_5-Bioinfo.html</loc>
+    <lastmod>2025-09-07T17:54:07.399Z</lastmod>
+  </url>
+  <url>
+    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Pratica_4-Bioinfo.html</loc>
+    <lastmod>2025-09-07T17:54:07.399Z</lastmod>
+  </url>
+  <url>
+    <loc>https://heronoh.github.io/bioinfo/aulas/bash/Dicionario_de_comandos.html</loc>
+    <lastmod>2025-09-07T17:54:07.399Z</lastmod>
   </url>
 </urlset>

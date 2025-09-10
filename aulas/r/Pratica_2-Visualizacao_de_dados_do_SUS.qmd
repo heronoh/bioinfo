@@ -1,8 +1,6 @@
 ---
 title: 'Visualização de dados do SUS'
 description: "Utilizando o R para obter dados do SUS e realizar análises exploratórias utilizando visualização de dados"
-lang: pt-BR
-date: last-modified
 execute:
   echo: true
   warning: false
