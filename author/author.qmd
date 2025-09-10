@@ -1,6 +1,5 @@
 ---
-title: "Apresentação — Heron O. Hilário"
-author: "Heron O. Hilário"
+title: "Olá"
 date: today
     # logo opcional (canto superior direito):
     # logo: misc/HOH-02.png
@@ -31,11 +30,11 @@ date: today
 .small { font-size: .95rem; }
 </style>
 ```
-# Olá!
+
+## Quem sou
 
 ::: columns
 ::: column
-## Quem sou
 
 Sou **Heron O. Hilário**, um bioinformáta interessado pelo estudo, preservação e conservação da **Biodiversidade**, utilizando ferramentas de **Biologia Molecular**, **Genética** e **Genômica**. As principais linhas de pesquisa nas quais trabalho são na aplicação do ***eDNA metabarcoding*** para investigação de vertebrados e invertebrados.
 
@@ -45,12 +44,18 @@ Sou **Heron O. Hilário**, um bioinformáta interessado pelo estudo, preservaç�
 
 <a href="http://lattes.cnpq.br/3654105041586325" target="_blank">🧬 ORCID</a> <a href="http://lattes.cnpq.br/SEU_ID" target="_blank">📄 Lattes</a> <a href="https://SEU-USUARIO.github.io/NOME-DO-REPO/" target="_blank">🌐 Site</a>
 :::
-:::
+
+::: 
 
 ::: column
 <!-- Substitua o caminho abaixo pela sua foto -->
 
-![](../misc/HOH-01.png){.photo alt="Foto de perfil de Heron O. Hilário"}
+
+
+
+
+![](../misc/HOH-01.png){.mt-4 alt="Foto de perfil de Heron O. Hilário" style="width:220px;height:220px;border-radius:50%;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
+
 :::
 :::
 
