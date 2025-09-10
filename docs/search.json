@@ -508,7 +508,7 @@
     "href": "author/author.html#quem-sou",
     "title": "Apresentação — Heron O. Hilário",
     "section": "",
-    "text": "Sou Heron O. Hilário — atuo em Bioinformática, Genômica e Ensino.\n\nInteresses: genômica, metabarcoding, transcriptômica, reprodutibilidade\n\nAfiliação: PUC Minas\n\nOnde ajudo: prática de R, Quarto, pipelines e boas práticas\n\n\n✉️ E-mail 🐙 GitHub 📚 Google Scholar 🧬 ORCID 📄 Lattes 🌐 Site"
+    "text": "Sou Heron O. Hilário, um bioinformáta interessado pelo estudo, preservação e conservação da Biodiversidade, utilizando ferramentas de Biologia Molecular, Genética e Genômica. As principais linhas de pesquisa nas quais trabalho são na aplicação do eDNA metabarcoding para investigação de vertebrados e invertebrados.\n\n🐙 GitHub 📚 Google Scholar\n🧬 ORCID 📄 Lattes 🌐 Site"
   },
   {
     "objectID": "author/author.html#o-que-faço",
@@ -522,7 +522,7 @@
     "href": "author/author.html#currículo-links",
     "title": "Apresentação — Heron O. Hilário",
     "section": "",
-    "text": "Currículo Lattes: http://lattes.cnpq.br/SEU_ID\n\nORCID: https://orcid.org/0000-0000-0000-0000\n\nGoogle Scholar: https://scholar.google.com/citations?user=SEU_ID\n\nCV (PDF): docs/CV_HeronOH.pdf (adicione ao repositório e linke: https://SEU-SITE/docs/CV_HeronOH.pdf)\n\nGitHub: https://github.com/SEU-USUARIO\n\n\nDica: mantenha o CV em PDF dentro do projeto (ex.: docs/) para facilitar o versionamento e o link público."
+    "text": "Currículo Lattes: http://lattes.cnpq.br/SEU_ID\n\nORCID: https://orcid.org/0000-0000-0000-0000\n\nGoogle Scholar: https://scholar.google.com/citations?user=SEU_ID\n\nCV (PDF): docs/CV_HeronOH.pdf (adicione ao repositório e linke: https://SEU-SITE/docs/CV_HeronOH.pdf)\n\nGitHub: https://github.com/SEU-USUARIO"
   },
   {
     "objectID": "author/author.html#aulas-materiais",
@@ -543,6 +543,6 @@
     "href": "author/author.html",
     "title": "Apresentação — Heron O. Hilário",
     "section": "",
-    "text": "Sou Heron O. Hilário — atuo em Bioinformática, Genômica e Ensino.\n\nInteresses: genômica, metabarcoding, transcriptômica, reprodutibilidade\n\nAfiliação: PUC Minas\n\nOnde ajudo: prática de R, Quarto, pipelines e boas práticas\n\n\n✉️ E-mail 🐙 GitHub 📚 Google Scholar 🧬 ORCID 📄 Lattes 🌐 Site\n\n\n\n\n\n\n\n\n\n\n\nDocência: Bioinformática e Genômica\n\nPesquisa: análise de dados ômicos, bancos FASTA/FASTQ, filogenia, taxonomia molecular\n\nFerramentas: R, Quarto, git/GitHub, Linux/Shell\n\n\nMissão: simplificar o acesso a métodos computacionais na biologia usando materiais claros, reproduzíveis e abertos.\n\n\n\n\n\n\nCurrículo Lattes: http://lattes.cnpq.br/SEU_ID\n\nORCID: https://orcid.org/0000-0000-0000-0000\n\nGoogle Scholar: https://scholar.google.com/citations?user=SEU_ID\n\nCV (PDF): docs/CV_HeronOH.pdf (adicione ao repositório e linke: https://SEU-SITE/docs/CV_HeronOH.pdf)\n\nGitHub: https://github.com/SEU-USUARIO\n\n\nDica: mantenha o CV em PDF dentro do projeto (ex.: docs/) para facilitar o versionamento e o link público.\n\n\n\n\n\n\nAulas (R): aulas/r/index.html\n\nAulas (Shell): aulas/bash/index.html\n\nRepositório do curso: https://SEU-USUARIO.github.io/NOME-DO-REPO/\n\n\nTodos os roteiros são escritos em Quarto/R Markdown, com foco em reprodutibilidade e acessibilidade.\n\n\n\n\n\n\n✉️ E-mail: seu.email@exemplo.com\n\n🐙 GitHub: github.com/SEU-USUARIO\n\n🧬 ORCID: 0000-0000-0000-0000\n\nObrigado!"
+    "text": "Sou Heron O. Hilário, um bioinformáta interessado pelo estudo, preservação e conservação da Biodiversidade, utilizando ferramentas de Biologia Molecular, Genética e Genômica. As principais linhas de pesquisa nas quais trabalho são na aplicação do eDNA metabarcoding para investigação de vertebrados e invertebrados.\n\n🐙 GitHub 📚 Google Scholar\n🧬 ORCID 📄 Lattes 🌐 Site\n\n\n\n\n\n\n\n\n\n\n\nDocência: Bioinformática e Genômica\n\nPesquisa: análise de dados ômicos, bancos FASTA/FASTQ, filogenia, taxonomia molecular\n\nFerramentas: R, Quarto, git/GitHub, Linux/Shell\n\n\nMissão: simplificar o acesso a métodos computacionais na biologia usando materiais claros, reproduzíveis e abertos."
   }
 ]
