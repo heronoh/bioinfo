@@ -17,10 +17,12 @@ website:
         href: aulas/r/index.qmd
       - text: "Aulas (bash)"
         href: aulas/bash/index.qmd
-      - text: "Sobre mim"
-        href: author/author.qmd
       - text: "eDNA scripts"
         href: eDNA/scripts/*.Rmd
+      - text: "BLASTr package"
+        href: "https://heronoh.github.io/BLASTr/"
+      - text: "Sobre mim"
+        href: author/author.qmd
 
 format:
   html:
