@@ -4958,103 +4958,96 @@ TGGTTAGGAACAGAGCTAGATACTAAA</code></pre>
 <section id="carregar-o-.fasta-como-objeto-no-r" class="level3">
 <h3 data-anchor-id="carregar-o-.fasta-como-objeto-no-r">carregar o <strong>.fasta</strong> como objeto no R</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>fasta_seqs <span class="ot">&lt;-</span>  Biostrings<span class="sc">::</span><span class="fu">readDNAStringSet</span>(<span class="at">filepath =</span> <span class="st">&quot;LGC12Sdb_peixes_Doce.fasta&quot;</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fasta_seqs <span class="ot">&lt;-</span>  Biostrings<span class="sc">::</span><span class="fu">readDNAStringSet</span>(<span class="at">filepath =</span> <span class="st">&quot;LGC12Sdb_peixes_Doce.fasta&quot;</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fasta_seqs</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>fasta_seqs</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>DECIPHER<span class="sc">::</span><span class="fu">BrowseSeqs</span>(fasta_seqs)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>DECIPHER<span class="sc">::</span><span class="fu">BrowseSeqs</span>(fasta_seqs)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 - alinhamentos ----</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 - alinhamentos ----</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="do">### a - preparo ----</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># orientar todas sequências na mesma direção (sobrescrevendo o objeto fasta_seqs)</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#              (se alguma estiver no complemento reverso?)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="do">### a - preparo ----</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># orientar todas sequências na mesma direção (sobrescrevendo o objeto fasta_seqs)</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#              (se alguma estiver no complemento reverso?)</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>fasta_seqs <span class="ot">&lt;-</span> DECIPHER<span class="sc">::</span><span class="fu">OrientNucleotides</span>(fasta_seqs)</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>fasta_seqs <span class="ot">&lt;-</span> DECIPHER<span class="sc">::</span><span class="fu">OrientNucleotides</span>(fasta_seqs)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="do">### b - alinhar sequências ----</span></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="do">### b - alinhar sequências ----</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>fasta_seqs_alg <span class="ot">&lt;-</span> DECIPHER<span class="sc">::</span><span class="fu">AlignSeqs</span>(<span class="at">myXStringSet =</span> fasta_seqs, </span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">refinements =</span> <span class="dv">100</span>,</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">iterations =</span> <span class="dv">100</span>,</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>fasta_seqs_alg <span class="ot">&lt;-</span> DECIPHER<span class="sc">::</span><span class="fu">AlignSeqs</span>(<span class="at">myXStringSet =</span> fasta_seqs, </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">refinements =</span> <span class="dv">100</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">iterations =</span> <span class="dv">100</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>fasta_seqs_alg</span>
 <span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>fasta_seqs_alg</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>DECIPHER<span class="sc">::</span><span class="fu">BrowseSeqs</span>(fasta_seqs_alg)</span>
 <span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>DECIPHER<span class="sc">::</span><span class="fu">BrowseSeqs</span>(fasta_seqs_alg)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 - Core alignment ----</span></span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 - Core alignment ----</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co"># devemos utilizar apenas a parte comum a todos alinhamentos, jogar o resto fora!</span></span>
 <span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># devemos utilizar apenas a parte comum a todos alinhamentos, jogar o resto fora!</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>fasta_seqs_alg </span>
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>fasta_seqs_alg </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>Biostrings<span class="sc">::</span><span class="fu">subseq</span>(fasta_seqs_alg,<span class="dv">43</span>,<span class="dv">658</span>)</span>
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>Biostrings<span class="sc">::</span><span class="fu">subseq</span>(fasta_seqs_alg,<span class="dv">43</span>,<span class="dv">658</span>)</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>fasta_seqs_alg_sub <span class="ot">&lt;-</span> Biostrings<span class="sc">::</span><span class="fu">subseq</span>(fasta_seqs_alg,<span class="dv">43</span>,<span class="dv">658</span>)</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>DECIPHER<span class="sc">::</span><span class="fu">BrowseSeqs</span>(fasta_seqs_alg_sub)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>fasta_seqs_alg_sub <span class="ot">&lt;-</span> Biostrings<span class="sc">::</span><span class="fu">subseq</span>(fasta_seqs_alg,<span class="dv">43</span>,<span class="dv">658</span>)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>DECIPHER<span class="sc">::</span><span class="fu">BrowseSeqs</span>(fasta_seqs_alg_sub)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 - Distâncias ----</span></span>
 <span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 - Distâncias ----</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="do">### a - calcular as distâncias ----</span></span>
 <span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="do">### a - calcular as distâncias ----</span></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>fasta_seqs_dist <span class="ot">&lt;-</span> DECIPHER<span class="sc">::</span><span class="fu">DistanceMatrix</span>(<span class="at">myXStringSet =</span> fasta_seqs_alg_sub,</span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">includeTerminalGaps =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">correction =</span> <span class="st">&quot;Jukes-Cantor&quot;</span>,</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">processors =</span> <span class="dv">20</span>)</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="co"># esta é a matriz de distâncias genéticas entre essas sequências</span></span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(fasta_seqs_dist)</span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>fasta_seqs_dist <span class="ot">&lt;-</span> DECIPHER<span class="sc">::</span><span class="fu">DistanceMatrix</span>(<span class="at">myXStringSet =</span> fasta_seqs_alg_sub,</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">includeTerminalGaps =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">correction =</span> <span class="st">&quot;Jukes-Cantor&quot;</span>,</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">processors =</span> <span class="dv">20</span>)</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="co"># esta é a matriz de distâncias genéticas entre essas sequências</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(fasta_seqs_dist)</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="co"># vamos ver como fica a matriz</span></span>
 <span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="co"># vamos ver como fica a matriz</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>pheatmap<span class="sc">::</span><span class="fu">pheatmap</span>(fasta_seqs_dist,<span class="at">fontsize =</span> <span class="dv">10</span>,<span class="at">color =</span> <span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">9</span>,<span class="at">name =</span> <span class="st">&quot;Greens&quot;</span>))</span>
 <span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>pheatmap<span class="sc">::</span><span class="fu">pheatmap</span>(fasta_seqs_dist,<span class="at">fontsize =</span> <span class="dv">10</span>,<span class="at">color =</span> <span class="fu">brewer.pal</span>(<span class="at">n =</span> <span class="dv">9</span>,<span class="at">name =</span> <span class="st">&quot;Greens&quot;</span>))</span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 -  plotar proporção de bases para uma subsequência (ggseq logo)</span></span>
 <span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 -  plotar proporção de bases para uma subsequência (ggseq logo)</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="do">### a - selecionar apenas uma pequena região parcialmente conservada</span></span>
 <span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="do">### a - selecionar apenas uma pequena região parcialmente conservada</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>fasta_sub_char <span class="ot">&lt;-</span> Biostrings<span class="sc">::</span><span class="fu">subseq</span>(fasta_seqs_alg,<span class="dv">180</span>,<span class="dv">220</span>) <span class="sc">%&gt;%</span> <span class="fu">as.character</span>()</span>
 <span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>fasta_sub_char <span class="ot">&lt;-</span> Biostrings<span class="sc">::</span><span class="fu">subseq</span>(fasta_seqs_alg,<span class="dv">180</span>,<span class="dv">220</span>) <span class="sc">%&gt;%</span> <span class="fu">as.character</span>()</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>seqs_logo_plot <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>  ggseqlogo<span class="sc">::</span><span class="fu">geom_logo</span>(<span class="at">data =</span> fasta_sub_char,</span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;probability&quot;</span>) <span class="sc">+</span></span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">&quot;rect&quot;</span>,</span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>                    <span class="at">xmin =</span> <span class="fl">12.5</span>,<span class="at">xmax =</span> <span class="fl">33.5</span>,</span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymin =</span> <span class="sc">-</span><span class="fl">0.1</span>,<span class="at">ymax =</span> <span class="fl">1.1</span>,</span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fill=</span><span class="st">&quot;#3cff00&quot;</span>, <span class="at">alpha=</span><span class="fl">0.25</span>)</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>seqs_logo_plot <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>  ggseqlogo<span class="sc">::</span><span class="fu">geom_logo</span>(<span class="at">data =</span> fasta_sub_char,</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;probability&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>  ggplot2<span class="sc">::</span><span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">&quot;rect&quot;</span>,</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>                    <span class="at">xmin =</span> <span class="fl">12.5</span>,<span class="at">xmax =</span> <span class="fl">33.5</span>,</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymin =</span> <span class="sc">-</span><span class="fl">0.1</span>,<span class="at">ymax =</span> <span class="fl">1.1</span>,</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>                    <span class="at">fill=</span><span class="st">&quot;#3cff00&quot;</span>, <span class="at">alpha=</span><span class="fl">0.25</span>)</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>seqs_logo_plot</span>
 <span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>seqs_logo_plot</span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;seqs_logo.png&quot;</span>,</span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>                <span class="at">device =</span> <span class="st">&quot;png&quot;</span>,</span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="dv">30</span>, <span class="at">height =</span> <span class="dv">10</span>,</span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>                <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span>
-<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Referências ----</span></span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.bioconductor.org/help/course-materials/2016/BioC2016/ConcurrentWorkshops2/Wright/BigBioSeqData.pdf</span></span>
-<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.bioconductor.org/packages/release/bioc/vignettes/DECIPHER/inst/doc/DECIPHERing.pdf</span></span>
-<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="co"># http://www2.decipher.codes/RLessons/RLesson14.html</span></span>
-<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="co"># https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12687</span></span>
-<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="co"># http://www2.decipher.codes/OligoDesign.html</span></span>
-<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="co"># http://www2.decipher.codes/Bioinformatics/BigBioSeqData/BigBioSeqData2.html</span></span>
-<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a><span class="co"># https://cran.r-project.org/web/packages/ggdendro/vignettes/ggdendro.html</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;seqs_logo.png&quot;</span>,</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>                <span class="at">device =</span> <span class="st">&quot;png&quot;</span>,</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="dv">30</span>, <span class="at">height =</span> <span class="dv">10</span>,</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>                <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a><span class="co"># Referências ----</span></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.bioconductor.org/help/course-materials/2016/BioC2016/ConcurrentWorkshops2/Wright/BigBioSeqData.pdf</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="co"># https://www.bioconductor.org/packages/release/bioc/vignettes/DECIPHER/inst/doc/DECIPHERing.pdf</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="co"># http://www2.decipher.codes/RLessons/RLesson14.html</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="co"># https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12687</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="co"># http://www2.decipher.codes/OligoDesign.html</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="co"># http://www2.decipher.codes/Bioinformatics/BigBioSeqData/BigBioSeqData2.html</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="co"># https://cran.r-project.org/web/packages/ggdendro/vignettes/ggdendro.html</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <style>
 body {

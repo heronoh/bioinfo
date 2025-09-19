@@ -223,7 +223,6 @@ download.file(
 #| include: true
 #| eval: false
 #| out-width: 100%
-knitr::opts_chunk$set(echo = TRUE)
 
 
 
@@ -241,7 +240,6 @@ fasta_seqs <-  Biostrings::readDNAStringSet(filepath = "LGC12Sdb_peixes_Doce.fas
 #| include: true
 #| eval: false
 #| out-width: 100%
-knitr::opts_chunk$set(echo = TRUE)
 
 fasta_seqs
 
