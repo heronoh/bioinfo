@@ -8,7 +8,7 @@
 
 <meta name="description" content="Conhecimentos básicos para lidar com sequências de DNA, RNA e proteínas utilizando ferramentas de R">
 
-<title>Sequências biológicas: Arquivos fasta e fastq – Bioinformática</title>
+<title>Sequências biológicas: alinhamento e dostância – Bioinformática</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -4797,10 +4797,7 @@ vertical-align: -.125em;
   <li><a href="#conceitos-fundamentais" id="toc-conceitos-fundamentais" class="nav-link active" data-scroll-target="#conceitos-fundamentais">Conceitos fundamentais</a>
   <ul class="collapse">
   <li><a href="#polímeros-biológicos-como-sequências" id="toc-polímeros-biológicos-como-sequências" class="nav-link" data-scroll-target="#polímeros-biológicos-como-sequências">Polímeros biológicos como <strong>sequências</strong></a></li>
-  </ul></li>
-  <li><a href="#formatos-de-arquivo" id="toc-formatos-de-arquivo" class="nav-link" data-scroll-target="#formatos-de-arquivo">Formatos de arquivo</a>
-  <ul class="collapse">
-  <li><a href="#formato-fasta" id="toc-formato-fasta" class="nav-link" data-scroll-target="#formato-fasta">Formato <strong>fasta</strong></a></li>
+  <li><a href="#o-formato-fasta" id="toc-o-formato-fasta" class="nav-link" data-scroll-target="#o-formato-fasta">O formato <strong><em>fasta</em></strong></a></li>
   <li><a href="#repositórios-de-sequências" id="toc-repositórios-de-sequências" class="nav-link" data-scroll-target="#repositórios-de-sequências">Repositórios de sequências</a></li>
   </ul></li>
   <li><a href="#prática" id="toc-prática" class="nav-link" data-scroll-target="#prática">Prática</a>
@@ -4821,7 +4818,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Sequências biológicas: Arquivos fasta e fastq</h1>
+<h1 class="title">Sequências biológicas: alinhamento e dostância</h1>
 </div>
 
 <div>
@@ -4837,7 +4834,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">19 de setembro de 2025</p>
+      <p class="date">10 de outubro de 2025</p>
     </div>
   </div>
   
@@ -4869,16 +4866,17 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <h1>Conceitos fundamentais</h1>
 <section id="polímeros-biológicos-como-sequências" class="level2">
 <h2 data-anchor-id="polímeros-biológicos-como-sequências">Polímeros biológicos como <strong>sequências</strong></h2>
-<p><strong>DNA</strong>, <strong>RNA</strong> e <strong>proteínas</strong> são <strong>polímeros</strong> formados por <strong>monômeros</strong> ordenados: - <strong>DNA</strong> e <strong>RNA</strong>: cadeias de <strong>nucleotídeos</strong> - <strong>Proteínas</strong>: cadeias de <strong>aminoácidos</strong></p>
-<p>A <strong>ordem</strong> dos <strong>monômeros</strong> determina <strong>função</strong> e <strong>estrutura</strong>: a <strong>sequência</strong> de <strong>DNA</strong> codifica <strong>RNAs</strong> e <strong>proteínas</strong>; a <strong>sequência</strong> de <strong>aminoácidos</strong> determina <strong>estrutura tridimensional</strong> das <em>proteínas</em> e sua atividade.</p>
+<p><strong>DNA</strong>, <strong>RNA</strong> e <strong>proteínas</strong> são <strong>polímeros</strong> formados por <strong>monômeros</strong> ordenados:</p>
+<ul>
+<li><p><strong>DNA</strong> e <strong>RNA</strong>: cadeias de <strong>nucleotídeos</strong></p></li>
+<li><p><strong>Proteínas</strong>: cadeias de <strong>aminoácidos</strong></p></li>
+</ul>
+<p>A <strong>ordem</strong> dos <strong>monômeros</strong> codifica informação biológica e determina <strong>função</strong> e <strong>estrutura</strong>: a <strong>sequência</strong> de <strong>DNA</strong> codifica <strong>RNAs</strong> e <strong>proteínas</strong>; a <strong>sequência</strong> de <strong>aminoácidos</strong> determina <strong>estrutura tridimensional</strong> das <em>proteínas</em> e sua atividade; a sequência de nucleotídeos de um RNA, codificador ou não de proteínas, pode determinar regiões de auto pareamentos, que resultam em estruturas secundárias e terciárias com capacidade catalítica, semelhantemente às proteínas.</p>
 </section>
-</section>
-<section id="formatos-de-arquivo" class="level1">
-<h1>Formatos de arquivo</h1>
-<section id="formato-fasta" class="level2">
-<h2 data-anchor-id="formato-fasta">Formato <strong>fasta</strong></h2>
+<section id="o-formato-fasta" class="level2">
+<h2 data-anchor-id="o-formato-fasta">O formato <strong><em>fasta</em></strong></h2>
 <p>O <strong>fasta</strong> armazena <strong>sequências</strong> (de <strong>DNA</strong>, <strong>RNA</strong> ou <strong>proteínas</strong>).</p>
-<p>Como os nucleotídeos e aminoácidos são moléculas definidas e fácilmente representadas por letras, a <em>International Union of Pure and Applied Chemistry</em> <a href="https://iupac.org/"><strong>IUPAC</strong></a> padronizou o <a href="https://www.bioinformatics.org/sms2/iupac.html">código de uma letra</a>, que toda a área da <em>Bioinformática de sequências</em> utiliza em suas análises de <em>genômica</em>, <em>transcriptômica</em>, <em>proteômica</em> e outras áras afins.</p>
+<p>Como os nucleotídeos e aminoácidos são moléculas definidas e fácilmente representadas por letras, a <em>International Union of Pure and Applied Chemistry</em> <a href="https://iupac.org/"><strong>IUPAC</strong></a> padronizou o <a href="https://www.bioinformatics.org/sms2/iupac.html">código de uma letra</a>, que toda a área da <em>Bioinformática de sequências</em> utiliza em suas análises de <em>genética</em>, <em>genômica</em>, <em>transcriptômica</em>, <em>proteômica</em> e outras áras afins.</p>
 <p>O arquivo <strong>fasta</strong> é muito simples, composto por múltiplas linhas que podem ser apenas de 2 tipos:</p>
 <ul>
 <li><strong>Cabeçalho</strong>: linha iniciada por <strong>&gt;</strong> com um <strong>identificador único da sequência</strong> e, opcionalmente, <strong>metadados</strong>.</li>
@@ -4893,7 +4891,7 @@ TGGTTAGGAACAGAGCTAGATACTAAA</code></pre>
 </section>
 <section id="repositórios-de-sequências" class="level2">
 <h2 data-anchor-id="repositórios-de-sequências">Repositórios de sequências</h2>
-<p>Muitos <em>Bancos de Dados</em> são dedicados para o armazenamento de sequências de <strong>DNA</strong>, <strong>RNA</strong> e <strong>proteínas</strong>. O principal destes é o <a href="https://www.ncbi.nlm.nih.gov/nucleotide/"><strong><em>NCBI nucleotide</em></strong></a></p>
+<p>Muitos <em>Bancos de Dados</em> são dedicados para o armazenamento de sequências de <strong>DNA</strong>, <strong>RNA</strong> e <strong>proteínas</strong>. O principal destes é o <a href="https://www.ncbi.nlm.nih.gov/nucleotide/"><strong><em>NCBI nucleotide</em></strong></a>. Este banco guarda virtualmente todas sequências biológicas já registradas pela ciência, com livre acesso e possibilidade de download. Todo cientista que realiza algum estudo genético deve depositar os dados genéticos lá, para contribuir para o conhecimento coletivo.</p>
 </section>
 </section>
 <section id="prática" class="level1">
@@ -4903,28 +4901,40 @@ TGGTTAGGAACAGAGCTAGATACTAAA</code></pre>
 <h2 data-anchor-id="preparativos">Preparativos</h2>
 <section id="carregando-pacotes" class="level3">
 <h3 data-anchor-id="carregando-pacotes">Carregando pacotes</h3>
+<p>Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário poide baixar e instalar com poucos comandos. Existem vários repositórios de pacotes (<em>packages</em>) e na bioinforática utilizamos práticamente dois:</p>
+<ul>
+<li><a href="https://cran.r-project.org/" title="The Comprehensive R Archive Network"><strong>CRAN</strong></a> <strong>(pacotes “gerais” do R)</strong><br>
+Repositório amplo e genérico (estatística, web, gráficos, etc.). Publicação via <em>install.packages()</em>. Ciclo de versões <strong>independente</strong> entre pacotes; revisão é mais básica e não força integração entre eles.</li>
+<li><a href="#0" title="Open source software for Bioinformatics"><strong>Bioconductor</strong></a> <strong>(instalado/gerenciado via <code>BiocManager</code>)</strong><br>
+Ecossistema <strong>focado em bioinformática/ômicas</strong> (RNA-seq, ChIP-seq, variantes, anotação, análise de dados de sequenciamento, …). Apresenta larga padronização em formatos de resultados. Possui <strong>annotation/data packages</strong> (ex.: genomas, bancos de genes) e serviços como <strong>AnnotationHub/ExperimentHub</strong>. Tem <strong>releases semestrais</strong> sincronizadas com a versão do R e <strong>checagem de compatibilidade</strong> entre pacotes, visando reprodutibilidade.</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#instale apenas caso você ainda não tenha o pacote ----</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;DECIPHER&quot;</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Biostrings&quot;</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggseqlogo&quot;</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># carregando pacotes ----</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Biostrings&quot;</span>)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stringr&quot;</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;DECIPHER&quot;</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tibble&quot;</span>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggseqlogo&quot;</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#    DICA: só é preciso instalar cada pacote uma única vez</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Pacotes do r CRAN----</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggseqlogo&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># pacotes do Bioconductor ----</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;DECIPHER&quot;</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Biostrings&quot;</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># carregando pacotes ----</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Biostrings&quot;</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stringr&quot;</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;DECIPHER&quot;</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tibble&quot;</span>)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;pheatmap&quot;</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggseqlogo&quot;</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>::: Dica: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:</p>
@@ -5082,7 +5092,7 @@ display: block !important;
 </blockquote>
 </blockquote>
 </blockquote>
-cat(’
+<p>cat(’</p>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   var codeBlocks = document.querySelectorAll("pre code");
