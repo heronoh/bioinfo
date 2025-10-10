@@ -58,7 +58,7 @@ doce_seqs <- seqs_DNA_tbl %>% dplyr::filter(stringr::str_detect(Header,
 
 
 doce_seqs %>%
-  select(Header, Sequence) %>%  # garanta só 2 colunas na ordem: nomes, valores
+  dplyr::select(Header, Sequence) %>%  # garanta só 2 colunas na ordem: nomes, valores
   tibble::deframe() %>% 
   Biostrings::DNAStringSet() %>% 
   Biostrings::writeXStringSet(filepath = "~/prjcts/bioinfo/aulas/r/arquivos/LGC12Sdb_peixes_Doce.fasta")
@@ -407,49 +407,3 @@ E por hoje ficamos por aqui!
 ------------------------------------------------------------------------
 
 > > > > Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
-
-cat('
-
-```{=html}
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  var codeBlocks = document.querySelectorAll("pre code");
-  codeBlocks.forEach(function(codeBlock) {
-    var button = document.createElement("button");
-    button.className = "copy-button";
-    button.type = "button";
-    button.innerText = "Copiar";
-    
-    button.addEventListener("click", function() {
-      navigator.clipboard.writeText(codeBlock.innerText);
-      button.innerText = "Copiado!";
-      setTimeout(function() {
-        button.innerText = "Copiar";
-      }, 2000);
-    });   
-
-    var pre = codeBlock.parentNode;
-    pre.parentNode.insertBefore(button, pre);
-  });
-});
-</script>
-```
-```{=html}
-<style>
-.copy-button {
-  float: right;
-  margin: 4px;
-  padding: 4px 8px;
-  font-size: 12px;
-  background-color: #406dde;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.copy-button:hover {
-  background-color: #45a049;
-}
-</style>
-```
-')
