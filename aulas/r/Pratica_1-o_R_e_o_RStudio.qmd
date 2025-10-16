@@ -345,8 +345,8 @@ Esse é o poder do computador, ele repete ações com muita facilicade.
 
 ### Funções
 
-E se quisermos saber a média dos valores do ***objD***. Como você faria?
-\
+E se quisermos saber a média dos valores do ***objD***. Como você
+faria?\
 Somaria todos valores dos elementos e dividiria pelo número de
 elementos? Parece meio trabalhoso né, será que tem algum jeito mais
 fácil? No rsempre tem!
@@ -398,7 +398,12 @@ tabela_exp <- data.frame(antes = c(130, 100, 90, 150, 130, 120, 86, 122, 99, 78,
                       controle = c(  0,   5,  2,   1,   5,   1,  7,   5,  3,  3, 21))
 
 tabela_exp$antes
+
 tabela_exp$depois
+
+tabela_exp$depois[2]
+tabela_exp[2,2]
+tabela_exp[c(2,3),2]
 
 
 ```

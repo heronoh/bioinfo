@@ -1,5 +1,5 @@
 ---
-title: 'Sequências biológicas: alinhamento e dostância'
+title: 'Sequências biológicas: alinhamento e distância'
 description: "Conhecimentos básicos para lidar com sequências de DNA, RNA e proteínas utilizando ferramentas de R"
 lang: pt-BR
 date: last-modified
@@ -202,6 +202,8 @@ setwd("")
 
 Baixe o arquivo **.fasta** que utilizaremos.
 
+> Para os Biólogos
+
 ```{r}
 #| label: get_fasta
 #| include: true
@@ -209,9 +211,29 @@ Baixe o arquivo **.fasta** que utilizaremos.
 #| out-width: 100%
 
 
-
+# para os biólogos
 download.file(
   "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/LGC12Sdb_peixes_Doce.fasta",
+  destfile = "LGC12Sdb_peixes_Doce.fasta",
+  mode = "wb",            # seguro no Windows/macOS/Linux
+  method = "libcurl"      # segue redirecionamentos HTTPS direitinho
+)
+
+
+```
+
+> Para os Biomédicos
+
+```{r}
+#| label: get_fasta2
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+# para os biólogos
+download.file(
+  "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/seqs_biomed_DNA.fasta",
   destfile = "LGC12Sdb_peixes_Doce.fasta",
   mode = "wb",            # seguro no Windows/macOS/Linux
   method = "libcurl"      # segue redirecionamentos HTTPS direitinho
