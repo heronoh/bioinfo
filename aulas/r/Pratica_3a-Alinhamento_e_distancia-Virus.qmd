@@ -1,5 +1,5 @@
 ---
-title: 'DNA de vírus: alinhamento e distância'
+title: 'DNA de peixes: alinhamento e distância'
 description: "Conhecimentos básicos para lidar com sequências de DNA, RNA e proteínas utilizando ferramentas de R"
 lang: pt-BR
 date: last-modified
@@ -163,8 +163,8 @@ for (pkg in cran_pkgs) {
 
 
 # pacotes do Bioconductor ----
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
+if (!requireNamespace("BiocManager", quietly = TRUE)){
+  install.packages("BiocManager")}
 
 # lista de pacotes Bioconductor
 bio_pkgs <- c("Biostrings", "DECIPHER")
