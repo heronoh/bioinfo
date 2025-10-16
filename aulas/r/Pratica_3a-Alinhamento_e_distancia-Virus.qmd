@@ -1,0 +1,408 @@
+---
+title: 'DNA de vírus: alinhamento e distância'
+description: "Conhecimentos básicos para lidar com sequências de DNA, RNA e proteínas utilizando ferramentas de R"
+lang: pt-BR
+date: last-modified
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| include: false
+# Define locale para meses/datas em português
+try({ Sys.setlocale('LC_TIME', 'pt_BR.UTF-8') }, silent = TRUE)
+try({ Sys.setlocale('LC_TIME', 'Portuguese_Brazil.1252') }, silent = TRUE)
+```
+
+::: callout-tip
+**Nota:** Este material foi escrito para práticas em R usando o RStudio.
+:::
+
+```{r}
+#| label: setup
+#| include: false
+#| eval: false
+#| out-width: 100%
+#| echo: false
+
+
+# carregar bibliotecas
+library("ggplot2")
+library("Biostrings")
+library("tidyverse")
+library("magrittr")
+library("DECIPHER")
+
+
+
+seqs_DNA <-  Biostrings::readDNAStringSet(filepath = "/data/databases/LGC12Sdb/mai25/LGC12Sdb_complete_noGaps-2025-05-21.fasta")
+
+
+seqs_DNA_tbl <- seqs_DNA %>% 
+  as.character() %>% 
+  tibble::enframe(name = "Header",
+          value = "Sequence")
+
+
+doce_seqs <- seqs_DNA_tbl %>% dplyr::filter(stringr::str_detect(Header,
+                                                   pattern = "DC"))
+
+
+# getwd()
+# setwd("~/prjcts/bioinfo/aulas/aulas_R/arquivos")
+
+
+doce_seqs %>%
+  dplyr::select(Header, Sequence) %>%  # garanta só 2 colunas na ordem: nomes, valores
+  tibble::deframe() %>% 
+  Biostrings::DNAStringSet() %>% 
+  Biostrings::writeXStringSet(filepath = "~/prjcts/bioinfo/aulas/r/arquivos/LGC12Sdb_peixes_Doce.fasta")
+
+
+
+download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/aulas_R/arquivos/LGC12Sdb_peixes_Doce.fasta",
+              destfile = "LGC12Sdb_peixes_Doce.fasta", mode = "wb")
+
+
+
+
+```
+
+```{r}
+#| label: hooks
+#| echo: false
+#| results: asis
+#| out-width: 100%
+#configurar pros **R**esultados do bash sairem coloridos e não ANSI
+old_hooks <- fansi::set_knit_hooks(
+  knitr::knit_hooks,
+  which = c("output", "message", "error"))
+```
+
+# Conceitos fundamentais
+
+## Polímeros biológicos como **sequências**
+
+**DNA**, **RNA** e **proteínas** são **polímeros** formados por **monômeros** ordenados:
+
+-   **DNA** e **RNA**: cadeias de **nucleotídeos**
+
+-   **Proteínas**: cadeias de **aminoácidos**
+
+A **ordem** dos **monômeros** codifica informação biológica e determina **função** e **estrutura**: a **sequência** de **DNA** codifica **RNAs** e **proteínas**; a **sequência** de **aminoácidos** determina **estrutura tridimensional** das *proteínas* e sua atividade; a sequência de nucleotídeos de um RNA, codificador ou não de proteínas, pode determinar regiões de auto pareamentos, que resultam em estruturas secundárias e terciárias com capacidade catalítica, semelhantemente às proteínas.
+
+## O formato ***fasta***
+
+O **fasta** armazena **sequências** (de **DNA**, **RNA** ou **proteínas**).
+
+Como os nucleotídeos e aminoácidos são moléculas definidas e fácilmente representadas por letras, a *International Union of Pure and Applied Chemistry* [**IUPAC**](https://iupac.org/) padronizou o [código de uma letra](https://www.bioinformatics.org/sms2/iupac.html), que toda a área da *Bioinformática de sequências* utiliza em suas análises de *genética*, *genômica*, *transcriptômica*, *proteômica* e outras áras afins.
+
+O arquivo **fasta** é muito simples, composto por múltiplas linhas que podem ser apenas de 2 tipos:
+
+-   **Cabeçalho**: linha iniciada por **\>** com um **identificador único da sequência** e, opcionalmente, **metadados**.
+-   **Sequência**: linhas subsequentes com as **letras** do **alfabeto** correspondente (aminoácidos ou nucleotídeos).
+
+**Exemplo (fasta de DNA):**
+
+``` text
+>seq1 organismo=Homo_sapiens gene=MT-ND1
+ATGCCCTCGGCTTCTGGTAATACACCGCGGACATCGGCGTAAAGAGTGGTTAGGAAGTCTTTCAAACTACGGTTACGGAC
+ATCGGCGTAAAGAGTGGTTAGGAAGTCTTTCAAACTATACGAATACGGACATCGGCGTAAAGAGTGGTTAGGAAGTCTTT
+CAAACTACGGACATCGGCGTAAAGAGTGGTTAGGAAGTCTTTCAAACTAGGCCCAAGTTGATGAACATCGGCGTAAAAAG
+TGGTTAGGAACAGAGCTAGATACTAAA
+```
+
+## Repositórios de sequências
+
+Muitos *Bancos de Dados* são dedicados para o armazenamento de sequências de **DNA**, **RNA** e **proteínas**. O principal destes é o [***NCBI nucleotide***](https://www.ncbi.nlm.nih.gov/nucleotide/). Este banco guarda virtualmente todas sequências biológicas já registradas pela ciência, com livre acesso e possibilidade de download. Todo cientista que realiza algum estudo genético deve depositar os dados genéticos lá, para contribuir para o conhecimento coletivo.
+
+# Prática
+
+Vamos conhecer um arquivo **fasta**? Siga as instruções a seguir no seu **Rstudio**. Copie, cole e execute os comandos abaixo
+
+## Preparativos
+
+### Carregando pacotes
+
+Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário poide baixar e instalar com poucos comandos. Existem vários repositórios de pacotes (*packages*) e na bioinforática utilizamos práticamente dois:
+
+-   [**CRAN**](https://cran.r-project.org/ "The Comprehensive R Archive Network") **(pacotes “gerais” do R)**\
+    Repositório amplo e genérico (estatística, web, gráficos, etc.). Publicação via *install.packages()*. Ciclo de versões **independente** entre pacotes; revisão é mais básica e não força integração entre eles.
+-   [**Bioconductor**](#0 "Open source software for Bioinformatics") **(instalado/gerenciado via `BiocManager`)**\
+    Ecossistema **focado em bioinformática/ômicas** (RNA-seq, ChIP-seq, variantes, anotação, análise de dados de sequenciamento, ...). Apresenta larga padronização em formatos de resultados. Possui **annotation/data packages** (ex.: genomas, bancos de genes) e serviços como **AnnotationHub/ExperimentHub**. Tem **releases semestrais** sincronizadas com a versão do R e **checagem de compatibilidade** entre pacotes, visando reprodutibilidade.
+
+```{r}
+#| label: packages
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+#instale apenas caso você ainda não tenha o pacote ----
+#    DICA: só é preciso instalar cada pacote uma única vez
+
+
+# lista de pacotes CRAN que você quer garantir instalados
+cran_pkgs <- c("pheatmap", 
+               "stringr", 
+               "ggseqlogo", 
+               "tidyverse", 
+               "RColorBrewer")
+
+# instala apenas os que não estão presentes
+for (pkg in cran_pkgs) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    install.packages(pkg)
+  }
+}
+
+
+# pacotes do Bioconductor ----
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+# lista de pacotes Bioconductor
+bio_pkgs <- c("Biostrings", "DECIPHER")
+
+# instala apenas os que faltam
+for (pkg in bio_pkgs) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    BiocManager::install(pkg, ask = FALSE, update = FALSE)
+  }
+}
+
+# carregando pacotes ----
+{
+library("tidyverse")
+library("Biostrings")
+library("stringr")
+library("dplyr")
+library("DECIPHER")
+library("tibble")
+library("RColorBrewer")
+library("pheatmap")
+library("ggseqlogo")
+}
+
+```
+
+> ::: Dica: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:
+
+``` r
+install.packages("pacote")
+```
+
+> ::: Dica: Alguns pacotes de bioinformática são fornecidos pelo Bioconductor, e podem ser instalados com o gerenciador de pacotes *BiocManager*
+
+``` r
+ install.packages("BiocManager")
+BiocManager::install("pacote")
+```
+
+### Definindo seu diretório de trabalho
+
+No comando abaixo, coloque dentro das aspas o caminho para o seu diretório de trabalho.
+
+> ::: Sempre utilize a tecla `TAB` para autocompletar os caminhos a partir do **\~** ou **/** (ou \*\*\*\*, caso no windows). Para isso, coloque o cursor (|, a barra onde sua digitação aparece) entre as " ".
+
+```{r}
+#| label: wd
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+getwd()
+
+setwd("")
+# utilize o tab para autocompletar com o cursor entre as aspas
+
+```
+
+### Obtendo os dados
+
+Baixe o arquivo **.fasta** que utilizaremos.
+
+```{r}
+#| label: get_fasta
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+# para os biólogos
+download.file(
+  "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/LGC12Sdb_peixes_Doce.fasta",
+  destfile = "LGC12Sdb_peixes_Doce.fasta",
+  mode = "wb",            # seguro no Windows/macOS/Linux
+  method = "libcurl"      # segue redirecionamentos HTTPS direitinho
+)
+
+
+```
+
+### carregar o **.fasta** como objeto no R
+
+Agora você vai carregar para o Ambiente (_Environment_) do R o arquivo que você baixou, o salvando em um objeto.
+Vamos fazer isso com o pacote [*_Biostrings_*](https://bioconductor.org/packages/release/bioc/html/Biostrings.html).
+O pacote *_Biostrings_* é um dos pilares do ecossistema *_Bioconductor_*, amplamente usado em bioinformática, genômica e análise de sequências biológicas. Ele fornece estruturas de dados e funções eficientes para representar, manipular e analisar sequências de DNA, RNA e proteínas em R.
+
+```{r}
+#| label: read_fasta
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+
+
+fasta_seqs <-  Biostrings::readDNAStringSet(filepath = "LGC12Sdb_peixes_Doce.fasta")
+
+fasta_seqs
+
+```
+
+Vamos explorar esse objeto. As sequências parecem muito diferentes, mas na verdade só estão desorientadas. Como o DNA é dupla fita, você pode usar a informação em qualquer uma das fitas (*sempre no sentido 5' -> 3'*) mas, para analisar vários DNAs juntos, é necessário colocar todos na mesma orientação.
+
+O pacote [DECIPHER](https://www2.decipher.codes/) oferece ferramentas para realizar a orientação, alinhamentos e visulização de sequências. 
+
+
+
+```{r}
+#| label: read_fasta_to_obj
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+fasta_seqs
+
+DECIPHER::BrowseSeqs(fasta_seqs)
+
+## 3 - alinhamentos ----
+
+### a - preparo ----
+# orientar todas sequências na mesma direção (sobrescrevendo o objeto fasta_seqs)
+#              (se alguma estiver no complemento reverso?)
+
+fasta_seqs <- DECIPHER::OrientNucleotides(fasta_seqs)
+
+### b - alinhar sequências ----
+
+fasta_seqs_alg <- DECIPHER::AlignSeqs(myXStringSet = fasta_seqs, 
+                                      refinements = 100,
+                                      iterations = 100,
+                                      verbose = TRUE)
+
+fasta_seqs_alg
+
+DECIPHER::BrowseSeqs(fasta_seqs_alg)
+
+## 4 - Core alignment ----
+
+# devemos utilizar apenas a parte comum a todos alinhamentos, jogar o resto fora!
+
+
+
+fasta_seqs_alg 
+
+Biostrings::subseq(fasta_seqs_alg,43,658)
+
+
+fasta_seqs_alg_sub <- Biostrings::subseq(fasta_seqs_alg,43,658)
+DECIPHER::BrowseSeqs(fasta_seqs_alg_sub)
+
+## 5 - Distâncias ----
+
+### a - calcular as distâncias ----
+
+fasta_seqs_dist <- DECIPHER::DistanceMatrix(myXStringSet = fasta_seqs_alg_sub,
+                                            includeTerminalGaps = FALSE,
+                                            correction = "Jukes-Cantor",
+                                            processors = 20)
+
+# esta é a matriz de distâncias genéticas entre essas sequências
+View(fasta_seqs_dist)
+
+
+# vamos ver como fica a matriz
+
+pheatmap::pheatmap(fasta_seqs_dist,
+                   fontsize = 10,
+                   color = brewer.pal(n = 9,name = "Greens"))
+
+
+## 6 -  plotar proporção de bases para uma subsequência (ggseq logo)
+
+### a - selecionar apenas uma pequena região parcialmente conservada
+
+
+
+fasta_sub_char <- Biostrings::subseq(fasta_seqs_alg,180,220) %>% as.character()
+
+seqs_logo_plot <- ggplot2::ggplot() +
+  ggseqlogo::geom_logo(data = fasta_sub_char,
+                       method = "probability") +
+  ggplot2::annotate(geom = "rect",
+                    xmin = 12.5,xmax = 33.5,
+                    ymin = -0.1,ymax = 1.1,
+                    fill="#3cff00", alpha=0.25)
+
+seqs_logo_plot
+
+ggplot2::ggsave(filename = "seqs_logo.png",
+                device = "png",
+                width = 30, height = 10,
+                units = "cm")
+
+
+# Referências ----
+# https://www.bioconductor.org/help/course-materials/2016/BioC2016/ConcurrentWorkshops2/Wright/BigBioSeqData.pdf
+# https://www.bioconductor.org/packages/release/bioc/vignettes/DECIPHER/inst/doc/DECIPHERing.pdf
+# http://www2.decipher.codes/RLessons/RLesson14.html
+# https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.12687
+# http://www2.decipher.codes/OligoDesign.html
+# http://www2.decipher.codes/Bioinformatics/BigBioSeqData/BigBioSeqData2.html
+# https://cran.r-project.org/web/packages/ggdendro/vignettes/ggdendro.html
+
+
+
+```
+
+```{=html}
+<style>
+body {
+text-align: justify}
+</style>
+```
+```{=html}
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+```
+E por hoje ficamos por aqui!
+
+------------------------------------------------------------------------
+
+> > > > Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
