@@ -4844,7 +4844,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Data de Publicação</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">10 de setembro de 2025</p>
+      <p class="date">10 de outubro de 2025</p>
     </div>
   </div>
   
@@ -5187,46 +5187,6 @@ display: block !important;
 </blockquote>
 </blockquote>
 </blockquote>
-cat(’
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  var codeBlocks = document.querySelectorAll("pre code");
-  codeBlocks.forEach(function(codeBlock) {
-    var button = document.createElement("button");
-    button.className = "copy-button";
-    button.type = "button";
-    button.innerText = "Copiar";
-    
-    button.addEventListener("click", function() {
-      navigator.clipboard.writeText(codeBlock.innerText);
-      button.innerText = "Copiado!";
-      setTimeout(function() {
-        button.innerText = "Copiar";
-      }, 2000);
-    });   
-
-    var pre = codeBlock.parentNode;
-    pre.parentNode.insertBefore(button, pre);
-  });
-});
-</script>
-<style>
-.copy-button {
-float: right;
-margin: 4px;
-padding: 4px 8px;
-font-size: 12px;
-background-color: #406dde;
-color: white;
-border: none;
-border-radius: 4px;
-cursor: pointer;
-}
-.copy-button:hover {
-background-color: #45a049;
-}
-</style>
-<p>’)</p>
 
 
 </section>

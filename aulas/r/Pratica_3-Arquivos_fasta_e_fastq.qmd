@@ -231,10 +231,10 @@ download.file(
 #| out-width: 100%
 
 
-# para os biólogos
+# para os Biomédicos
 download.file(
   "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/seqs_biomed_DNA.fasta",
-  destfile = "LGC12Sdb_peixes_Doce.fasta",
+  destfile = "seqs_biomed_DNA.fasta",
   mode = "wb",            # seguro no Windows/macOS/Linux
   method = "libcurl"      # segue redirecionamentos HTTPS direitinho
 )
