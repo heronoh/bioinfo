@@ -204,8 +204,10 @@ install.packages("pacote")
 BiocManager::install("pacote")
 ```
 
+
 ### Definindo seu diretório de trabalho
 
+Para cada projeto, sempre crie uma pasta onde você vai salvar todos arquivos e scripts, assim você mantém seu trabalho sempre organizado.
 No comando abaixo, coloque dentro das aspas o caminho para o seu diretório de trabalho.
 
 > ::: Sempre utilize a tecla `TAB` para autocompletar os caminhos a partir do **\~** ou **/** (ou \*\*\*\*, caso no windows). Para isso, coloque o cursor (|, a barra onde sua digitação aparece) entre as " ".
@@ -223,7 +225,7 @@ setwd("")
 
 ```
 
-### Obtendo os dados
+### Obter arquivos
 
 Baixe o arquivo **.fasta** que utilizaremos.
 
@@ -234,7 +236,6 @@ Baixe o arquivo **.fasta** que utilizaremos.
 #| out-width: 100%
 
 
-# para os biólogos
 download.file(
   "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/LGC12Sdb_peixes_Doce.fasta",
   destfile = "LGC12Sdb_peixes_Doce.fasta",

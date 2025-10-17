@@ -17,13 +17,16 @@ try({ Sys.setlocale('LC_TIME', 'pt_BR.UTF-8') }, silent = TRUE)
 try({ Sys.setlocale('LC_TIME', 'Portuguese_Brazil.1252') }, silent = TRUE)
 ```
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library("ggplot2")
 library("dplyr")
-dados_SUS <-  read.csv(file = "~/prjcts/bioinfo/misc/dados_SUS_filt.csv",
-                             sep = ",") %>% tibble::tibble()
+
+
+dados_SUS <-  read.csv(file = "~/prjcts/bioinfo/aulas/r/arquivos/dados_SUS_pneumo.csv",
+                       sep = ",") %>% tibble::tibble()
 ```
 
 ```{r color, echo=FALSE, results='asis'}
@@ -34,33 +37,6 @@ old_hooks <- fansi::set_knit_hooks(
   which = c("output", "message", "error")
 )
 ```
-
-<style>
-body {
-text-align: justify}
-</style>
-
-<style>
-#toc ul.nav li ul li {
-    display: none;
-    max-height: none;
-}
-
-#toc ul.nav li.active ul li  {
-    display: block;
-    max-height: none;
-}
-
-#toc ul.nav li ul li ul li {
-    max-height: none;
-    display: none !important;
-}
-
-#toc ul.nav li ul li.active ul li {
-    max-height: none;
-    display: block !important;
-}
-</style>
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -153,9 +129,45 @@ library("dplyr")
 
 ## Obtendo os dados
 
-### Para a prática
+### Definindo seu diretório de trabalho
 
-Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser baixado [aqui](https://drive.google.com/file/d/1cBdH54Ri8CYDb1wdXE5dgd6UWQqbdEiU/view?usp=sharing). Você irá fazer download do arquivo e em seguida iremos carregar esse arquivo para o R. 
+Para cada projeto, sempre crie uma pasta onde você vai salvar todos arquivos e scripts, assim você mantém seu trabalho sempre organizado.
+No comando abaixo, coloque dentro das aspas o caminho para o seu diretório de trabalho.
+
+> ::: Sempre utilize a tecla `TAB` para autocompletar os caminhos a partir do **\~** ou **/** (ou \*\*\*\*, caso no windows). Para isso, coloque o cursor (|, a barra onde sua digitação aparece) entre as " ".
+
+```{r}
+#| label: wd
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+getwd()
+
+setwd("")
+# utilize o tab para autocompletar com o cursor entre as aspas
+
+```
+
+### Obter arquivos
+
+Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser baixado [aqui](). Você irá fazer download do arquivo e em seguida iremos carregar esse arquivo para o R. 
+
+```{r}
+#| label: get_fasta
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+download.file(
+  "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/dados_SUS_pneumo.csv",
+  destfile = "dados_SUS_pneumo.csv",
+  mode = "wb",
+  method = "libcurl"
+  )
+
+```
 
 
 Vamos ver o arquivo no formato tabular clássico, nesta [tabela](https://docs.google.com/spreadsheets/d/1z46ZbQUn74_zI0IJG8RrNI096Y0VYPHebm0Ubg5CT8Y/edit?usp=drive_link).
@@ -168,13 +180,15 @@ Para as análises da desta aula prática, você pode pular a próxima sessão.
 > DICA 2: utilize a tecla **tab** para autocompletar e evitar erros!
 
 ```{r import_dados_SUS, echo=TRUE,eval=FALSE}
-                             #complete usando a tecla TAB até chegar ao arquivo que você baixou
+#complete usando a tecla TAB até chegar ao arquivo que você baixou
 dados_SUS <- read.csv(file = "",
                       sep = ","
                       ) %>% 
   tibble::tibble()
 ```
 
+
+::: {style="background:#FFF7CC; border-left:6px solid #F0B400; padding:1rem 1.25rem; border-radius:8px; margin:1rem 0;"}
 ### Para outros projetos
 
 Caso você tenha interesse em investigar outras questões sanitárias da população brasileira, você pode obter diferentes conjuntos de dados assim:
@@ -199,7 +213,7 @@ dados_SUS <- process_sim(dados_brutos_SUS)
 
 dados_SUS
 ```
-
+:::
 ## Investigando os dados
 
 
@@ -347,6 +361,36 @@ dados_SUS$Idade_anos %>% mean(na.rm = T)
 ```
 
 
+
+```{=html}
+<style>
+body {
+text-align: justify}
+</style>
+```
+```{=html}
+<style>
+#toc ul.nav li ul li {
+    display: none;
+    max-height: none;
+}
+
+#toc ul.nav li.active ul li  {
+    display: block;
+    max-height: none;
+}
+
+#toc ul.nav li ul li ul li {
+    max-height: none;
+    display: none !important;
+}
+
+#toc ul.nav li ul li.active ul li {
+    max-height: none;
+    display: block !important;
+}
+</style>
+```
 E por hoje ficamos por aqui!
 
 
