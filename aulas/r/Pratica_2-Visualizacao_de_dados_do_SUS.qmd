@@ -151,7 +151,7 @@ setwd("")
 
 ### Obter arquivos
 
-Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser baixado [aqui](). Você irá fazer download do arquivo e em seguida iremos carregar esse arquivo para o R. 
+Para facilitar, iremos trabalhar com um subconjunto já organizado, que deve ser baixado com o comando a seguir. Você irá fazer download do arquivo e em seguida iremos carregar esse arquivo para o R. 
 
 ```{r}
 #| label: get_fasta
