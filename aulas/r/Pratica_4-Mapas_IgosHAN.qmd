@@ -15,10 +15,10 @@ editor_options:
 
 ::: {style="background:#adc3ff; border-left:6px solid #F0B400; padding:1rem 1.25rem; border-radius:8px; margin:1rem 0;"}
 ::: columns
-# Pesquisador contribuidor
-
-
 ::: column
+
+
+# Pesquisador contribuidor
 Esta prática foi gentilmente preparada pelo pesquisador parceiro _*Igor Henrique Alves do Nascimento*_.
 :::
 ::: column
@@ -30,6 +30,8 @@ Mestre pelo Programa de **Pós-Graduação em Biologia de Vertebrados pela Ponti
 </div>
 ::: {.badges .small}
 <a href="http://lattes.cnpq.br/8058057498186733" target="_blank">📄 Lattes</a>
+
+
 <a href="https://orcid.org/0000-0002-7415-6417" target="_blank">🧬 ORCID</a> 
 :::
 
@@ -58,6 +60,16 @@ Cada sistema de referência é padronizado por um código EPSG (_European Petrol
 -   EPSG:31983 - UTM Zona 23S, baseado em SIRGAS 2000 (Utilizado no Sudeste Brasileiro)
 
 # Prática
+
+```{r}
+#| label: wd_config
+#| include: false
+#| eval: true
+
+knitr::opts_knit$set(root.dir = "arquivos/maps")
+
+```
+
 
 ## Carregar pacotes necessários
 
@@ -118,12 +130,13 @@ Em seguida, você poderá carregar os dados para o R
 #| out-width: 100%
 
 
+# abixar aruivos
+download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/aulas_R/arquivos/maps.tar.gz",
+              destfile = "maps.tar.gz", mode = "wb")
 
-download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/aulas_R/arquivos/maps.gz",
-              destfile = "maps.gz", mode = "wb")
 
-
-#descompactar arquivos
+#descompactar arquivos ----
+untar("maps.tar.gz", exdir = ".")
 
 
 
@@ -140,13 +153,13 @@ download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/aulas_R/arquiv
 
 
 # MG
-minas <- st_read("/home/igorhan/projetos/aula_heron/shapes/ide_1101_mg_unidade_federacao_pol.shp")
+minas <- st_read("ide_1101_mg_unidade_federacao_pol.shp")
 
 plot(minas)
 
 # Parques
 # uc_minas <- st_read("/PASTA/SUA_UC.shp")
-uc_minas <- st_read("/home/igorhan/projetos/aula_heron/shapes/ide_2010_mg_unidades_conservacao_estaduais_pol.shp")
+uc_minas <- st_read("ide_2010_mg_unidades_conservacao_estaduais_pol.shp")
 
 plot(uc_minas)
 ```
@@ -218,7 +231,7 @@ Utilizaremos dados de temperatura média anual, disponível na plataforma WorldC
 Você pode baixar o arquivo recortado para o estado de Minas Gerais aqui.
 
 ```{r}
-raster_temp <- terra::rast("/home/igorhan/projetos/aula_heron/shapes/wc2.1_30s_bio_1_cortado.tif")
+raster_temp <- terra::rast("wc2.1_30s_bio_1_cortado.tif")
 ```
 
 -   Para visualizar o raster, antes é necessário transformá-lo em um dataframe
@@ -237,9 +250,9 @@ names(raster_temp_df)[3] <- "value"
 
 ```{r}
 # ler shp
-bacia <- st_read("/home/igorhan/projetos/aula_heron/shapes/bacia_doce.shp")
+bacia <- st_read("bacia_doce.shp")
 
-rios <- st_read("/home/igorhan/projetos/aula_heron/shapes/rios_intersec.shp")
+rios <- st_read("rios_intersec.shp")
 
 # definir projeção
 bacia_wgs <- st_set_crs(x = bacia,
@@ -250,7 +263,7 @@ rios_wgs <- st_transform(x = rios,
                          crs = 4326)
 
 # Carregar dados a partir de um .csv
-ocur_peixes <- read.csv("/home/igorhan/projetos/aula_heron/shapes/banco_final_tricho.csv")
+ocur_peixes <- read.csv("banco_final_tricho.csv")
 
 # transformar csv em shp
 ocur_peixe_shp <- st_as_sf(ocur_peixes,
