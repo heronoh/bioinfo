@@ -1,0 +1,210 @@
+---
+title: 'Construção de mapas temáticos com o R'
+description: "Ferramentas básicas para criar e editar mapas no R, sem a necessidade de softwares GIS"
+lang: pt-BR
+date: last-modified
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+editor_options: 
+  chunk_output_type: console
+---
+
+## Construção de mapas temáticos no R
+
+A construção de mapas é fundamental para análises espaciais, permitindo representar e interpretar informações geográficas de forma visual e simplificada.
+
+Para elaborar um mapa é necessário integrar dados espaciais (Shapefiles \[.shp\], rasters \[.tif\], tabelas \[.csv\]) a um sistema de informações geográficas (SIG), onde será possível tornar o mapa não apenas informativo, mas esteticamente agradável.
+
+## Sistemas de Referências
+
+Os sistemas de coordenadas geográficas são essenciais para localizar pontos na superfície geóide da terra. Quando representado a superfície terrestre em um plano (ex: mapas), é necessário aplicar uma projeção cartográfica específica para sua área de estudo, levando em consideração as deformações de área, formato ou distâncias de cada sistema.
+
+### EPSG
+
+Cada sistema de referência é padronizado por um código EPSG (European Petroleum Survey Group), que identifica e padroniza os sistemas de coordenadas. Por exemplo:
+
+-   EPSG:4326 - WGS84 (Usado globalmente e em GPS)
+
+-   EPSG:4674 - SIRGAS 2000 (Oficial do Brasil)
+
+-   EPSG:31983 - UTM Zona 23S, baseado em SIRGAS 2000 (Utilizado no Sudeste Brasileiro)
+
+## Carregar pacotes necessários
+
+```{r load-lib}
+{
+  library(sf)
+  library(terra)
+  library(ggspatial)
+  library(ggplot2)
+  library(dplyr)
+}
+```
+
+## Obtenção de dados brutos
+
+Existem diversos bancos de dados de informação cartográfica com shapefiles e raster de diversos locais e temas. Para MG por exemplo, podemos acessar o portal da Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustentável (SEMAD) através do banco de dados [IDE-Sisema](https://visualizador.idesisema.meioambiente.mg.gov.br/).
+
+Nesse banco é possível baixar arquivos .shp de diversos tipos, para o estado de MG. Para esta prática iremos utilizar a base de dados:
+
+Restrição Ambiental \> Áreas Protegidas \> Unidades de Conservação Estaduais
+
+Limites \> Unidade da Federação \> Limite de Minas Gerais
+
+Em seguida, você poderá carregar os dados para o R
+
+```{r}
+
+# MG
+minas <- st_read("/home/igorhan/projetos/aula_heron/shapes/ide_1101_mg_unidade_federacao_pol.shp")
+
+plot(minas)
+
+# Parques
+# uc_minas <- st_read("/PASTA/SUA_UC.shp")
+uc_minas <- st_read("/home/igorhan/projetos/aula_heron/shapes/ide_2010_mg_unidades_conservacao_estaduais_pol.shp")
+
+plot(uc_minas)
+```
+
+Note que o arquivo de UCs possui mais de uma área dividida em diversas categorias.
+
+Vamos selecionar apenas a área de interesse:
+
+```{r}
+uc_minas$categoria %>% unique()
+
+# é possível filtrar por qualquer valor desejado, exemplos:
+
+uc_interesse <- uc_minas %>% 
+  dplyr::filter(categoria == "PAR")
+  # dplyr::filter(bioma == "Mata Atlantica")
+  # dplyr::filter(nome == "Parque Estadual da Serra do Cipo")
+```
+
+Com todos os .shp selecionados, precisamos converter as camadas para o mesmo sistema de coordenadas:
+
+```{r}
+minas_wgs <- sf::st_transform(x = minas,
+                              crs = 4326)
+
+uc_minas_wgs <- sf::st_transform(x = uc_minas,
+                                 crs = 4326)
+
+uc_int_wgs <- sf::st_transform(x = uc_interesse,
+                               crs = 4326)
+```
+
+## Plotar o mapa final
+
+-   Primeiro vamos visualizar todas as UCs, classificadas por bioma.
+
+-   Em seguida, visualize sua área de interesse, de acordo com o filter realizado anteriormente.
+
+```{r}
+ggplot()+
+  geom_sf(data = uc_int_wgs,
+          aes(fill = bioma))+
+  scale_fill_viridis_d(option = "turbo")+
+  geom_sf(data = minas_wgs,
+          fill = "transparent")+
+  theme_minimal()+
+  theme(axis.line = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid = element_blank(),
+        plot.background = element_rect(fill = "white",
+                                       color = NA),
+        panel.background = element_rect(fill = "white",
+                                        color = NA),
+        panel.border = element_blank())
+
+```
+
+## Trabalhando com Rasters
+
+Rasters são imagens pixeladas, que trazem informações mais complexas para o geoprocessamento.
+
+Cada pixel da imagem possui tamanhos pré-definidos, de acordo com a metodologia abordada em sua produção. Quanto menor o tamanho dos pixels, mais detalhada a imagem será, por exemplo rasters de 30 metros por pixel possuem alta resolução.
+
+### Visualizando rasters
+
+Utilizaremos dados de temperatura média anual, disponível na plataforma WorldClim.
+
+Você pode baixar o arquivo recortado para o estado de Minas Gerais aqui.
+
+```{r}
+raster_temp <- terra::rast("/home/igorhan/projetos/aula_heron/shapes/wc2.1_30s_bio_1_cortado.tif")
+```
+
+-   Para visualizar o raster, antes é necessário transformá-lo em um dataframe
+
+```{r}
+raster_temp_df <- as.data.frame(x = raster_temp,
+                                xy = TRUE)
+
+# renomear a coluna de valores do raster
+names(raster_temp_df)[3] <- "value"
+```
+
+### Plotar o mapa temático final
+
+-   Vamos criar um mapa da bacia do Rio Doce, com os rios e dados de ocorrência de uma espécie de peixe, disponíveis no SpeciesLink.
+
+```{r}
+# ler shp
+bacia <- st_read("/home/igorhan/projetos/aula_heron/shapes/bacia_doce.shp")
+
+rios <- st_read("/home/igorhan/projetos/aula_heron/shapes/ide_0104_mg_hidrografia_principal_lin.shp")
+
+# definir projeção
+bacia_wgs <- st_set_crs(x = bacia,
+                        value = 4326)
+
+# reprojetar para coordenada certa
+rios_wgs <- st_transform(x = rios,
+                         crs = 4326)
+
+# recortar rios apenas para a bacia
+rios_inter <- st_intersection(rios_wgs, bacia_wgs)
+
+# Carregar dados a partir de um .csv
+ocur_peixes <- read.csv("/home/igorhan/projetos/aula_heron/shapes/banco_final_tricho.csv")
+
+# transformar csv em shp
+ocur_peixe_shp <- st_as_sf(ocur_peixes,
+                           coords = c("long",
+                                      "lat"), crs = 4326)
+
+# cortar dados apenas para a área de interesse
+peixes_inter <- st_intersection(ocur_peixe_shp, bacia_wgs)
+
+# plotar o mapa
+ggplot()+
+  geom_raster(data = raster_temp_df,
+              aes(x = x,
+                  y = y,
+                  fill = value))+
+  scale_fill_gradient(low = "blue", high = "pink", name = "Temperatura (°C)")+
+  geom_sf(data = bacia_wgs,
+          color = "black",
+          fill = "transparent") +
+  geom_sf(data = rios_inter,
+          color = "cyan") +
+  geom_sf(data = peixes_inter,
+          color = "grey40") +
+  annotation_north_arrow(location = "tr",
+                         which_north = "true",
+                         # pad_x = unit(8, "cm"),
+                         # pad_y = unit(5, "cm"),
+                         style = north_arrow_nautical()) + # elemento obrigatorio
+  annotation_scale(location = "br",
+                   # pad_x = ,
+                   # pad_y = ,
+                   width_hint = 0.3) +
+  theme_void() +
+  labs(title = "Temperatura Média Anual para o ano de 2020")
+```
