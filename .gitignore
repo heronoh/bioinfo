@@ -15,3 +15,4 @@ docs/              # se for gerar docs no CI, pode deixar; localmente é descart
 *.html             # (opcional) se você não quer versionar HTML gerado
 
 /.quarto/
+aulas/r/arquivos/maps/*

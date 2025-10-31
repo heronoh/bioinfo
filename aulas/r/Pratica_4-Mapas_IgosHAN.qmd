@@ -14,24 +14,25 @@ editor_options:
 
 
 ::: {style="background:#adc3ff; border-left:6px solid #F0B400; padding:1rem 1.25rem; border-radius:8px; margin:1rem 0;"}
-# Pesquisador contribuidor
 ::: columns
+# Pesquisador contribuidor
 
-Esta prática foi gentilmente preparada pelo pesquisador parceiro _*Igor Henrique Alves do Nascimento*_.
 
 ::: column
-Mestre pelo Programa de **Pós-Graduação em Biologia de Vertebrados pela Pontifícia Universidade Católica de Minas Gerais** (PUC Minas - 2024) e integrante do **Laboratório de Genética da Conservação** da mesma instituição. Bacharel e Licenciado em Ciências Biológicas pela PUC Minas (2018-2022). Atualmente é doutorando em Biodiversidade e Meio Ambiente pela **PUC Minas**, com ênfase em ecologia do DNA ambiental em rios neotropicais. Possui interesse pelas áreas de Genética da Conservação, Biologia Molecular e Bioinformática.
-
-::: {.badges .small}
-<a href="http://lattes.cnpq.br/8058057498186733" target="_blank">📄 Lattes</a>
+Esta prática foi gentilmente preparada pelo pesquisador parceiro _*Igor Henrique Alves do Nascimento*_.
 :::
-:::
-
 ::: column
 <!-- Substitua o caminho abaixo pela sua foto -->
-
-![](/misc/IgorHAN.jpg){.mt-4 alt="Foto de perfil de Heron O. Hilário" style="border-radius:50%;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
+![](/misc/IgorHAN.jpg){.mt-4 alt="Foto de perfil de Igor H. A. Nascimento" style="width:220px;height:220px;border-radius:50%;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
 :::
+<div style="text-align: justify;">
+Mestre pelo Programa de **Pós-Graduação em Biologia de Vertebrados pela Pontifícia Universidade Católica de Minas Gerais** (PUC Minas - 2024) e integrante do **Laboratório de Genética da Conservação** da mesma instituição. Bacharel e Licenciado em Ciências Biológicas pela PUC Minas (2018-2022). Atualmente é doutorando em Biodiversidade e Meio Ambiente pela **PUC Minas**, com ênfase em ecologia do DNA ambiental em rios neotropicais. Possui interesse pelas áreas de Genética da Conservação, Biologia Molecular e Bioinformática.
+</div>
+::: {.badges .small}
+<a href="http://lattes.cnpq.br/8058057498186733" target="_blank">📄 Lattes</a>
+<a href="https://orcid.org/0000-0002-7415-6417" target="_blank">🧬 ORCID</a> 
+:::
+
 :::
 :::
 
@@ -238,7 +239,7 @@ names(raster_temp_df)[3] <- "value"
 # ler shp
 bacia <- st_read("/home/igorhan/projetos/aula_heron/shapes/bacia_doce.shp")
 
-rios <- st_read("/home/igorhan/projetos/aula_heron/shapes/ide_0104_mg_hidrografia_principal_lin.shp")
+rios <- st_read("/home/igorhan/projetos/aula_heron/shapes/rios_intersec.shp")
 
 # definir projeção
 bacia_wgs <- st_set_crs(x = bacia,
@@ -247,9 +248,6 @@ bacia_wgs <- st_set_crs(x = bacia,
 # reprojetar para coordenada certa
 rios_wgs <- st_transform(x = rios,
                          crs = 4326)
-
-# recortar rios apenas para a bacia
-rios_inter <- st_intersection(rios_wgs, bacia_wgs)
 
 # Carregar dados a partir de um .csv
 ocur_peixes <- read.csv("/home/igorhan/projetos/aula_heron/shapes/banco_final_tricho.csv")
@@ -272,7 +270,7 @@ ggplot()+
   geom_sf(data = bacia_wgs,
           color = "black",
           fill = "transparent") +
-  geom_sf(data = rios_inter,
+  geom_sf(data = rios_wgs,
           color = "cyan") +
   geom_sf(data = peixes_inter,
           color = "grey40") +
