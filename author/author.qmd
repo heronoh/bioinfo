@@ -41,8 +41,9 @@ Sou **Heron O. Hilário**, um bioinformáta interessado pelo estudo, preservaç�
 ::: {.badges .small}
 <a href="https://github.com/heronoh" target="_blank">🐙 GitHub</a> 
 <a href="https://scholar.google.com/citations?user=e0PUfXoAAAAJ&hl=en&oi=ao" target="_blank">📚 Google Scholar</a>
-
-<a href="http://lattes.cnpq.br/3654105041586325" target="_blank">🧬 ORCID</a> <a href="http://lattes.cnpq.br/SEU_ID" target="_blank">📄 Lattes</a> <a href="https://SEU-USUARIO.github.io/NOME-DO-REPO/" target="_blank">🌐 Site</a>
+<a href="https://orcid.org/0000-0002-2548-1053" target="_blank">🧬 ORCID</a> 
+<a href="http://lattes.cnpq.br/SEU_ID" target="_blank">📄 Lattes</a> 
+<a href="http://instagram.com/hohphoto" target="_blank">🌐 Site</a>
 :::
 
 ::: 

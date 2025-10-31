@@ -12,7 +12,31 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Construção de mapas temáticos no R
+
+::: {style="background:#adc3ff; border-left:6px solid #F0B400; padding:1rem 1.25rem; border-radius:8px; margin:1rem 0;"}
+# Pesquisador contribuidor
+::: columns
+
+Esta prática foi gentilmente preparada pelo pesquisador parceiro _*Igor Henrique Alves do Nascimento*_.
+
+::: column
+Mestre pelo Programa de **Pós-Graduação em Biologia de Vertebrados pela Pontifícia Universidade Católica de Minas Gerais** (PUC Minas - 2024) e integrante do **Laboratório de Genética da Conservação** da mesma instituição. Bacharel e Licenciado em Ciências Biológicas pela PUC Minas (2018-2022). Atualmente é doutorando em Biodiversidade e Meio Ambiente pela **PUC Minas**, com ênfase em ecologia do DNA ambiental em rios neotropicais. Possui interesse pelas áreas de Genética da Conservação, Biologia Molecular e Bioinformática.
+
+::: {.badges .small}
+<a href="http://lattes.cnpq.br/8058057498186733" target="_blank">📄 Lattes</a>
+:::
+:::
+
+::: column
+<!-- Substitua o caminho abaixo pela sua foto -->
+
+![](/misc/IgorHAN.jpg){.mt-4 alt="Foto de perfil de Heron O. Hilário" style="border-radius:50%;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
+:::
+:::
+:::
+
+
+# Contextualização
 
 A construção de mapas é fundamental para análises espaciais, permitindo representar e interpretar informações geográficas de forma visual e simplificada.
 
@@ -24,7 +48,7 @@ Os sistemas de coordenadas geográficas são essenciais para localizar pontos na
 
 ### EPSG
 
-Cada sistema de referência é padronizado por um código EPSG (European Petroleum Survey Group), que identifica e padroniza os sistemas de coordenadas. Por exemplo:
+Cada sistema de referência é padronizado por um código EPSG (_European Petroleum Survey Group_), que identifica e padroniza os sistemas de coordenadas. Por exemplo:
 
 -   EPSG:4326 - WGS84 (Usado globalmente e em GPS)
 
@@ -32,9 +56,15 @@ Cada sistema de referência é padronizado por um código EPSG (European Petrole
 
 -   EPSG:31983 - UTM Zona 23S, baseado em SIRGAS 2000 (Utilizado no Sudeste Brasileiro)
 
+# Prática
+
 ## Carregar pacotes necessários
 
-```{r load-lib}
+```{r}
+#| label: load-lib
+#| include: true
+#| eval: true
+#| out-width: 100%
 {
   library(sf)
   library(terra)
@@ -42,6 +72,26 @@ Cada sistema de referência é padronizado por um código EPSG (European Petrole
   library(ggplot2)
   library(dplyr)
 }
+```
+
+## Definindo seu diretório de trabalho
+
+Para cada projeto, sempre crie uma pasta onde você vai salvar todos arquivos e scripts, assim você mantém seu trabalho sempre organizado.
+No comando abaixo, coloque dentro das aspas o caminho para o seu diretório de trabalho.
+
+> ::: Sempre utilize a tecla `TAB` para autocompletar os caminhos a partir do **\~** ou **/** (ou \*\*\*\*, caso no windows). Para isso, coloque o cursor (|, a barra onde sua digitação aparece) entre as " ".
+
+```{r}
+#| label: wd
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+getwd()
+
+setwd("")
+# utilize o tab para autocompletar com o cursor entre as aspas
+
 ```
 
 ## Obtenção de dados brutos
@@ -56,7 +106,37 @@ Limites \> Unidade da Federação \> Limite de Minas Gerais
 
 Em seguida, você poderá carregar os dados para o R
 
+## Dados para está prática
+
+### Baixar e descompactar shapes
+
 ```{r}
+#| label: getdata
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+
+download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/aulas_R/arquivos/maps.gz",
+              destfile = "maps.gz", mode = "wb")
+
+
+#descompactar arquivos
+
+
+
+```
+
+
+### Ler arquivos
+
+```{r}
+#| label: input
+#| include: true
+#| eval: true
+#| out-width: 100%
+
 
 # MG
 minas <- st_read("/home/igorhan/projetos/aula_heron/shapes/ide_1101_mg_unidade_federacao_pol.shp")

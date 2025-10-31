@@ -12,4 +12,4 @@ format:
     allow-html: true
 ---
 
-> Abaixo você encontra as práticas de R. Cada página deve ter ao menos `title:` no YAML.
+> Abaixo você encontra as práticas de R. 
