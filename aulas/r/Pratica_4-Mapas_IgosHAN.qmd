@@ -131,7 +131,7 @@ Em seguida, você poderá carregar os dados para o R
 
 
 # abixar aruivos
-download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/aulas_R/arquivos/maps.tar.gz",
+download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/r/arquivos/maps.tar.gz",
               destfile = "maps.tar.gz", mode = "wb")
 
 
