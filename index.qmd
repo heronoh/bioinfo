@@ -7,6 +7,7 @@ page-layout: full
 listing:
   - id: grid-r
     contents:
+      - "aulas/r/ana*.qmd"
       - "aulas/r/P*.qmd"
       - "aulas/r/P*.Rmd"
     type: grid
