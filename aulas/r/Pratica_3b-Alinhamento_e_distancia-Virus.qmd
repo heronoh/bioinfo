@@ -96,8 +96,10 @@ Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário
 -   [**Bioconductor**](#0 "Open source software for Bioinformatics") **(instalado/gerenciado via `BiocManager`)**\
     Ecossistema **focado em bioinformática/ômicas** (RNA-seq, ChIP-seq, variantes, anotação, análise de dados de sequenciamento, ...). Apresenta larga padronização em formatos de resultados. Possui **annotation/data packages** (ex.: genomas, bancos de genes) e serviços como **AnnotationHub/ExperimentHub**. Tem **releases semestrais** sincronizadas com a versão do R e **checagem de compatibilidade** entre pacotes, visando reprodutibilidade.
 
+
+#### CRAN - Instalando pacotes
 ```{r}
-#| label: packages
+#| label: packages_CRAN
 #| include: true
 #| eval: false
 #| out-width: 100%
@@ -108,10 +110,10 @@ Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário
 
 
 # lista de pacotes CRAN que você quer garantir instalados
-cran_pkgs <- c("pheatmap", 
-               "stringr", 
-               "ggseqlogo", 
-               "tidyverse", 
+cran_pkgs <- c("pheatmap",
+               "stringr",
+               "ggseqlogo",
+               "tidyverse",
                "RColorBrewer")
 
 # instala apenas os que não estão presentes
@@ -121,10 +123,18 @@ for (pkg in cran_pkgs) {
   }
 }
 
+```
 
-# pacotes do Bioconductor ----
-if (!requireNamespace("BiocManager", quietly = TRUE)){
-  install.packages("BiocManager")}
+#### Bioconductor - Instalando pacotes
+```{r}
+#| label: packages_Bioc
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+#instale apenas caso você ainda não tenha o pacote ----
+#    DICA: só é preciso instalar cada pacote uma única vez
 
 # lista de pacotes Bioconductor
 bio_pkgs <- c("Biostrings", "DECIPHER")
@@ -151,7 +161,30 @@ library("ggseqlogo")
 
 ```
 
+#### Carregando pacotes
+```{r}
+#| label: packages
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+# carregando pacotes ----
+{
+library("tidyverse")
+library("Biostrings")
+library("stringr")
+library("dplyr")
+library("DECIPHER")
+library("tibble")
+library("RColorBrewer")
+library("pheatmap")
+library("ggseqlogo")
+}
+
+```
+
 > ::: Dica: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:
+
 
 ``` r
 install.packages("pacote")
