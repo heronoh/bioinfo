@@ -146,18 +146,6 @@ for (pkg in bio_pkgs) {
   }
 }
 
-# carregando pacotes ----
-{
-library("tidyverse")
-library("Biostrings")
-library("stringr")
-library("dplyr")
-library("DECIPHER")
-library("tibble")
-library("RColorBrewer")
-library("pheatmap")
-library("ggseqlogo")
-}
 
 ```
 
@@ -319,7 +307,7 @@ View(fasta_seqs_dist)
 
 pheatmap::pheatmap(fasta_seqs_dist,
                    fontsize = 10,
-                   color = brewer.pal(n = 9,name = "Greens"))
+                   color = RColorBrewer::brewer.pal(n = 9,name = "Greens"))
 
 
 ## 6 -  plotar proporção de bases para uma subsequência (ggseq logo)
