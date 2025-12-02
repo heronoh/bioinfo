@@ -136,8 +136,10 @@ Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário
 -   [**Bioconductor**](#0 "Open source software for Bioinformatics") **(instalado/gerenciado via `BiocManager`)**\
     Ecossistema **focado em bioinformática/ômicas** (RNA-seq, ChIP-seq, variantes, anotação, análise de dados de sequenciamento, ...). Apresenta larga padronização em formatos de resultados. Possui **annotation/data packages** (ex.: genomas, bancos de genes) e serviços como **AnnotationHub/ExperimentHub**. Tem **releases semestrais** sincronizadas com a versão do R e **checagem de compatibilidade** entre pacotes, visando reprodutibilidade.
 
+
+#### CRAN - Instalando pacotes
 ```{r}
-#| label: packages
+#| label: packages_CRAN
 #| include: true
 #| eval: false
 #| out-width: 100%
@@ -148,10 +150,11 @@ Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário
 
 
 # lista de pacotes CRAN que você quer garantir instalados
-cran_pkgs <- c("pheatmap", 
-               "stringr", 
-               "ggseqlogo", 
-               "tidyverse", 
+cran_pkgs <- c("pheatmap",
+               "stringr",
+               "BiocManager",
+               "ggseqlogo",
+               "tidyverse",
                "RColorBrewer")
 
 # instala apenas os que não estão presentes
@@ -161,10 +164,18 @@ for (pkg in cran_pkgs) {
   }
 }
 
+```
 
-# pacotes do Bioconductor ----
-if (!requireNamespace("BiocManager", quietly = TRUE)){
-  install.packages("BiocManager")}
+#### Bioconductor - Instalando pacotes
+```{r}
+#| label: packages_Bioc
+#| include: true
+#| eval: false
+#| out-width: 100%
+
+
+#instale apenas caso você ainda não tenha o pacote ----
+#    DICA: só é preciso instalar cada pacote uma única vez
 
 # lista de pacotes Bioconductor
 bio_pkgs <- c("Biostrings", "DECIPHER")
@@ -175,6 +186,16 @@ for (pkg in bio_pkgs) {
     BiocManager::install(pkg, ask = FALSE, update = FALSE)
   }
 }
+
+
+```
+
+#### Carregando pacotes
+```{r}
+#| label: packages
+#| include: true
+#| eval: false
+#| out-width: 100%
 
 # carregando pacotes ----
 {
@@ -192,6 +213,7 @@ library("ggseqlogo")
 ```
 
 > ::: Dica: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:
+
 
 ``` r
 install.packages("pacote")
@@ -274,14 +296,13 @@ O pacote [DECIPHER](https://www2.decipher.codes/) oferece ferramentas para reali
 
 
 ```{r}
-#| label: read_fasta_to_obj
+#| label: align
 #| include: true
 #| eval: false
 #| out-width: 100%
 
-fasta_seqs
 
-DECIPHER::BrowseSeqs(fasta_seqs)
+
 
 ## 3 - alinhamentos ----
 
@@ -291,6 +312,7 @@ DECIPHER::BrowseSeqs(fasta_seqs)
 
 fasta_seqs <- DECIPHER::OrientNucleotides(fasta_seqs)
 
+DECIPHER::BrowseSeqs(fasta_seqs)
 ### b - alinhar sequências ----
 
 fasta_seqs_alg <- DECIPHER::AlignSeqs(myXStringSet = fasta_seqs, 
@@ -300,6 +322,8 @@ fasta_seqs_alg <- DECIPHER::AlignSeqs(myXStringSet = fasta_seqs,
 
 fasta_seqs_alg
 
+
+#veja seu alinhamento 
 DECIPHER::BrowseSeqs(fasta_seqs_alg)
 
 ## 4 - Core alignment ----
@@ -307,20 +331,26 @@ DECIPHER::BrowseSeqs(fasta_seqs_alg)
 # devemos utilizar apenas a parte comum a todos alinhamentos, jogar o resto fora!
 
 
-
+#veja o objeto biostrings
 fasta_seqs_alg 
 
-Biostrings::subseq(fasta_seqs_alg,43,658)
 
 
-fasta_seqs_alg_sub <- Biostrings::subseq(fasta_seqs_alg,43,658)
-DECIPHER::BrowseSeqs(fasta_seqs_alg_sub)
+```
+
+### Matriz de distâncias
+
+```{r}
+#| label: dist
+#| include: true
+#| eval: false
+#| out-width: 100%
 
 ## 5 - Distâncias ----
 
 ### a - calcular as distâncias ----
 
-fasta_seqs_dist <- DECIPHER::DistanceMatrix(myXStringSet = fasta_seqs_alg_sub,
+fasta_seqs_dist <- DECIPHER::DistanceMatrix(myXStringSet = fasta_seqs_alg,
                                             includeTerminalGaps = FALSE,
                                             correction = "Jukes-Cantor",
                                             processors = 20)
@@ -329,11 +359,21 @@ fasta_seqs_dist <- DECIPHER::DistanceMatrix(myXStringSet = fasta_seqs_alg_sub,
 View(fasta_seqs_dist)
 
 
+
+```
+
+#Visualizando a matriz de distâncias
+
+```{r}
+#| label: plot_dist
+#| include: true
+#| eval: false
+#| out-width: 100%
 # vamos ver como fica a matriz
 
 pheatmap::pheatmap(fasta_seqs_dist,
                    fontsize = 10,
-                   color = brewer.pal(n = 9,name = "Greens"))
+                   color = RColorBrewer::brewer.pal(n = 9,name = "Greens"))
 
 
 ## 6 -  plotar proporção de bases para uma subsequência (ggseq logo)
@@ -341,6 +381,14 @@ pheatmap::pheatmap(fasta_seqs_dist,
 ### a - selecionar apenas uma pequena região parcialmente conservada
 
 
+
+```
+
+```{r}
+#| label: subchar
+#| include: true
+#| eval: false
+#| out-width: 100%
 
 fasta_sub_char <- Biostrings::subseq(fasta_seqs_alg,180,220) %>% as.character()
 
@@ -350,7 +398,7 @@ seqs_logo_plot <- ggplot2::ggplot() +
   ggplot2::annotate(geom = "rect",
                     xmin = 12.5,xmax = 33.5,
                     ymin = -0.1,ymax = 1.1,
-                    fill="#3cff00", alpha=0.25)
+                    fill="#3cff00", alpha = 0.25)
 
 seqs_logo_plot
 
@@ -372,6 +420,7 @@ ggplot2::ggsave(filename = "seqs_logo.png",
 
 
 ```
+
 
 ```{=html}
 <style>
