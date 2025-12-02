@@ -112,6 +112,7 @@ Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário
 # lista de pacotes CRAN que você quer garantir instalados
 cran_pkgs <- c("pheatmap",
                "stringr",
+               "BiocManager",
                "ggseqlogo",
                "tidyverse",
                "RColorBrewer")
@@ -246,15 +247,15 @@ fasta_seqs
 
 ```
 
+### alinhamento de sequências 
+
 Vamos explorar esse objeto. As sequências parecem muito diferentes, mas na verdade só estão desorientadas. Como o DNA é dupla fita, você pode usar a informação em qualquer uma das fitas (*sempre no sentido 5' -> 3'*) mas, para analisar vários DNAs juntos, é necessário colocar todos na mesma orientação.
 
 O pacote [DECIPHER](https://www2.decipher.codes/) oferece ferramentas para realizar a orientação, alinhamentos e visulização de sequências. 
 
 
-
-
 ```{r}
-#| label: read_fasta_to_obj
+#| label: align
 #| include: true
 #| eval: false
 #| out-width: 100%
@@ -280,6 +281,8 @@ fasta_seqs_alg <- DECIPHER::AlignSeqs(myXStringSet = fasta_seqs,
 
 fasta_seqs_alg
 
+
+#veja seu alinhamento 
 DECIPHER::BrowseSeqs(fasta_seqs_alg)
 
 ## 4 - Core alignment ----
@@ -287,8 +290,20 @@ DECIPHER::BrowseSeqs(fasta_seqs_alg)
 # devemos utilizar apenas a parte comum a todos alinhamentos, jogar o resto fora!
 
 
-
+#veja o objeto biostrings
 fasta_seqs_alg 
+
+
+
+```
+
+### Matriz de distâncias
+
+```{r}
+#| label: dist
+#| include: true
+#| eval: false
+#| out-width: 100%
 
 ## 5 - Distâncias ----
 
@@ -303,6 +318,16 @@ fasta_seqs_dist <- DECIPHER::DistanceMatrix(myXStringSet = fasta_seqs_alg,
 View(fasta_seqs_dist)
 
 
+
+```
+
+#Visualizando a matriz de distâncias
+
+```{r}
+#| label: plot_dist
+#| include: true
+#| eval: false
+#| out-width: 100%
 # vamos ver como fica a matriz
 
 pheatmap::pheatmap(fasta_seqs_dist,
@@ -315,6 +340,14 @@ pheatmap::pheatmap(fasta_seqs_dist,
 ### a - selecionar apenas uma pequena região parcialmente conservada
 
 
+
+```
+
+```{r}
+#| label: subchar
+#| include: true
+#| eval: false
+#| out-width: 100%
 
 fasta_sub_char <- Biostrings::subseq(fasta_seqs_alg,1,99) %>% as.character()
 
