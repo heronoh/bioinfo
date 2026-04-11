@@ -22,7 +22,7 @@ website:
       - text: "BLASTr package"
         href: "https://heronoh.github.io/BLASTr/"
       - text: "Extras"
-        href: extras/HeronOH--Simposio_mitocondria_PUC2026.pdf
+        href: "https://raw.githubusercontent.com/heronoh/bioinfo/main/extras/HeronOH--Simposio_mitocondria_PUC2026.pdf"
       - text: "Sobre mim"
         href: author/author.qmd
 
