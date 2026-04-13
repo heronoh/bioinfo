@@ -105,6 +105,8 @@ Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário
 #| out-width: 100%
 
 
+# 00a - instalar pacotes CRAN----
+
 #instale apenas caso você ainda não tenha o pacote ----
 #    DICA: só é preciso instalar cada pacote uma única vez
 
@@ -134,6 +136,8 @@ for (pkg in cran_pkgs) {
 #| out-width: 100%
 
 
+# 00b - instalar pacotes Bioconductor----
+
 #instale apenas caso você ainda não tenha o pacote ----
 #    DICA: só é preciso instalar cada pacote uma única vez
 
@@ -157,7 +161,7 @@ for (pkg in bio_pkgs) {
 #| eval: false
 #| out-width: 100%
 
-# carregando pacotes ----
+# 01 - carregando pacotes ----
 {
 library("tidyverse")
 library("Biostrings")
@@ -172,6 +176,9 @@ library("ggseqlogo")
 
 ```
 
+
+::: {style="background:#FFF7CC; border-left:6px solid #F0B400; padding:1rem 1.25rem; border-radius:8px; margin:1rem 0;"}
+
 > ::: Dica: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:
 
 
@@ -182,9 +189,11 @@ install.packages("pacote")
 > ::: Dica: Alguns pacotes de bioinformática são fornecidos pelo Bioconductor, e podem ser instalados com o gerenciador de pacotes *BiocManager*
 
 ``` r
- install.packages("BiocManager")
+install.packages("BiocManager")
 BiocManager::install("pacote")
 ```
+
+:::
 
 ### Definindo seu diretório de trabalho
 
@@ -199,10 +208,16 @@ No comando abaixo, coloque dentro das aspas o caminho para o seu diretório de t
 #| eval: false
 #| out-width: 100%
 
+# 02 - diretório de trabalho ----
+
+# verifique onde stamos trabalhando e onde os arquivos estão sendo salvos
 getwd()
 
-setwd("")
-# utilize o tab para autocompletar com o cursor entre as aspas
+
+
+#caso queira mudar de diretório, você pode usar 
+#  setwd()
+#utilize o tab para autocompletar com o cursor entre as aspas
 
 ```
 
@@ -216,6 +231,8 @@ Baixe o arquivo **.fasta** que utilizaremos.
 #| eval: false
 #| out-width: 100%
 
+
+# 03 - baixar arquivo fasta com sequencias ----
 
 download.file(
   "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/seqs_biomed_DNA.fasta",
@@ -240,6 +257,7 @@ O pacote *_Biostrings_* é um dos pilares do ecossistema *_Bioconductor_*, ampla
 #| eval: false
 #| out-width: 100%
 
+# 04 - ler arquivo fasta como objeto no R ----
 
 fasta_seqs <- Biostrings::readDNAStringSet(filepath = "seqs_biomed_DNA.fasta")
 
@@ -263,16 +281,16 @@ O pacote [DECIPHER](https://www2.decipher.codes/) oferece ferramentas para reali
 
 
 
-## 3 - alinhamentos ----
+# 05 - alinhamentos ----
 
-### a - preparo ----
+### a - orientar seqs ----
 # orientar todas sequências na mesma direção (sobrescrevendo o objeto fasta_seqs)
 #              (se alguma estiver no complemento reverso?)
 
 fasta_seqs <- DECIPHER::OrientNucleotides(fasta_seqs)
 
 DECIPHER::BrowseSeqs(fasta_seqs)
-### b - alinhar sequências ----
+### b - alinhar seqs ----
 
 fasta_seqs_alg <- DECIPHER::AlignSeqs(myXStringSet = fasta_seqs, 
                                       refinements = 100,
@@ -281,19 +299,27 @@ fasta_seqs_alg <- DECIPHER::AlignSeqs(myXStringSet = fasta_seqs,
 
 fasta_seqs_alg
 
+### c - ver seqs ----
 
 #veja seu alinhamento 
 DECIPHER::BrowseSeqs(fasta_seqs_alg)
 
-## 4 - Core alignment ----
+# onde começam e terminam as posições compartilhadas entre todos?
+
+# 06 - Core alignment ----
 
 # devemos utilizar apenas a parte comum a todos alinhamentos, jogar o resto fora!
 
 
+
+
 #veja o objeto biostrings
-fasta_seqs_alg 
+fasta_subseqs_alg <-  Biostrings::subseq(fasta_seqs_alg,
+                                         start = 1,   #substitua pela primeira posição compartilhada
+                                         end = 2500)  #substitua pela ultima posição compartilhada
 
 
+DECIPHER::BrowseSeqs(fasta_subseqs_alg)
 
 ```
 
@@ -305,18 +331,17 @@ fasta_seqs_alg
 #| eval: false
 #| out-width: 100%
 
-## 5 - Distâncias ----
+# 07 - Distâncias ----
 
-### a - calcular as distâncias ----
+### a - calcular a matriz distâncias ----
 
-fasta_seqs_dist <- DECIPHER::DistanceMatrix(myXStringSet = fasta_seqs_alg,
+fasta_seqs_dist <- DECIPHER::DistanceMatrix(myXStringSet = fasta_subseqs_alg,
                                             includeTerminalGaps = FALSE,
-                                            correction = "Jukes-Cantor",
+                                            correction = "JC",
                                             processors = 20)
 
 # esta é a matriz de distâncias genéticas entre essas sequências
 View(fasta_seqs_dist)
-
 
 
 ```
@@ -328,6 +353,10 @@ View(fasta_seqs_dist)
 #| include: true
 #| eval: false
 #| out-width: 100%
+
+
+# 08 - gráfico de distância ----
+
 # vamos ver como fica a matriz
 
 pheatmap::pheatmap(fasta_seqs_dist,
@@ -349,7 +378,10 @@ pheatmap::pheatmap(fasta_seqs_dist,
 #| eval: false
 #| out-width: 100%
 
-fasta_sub_char <- Biostrings::subseq(fasta_seqs_alg,1,99) %>% as.character()
+
+# 09 - Gráfico de proporção ----
+
+fasta_sub_char <- Biostrings::subseq(fasta_subseqs_alg,1,99) %>% as.character()
 
 seqs_logo_plot <- ggplot2::ggplot() +
   ggseqlogo::geom_logo(data = fasta_sub_char,
@@ -357,7 +389,7 @@ seqs_logo_plot <- ggplot2::ggplot() +
   ggplot2::annotate(geom = "rect",
                     xmin = 12.5,xmax = 33.5,
                     ymin = -0.1,ymax = 1.1,
-                    fill="#3cff00", alpha=0.25)
+                    fill = "#3cff00", alpha = 0.25)
 
 seqs_logo_plot
 
