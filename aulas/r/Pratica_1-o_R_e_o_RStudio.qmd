@@ -205,6 +205,8 @@ tarefas de análise de dados e desenvolvimento.
 
 # Prática
 
+[<i class="bi bi-download"></i> Baixar o script desta prática (.R)](scripts/Pratica_1-o_R_e_o_RStudio.R){.btn .btn-outline-primary download="Pratica_1-o_R_e_o_RStudio.R"}
+
 ## Preparando um documento de código
 
      Antes de mais continuarmos, abra um novo **script em R**. Você pode

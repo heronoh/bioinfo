@@ -1,9 +1,11 @@
 project:
   type: website
   output-dir: docs              # ← para GitHub Pages (opcional)
+  pre-render: utils/extrair_scripts.R   # gera aulas/r/scripts/*.R a partir das práticas
   resources:
     - misc/**                   # garanta que a logo e imagens entrem no build
     - data/**
+    - aulas/r/scripts/*.R       # scripts .R baixados pelo botão de cada prática
 lang: pt-BR
 date: last-modified
 website:

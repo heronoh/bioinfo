@@ -101,6 +101,8 @@ O uso integrado desses sistemas permite compreender a situação de saúde da po
 
 # Prática
 
+[<i class="bi bi-download"></i> Baixar o script desta prática (.R)](scripts/Pratica_2-Visualizacao_de_dados_do_SUS.R){.btn .btn-outline-primary download="Pratica_2-Visualizacao_de_dados_do_SUS.R"}
+
 Nesta prática iremos explorar um subconjunto de dados do sistema SIM-DO, mais especificamente analisando óbitos relacionados ao *CID J159*: _"Pneumonia bacteriana, não especificada"_.
 Aproveitaremos também para revisar alguns consceitos importantes sobre a linguagem R e seu funcionamento.
 
@@ -193,7 +195,7 @@ dados_SUS <- read.csv(file = "",
 
 Caso você tenha interesse em investigar outras questões sanitárias da população brasileira, você pode obter diferentes conjuntos de dados assim:
 
-```{r intall_microdatasus, echo=TRUE,eval=FALSE}
+```{r intall_microdatasus, echo=TRUE, eval=FALSE, script=FALSE}
 # executar apenas se estiver instalando em um computador windows ----
 install.packages("read.dbc", repos = "https://packagemanager.posit.co/cran/2024-07-05")
 

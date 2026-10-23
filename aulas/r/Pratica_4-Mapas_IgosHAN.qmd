@@ -61,6 +61,8 @@ Cada sistema de referência é padronizado por um código EPSG (_European Petrol
 
 # Prática
 
+[<i class="bi bi-download"></i> Baixar o script desta prática (.R)](scripts/Pratica_4-Mapas_IgosHAN.R){.btn .btn-outline-primary download="Pratica_4-Mapas_IgosHAN.R"}
+
 ```{r}
 #| label: wd_config
 #| include: false

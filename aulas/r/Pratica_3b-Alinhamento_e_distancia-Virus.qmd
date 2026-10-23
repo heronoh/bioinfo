@@ -105,6 +105,8 @@ Muitos *Bancos de Dados* são dedicados para o armazenamento de sequências de *
 
 # Prática
 
+[<i class="bi bi-download"></i> Baixar o script desta prática (.R)](scripts/Pratica_3b-Alinhamento_e_distancia-Virus.R){.btn .btn-outline-primary download="Pratica_3b-Alinhamento_e_distancia-Virus.R"}
+
 Vamos conhecer um arquivo **fasta**? Siga as instruções a seguir no seu **Rstudio**. Copie, cole e execute os comandos abaixo
 
 ## Preparativos
@@ -187,13 +189,13 @@ library("ggseqlogo")
 > DICA: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:
 
 
-``` r
+```{.r .nao-script}
 install.packages("pacote")
 ```
 
 > DICA: Alguns pacotes de bioinformática são fornecidos pelo Bioconductor, e podem ser instalados com o gerenciador de pacotes *BiocManager*
 
-``` r
+```{.r .nao-script}
 install.packages("BiocManager")
 BiocManager::install("pacote")
 ```
@@ -256,6 +258,7 @@ fasta_seqs
 
 ```{r}
 #| label: show_fasta
+#| script: false
 fasta_seqs
 ```
 

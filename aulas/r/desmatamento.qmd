@@ -102,6 +102,8 @@ Existem diversas fontes, que diferem quanto ao **método**, à **escala** e ao *
 
 # Prática
 
+[<i class="bi bi-download"></i> Baixar o script desta prática (.R)](scripts/desmatamento.R){.btn .btn-outline-primary download="desmatamento.R"}
+
 &nbsp;&nbsp;&nbsp;&nbsp;
 Nesta prática vamos reconstruir, passo a passo, a história do desmatamento na **Amazônia Legal** desde o início do monitoramento, em 1988. A Amazônia Legal é uma região político-administrativa formada por nove estados: Acre, Amapá, Amazonas, Mato Grosso, Pará, Rondônia, Roraima, Tocantins e parte do Maranhão.
 
@@ -212,7 +214,7 @@ O arquivo desta prática é um recorte já organizado. Para outras perguntas, vo
 
 As tabelas exportadas por essas plataformas costumam vir no formato _largo_ (um ano por coluna) e com números no padrão brasileiro (vírgula decimal). Nesses casos, use `read.csv2()` no lugar de `read.csv()`, e converta para o formato _longo_ com `tidyr::pivot_longer()`:
 
-```r
+```{.r .nao-script}
 install.packages("tidyr")
 library(tidyr)
 
