@@ -285,7 +285,7 @@ mandatos <- tibble::tribble(
   "Fernando Henrique Cardoso", "FHC II",    "1999-01-01", "2003-01-01",
   "Luiz Inácio Lula da Silva", "Lula I",    "2003-01-01", "2007-01-01",
   "Luiz Inácio Lula da Silva", "Lula II",   "2007-01-01", "2011-01-01",
-  "Dilma Rousseff",            "Dilma I",   "2011-01-01", "2015-05-12",
+  "Dilma Rousseff",            "Dilma I",   "2011-01-01", "2015-01-01",
   "Dilma Rousseff",            "Dilma II",  "2015-01-01", "2016-05-12", # até o impeachment (golpe) em 31 de agosto de 2016
   "Michel Temer",              "Temer",     "2016-05-12", "2019-01-01", # interino até 31/08/2016
   "Jair Bolsonaro",            "Bolsonaro", "2019-01-01", "2023-01-01",
@@ -359,14 +359,16 @@ mandatos_linhas <- function(de = 1988, ate = 2025, dentro = FALSE, tamanho = 3,
                        inherit.aes = FALSE)
     list(linhas, nomes)
   } else {
+    # nomes em duas alturas alternadas, para não se sobreporem nos mandatos curtos
+    m_nomes$altura <- ifelse(seq_len(nrow(m_nomes)) %% 2 == 1, -0.5, -1.9)
     nomes <- geom_text(data = m_nomes,
-                       aes(x = meio, y = Inf, label = rotulo),
-                       vjust = -0.6, size = tamanho, colour = "grey20",
+                       aes(x = meio, y = Inf, label = rotulo, vjust = altura),
+                       size = tamanho, colour = "grey20",
                        inherit.aes = FALSE)
     list(linhas, nomes,
          coord_cartesian(clip = "off"),  # permite escrever fora da área do gráfico
-         theme(plot.title = element_text(margin = margin(b = 18)),
-               plot.margin = margin(t = 22, r = 6, b = 6, l = 6)))
+         theme(plot.title = element_text(margin = margin(b = 30)),
+               plot.margin = margin(t = 34, r = 6, b = 6, l = 6)))
   }
 }
 ```
@@ -448,11 +450,12 @@ desmat %>%
              fill = desmatamento_km2)) +
   geom_tile(color = "white") +
   scale_fill_viridis_c(option = "rocket", direction = -1, labels = num) +
-  scale_x_continuous(breaks = seq(1988, 2025, by = 4), expand = c(0, 0)) +
+  scale_x_continuous(breaks = seq(1988, 2025, by = 1), expand = c(0, 0)) +
   labs(x = "Ano PRODES",
        y = NULL,
        fill = "km²/ano") +
   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   mandatos_linhas()
 ```
 
@@ -468,12 +471,13 @@ desmat %>%
              fill = reorder(estado, desmatamento_km2, FUN = sum))) +
   geom_col(position = "fill", width = 1) +
   scale_fill_viridis_d(option = "turbo") +
-  scale_y_continuous(labels = scales::label_percent()) +
-  scale_x_continuous(breaks = seq(1988, 2025, by = 4), expand = c(0, 0)) +
+  scale_y_continuous(labels = scales::label_percent(), expand = c(0, 0)) +
+  scale_x_continuous(breaks = seq(1988, 2025, by = 1), expand = c(0, 0)) +
   labs(x = "Ano PRODES",
        y = "Participação no desmatamento do ano",
        fill = "Estado") +
   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   mandatos_linhas()
 ```
 
@@ -520,14 +524,15 @@ desmat_acum %>%
   geom_density(stat = "identity", position = "stack", alpha = 0.85) +
   scale_fill_viridis_d(option = "turbo") +
   scale_color_viridis_d(option = "turbo") +
-  scale_y_continuous(labels = num) +
-  scale_x_continuous(breaks = seq(1988, 2025, by = 4), expand = c(0, 0)) +
+  scale_y_continuous(labels = num, expand = c(0, 0)) +
+  scale_x_continuous(breaks = seq(1988, 2025, by = 1), expand = c(0, 0)) +
   labs(title = "Desmatamento acumulado na Amazônia Legal desde 1988",
        x = "Ano PRODES",
        y = "Área desmatada acumulada (km²)",
        fill = "Estado",
        col = "Estado") +
   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   mandatos_linhas()
 ```
 
@@ -623,13 +628,15 @@ veg_bioma %>%
   geom_density(stat = "identity", position = "stack", alpha = 0.85) +
   scale_fill_manual(values = cores_biomas) +
   scale_color_manual(values = cores_biomas) +
-  scale_x_continuous(breaks = seq(1985, 2025, by = 5), expand = c(0, 0)) +
+  scale_x_continuous(breaks = seq(1985, 2025, by = 1), expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
   labs(title = "Vegetação nativa no Brasil, por bioma (MapBiomas)",
        x = "Ano",
        y = "Vegetação nativa (milhões de ha)",
        fill = "Bioma",
        col = "Bioma") +
   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   mandatos_linhas(de = 1985)
 ```
 
@@ -642,12 +649,13 @@ veg_bioma %>%
   mandatos_fundo(de = 1985) +
   geom_line(linewidth = 1.2) +
   scale_color_manual(values = cores_biomas) +
-  scale_x_continuous(breaks = seq(1985, 2025, by = 5), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0, 100)) +
+  scale_x_continuous(breaks = seq(1985, 2025, by = 1), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 100), expand = c(0, 0)) +
   labs(x = "Ano",
        y = "Área do bioma com vegetação nativa (%)",
        col = "Bioma") +
   theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   mandatos_linhas(de = 1985)
 ```
 
@@ -715,12 +723,13 @@ veg_var %>%
   facet_grid(bioma ~ ., scales = "free_y", space = "free_y") +
   scale_fill_distiller(palette = "RdYlGn", direction = 1, limits = c(50, 115),
                        oob = scales::squish) +
-  scale_x_continuous(breaks = seq(1985, 2025, by = 5), expand = c(0, 0)) +
+  scale_x_continuous(breaks = seq(1985, 2025, by = 1), expand = c(0, 0)) +
   labs(x = "Ano",
        y = NULL,
        fill = "% da vegetação\nnativa de 1985") +
   theme_minimal() +
-  theme(strip.text.y = element_text(angle = 0, hjust = 0)) +
+  theme(strip.text.y = element_text(angle = 0, hjust = 0),
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
   mandatos_linhas(de = 1985, tamanho = 2.5,
                   so_no_painel = list(bioma = "Amazônia"))
 ```
