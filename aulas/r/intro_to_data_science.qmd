@@ -1,0 +1,191 @@
+---
+title: "Ciência de Dados em R para Ciências Biológicas"
+format: 
+  revealjs:
+    theme: solarized
+    slide-number: true
+    code-copy: true
+    fontsize: 24px
+    width: 1280
+    height: 720
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-width: 4
+  fig-height: 3
+lang: pt-BR
+---
+
+## 🧬 O que são dados?
+
+Dados são representações estruturadas de fenômenos observáveis. Na biologia, eles podem derivar de experimentos, observações de campo ou medições laboratoriais, como abundância de espécies, expressão gênica ou parâmetros fisiológicos.
+
+Historicamente, a formalização de dados como objeto científico se intensificou com o desenvolvimento da estatística no século XIX, especialmente com o trabalho de cientistas como Francis Galton e Karl Pearson. Esses pesquisadores buscavam entender padrões em populações biológicas, estabelecendo as bases da análise quantitativa moderna.
+
+Em ciência de dados, dados não são apenas números — são evidências que precisam ser interpretadas dentro de um contexto experimental e biológico.
+
+---
+
+## 🔢 Tipos de variáveis
+
+Variáveis são características mensuráveis de um sistema. Elas podem ser classificadas em:
+
+- **Numéricas**: representam quantidades (ex: concentração, abundância)
+- **Categóricas**: representam grupos (ex: espécie, tratamento)
+- **Booleanas**: representam estados binários (presença/ausência)
+
+Essa distinção é fundamental porque cada tipo de variável exige métodos analíticos específicos. Por exemplo, correlações clássicas como Pearson só são apropriadas para variáveis numéricas contínuas.
+
+A escolha incorreta do tipo de variável pode levar a interpretações estatísticas equivocadas.
+
+---
+
+## 🌸 Dataset iris
+
+O dataset iris foi introduzido por Ronald Fisher em 1936 no contexto do desenvolvimento da análise discriminante linear. Ele contém medidas morfológicas de três espécies de íris.
+
+Este dataset é historicamente importante porque foi um dos primeiros exemplos de aplicação de métodos estatísticos para classificação biológica, um problema central ainda hoje em áreas como bioinformática e ecologia.
+
+```{r}
+head(iris)
+```
+
+---
+
+## 📈 Scatter plot com regressão
+
+```{r}
+library(ggplot2)
+library(ggpubr)
+
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length, color = Species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  stat_cor(aes(color = Species))
+```
+
+Gráficos de dispersão permitem visualizar relações entre duas variáveis contínuas. A linha de regressão linear representa a melhor aproximação dessa relação sob o critério dos mínimos quadrados, formalizado por Legendre (1805) e Gauss (1809).
+
+O coeficiente de correlação (r) mede a força da associação linear entre variáveis, enquanto o p-valor avalia a evidência contra a hipótese nula de ausência de associação.
+
+---
+
+## 📊 Correlação de Pearson
+
+A correlação de Pearson, desenvolvida por Karl Pearson no final do século XIX, mede a associação linear entre duas variáveis contínuas.
+
+Ela assume:
+- linearidade
+- homocedasticidade
+- distribuição aproximadamente normal
+
+```{r}
+cor(iris$Sepal.Length, iris$Petal.Length, method = "pearson")
+```
+
+Matematicamente, ela representa a covariância padronizada entre duas variáveis. Valores próximos de 1 ou -1 indicam forte associação linear.
+
+---
+
+## 📊 Correlação de Spearman
+
+A correlação de Spearman, proposta por Charles Spearman em 1904, é uma alternativa não paramétrica baseada em ranks.
+
+```{r}
+cor(iris$Sepal.Length, iris$Petal.Length, method = "spearman")
+```
+
+Ela mede relações monotônicas (não necessariamente lineares) e é mais robusta a outliers e distribuições não normais.
+
+Isso é particularmente relevante em dados biológicos, que frequentemente violam pressupostos paramétricos.
+
+---
+
+## ⚠️ Correlação ≠ causalidade
+
+Uma das distinções mais importantes na ciência é entre associação e causalidade.
+
+Correlação indica que duas variáveis variam juntas, mas não explica o porquê. Como discutido por Judea Pearl, causalidade exige modelos explícitos de relação entre variáveis, frequentemente representados por grafos causais.
+
+Exemplos clássicos incluem:
+- consumo de sorvete e afogamentos (variável oculta: temperatura)
+- biodiversidade e produtividade (potenciais fatores ambientais compartilhados)
+
+Inferir causalidade a partir de correlação é um dos erros mais comuns em ciência.
+
+---
+
+## 🧠 Paradoxo de Simpson
+
+O paradoxo de Simpson, descrito por Edward Simpson em 1951, ocorre quando uma tendência observada em vários grupos desaparece ou se inverte quando os dados são agregados.
+
+Isso acontece devido à presença de variáveis de confusão que não são consideradas na análise global.
+
+Este fenômeno é extremamente relevante em estudos biológicos, onde fatores ambientais ou experimentais podem influenciar múltiplas variáveis simultaneamente.
+
+---
+
+## 📊 Exemplo de Simpson
+
+```{r}
+library(dplyr)
+
+df <- iris %>%
+  mutate(group = ifelse(Species == "setosa", "A", "B"))
+
+cor(df$Sepal.Length, df$Petal.Length)
+
+df %>%
+  group_by(group) %>%
+  summarise(correl = cor(Sepal.Length, Petal.Length))
+```
+
+Aqui vemos como a correlação global pode diferir das correlações dentro de grupos.
+
+Isso demonstra que análises agregadas podem mascarar padrões importantes.
+
+---
+
+## 📈 Visualização do paradoxo
+
+```{r}
+ggplot(df, aes(x = Sepal.Length, y = Petal.Length, color = group)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+A visualização permite identificar padrões que não são evidentes em métricas agregadas.
+
+Esse princípio é central em ciência de dados: sempre explorar os dados visualmente antes de interpretar estatísticas.
+
+---
+
+## 🦖 Datasaurus
+
+```{r}
+library(datasauRus)
+
+datasaurus_dozen %>%
+  filter(dataset %in% c("dino","circle")) %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  facet_wrap(~dataset)
+```
+
+O Datasaurus Dozen demonstra que datasets com estatísticas idênticas (média, variância, correlação) podem ter distribuições completamente diferentes.
+
+Esse exemplo reforça a importância da visualização como ferramenta crítica na análise de dados.
+
+---
+
+## 🎯 Mensagem final
+
+A ciência de dados é tanto uma disciplina técnica quanto interpretativa.
+
+- Métricas resumem dados, mas podem esconder padrões
+- Visualizações revelam estrutura
+- Correlação não implica causalidade
+- Contexto biológico é essencial para interpretação
+
+Uma análise robusta combina estatística, visualização e conhecimento do sistema estudado.

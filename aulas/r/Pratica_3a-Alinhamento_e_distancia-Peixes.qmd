@@ -127,7 +127,7 @@ Vamos conhecer um arquivo **fasta**? Siga as instruções a seguir no seu **Rstu
 
 ## Preparativos
 
-### Carregando pacotes
+ ### Carregando pacotes
 
 Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário poide baixar e instalar com poucos comandos. Existem vários repositórios de pacotes (*packages*) e na bioinforática utilizamos práticamente dois:
 

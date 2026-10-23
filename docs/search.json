@@ -593,5 +593,278 @@
     "title": "Dicionário de comandos em bash",
     "section": "",
     "text": "Comando\nAção\n\n\n\n\nls\nlista o conteúdo do diretório atual\n\n\ncd\nmuda o diretório atual\n\n\npwd\nexibe o caminho completo do diretório atual\n\n\nmkdir\ncria um novo diretório\n\n\nrm\nremove um arquivo ou diretório\n\n\ncp\ncopia um arquivo ou diretório\n\n\nmv\nmove ou renomeia um arquivo ou diretório\n\n\ncat\nexibe o conteúdo de um arquivo\n\n\nless\nexibe o conteúdo de um arquivo de forma interativa\n\n\ngrep\nprocura por um padrão em um arquivo ou em uma saída de comando\n\n\npasswd\nmuda seu password\n\n\ntop\nexibe as informações de uso do sistema em tempo real\n\n\nhtop\nexibe as informações de uso do sistema em tempo real, com mais opções\n\n\nps\nlista os processos em execução no sistema\n\n\nkill\nencerra um processo em execução\n\n\nchmod\naltera as permissões de acesso a um arquivo ou diretório\n\n\nchown\naltera o proprietário de um arquivo ou diretório\n\n\nssh\nestabelece uma conexão segura com outro computador\n\n\ntar\ncria ou extrai arquivos compactados em formato tar\n\n\nwget\nbaixa arquivos da internet\n\n\ncurl\ntransfere dados de ou para um servidor utilizando diversos protocolos\n\n\nsudo\nexecuta um comando com privilégios de superusuário (root)\n\n\napt\ngerenciador de pacotes do sistema Debian e derivados, utilizado para instalar, atualizar e remover pacotes de software\n\n\ndf\nexibe informações sobre o espaço em disco utilizado e livre em cada partição do sistema\n\n\ndu\nexibe o espaço em disco utilizado por cada arquivo e diretório no sistema\n\n\nping\ntesta a conectividade com outro computador ou dispositivo na rede\n\n\nrsync\nsincroniza o conteúdo de diretórios e arquivos entre dois computadores ou dispositivos na rede\n\n\n\n\n\n\n\n\n\nVoltar para a página inicial"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#o-que-são-dados",
+    "href": "aulas/r/intro_to_data_science.html#o-que-são-dados",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🧬 O que são dados?",
+    "text": "🧬 O que são dados?\nDados são representações estruturadas de fenômenos observáveis. Na biologia, eles podem derivar de experimentos, observações de campo ou medições laboratoriais, como abundância de espécies, expressão gênica ou parâmetros fisiológicos.\nHistoricamente, a formalização de dados como objeto científico se intensificou com o desenvolvimento da estatística no século XIX, especialmente com o trabalho de cientistas como Francis Galton e Karl Pearson. Esses pesquisadores buscavam entender padrões em populações biológicas, estabelecendo as bases da análise quantitativa moderna.\nEm ciência de dados, dados não são apenas números — são evidências que precisam ser interpretadas dentro de um contexto experimental e biológico."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#tipos-de-variáveis",
+    "href": "aulas/r/intro_to_data_science.html#tipos-de-variáveis",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🔢 Tipos de variáveis",
+    "text": "🔢 Tipos de variáveis\nVariáveis são características mensuráveis de um sistema. Elas podem ser classificadas em:\n\nNuméricas: representam quantidades (ex: concentração, abundância)\nCategóricas: representam grupos (ex: espécie, tratamento)\nBooleanas: representam estados binários (presença/ausência)\n\nEssa distinção é fundamental porque cada tipo de variável exige métodos analíticos específicos. Por exemplo, correlações clássicas como Pearson só são apropriadas para variáveis numéricas contínuas.\nA escolha incorreta do tipo de variável pode levar a interpretações estatísticas equivocadas."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#formatos-de-dados",
+    "href": "aulas/r/intro_to_data_science.html#formatos-de-dados",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 Formatos de dados",
+    "text": "📊 Formatos de dados\nWide\n\n\n\nSample\nsp1\nsp2\n\n\n\n\nS1\n10\n5\n\n\n\nLong\n\n\n\nSample\nSpecies\nAbundance\n\n\n\n\nS1\nsp1\n10\n\n\nS1\nsp2\n5"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#por-que-usar-tibble",
+    "href": "aulas/r/intro_to_data_science.html#por-que-usar-tibble",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🧠 Por que usar tibble?",
+    "text": "🧠 Por que usar tibble?\n\nMelhor visualização\n\nNão altera tipos automaticamente\n\nIntegração com tidyverse"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#importar-csv",
+    "href": "aulas/r/intro_to_data_science.html#importar-csv",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📥 Importar CSV",
+    "text": "📥 Importar CSV\nlibrary(readr)\ndados &lt;- read_csv(\"dados.csv\")\n\n\n\n\n\n\nO que é\n\n\nFunção para importar arquivos CSV como tabela.\n\n\n\n\n\n\n\n\n\nQuando usar\n\n\nSempre que estiver trabalhando com dados tabulares simples."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#exportar-csv",
+    "href": "aulas/r/intro_to_data_science.html#exportar-csv",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📤 Exportar CSV",
+    "text": "📤 Exportar CSV\nwrite_csv(dados, \"saida.csv\")\n\n\n\n\n\n\nO que é\n\n\nExporta um data.frame para CSV.\n\n\n\n\n\n\n\n\n\nQuando usar\n\n\nPara salvar resultados e compartilhar dados."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#importar-excel",
+    "href": "aulas/r/intro_to_data_science.html#importar-excel",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📥 Importar Excel",
+    "text": "📥 Importar Excel\nlibrary(readxl)\ndados &lt;- read_excel(\"dados.xlsx\")\n\n\n\n\n\n\nO que é\n\n\nImporta planilhas Excel.\n\n\n\n\n\n\n\n\n\nQuando usar\n\n\nQuando dados vêm de laboratório/planilhas."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#filter",
+    "href": "aulas/r/intro_to_data_science.html#filter",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🔍 filter()",
+    "text": "🔍 filter()\n\n\nCódigo\n\nlibrary(dplyr)\n\nmtcars %&gt;%\n  filter(cyl == 6)\n\n                mpg cyl  disp  hp drat    wt  qsec vs am gear carb\nMazda RX4      21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4\nMazda RX4 Wag  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4\nHornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1\nValiant        18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1\nMerc 280       19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4\nMerc 280C      17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4\nFerrari Dino   19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6\n\n\n\nExplicação\nFiltragem é uma das operações mais comuns em ciência de dados. Permite selecionar subconjuntos específicos para análise direcionada, como comparar grupos experimentais e controles."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#select",
+    "href": "aulas/r/intro_to_data_science.html#select",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🎯 select()",
+    "text": "🎯 select()\n\n\nCódigo\n\nmtcars %&gt;%\n  select(mpg, cyl, hp) %&gt;%\n  head()\n\n                   mpg cyl  hp\nMazda RX4         21.0   6 110\nMazda RX4 Wag     21.0   6 110\nDatsun 710        22.8   4  93\nHornet 4 Drive    21.4   6 110\nHornet Sportabout 18.7   8 175\nValiant           18.1   6 105\n\n\n\nExplicação\nO que é:\nSeleciona colunas.\nQuando usar:\nReduzir dataset."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#mutate",
+    "href": "aulas/r/intro_to_data_science.html#mutate",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "⚙️ mutate()",
+    "text": "⚙️ mutate()\n\n\nCódigo\n\nmtcars %&gt;%\n  mutate(mpg_log = log10(mpg)) %&gt;%\n  head()\n\n                   mpg cyl disp  hp drat    wt  qsec vs am gear carb  mpg_log\nMazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4 1.322219\nMazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4 1.322219\nDatsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1 1.357935\nHornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1 1.330414\nHornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2 1.271842\nValiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1 1.257679\n\n\n\nExplicação\nO que é:\nCria variáveis.\nQuando usar:\nTransformações."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#case_when",
+    "href": "aulas/r/intro_to_data_science.html#case_when",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🔀 case_when()",
+    "text": "🔀 case_when()\n\n\nCódigo\n\nmtcars %&gt;%\n  mutate(consumo = case_when(\n    mpg &gt; 25 ~ \"baixo\",\n    mpg &gt; 15 ~ \"medio\",\n    TRUE ~ \"alto\"\n  )) %&gt;%\n  head()\n\n                   mpg cyl disp  hp drat    wt  qsec vs am gear carb consumo\nMazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4   medio\nMazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4   medio\nDatsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1   medio\nHornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1   medio\nHornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2   medio\nValiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1   medio\n\n\n\nExplicação\nO que é:\nCria categorias.\nQuando usar:\nClassificação."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#arrange",
+    "href": "aulas/r/intro_to_data_science.html#arrange",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 arrange()",
+    "text": "📊 arrange()\n\n\nCódigo\n\nmtcars %&gt;%\n  arrange(desc(mpg)) %&gt;%\n  head()\n\n                mpg cyl  disp  hp drat    wt  qsec vs am gear carb\nToyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1\nFiat 128       32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1\nHonda Civic    30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2\nLotus Europa   30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2\nFiat X1-9      27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1\nPorsche 914-2  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2\n\n\n\nExplicação\nO que é:\nOrdena dados.\nQuando usar:\nRanking."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#ggplot-pontos",
+    "href": "aulas/r/intro_to_data_science.html#ggplot-pontos",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📈 ggplot – pontos",
+    "text": "📈 ggplot – pontos\n\nlibrary(ggplot2)\n\nggplot(mtcars, aes(x = wt, y = mpg)) +\n  geom_point()"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#ggplot-boxplot",
+    "href": "aulas/r/intro_to_data_science.html#ggplot-boxplot",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📦 ggplot – boxplot",
+    "text": "📦 ggplot – boxplot\n\nggplot(mtcars, aes(x = factor(cyl), y = mpg)) +\n  geom_boxplot()"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#ggplot-barras",
+    "href": "aulas/r/intro_to_data_science.html#ggplot-barras",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 ggplot – barras",
+    "text": "📊 ggplot – barras\n\nggplot(mtcars, aes(x = factor(cyl))) +\n  geom_bar()"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#correlação",
+    "href": "aulas/r/intro_to_data_science.html#correlação",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📉 Correlação",
+    "text": "📉 Correlação\n\nggplot(mtcars, aes(x = wt, y = mpg)) +\n  geom_point() +\n  geom_smooth(method = \"lm\")"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#como-renderizar",
+    "href": "aulas/r/intro_to_data_science.html#como-renderizar",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🚀 Como renderizar",
+    "text": "🚀 Como renderizar\nquarto render aula_ciencia_dados_R.qmd"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#exemplo-real-mtcars",
+    "href": "aulas/r/intro_to_data_science.html#exemplo-real-mtcars",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 Exemplo real (mtcars)",
+    "text": "📊 Exemplo real (mtcars)\nEste é um dataset clássico do R, originalmente publicado em 1974, contendo dados de carros. Ele é amplamente utilizado para ensino de estatística aplicada.\n\nhead(mtcars)\n\n                   mpg cyl disp  hp drat    wt  qsec vs am gear carb\nMazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4\nMazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4\nDatsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1\nHornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1\nHornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2\nValiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#dataset-iris",
+    "href": "aulas/r/intro_to_data_science.html#dataset-iris",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🌸 Dataset iris",
+    "text": "🌸 Dataset iris\nO dataset iris foi introduzido por Ronald Fisher em 1936 no contexto do desenvolvimento da análise discriminante linear. Ele contém medidas morfológicas de três espécies de íris.\nEste dataset é historicamente importante porque foi um dos primeiros exemplos de aplicação de métodos estatísticos para classificação biológica, um problema central ainda hoje em áreas como bioinformática e ecologia.\n\nhead(iris)\n\n  Sepal.Length Sepal.Width Petal.Length Petal.Width Species\n1          5.1         3.5          1.4         0.2  setosa\n2          4.9         3.0          1.4         0.2  setosa\n3          4.7         3.2          1.3         0.2  setosa\n4          4.6         3.1          1.5         0.2  setosa\n5          5.0         3.6          1.4         0.2  setosa\n6          5.4         3.9          1.7         0.4  setosa"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#exemplo-com-iris",
+    "href": "aulas/r/intro_to_data_science.html#exemplo-com-iris",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📈 Exemplo com iris",
+    "text": "📈 Exemplo com iris\n\nggplot(iris, aes(x = Sepal.Length, y = Petal.Length, color = Species)) +\n  geom_point()"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#tamanho-fixo-de-gráficos",
+    "href": "aulas/r/intro_to_data_science.html#tamanho-fixo-de-gráficos",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🧠 Tamanho fixo de gráficos",
+    "text": "🧠 Tamanho fixo de gráficos\n\nControlado por:\n\nfig-width\nfig-height\n\nAjuste no YAML (global) ou no chunk\n\n\n# exemplo local\n#| fig-width: 4\n#| fig-height: 3\nplot(1:10)"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#scatter-plot-simples",
+    "href": "aulas/r/intro_to_data_science.html#scatter-plot-simples",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📈 Scatter plot simples",
+    "text": "📈 Scatter plot simples\n\nlibrary(ggplot2)\n\nggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +\n  geom_point()"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#correlação-geral",
+    "href": "aulas/r/intro_to_data_science.html#correlação-geral",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 Correlação geral",
+    "text": "📊 Correlação geral\n\nlibrary(ggpubr)\n\nggscatter(iris,\n          x = \"Sepal.Length\",\n          y = \"Petal.Length\",\n          add = \"reg.line\",\n          conf.int = TRUE,\n          cor.coef = TRUE)"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#correlação-por-grupo",
+    "href": "aulas/r/intro_to_data_science.html#correlação-por-grupo",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 Correlação por grupo",
+    "text": "📊 Correlação por grupo\n\nggscatter(iris,\n          x = \"Sepal.Length\",\n          y = \"Petal.Length\",\n          color = \"Species\",\n          add = \"reg.line\",\n          conf.int = TRUE,\n          cor.coef = TRUE)"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#correlação-causalidade",
+    "href": "aulas/r/intro_to_data_science.html#correlação-causalidade",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "⚠️ Correlação ≠ causalidade",
+    "text": "⚠️ Correlação ≠ causalidade\nUma das distinções mais importantes na ciência é entre associação e causalidade.\nCorrelação indica que duas variáveis variam juntas, mas não explica o porquê. Como discutido por Judea Pearl, causalidade exige modelos explícitos de relação entre variáveis, frequentemente representados por grafos causais.\nExemplos clássicos incluem: - consumo de sorvete e afogamentos (variável oculta: temperatura) - biodiversidade e produtividade (potenciais fatores ambientais compartilhados)\nInferir causalidade a partir de correlação é um dos erros mais comuns em ciência."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#exemplo-didático-datasaurus",
+    "href": "aulas/r/intro_to_data_science.html#exemplo-didático-datasaurus",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🧠 Exemplo didático (Datasaurus)",
+    "text": "🧠 Exemplo didático (Datasaurus)\n\nlibrary(datasauRus)\nlibrary(dplyr)\n\ndf &lt;- datasaurus_dozen\n\ndf %&gt;%\n  filter(dataset %in% c(\"dino\",\"circle\")) %&gt;%\n  ggplot(aes(x = x, y = y)) +\n  geom_point() +\n  facet_wrap(~dataset)"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#insight-importante",
+    "href": "aulas/r/intro_to_data_science.html#insight-importante",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "💡 Insight importante",
+    "text": "💡 Insight importante\n\nMesma média, variância e correlação\nDistribuições completamente diferentes\n\n👉 Visualização é essencial"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#mensagem-final",
+    "href": "aulas/r/intro_to_data_science.html#mensagem-final",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🎯 Mensagem final",
+    "text": "🎯 Mensagem final\nA ciência de dados é tanto uma disciplina técnica quanto interpretativa.\n\nMétricas resumem dados, mas podem esconder padrões\nVisualizações revelam estrutura\nCorrelação não implica causalidade\nContexto biológico é essencial para interpretação\n\nUma análise robusta combina estatística, visualização e conhecimento do sistema estudado."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#scatter-plot-com-regressão",
+    "href": "aulas/r/intro_to_data_science.html#scatter-plot-com-regressão",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📈 Scatter plot com regressão",
+    "text": "📈 Scatter plot com regressão\n\nlibrary(ggplot2)\nlibrary(ggpubr)\n\nggplot(iris, aes(x = Sepal.Length, y = Petal.Length, color = Species)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE) +\n  stat_cor(aes(color = Species))\n\n\nGráficos de dispersão permitem visualizar relações entre duas variáveis contínuas. A linha de regressão linear representa a melhor aproximação dessa relação sob o critério dos mínimos quadrados, formalizado por Legendre (1805) e Gauss (1809).\nO coeficiente de correlação (r) mede a força da associação linear entre variáveis, enquanto o p-valor avalia a evidência contra a hipótese nula de ausência de associação."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#correlação-pearson-vs-spearman",
+    "href": "aulas/r/intro_to_data_science.html#correlação-pearson-vs-spearman",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 Correlação: Pearson vs Spearman",
+    "text": "📊 Correlação: Pearson vs Spearman\nA correlação de Pearson foi proposta por entity[“people”,“Karl Pearson”,“statistician”] e mede associação linear. Já Spearman, desenvolvida por entity[“people”,“Charles Spearman”,“psychologist”], mede relações monotônicas e é menos sensível a outliers."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#exemplo-pearson",
+    "href": "aulas/r/intro_to_data_science.html#exemplo-pearson",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📈 Exemplo Pearson",
+    "text": "📈 Exemplo Pearson\n\ncor(iris$Sepal.Length, iris$Petal.Length, method = \"pearson\")\n\n[1] 0.8717538\n\n\nPearson assume linearidade e distribuição aproximadamente normal."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#exemplo-spearman",
+    "href": "aulas/r/intro_to_data_science.html#exemplo-spearman",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📈 Exemplo Spearman",
+    "text": "📈 Exemplo Spearman\n\ncor(iris$Sepal.Length, iris$Petal.Length, method = \"spearman\")\n\n[1] 0.8818981\n\n\nSpearman usa ranks, sendo mais robusto a distribuições não normais."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#paradoxo-de-simpson",
+    "href": "aulas/r/intro_to_data_science.html#paradoxo-de-simpson",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🧠 Paradoxo de Simpson",
+    "text": "🧠 Paradoxo de Simpson\nO paradoxo de Simpson, descrito por Edward Simpson em 1951, ocorre quando uma tendência observada em vários grupos desaparece ou se inverte quando os dados são agregados.\nIsso acontece devido à presença de variáveis de confusão que não são consideradas na análise global.\nEste fenômeno é extremamente relevante em estudos biológicos, onde fatores ambientais ou experimentais podem influenciar múltiplas variáveis simultaneamente."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#exemplo-de-simpson",
+    "href": "aulas/r/intro_to_data_science.html#exemplo-de-simpson",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 Exemplo de Simpson",
+    "text": "📊 Exemplo de Simpson\n\nlibrary(dplyr)\n\ndf &lt;- iris %&gt;%\n  mutate(group = ifelse(Species == \"setosa\", \"A\", \"B\"))\n\ncor(df$Sepal.Length, df$Petal.Length)\n\n[1] 0.8717538\n\ndf %&gt;%\n  group_by(group) %&gt;%\n  summarise(correl = cor(Sepal.Length, Petal.Length))\n\n# A tibble: 2 × 2\n  group correl\n  &lt;chr&gt;  &lt;dbl&gt;\n1 A      0.267\n2 B      0.828\n\n\nAqui vemos como a correlação global pode diferir das correlações dentro de grupos.\nIsso demonstra que análises agregadas podem mascarar padrões importantes."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#visualização-do-paradoxo",
+    "href": "aulas/r/intro_to_data_science.html#visualização-do-paradoxo",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📈 Visualização do paradoxo",
+    "text": "📈 Visualização do paradoxo\n\nggplot(df, aes(x = Sepal.Length, y = Petal.Length, color = group)) +\n  geom_point() +\n  geom_smooth(method = \"lm\", se = FALSE)\n\n\nA visualização permite identificar padrões que não são evidentes em métricas agregadas.\nEsse princípio é central em ciência de dados: sempre explorar os dados visualmente antes de interpretar estatísticas."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#datasaurus-visualização-importa",
+    "href": "aulas/r/intro_to_data_science.html#datasaurus-visualização-importa",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🦖 Datasaurus (visualização importa)",
+    "text": "🦖 Datasaurus (visualização importa)\n\nlibrary(datasauRus)\n\ndatasaurus_dozen %&gt;%\n  filter(dataset %in% c(\"dino\",\"circle\")) %&gt;%\n  ggplot(aes(x = x, y = y)) +\n  geom_point() +\n  facet_wrap(~dataset)"
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#datasaurus",
+    "href": "aulas/r/intro_to_data_science.html#datasaurus",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "🦖 Datasaurus",
+    "text": "🦖 Datasaurus\n\nlibrary(datasauRus)\n\ndatasaurus_dozen %&gt;%\n  filter(dataset %in% c(\"dino\",\"circle\")) %&gt;%\n  ggplot(aes(x = x, y = y)) +\n  geom_point() +\n  facet_wrap(~dataset)\n\n\nO Datasaurus Dozen demonstra que datasets com estatísticas idênticas (média, variância, correlação) podem ter distribuições completamente diferentes.\nEsse exemplo reforça a importância da visualização como ferramenta crítica na análise de dados."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#correlação-de-pearson",
+    "href": "aulas/r/intro_to_data_science.html#correlação-de-pearson",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 Correlação de Pearson",
+    "text": "📊 Correlação de Pearson\nA correlação de Pearson, desenvolvida por Karl Pearson no final do século XIX, mede a associação linear entre duas variáveis contínuas.\nEla assume: - linearidade - homocedasticidade - distribuição aproximadamente normal\n\ncor(iris$Sepal.Length, iris$Petal.Length, method = \"pearson\")\n\n[1] 0.8717538\n\n\nMatematicamente, ela representa a covariância padronizada entre duas variáveis. Valores próximos de 1 ou -1 indicam forte associação linear."
+  },
+  {
+    "objectID": "aulas/r/intro_to_data_science.html#correlação-de-spearman",
+    "href": "aulas/r/intro_to_data_science.html#correlação-de-spearman",
+    "title": "Ciência de Dados em R para Ciências Biológicas",
+    "section": "📊 Correlação de Spearman",
+    "text": "📊 Correlação de Spearman\nA correlação de Spearman, proposta por Charles Spearman em 1904, é uma alternativa não paramétrica baseada em ranks.\n\ncor(iris$Sepal.Length, iris$Petal.Length, method = \"spearman\")\n\n[1] 0.8818981\n\n\nEla mede relações monotônicas (não necessariamente lineares) e é mais robusta a outliers e distribuições não normais.\nIsso é particularmente relevante em dados biológicos, que frequentemente violam pressupostos paramétricos."
   }
 ]
