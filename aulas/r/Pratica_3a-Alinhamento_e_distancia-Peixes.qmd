@@ -8,6 +8,9 @@ execute:
   warning: false
   message: false
   freeze: auto
+knitr:
+  opts_knit:
+    root.dir: "../.."   # executa a partir da raiz do projeto, como no RStudio
 editor_options: 
   chunk_output_type: console
 ---
@@ -26,11 +29,36 @@ try({ Sys.setlocale('LC_TIME', 'Portuguese_Brazil.1252') }, silent = TRUE)
 ```{r}
 #| label: setup
 #| include: false
-#| eval: false
-#| out-width: 100%
-#| echo: false
 
+# carregar bibliotecas
+library("ggplot2")
+library("Biostrings")
+library("tidyverse")
+library("magrittr")
+library("DECIPHER")
 
+# arquivo local, usado apenas para renderizar o site
+fasta_seqs <- Biostrings::readDNAStringSet(filepath = "aulas/r/arquivos/LGC12Sdb_peixes_Doce.fasta")
+
+# mostra o resultado do DECIPHER::BrowseSeqs() dentro do html renderizado.
+# No RStudio (sessão interativa) não faz nada, pois o próprio BrowseSeqs() já abre o navegador.
+embutir_BrowseSeqs <- function(seqs, altura = 450, ...) {
+  if (interactive()) return(invisible(NULL))
+  arq <- tempfile(fileext = ".html")
+  DECIPHER::BrowseSeqs(seqs, htmlFile = arq, openURL = FALSE, ...)
+  pagina <- paste(readLines(arq, warn = FALSE), collapse = "\n")
+  pagina <- gsub("&", "&amp;", pagina, fixed = TRUE)
+  pagina <- gsub("\"", "&quot;", pagina, fixed = TRUE)
+  knitr::asis_output(sprintf(
+    '<iframe srcdoc="%s" style="width:100%%;height:%dpx;border:1px solid #ccc;border-radius:6px;"></iframe>',
+    pagina, altura))
+}
+```
+
+<!--
+Código usado para preparar o arquivo .fasta desta prática (não é executado):
+
+```r
 # carregar bibliotecas
 library("ggplot2")
 library("Biostrings")
@@ -67,11 +95,8 @@ doce_seqs %>%
 
 download.file("https://github.com/heronoh/bioinfo/blob/main/aulas/aulas_R/arquivos/LGC12Sdb_peixes_Doce.fasta",
               destfile = "LGC12Sdb_peixes_Doce.fasta", mode = "wb")
-
-
-
-
 ```
+-->
 
 ```{r}
 #| label: hooks
@@ -127,7 +152,7 @@ Vamos conhecer um arquivo **fasta**? Siga as instruções a seguir no seu **Rstu
 
 ## Preparativos
 
- ### Carregando pacotes
+### Carregando pacotes
 
 Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário poide baixar e instalar com poucos comandos. Existem vários repositórios de pacotes (*packages*) e na bioinforática utilizamos práticamente dois:
 
@@ -138,13 +163,7 @@ Todos pacotes públicos criados para o R são de livre acesso. Qualquer usuário
 
 
 #### CRAN - Instalando pacotes
-```{r}
-#| label: packages_CRAN
-#| include: true
-#| eval: false
-#| out-width: 100%
-
-
+```r
 #instale apenas caso você ainda não tenha o pacote ----
 #    DICA: só é preciso instalar cada pacote uma única vez
 
@@ -167,13 +186,7 @@ for (pkg in cran_pkgs) {
 ```
 
 #### Bioconductor - Instalando pacotes
-```{r}
-#| label: packages_Bioc
-#| include: true
-#| eval: false
-#| out-width: 100%
-
-
+```r
 #instale apenas caso você ainda não tenha o pacote ----
 #    DICA: só é preciso instalar cada pacote uma única vez
 
@@ -191,12 +204,7 @@ for (pkg in bio_pkgs) {
 ```
 
 #### Carregando pacotes
-```{r}
-#| label: packages
-#| include: true
-#| eval: false
-#| out-width: 100%
-
+```r
 # carregando pacotes ----
 {
 library("tidyverse")
@@ -212,14 +220,14 @@ library("ggseqlogo")
 
 ```
 
-> ::: Dica: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:
+> DICA: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:
 
 
 ``` r
 install.packages("pacote")
 ```
 
-> ::: Dica: Alguns pacotes de bioinformática são fornecidos pelo Bioconductor, e podem ser instalados com o gerenciador de pacotes *BiocManager*
+> DICA: Alguns pacotes de bioinformática são fornecidos pelo Bioconductor, e podem ser instalados com o gerenciador de pacotes *BiocManager*
 
 ``` r
  install.packages("BiocManager")
@@ -232,14 +240,9 @@ BiocManager::install("pacote")
 Para cada projeto, sempre crie uma pasta onde você vai salvar todos arquivos e scripts, assim você mantém seu trabalho sempre organizado.
 No comando abaixo, coloque dentro das aspas o caminho para o seu diretório de trabalho.
 
-> ::: Sempre utilize a tecla `TAB` para autocompletar os caminhos a partir do **\~** ou **/** (ou \*\*\*\*, caso no windows). Para isso, coloque o cursor (|, a barra onde sua digitação aparece) entre as " ".
+> DICA: Sempre utilize a tecla `TAB` para autocompletar os caminhos a partir do **\~** ou **/** (ou \*\*\*\*, caso no windows). Para isso, coloque o cursor (|, a barra onde sua digitação aparece) entre as " ".
 
-```{r}
-#| label: wd
-#| include: true
-#| eval: false
-#| out-width: 100%
-
+```r
 getwd()
 
 setwd("")
@@ -251,13 +254,7 @@ setwd("")
 
 Baixe o arquivo **.fasta** que utilizaremos.
 
-```{r}
-#| label: get_fasta
-#| include: true
-#| eval: false
-#| out-width: 100%
-
-
+```r
 download.file(
   "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/LGC12Sdb_peixes_Doce.fasta",
   destfile = "LGC12Sdb_peixes_Doce.fasta",
@@ -274,19 +271,16 @@ Agora você vai carregar para o Ambiente (_Environment_) do R o arquivo que voc�
 Vamos fazer isso com o pacote [*_Biostrings_*](https://bioconductor.org/packages/release/bioc/html/Biostrings.html).
 O pacote *_Biostrings_* é um dos pilares do ecossistema *_Bioconductor_*, amplamente usado em bioinformática, genômica e análise de sequências biológicas. Ele fornece estruturas de dados e funções eficientes para representar, manipular e analisar sequências de DNA, RNA e proteínas em R.
 
-```{r}
-#| label: read_fasta
-#| include: true
-#| eval: false
-#| out-width: 100%
-
-
-
-
+```r
 fasta_seqs <-  Biostrings::readDNAStringSet(filepath = "LGC12Sdb_peixes_Doce.fasta")
 
 fasta_seqs
 
+```
+
+```{r}
+#| label: show_fasta
+fasta_seqs
 ```
 
 Vamos explorar esse objeto. As sequências parecem muito diferentes, mas na verdade só estão desorientadas. Como o DNA é dupla fita, você pode usar a informação em qualquer uma das fitas (*sempre no sentido 5' -> 3'*) mas, para analisar vários DNAs juntos, é necessário colocar todos na mesma orientação.
@@ -296,13 +290,7 @@ O pacote [DECIPHER](https://www2.decipher.codes/) oferece ferramentas para reali
 
 
 ```{r}
-#| label: align
-#| include: true
-#| eval: false
-#| out-width: 100%
-
-
-
+#| label: orient
 
 ## 3 - alinhamentos ----
 
@@ -313,18 +301,44 @@ O pacote [DECIPHER](https://www2.decipher.codes/) oferece ferramentas para reali
 fasta_seqs <- DECIPHER::OrientNucleotides(fasta_seqs)
 
 DECIPHER::BrowseSeqs(fasta_seqs)
+```
+
+```{r}
+#| label: browse_orient
+#| echo: false
+embutir_BrowseSeqs(fasta_seqs)
+```
+
+```{r}
+#| label: align
+#| results: hide
+
 ### b - alinhar sequências ----
 
 fasta_seqs_alg <- DECIPHER::AlignSeqs(myXStringSet = fasta_seqs, 
                                       refinements = 100,
                                       iterations = 100,
                                       verbose = TRUE)
+```
+
+```{r}
+#| label: align_show
 
 fasta_seqs_alg
 
 
 #veja seu alinhamento 
 DECIPHER::BrowseSeqs(fasta_seqs_alg)
+```
+
+```{r}
+#| label: browse_align
+#| echo: false
+embutir_BrowseSeqs(fasta_seqs_alg)
+```
+
+```{r}
+#| label: core
 
 ## 4 - Core alignment ----
 
@@ -333,18 +347,12 @@ DECIPHER::BrowseSeqs(fasta_seqs_alg)
 
 #veja o objeto biostrings
 fasta_seqs_alg 
-
-
-
 ```
 
 ### Matriz de distâncias
 
 ```{r}
 #| label: dist
-#| include: true
-#| eval: false
-#| out-width: 100%
 
 ## 5 - Distâncias ----
 
@@ -352,43 +360,45 @@ fasta_seqs_alg
 
 fasta_seqs_dist <- DECIPHER::DistanceMatrix(myXStringSet = fasta_seqs_alg,
                                             includeTerminalGaps = FALSE,
-                                            correction = "Jukes-Cantor",
+                                            correction = "JC69",   # Jukes-Cantor (nas versões antigas do DECIPHER: "Jukes-Cantor")
                                             processors = 20)
 
 # esta é a matriz de distâncias genéticas entre essas sequências
-View(fasta_seqs_dist)
-
-
-
+# (aqui, só um pedaço: as 5 primeiras linhas e colunas)
+round(fasta_seqs_dist[1:5, 1:5], 3)
 ```
 
-#Visualizando a matriz de distâncias
+Para ver a matriz completa, como uma planilha, use:
+
+```r
+View(fasta_seqs_dist)
+```
+
+### Visualizando a matriz de distâncias
 
 ```{r}
 #| label: plot_dist
-#| include: true
-#| eval: false
+#| fig-width: 18
+#| fig-height: 18
 #| out-width: 100%
 # vamos ver como fica a matriz
 
 pheatmap::pheatmap(fasta_seqs_dist,
                    fontsize = 10,
                    color = RColorBrewer::brewer.pal(n = 9,name = "Greens"))
+```
 
+### Logo de sequências
+
+```{r}
+#| label: subchar
+#| fig-width: 12
+#| fig-height: 4
+#| out-width: 100%
 
 ## 6 -  plotar proporção de bases para uma subsequência (ggseq logo)
 
 ### a - selecionar apenas uma pequena região parcialmente conservada
-
-
-
-```
-
-```{r}
-#| label: subchar
-#| include: true
-#| eval: false
-#| out-width: 100%
 
 fasta_sub_char <- Biostrings::subseq(fasta_seqs_alg,180,220) %>% as.character()
 
@@ -401,13 +411,18 @@ seqs_logo_plot <- ggplot2::ggplot() +
                     fill="#3cff00", alpha = 0.25)
 
 seqs_logo_plot
+```
 
+Para salvar o gráfico como imagem na sua pasta de trabalho:
+
+```r
 ggplot2::ggsave(filename = "seqs_logo.png",
                 device = "png",
                 width = 30, height = 10,
                 units = "cm")
+```
 
-
+```r
 # Referências ----
 # https://www.bioconductor.org/help/course-materials/2016/BioC2016/ConcurrentWorkshops2/Wright/BigBioSeqData.pdf
 # https://www.bioconductor.org/packages/release/bioc/vignettes/DECIPHER/inst/doc/DECIPHERing.pdf
@@ -416,9 +431,6 @@ ggplot2::ggsave(filename = "seqs_logo.png",
 # http://www2.decipher.codes/OligoDesign.html
 # http://www2.decipher.codes/Bioinformatics/BigBioSeqData/BigBioSeqData2.html
 # https://cran.r-project.org/web/packages/ggdendro/vignettes/ggdendro.html
-
-
-
 ```
 
 
