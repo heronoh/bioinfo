@@ -392,7 +392,7 @@ pheatmap::pheatmap(fasta_seqs_dist,
 
 ### a - selecionar apenas uma pequena região parcialmente conservada
 
-fasta_sub_char <- Biostrings::subseq(fasta_subseqs_alg,1,99) %>% as.character()
+fasta_sub_char <- Biostrings::subseq(fasta_subseqs_alg,886,926) %>% as.character()
 
 seqs_logo_plot <- ggplot2::ggplot() +
   ggseqlogo::geom_logo(data = fasta_sub_char,
