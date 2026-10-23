@@ -4945,6 +4945,7 @@ TGGTTAGGAACAGAGCTAGATACTAAA</code></pre>
 </section>
 <section id="prática" class="level1">
 <h1>Prática</h1>
+<p><a href="scripts/Pratica_3a-Alinhamento_e_distancia-Peixes.R" class="btn btn-outline-primary" download="Pratica_3a-Alinhamento_e_distancia-Peixes.R"><i class="bi bi-download"></i> Baixar o script desta prática (.R)</a></p>
 <p>Vamos conhecer um arquivo <strong>fasta</strong>? Siga as instruções a seguir no seu <strong>Rstudio</strong>. Copie, cole e execute os comandos abaixo</p>
 <section id="preparativos" class="level2">
 <h2 data-anchor-id="preparativos">Preparativos</h2>
@@ -5011,11 +5012,11 @@ Ecossistema <strong>focado em bioinformática/ômicas</strong> (RNA-seq, ChIP-se
 <blockquote class="blockquote">
 <p>DICA: caso receba alguma mensagem de que o pacote não foi encontrado, você pode instalá-lo com:</p>
 </blockquote>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;pacote&quot;</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r nao-script code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;pacote&quot;</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <blockquote class="blockquote">
 <p>DICA: Alguns pacotes de bioinformática são fornecidos pelo Bioconductor, e podem ser instalados com o gerenciador de pacotes <em>BiocManager</em></p>
 </blockquote>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r nao-script code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;pacote&quot;</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
@@ -5047,7 +5048,7 @@ Ecossistema <strong>focado em bioinformática/ômicas</strong> (RNA-seq, ChIP-se
 <div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fasta_seqs <span class="ot">&lt;-</span>  Biostrings<span class="sc">::</span><span class="fu">readDNAStringSet</span>(<span class="at">filepath =</span> <span class="st">&quot;LGC12Sdb_peixes_Doce.fasta&quot;</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>fasta_seqs</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell">
+<div class="cell" data-script="false">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fasta_seqs</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DNAStringSet object of length 103:
@@ -5078,7 +5079,7 @@ Ecossistema <strong>focado em bioinformática/ômicas</strong> (RNA-seq, ChIP-se
 <div class="cell-output cell-output-stdout">
 <pre><code>========================================================================================================================================================================================================
 
-Time difference of 0.1 secs</code></pre>
+Time difference of 0.12 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>DECIPHER<span class="sc">::</span><span class="fu">BrowseSeqs</span>(fasta_seqs)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

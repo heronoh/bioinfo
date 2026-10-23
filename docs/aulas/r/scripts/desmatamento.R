@@ -1,0 +1,428 @@
+# Desmatamento no Brasil
+#
+# Script da prática: https://heronoh.github.io/bioinfo/aulas/r/desmatamento.html
+# Gerado automaticamente a partir da página da prática; para mudar o
+# código, edite o .qmd correspondente.
+
+# Prática ----
+
+## Preparação ----
+
+### Carregar pacotes ----
+
+# para instalar os pacotes, caso ainda não tenha (só se instala uma vez)
+install.packages("ggplot2")
+install.packages("dplyr")
+
+# execute para carregar os pacotes
+library("ggplot2")
+library("dplyr")
+
+# função para escrever números no padrão brasileiro (1.234,5)
+num <- scales::label_number(big.mark = ".", decimal.mark = ",")
+
+## Obtendo os dados ----
+
+### Definindo seu diretório de trabalho ----
+
+getwd()
+
+setwd("")
+# utilize o tab para autocompletar com o cursor entre as aspas
+
+### Obter arquivos ----
+
+# taxas anuais de desmatamento na Amazônia Legal (PRODES/INPE)
+download.file(
+  "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/desmatamento_prodes_amazonia_uf.csv",
+  destfile = "desmatamento_prodes_amazonia_uf.csv",
+  mode = "wb",
+  method = "libcurl"
+  )
+
+# área de vegetação nativa por bioma e estado (MapBiomas, Coleção 11)
+download.file(
+  "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/vegetacao_nativa_mapbiomas_uf.csv",
+  destfile = "vegetacao_nativa_mapbiomas_uf.csv",
+  mode = "wb",
+  method = "libcurl"
+  )
+
+### Ler os arquivos .csv ----
+
+#complete usando a tecla TAB até chegar aos arquivos que você baixou
+desmat <- read.csv(file = "desmatamento_prodes_amazonia_uf.csv",
+                   sep = ",",
+                   fileEncoding = "UTF-8"
+                   ) %>%
+  tibble::tibble()
+
+veg <- read.csv(file = "vegetacao_nativa_mapbiomas_uf.csv",
+                sep = ",",
+                fileEncoding = "UTF-8"
+                ) %>%
+  tibble::tibble()
+
+## Conhecendo a tabela ----
+
+# as primeiras linhas
+head(desmat)
+
+# estrutura: nome, tipo e exemplos de cada coluna
+str(desmat)
+
+# quantas linhas e colunas?
+dim(desmat)
+
+# quais estados?
+unique(desmat$estado)
+
+# qual o período coberto?
+range(desmat$ano)
+
+# quantas linhas por estado? (deve ser igual ao número de anos)
+table(desmat$uf)
+
+# resumo da coluna numérica
+summary(desmat$desmatamento_km2)
+
+## Contexto: os mandatos presidenciais ----
+
+mandatos <- tibble::tribble(
+  ~presidente,                 ~rotulo,     ~inicio,      ~fim,
+  "José Sarney",               "Sarney",    "1985-03-15", "1990-03-15",
+  "Fernando Collor",           "Collor",    "1990-03-15", "1992-10-02",
+  "Itamar Franco",             "Itamar",    "1992-10-02", "1995-01-01", # interino até a renúncia de Collor, em 29/12/1992
+  "Fernando Henrique Cardoso", "FHC I",     "1995-01-01", "1999-01-01",
+  "Fernando Henrique Cardoso", "FHC II",    "1999-01-01", "2003-01-01",
+  "Luiz Inácio Lula da Silva", "Lula I",    "2003-01-01", "2007-01-01",
+  "Luiz Inácio Lula da Silva", "Lula II",   "2007-01-01", "2011-01-01",
+  "Dilma Rousseff",            "Dilma I",   "2011-01-01", "2015-01-01",
+  "Dilma Rousseff",            "Dilma II",  "2015-01-01", "2016-05-12", # até o impeachment (golpe) em 31 de agosto de 2016
+  "Michel Temer",              "Temer",     "2016-05-12", "2019-01-01", # interino até 31/08/2016
+  "Jair Bolsonaro",            "Bolsonaro", "2019-01-01", "2023-01-01",
+  "Luiz Inácio Lula da Silva", "Lula III",  "2023-01-01", "2027-01-05"
+)
+
+mandatos
+
+# converte uma data em ano decimal
+ano_decimal <- function(data) {
+  data <- as.Date(data)
+  as.numeric(format(data, "%Y")) + (as.numeric(format(data, "%j")) - 1) / 365
+}
+
+mandatos <- mandatos %>%
+  mutate(inicio_ano = ano_decimal(inicio),
+         fim_ano    = ano_decimal(fim),
+         cor_faixa  = ifelse(row_number() %% 2 == 0, "grey80", "grey93"))
+
+mandatos %>% select(rotulo, inicio_ano, fim_ano)
+
+# recorta os mandatos ao período do gráfico
+mandatos_periodo <- function(de, ate) {
+  mandatos %>%
+    mutate(inicio_ano = pmax(inicio_ano, de - 0.5),
+           fim_ano    = pmin(fim_ano,    ate + 0.5),
+           meio       = (inicio_ano + fim_ano) / 2) %>%   # posição do nome
+    filter(inicio_ano < fim_ano)
+}
+
+# faixas de fundo, alternando tons de cinza (adicionar ANTES dos dados)
+mandatos_fundo <- function(de = 1988, ate = 2025) {
+  m <- mandatos_periodo(de, ate)
+  # uma camada para cada tom de cinza
+  lapply(c("grey80", "grey93"), function(cor) {
+    geom_rect(data = m %>% filter(cor_faixa == cor),
+              aes(xmin = inicio_ano, xmax = fim_ano, ymin = -Inf, ymax = Inf),
+              fill = cor,
+              alpha = 0.6,
+              inherit.aes = FALSE)
+  })
+}
+
+# linhas de troca de mandato + nomes dos presidentes (adicionar NO FINAL)
+# dentro = FALSE: nomes acima do gráfico; dentro = TRUE: nomes verticais dentro de cada painel
+# so_no_painel: em gráficos com painéis, escreve os nomes só em um deles,
+#               por exemplo so_no_painel = list(bioma = "Amazônia")
+mandatos_linhas <- function(de = 1988, ate = 2025, dentro = FALSE, tamanho = 3,
+                            so_no_painel = NULL) {
+  m <- mandatos_periodo(de, ate)
+  m_nomes <- m
+  for (coluna in names(so_no_painel)) m_nomes[[coluna]] <- so_no_painel[[coluna]]
+  linhas <- geom_vline(data = m %>% filter(inicio_ano > de - 0.5),
+                       aes(xintercept = inicio_ano),
+                       linetype = "dashed", linewidth = 0.3, colour = "grey20",
+                       inherit.aes = FALSE)
+  if (dentro) {
+    nomes <- geom_text(data = m_nomes,
+                       aes(x = meio, y = Inf, label = rotulo),
+                       angle = 90, hjust = 1.1, size = tamanho, colour = "grey20",
+                       inherit.aes = FALSE)
+    list(linhas, nomes)
+  } else {
+    # nomes em duas alturas alternadas, para não se sobreporem nos mandatos curtos
+    m_nomes$altura <- ifelse(seq_len(nrow(m_nomes)) %% 2 == 1, -0.5, -1.9)
+    nomes <- geom_text(data = m_nomes,
+                       aes(x = meio, y = Inf, label = rotulo, vjust = altura),
+                       size = tamanho, colour = "grey20",
+                       inherit.aes = FALSE)
+    list(linhas, nomes,
+         coord_cartesian(clip = "off"),  # permite escrever fora da área do gráfico
+         theme(plot.title = element_text(margin = margin(b = 30)),
+               plot.margin = margin(t = 34, r = 6, b = 6, l = 6)))
+  }
+}
+
+## A série histórica da Amazônia Legal ----
+
+total_ano <- desmat %>%
+  group_by(ano) %>%
+  summarise(desmatamento_km2 = sum(desmatamento_km2))
+
+total_ano
+
+total_ano %>% slice_max(desmatamento_km2, n = 3)
+total_ano %>% slice_min(desmatamento_km2, n = 3)
+
+total_ano %>%
+  ggplot(aes(x = ano, y = desmatamento_km2, fill = desmatamento_km2)) +
+  mandatos_fundo() +
+  geom_col() +
+  scale_fill_viridis_c(option = "rocket", direction = -1, guide = "none") +
+  scale_y_continuous(labels = num,
+                     limits = c(0,30000),
+                     expand = F) +
+  scale_x_continuous(breaks = seq(1988, 2025, by = 1)) +
+  labs(title = "Taxa anual de desmatamento na Amazônia Legal (PRODES)",
+       x = "Ano PRODES",
+       y = "Desmatamento (km²/ano)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45,hjust = 1)) +
+  mandatos_linhas()
+
+## Comparando os estados ----
+
+### Um gráfico para cada estado ----
+
+desmat %>%
+  ggplot(aes(x = ano, y = desmatamento_km2)) +
+  mandatos_fundo() +
+  geom_area(fill = "#B5442E", alpha = 0.8) +
+  facet_wrap(~ estado) +
+  scale_y_continuous(labels = num) +
+  labs(x = "Ano PRODES",
+       y = "Desmatamento (km²/ano)") +
+  theme_minimal() +
+  mandatos_linhas(dentro = TRUE, tamanho = 2.2)
+
+### Mapa de calor ----
+
+desmat %>%
+  ggplot(aes(x = ano,
+             y = reorder(estado, desmatamento_km2, FUN = sum),
+             fill = desmatamento_km2)) +
+  geom_tile(color = "white") +
+  scale_fill_viridis_c(option = "rocket", direction = -1, labels = num) +
+  scale_x_continuous(breaks = seq(1988, 2025, by = 1), expand = c(0, 0)) +
+  labs(x = "Ano PRODES",
+       y = NULL,
+       fill = "km²/ano") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  mandatos_linhas()
+
+### Participação de cada estado ----
+
+desmat %>%
+  ggplot(aes(x = ano,
+             y = desmatamento_km2,
+             fill = reorder(estado, desmatamento_km2, FUN = sum))) +
+  geom_col(position = "fill", width = 1) +
+  scale_fill_viridis_d(option = "turbo") +
+  scale_y_continuous(labels = scales::label_percent(), expand = c(0, 0)) +
+  scale_x_continuous(breaks = seq(1988, 2025, by = 1), expand = c(0, 0)) +
+  labs(x = "Ano PRODES",
+       y = "Participação no desmatamento do ano",
+       fill = "Estado") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  mandatos_linhas()
+
+## Desmatamento acumulado ----
+
+# como funciona a soma acumulada?
+c(10, 20, 5, 15)
+cumsum(c(10, 20, 5, 15))
+
+desmat_acum <- desmat %>%
+  arrange(estado, ano) %>%
+  group_by(estado) %>%
+  mutate(acumulado_km2 = cumsum(desmatamento_km2)) %>%
+  ungroup()
+
+# conferindo um estado
+desmat_acum %>% filter(uf == "MT")
+
+### Gráfico de densidade do desmatamento acumulado ----
+
+desmat_acum %>%
+  ggplot(aes(x = ano,
+             y = acumulado_km2,
+             fill = reorder(estado, acumulado_km2, FUN = max),
+             col = reorder(estado, acumulado_km2, FUN = max))) +
+  mandatos_fundo() +
+  geom_density(stat = "identity", position = "stack", alpha = 0.85) +
+  scale_fill_viridis_d(option = "turbo") +
+  scale_color_viridis_d(option = "turbo") +
+  scale_y_continuous(labels = num, expand = c(0, 0)) +
+  scale_x_continuous(breaks = seq(1988, 2025, by = 1), expand = c(0, 0)) +
+  labs(title = "Desmatamento acumulado na Amazônia Legal desde 1988",
+       x = "Ano PRODES",
+       y = "Área desmatada acumulada (km²)",
+       fill = "Estado",
+       col = "Estado") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  mandatos_linhas()
+
+### Quanto cada estado já perdeu? ----
+
+ranking <- desmat_acum %>%
+  filter(ano == max(ano)) %>%
+  arrange(desc(acumulado_km2))
+
+ranking %>% select(estado, acumulado_km2)
+
+# total da Amazônia Legal
+sum(ranking$acumulado_km2) %>% num()
+
+ranking %>%
+  ggplot(aes(x = acumulado_km2,
+             y = reorder(estado, acumulado_km2))) +
+  geom_col(fill = "#B5442E") +
+  geom_text(aes(label = num(acumulado_km2)), hjust = -0.1, size = 3.5) +
+  scale_x_continuous(labels = num, expand = expansion(mult = c(0, 0.15))) +
+  labs(x = "Desmatamento acumulado desde 1988 (km²)",
+       y = NULL) +
+  theme_minimal()
+
+## Vegetação nativa em todos os biomas (MapBiomas) ----
+
+### Conhecendo a tabela ----
+
+head(veg)
+
+# período coberto
+range(veg$ano)
+
+# quantos estados em cada bioma?
+veg %>%
+  distinct(bioma, uf) %>%
+  count(bioma)
+
+### Quanto resta em cada bioma? ----
+
+veg_bioma <- veg %>%
+  group_by(bioma, ano) %>%
+  summarise(vegetacao_nativa_ha = sum(vegetacao_nativa_ha),
+            area_total_ha       = sum(area_total_ha)) %>%
+  ungroup() %>%
+  mutate(perc_nativa = 100 * vegetacao_nativa_ha / area_total_ha)
+
+veg_bioma %>% filter(ano %in% c(1985, 2025))
+
+cores_biomas <- c("Amazônia" = "#1f6f43", "Cerrado" = "#c9a227",
+                  "Mata Atlântica" = "#5fa35f", "Caatinga" = "#d9805f",
+                  "Pampa" = "#9ec46b", "Pantanal" = "#3f8fb5")
+
+veg_bioma %>%
+  ggplot(aes(x = ano,
+             y = vegetacao_nativa_ha / 1e6,
+             fill = bioma,
+             col = bioma)) +
+  mandatos_fundo(de = 1985) +
+  geom_density(stat = "identity", position = "stack", alpha = 0.85) +
+  scale_fill_manual(values = cores_biomas) +
+  scale_color_manual(values = cores_biomas) +
+  scale_x_continuous(breaks = seq(1985, 2025, by = 1), expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(title = "Vegetação nativa no Brasil, por bioma (MapBiomas)",
+       x = "Ano",
+       y = "Vegetação nativa (milhões de ha)",
+       fill = "Bioma",
+       col = "Bioma") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  mandatos_linhas(de = 1985)
+
+veg_bioma %>%
+  ggplot(aes(x = ano, y = perc_nativa, col = bioma)) +
+  mandatos_fundo(de = 1985) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = cores_biomas) +
+  scale_x_continuous(breaks = seq(1985, 2025, by = 1), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 100), expand = c(0, 0)) +
+  labs(x = "Ano",
+       y = "Área do bioma com vegetação nativa (%)",
+       col = "Bioma") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  mandatos_linhas(de = 1985)
+
+### Variação acumulada por estado ----
+
+veg_var <- veg %>%
+  arrange(bioma, uf, ano) %>%
+  group_by(bioma, uf) %>%
+  mutate(perda_acumulada_ha = first(vegetacao_nativa_ha) - vegetacao_nativa_ha,
+         perc_restante      = 100 * vegetacao_nativa_ha / first(vegetacao_nativa_ha)) %>%
+  ungroup()
+
+# os 10 recortes com maior perda acumulada até 2025
+veg_var %>%
+  filter(ano == max(ano)) %>%
+  slice_max(perda_acumulada_ha, n = 10) %>%
+  select(bioma, estado, perda_acumulada_ha, perc_restante)
+
+#### Gráfico de densidade da perda acumulada por estado ----
+
+veg_var %>%
+  ggplot(aes(x = ano,
+             y = perda_acumulada_ha / 1e6,
+             fill = uf,
+             col = uf)) +
+  mandatos_fundo(de = 1985) +
+  geom_density(stat = "identity", position = "stack", alpha = 0.85) +
+  facet_wrap(~ bioma, scales = "free_y", ncol = 2) +
+  scale_fill_viridis_d(option = "turbo") +
+  scale_color_viridis_d(option = "turbo") +
+  scale_x_continuous(breaks = seq(1985, 2025, by = 10), expand = c(0, 0)) +
+  labs(x = "Ano",
+       y = "Perda acumulada desde 1985 (milhões de ha)",
+       fill = "UF",
+       col = "UF") +
+  guides(fill = guide_legend(ncol = 2), col = guide_legend(ncol = 2)) +
+  theme_minimal() +
+  mandatos_linhas(de = 1985, dentro = TRUE, tamanho = 2.2)
+
+#### Mapa de calor: quanto resta em cada estado ----
+
+veg_var %>%
+  ggplot(aes(x = ano,
+             y = reorder(estado, perc_restante, FUN = min),
+             fill = perc_restante)) +
+  geom_tile() +
+  facet_grid(bioma ~ ., scales = "free_y", space = "free_y") +
+  scale_fill_distiller(palette = "RdYlGn", direction = 1, limits = c(50, 115),
+                       oob = scales::squish) +
+  scale_x_continuous(breaks = seq(1985, 2025, by = 1), expand = c(0, 0)) +
+  labs(x = "Ano",
+       y = NULL,
+       fill = "% da vegetação\nnativa de 1985") +
+  theme_minimal() +
+  theme(strip.text.y = element_text(angle = 0, hjust = 0),
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  mandatos_linhas(de = 1985, tamanho = 2.5,
+                  so_no_painel = list(bioma = "Amazônia"))
+

@@ -4941,6 +4941,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 </section>
 <section id="prática" class="level1">
 <h1>Prática</h1>
+<p><a href="scripts/desmatamento.R" class="btn btn-outline-primary" download="desmatamento.R"><i class="bi bi-download"></i> Baixar o script desta prática (.R)</a></p>
 <p>     Nesta prática vamos reconstruir, passo a passo, a história do desmatamento na <strong>Amazônia Legal</strong> desde o início do monitoramento, em 1988. A Amazônia Legal é uma região político-administrativa formada por nove estados: Acre, Amapá, Amazonas, Mato Grosso, Pará, Rondônia, Roraima, Tocantins e parte do Maranhão.</p>
 <p>     Vamos usar dois conjuntos de dados:</p>
 <ul>
@@ -5035,7 +5036,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <li><strong>Área de cada classe de cobertura e uso da terra, por estado, município, terra indígena ou unidade de conservação:</strong> <a href="https://brasil.mapbiomas.org/estatisticas/">MapBiomas - estatísticas</a></li>
 </ul>
 <p>As tabelas exportadas por essas plataformas costumam vir no formato <em>largo</em> (um ano por coluna) e com números no padrão brasileiro (vírgula decimal). Nesses casos, use <code>read.csv2()</code> no lugar de <code>read.csv()</code>, e converta para o formato <em>longo</em> com <code>tidyr::pivot_longer()</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyr&quot;</span>)</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r nao-script code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyr&quot;</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># exemplo: transformar colunas &quot;1985&quot;, &quot;1986&quot;, ... em uma coluna &quot;ano&quot;</span></span>
