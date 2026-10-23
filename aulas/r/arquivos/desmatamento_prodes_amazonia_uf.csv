@@ -1,0 +1,343 @@
+ano,uf,estado,desmatamento_km2
+1988,AC,Acre,620
+1988,AM,Amazonas,1510
+1988,AP,Amapá,60
+1988,MA,Maranhão,2450
+1988,MT,Mato Grosso,5140
+1988,PA,Pará,6990
+1988,RO,Rondônia,2340
+1988,RR,Roraima,290
+1988,TO,Tocantins,1650
+1989,AC,Acre,540
+1989,AM,Amazonas,1180
+1989,AP,Amapá,130
+1989,MA,Maranhão,1420
+1989,MT,Mato Grosso,5960
+1989,PA,Pará,5750
+1989,RO,Rondônia,1430
+1989,RR,Roraima,630
+1989,TO,Tocantins,730
+1990,AC,Acre,550
+1990,AM,Amazonas,520
+1990,AP,Amapá,250
+1990,MA,Maranhão,1100
+1990,MT,Mato Grosso,4020
+1990,PA,Pará,4890
+1990,RO,Rondônia,1670
+1990,RR,Roraima,150
+1990,TO,Tocantins,580
+1991,AC,Acre,380
+1991,AM,Amazonas,980
+1991,AP,Amapá,410
+1991,MA,Maranhão,670
+1991,MT,Mato Grosso,2840
+1991,PA,Pará,3780
+1991,RO,Rondônia,1110
+1991,RR,Roraima,420
+1991,TO,Tocantins,440
+1992,AC,Acre,400
+1992,AM,Amazonas,799
+1992,AP,Amapá,36
+1992,MA,Maranhão,1135
+1992,MT,Mato Grosso,4674
+1992,PA,Pará,3787
+1992,RO,Rondônia,2265
+1992,RR,Roraima,281
+1992,TO,Tocantins,409
+1993,AC,Acre,482
+1993,AM,Amazonas,370
+1993,AP,Amapá,0
+1993,MA,Maranhão,372
+1993,MT,Mato Grosso,6220
+1993,PA,Pará,4284
+1993,RO,Rondônia,2595
+1993,RR,Roraima,240
+1993,TO,Tocantins,333
+1994,AC,Acre,482
+1994,AM,Amazonas,370
+1994,AP,Amapá,0
+1994,MA,Maranhão,372
+1994,MT,Mato Grosso,6220
+1994,PA,Pará,4284
+1994,RO,Rondônia,2595
+1994,RR,Roraima,240
+1994,TO,Tocantins,333
+1995,AC,Acre,1208
+1995,AM,Amazonas,2114
+1995,AP,Amapá,9
+1995,MA,Maranhão,1745
+1995,MT,Mato Grosso,10391
+1995,PA,Pará,7845
+1995,RO,Rondônia,4730
+1995,RR,Roraima,220
+1995,TO,Tocantins,797
+1996,AC,Acre,433
+1996,AM,Amazonas,1023
+1996,AP,Amapá,0
+1996,MA,Maranhão,1061
+1996,MT,Mato Grosso,6543
+1996,PA,Pará,6135
+1996,RO,Rondônia,2432
+1996,RR,Roraima,214
+1996,TO,Tocantins,320
+1997,AC,Acre,358
+1997,AM,Amazonas,589
+1997,AP,Amapá,18
+1997,MA,Maranhão,409
+1997,MT,Mato Grosso,5271
+1997,PA,Pará,4139
+1997,RO,Rondônia,1986
+1997,RR,Roraima,184
+1997,TO,Tocantins,273
+1998,AC,Acre,536
+1998,AM,Amazonas,670
+1998,AP,Amapá,30
+1998,MA,Maranhão,1012
+1998,MT,Mato Grosso,6466
+1998,PA,Pará,5829
+1998,RO,Rondônia,2041
+1998,RR,Roraima,223
+1998,TO,Tocantins,576
+1999,AC,Acre,441
+1999,AM,Amazonas,720
+1999,AP,Amapá,0
+1999,MA,Maranhão,1230
+1999,MT,Mato Grosso,6963
+1999,PA,Pará,5111
+1999,RO,Rondônia,2358
+1999,RR,Roraima,220
+1999,TO,Tocantins,216
+2000,AC,Acre,547
+2000,AM,Amazonas,612
+2000,AP,Amapá,0
+2000,MA,Maranhão,1065
+2000,MT,Mato Grosso,6369
+2000,PA,Pará,6671
+2000,RO,Rondônia,2465
+2000,RR,Roraima,253
+2000,TO,Tocantins,244
+2001,AC,Acre,419
+2001,AM,Amazonas,634
+2001,AP,Amapá,7
+2001,MA,Maranhão,958
+2001,MT,Mato Grosso,7703
+2001,PA,Pará,5237
+2001,RO,Rondônia,2673
+2001,RR,Roraima,345
+2001,TO,Tocantins,189
+2002,AC,Acre,883
+2002,AM,Amazonas,885
+2002,AP,Amapá,0
+2002,MA,Maranhão,1085
+2002,MT,Mato Grosso,7892
+2002,PA,Pará,7510
+2002,RO,Rondônia,3099
+2002,RR,Roraima,84
+2002,TO,Tocantins,212
+2003,AC,Acre,1078
+2003,AM,Amazonas,1558
+2003,AP,Amapá,25
+2003,MA,Maranhão,993
+2003,MT,Mato Grosso,10405
+2003,PA,Pará,7145
+2003,RO,Rondônia,3597
+2003,RR,Roraima,439
+2003,TO,Tocantins,156
+2004,AC,Acre,728
+2004,AM,Amazonas,1232
+2004,AP,Amapá,46
+2004,MA,Maranhão,755
+2004,MT,Mato Grosso,11814
+2004,PA,Pará,8870
+2004,RO,Rondônia,3858
+2004,RR,Roraima,311
+2004,TO,Tocantins,158
+2005,AC,Acre,592
+2005,AM,Amazonas,775
+2005,AP,Amapá,33
+2005,MA,Maranhão,922
+2005,MT,Mato Grosso,7145
+2005,PA,Pará,5899
+2005,RO,Rondônia,3244
+2005,RR,Roraima,133
+2005,TO,Tocantins,271
+2006,AC,Acre,398
+2006,AM,Amazonas,788
+2006,AP,Amapá,30
+2006,MA,Maranhão,674
+2006,MT,Mato Grosso,4333
+2006,PA,Pará,5659
+2006,RO,Rondônia,2049
+2006,RR,Roraima,231
+2006,TO,Tocantins,124
+2007,AC,Acre,184
+2007,AM,Amazonas,610
+2007,AP,Amapá,39
+2007,MA,Maranhão,631
+2007,MT,Mato Grosso,2678
+2007,PA,Pará,5526
+2007,RO,Rondônia,1611
+2007,RR,Roraima,309
+2007,TO,Tocantins,63
+2008,AC,Acre,254
+2008,AM,Amazonas,604
+2008,AP,Amapá,100
+2008,MA,Maranhão,1271
+2008,MT,Mato Grosso,3258
+2008,PA,Pará,5607
+2008,RO,Rondônia,1136
+2008,RR,Roraima,574
+2008,TO,Tocantins,107
+2009,AC,Acre,167
+2009,AM,Amazonas,405
+2009,AP,Amapá,70
+2009,MA,Maranhão,828
+2009,MT,Mato Grosso,1049
+2009,PA,Pará,4281
+2009,RO,Rondônia,482
+2009,RR,Roraima,121
+2009,TO,Tocantins,61
+2010,AC,Acre,259
+2010,AM,Amazonas,595
+2010,AP,Amapá,53
+2010,MA,Maranhão,712
+2010,MT,Mato Grosso,871
+2010,PA,Pará,3770
+2010,RO,Rondônia,435
+2010,RR,Roraima,256
+2010,TO,Tocantins,49
+2011,AC,Acre,280
+2011,AM,Amazonas,502
+2011,AP,Amapá,66
+2011,MA,Maranhão,396
+2011,MT,Mato Grosso,1120
+2011,PA,Pará,3008
+2011,RO,Rondônia,865
+2011,RR,Roraima,141
+2011,TO,Tocantins,40
+2012,AC,Acre,305
+2012,AM,Amazonas,523
+2012,AP,Amapá,27
+2012,MA,Maranhão,269
+2012,MT,Mato Grosso,757
+2012,PA,Pará,1741
+2012,RO,Rondônia,773
+2012,RR,Roraima,124
+2012,TO,Tocantins,52
+2013,AC,Acre,221
+2013,AM,Amazonas,583
+2013,AP,Amapá,23
+2013,MA,Maranhão,403
+2013,MT,Mato Grosso,1139
+2013,PA,Pará,2346
+2013,RO,Rondônia,932
+2013,RR,Roraima,170
+2013,TO,Tocantins,74
+2014,AC,Acre,309
+2014,AM,Amazonas,500
+2014,AP,Amapá,31
+2014,MA,Maranhão,257
+2014,MT,Mato Grosso,1075
+2014,PA,Pará,1887
+2014,RO,Rondônia,684
+2014,RR,Roraima,219
+2014,TO,Tocantins,50
+2015,AC,Acre,264
+2015,AM,Amazonas,712
+2015,AP,Amapá,25
+2015,MA,Maranhão,209
+2015,MT,Mato Grosso,1601
+2015,PA,Pará,2153
+2015,RO,Rondônia,1030
+2015,RR,Roraima,156
+2015,TO,Tocantins,57
+2016,AC,Acre,372
+2016,AM,Amazonas,1129
+2016,AP,Amapá,17
+2016,MA,Maranhão,258
+2016,MT,Mato Grosso,1489
+2016,PA,Pará,2992
+2016,RO,Rondônia,1376
+2016,RR,Roraima,202
+2016,TO,Tocantins,58
+2017,AC,Acre,257
+2017,AM,Amazonas,1001
+2017,AP,Amapá,24
+2017,MA,Maranhão,265
+2017,MT,Mato Grosso,1561
+2017,PA,Pará,2433
+2017,RO,Rondônia,1243
+2017,RR,Roraima,132
+2017,TO,Tocantins,31
+2018,AC,Acre,444
+2018,AM,Amazonas,1045
+2018,AP,Amapá,24
+2018,MA,Maranhão,253
+2018,MT,Mato Grosso,1490
+2018,PA,Pará,2744
+2018,RO,Rondônia,1316
+2018,RR,Roraima,195
+2018,TO,Tocantins,25
+2019,AC,Acre,682
+2019,AM,Amazonas,1434
+2019,AP,Amapá,32
+2019,MA,Maranhão,237
+2019,MT,Mato Grosso,1702
+2019,PA,Pará,4172
+2019,RO,Rondônia,1257
+2019,RR,Roraima,590
+2019,TO,Tocantins,23
+2020,AC,Acre,706
+2020,AM,Amazonas,1512
+2020,AP,Amapá,24
+2020,MA,Maranhão,336
+2020,MT,Mato Grosso,1779
+2020,PA,Pará,4899
+2020,RO,Rondônia,1273
+2020,RR,Roraima,297
+2020,TO,Tocantins,25
+2021,AC,Acre,889
+2021,AM,Amazonas,2306
+2021,AP,Amapá,17
+2021,MA,Maranhão,350
+2021,MT,Mato Grosso,2213
+2021,PA,Pará,5238
+2021,RO,Rondônia,1673
+2021,RR,Roraima,315
+2021,TO,Tocantins,37
+2022,AC,Acre,840
+2022,AM,Amazonas,2594
+2022,AP,Amapá,14
+2022,MA,Maranhão,271
+2022,MT,Mato Grosso,1927
+2022,PA,Pará,4162
+2022,RO,Rondônia,1480
+2022,RR,Roraima,279
+2022,TO,Tocantins,27
+2023,AC,Acre,601
+2023,AM,Amazonas,1610
+2023,AP,Amapá,17
+2023,MA,Maranhão,306
+2023,MT,Mato Grosso,2048
+2023,PA,Pará,3299
+2023,RO,Rondônia,867
+2023,RR,Roraima,284
+2023,TO,Tocantins,32
+2024,AC,Acre,449
+2024,AM,Amazonas,1223
+2024,AP,Amapá,27
+2024,MA,Maranhão,307
+2024,MT,Mato Grosso,1257
+2024,PA,Pará,2395
+2024,RO,Rondônia,360
+2024,RR,Roraima,468
+2024,TO,Tocantins,32
+2025,AC,Acre,324
+2025,AM,Amazonas,979
+2025,AP,Amapá,17
+2025,MA,Maranhão,210
+2025,MT,Mato Grosso,1593
+2025,PA,Pará,2064
+2025,RO,Rondônia,229
+2025,RR,Roraima,285
+2025,TO,Tocantins,30
