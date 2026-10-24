@@ -20,7 +20,6 @@ try({ Sys.setlocale('LC_TIME', 'pt_BR.UTF-8') }, silent = TRUE)
 try({ Sys.setlocale('LC_TIME', 'Portuguese_Brazil.1252') }, silent = TRUE)
 ```
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.width = 9, fig.height = 5.5, out.width = "100%")
 
@@ -46,24 +45,17 @@ old_hooks <- fansi::set_knit_hooks(
 )
 ```
 
+     Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da *PUC-MG*. Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo/aulas).
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-Olá, esta é mais uma de um conjunto de práticas em bioinformática desenvolvidas para o curso de Biomedicina da *PUC-MG*.
-Você pode encontrar as demais práticas [*aqui*](https://heronoh.github.io/bioinfo/aulas).
-
-&nbsp;&nbsp;&nbsp;&nbsp;
-Hoje nós vamos trabalhar com dados públicos sobre o _*desmatamento*_ no Brasil, produzidos a partir de imagens de satélite.
-
+     Hoje nós vamos trabalhar com dados públicos sobre o *desmatamento* no Brasil, produzidos a partir de imagens de satélite.
 
 # Introdução
 
 ## Por que estudar desmatamento?
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-O Brasil abriga seis biomas continentais: _Amazônia_, _Cerrado_, _Mata Atlântica_, _Caatinga_, _Pampa_ e _Pantanal_. A perda de vegetação nativa afeta diretamente a biodiversidade, o regime de chuvas, a emissão de gases de efeito estufa e também a saúde humana, por exemplo ao aproximar pessoas de reservatórios de patógenos e vetores de doenças.
+     O Brasil abriga seis biomas continentais: *Amazônia*, *Cerrado*, *Mata Atlântica*, *Caatinga*, *Pampa* e *Pantanal*. A perda de vegetação nativa afeta diretamente a biodiversidade, o regime de chuvas, a emissão de gases de efeito estufa e também a saúde humana, por exemplo ao aproximar pessoas de reservatórios de patógenos e vetores de doenças.
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-O Brasil é um dos países com o monitoramento por satélite mais longo e consolidado do mundo, e a maior parte desses dados é aberta. Isso faz deles um ótimo material para praticar análise de dados tabulares no R.
+     O Brasil é um dos países com o monitoramento por satélite mais longo e consolidado do mundo, e a maior parte desses dados é aberta. Isso faz deles um ótimo material para praticar análise de dados tabulares no R.
 
 ## Onde obter os dados
 
@@ -71,60 +63,57 @@ Existem diversas fontes, que diferem quanto ao **método**, à **escala** e ao *
 
 ### INPE - PRODES e DETER (portal TerraBrasilis)
 
-- **Instituição:** [Instituto Nacional de Pesquisas Espaciais (INPE)](https://www.gov.br/inpe), órgão federal ligado ao Ministério da Ciência, Tecnologia e Inovação.
-- **PRODES** (_Projeto de Monitoramento do Desmatamento na Amazônia Legal por Satélite_): calcula a **taxa anual de desmatamento** por corte raso, a partir de imagens da série Landsat e similares. Na Amazônia Legal a série começa em **1988**, e hoje o projeto cobre todos os biomas.
-- **DETER** (_Detecção de Desmatamento em Tempo Real_): sistema de **alertas** quase diários, criado para orientar a fiscalização. Não serve para calcular taxas oficiais, mas mostra a dinâmica ao longo do ano.
-- **Onde baixar:** portal [*TerraBrasilis*](https://terrabrasilis.dpi.inpe.br/), na [página de downloads](https://terrabrasilis.dpi.inpe.br/downloads/), com arquivos em formato `.csv`, shapefile e raster. Os painéis de taxas do próprio portal também permitem exportar tabelas.
+-   **Instituição:** [Instituto Nacional de Pesquisas Espaciais (INPE)](https://www.gov.br/inpe), órgão federal ligado ao Ministério da Ciência, Tecnologia e Inovação.
+-   **PRODES** (*Projeto de Monitoramento do Desmatamento na Amazônia Legal por Satélite*): calcula a **taxa anual de desmatamento** por corte raso, a partir de imagens da série Landsat e similares. Na Amazônia Legal a série começa em **1988**, e hoje o projeto cobre todos os biomas.
+-   **DETER** (*Detecção de Desmatamento em Tempo Real*): sistema de **alertas** quase diários, criado para orientar a fiscalização. Não serve para calcular taxas oficiais, mas mostra a dinâmica ao longo do ano.
+-   **Onde baixar:** portal [*TerraBrasilis*](https://terrabrasilis.dpi.inpe.br/), na [página de downloads](https://terrabrasilis.dpi.inpe.br/downloads/), com arquivos em formato `.csv`, shapefile e raster. Os painéis de taxas do próprio portal também permitem exportar tabelas.
 
 > O "ano PRODES" não é o ano civil: ele vai de agosto de um ano a julho do ano seguinte, que é a época seca na Amazônia, com menos nuvens nas imagens.
 
 ### MapBiomas
 
-- **Instituição:** [*MapBiomas*](https://brasil.mapbiomas.org/), rede colaborativa de universidades, ONGs e empresas de tecnologia.
-- **O que oferece:** mapas anuais de **cobertura e uso da terra** de todo o Brasil desde **1985**, com resolução de 30 m, classificando cada pixel em classes como _Formação Florestal_, _Formação Savânica_, _Pastagem_, _Agricultura_, _Área Urbana_ etc. Também tem módulos de desmatamento, vegetação secundária, fogo, mineração e superfície de água.
-- **Onde baixar:** a página de [*estatísticas*](https://brasil.mapbiomas.org/estatisticas/) disponibiliza planilhas com a **área (em hectares) de cada classe** por bioma, estado e município, para cada ano. É a fonte mais prática para obter a **área absoluta de vegetação nativa** por estado.
+-   **Instituição:** [*MapBiomas*](https://brasil.mapbiomas.org/), rede colaborativa de universidades, ONGs e empresas de tecnologia.
+-   **O que oferece:** mapas anuais de **cobertura e uso da terra** de todo o Brasil desde **1985**, com resolução de 30 m, classificando cada pixel em classes como *Formação Florestal*, *Formação Savânica*, *Pastagem*, *Agricultura*, *Área Urbana* etc. Também tem módulos de desmatamento, vegetação secundária, fogo, mineração e superfície de água.
+-   **Onde baixar:** a página de [*estatísticas*](https://brasil.mapbiomas.org/estatisticas/) disponibiliza planilhas com a **área (em hectares) de cada classe** por bioma, estado e município, para cada ano. É a fonte mais prática para obter a **área absoluta de vegetação nativa** por estado.
 
 ### IBGE
 
-- **Instituição:** [Instituto Brasileiro de Geografia e Estatística (IBGE)](https://www.ibge.gov.br/).
-- **O que oferece:** os **limites oficiais dos biomas**, dos estados e dos municípios, além do _Monitoramento da Cobertura e Uso da Terra do Brasil_. Os códigos de município do IBGE (7 dígitos) são a "chave" que permite cruzar dados ambientais com dados de saúde, como os do *SUS*.
+-   **Instituição:** [Instituto Brasileiro de Geografia e Estatística (IBGE)](https://www.ibge.gov.br/).
+-   **O que oferece:** os **limites oficiais dos biomas**, dos estados e dos municípios, além do *Monitoramento da Cobertura e Uso da Terra do Brasil*. Os códigos de município do IBGE (7 dígitos) são a "chave" que permite cruzar dados ambientais com dados de saúde, como os do *SUS*.
 
 ### SOS Mata Atlântica
 
-- **Instituição:** [Fundação SOS Mata Atlântica](https://www.sosma.org.br/), em parceria com o INPE.
-- **O que oferece:** o _Atlas dos Remanescentes Florestais da Mata Atlântica_, que acompanha desde o fim dos anos 1980 o que resta de floresta no bioma mais desmatado do país.
+-   **Instituição:** [Fundação SOS Mata Atlântica](https://www.sosma.org.br/), em parceria com o INPE.
+-   **O que oferece:** o *Atlas dos Remanescentes Florestais da Mata Atlântica*, que acompanha desde o fim dos anos 1980 o que resta de floresta no bioma mais desmatado do país.
 
 ### Outras fontes úteis
 
-- [**Global Forest Watch**](https://www.globalforestwatch.org/): perda anual de cobertura arbórea em escala global, a partir de 2001, com recortes por país e estado.
-- [**Base dos Dados**](https://basedosdados.org/): reúne em um só lugar diversos conjuntos públicos brasileiros já tratados, acessíveis pelo pacote de R `basedosdados` (exige um projeto no Google Cloud).
-
+-   [**Global Forest Watch**](https://www.globalforestwatch.org/): perda anual de cobertura arbórea em escala global, a partir de 2001, com recortes por país e estado.
+-   [**Base dos Dados**](https://basedosdados.org/): reúne em um só lugar diversos conjuntos públicos brasileiros já tratados, acessíveis pelo pacote de R `basedosdados` (exige um projeto no Google Cloud).
 
 # Prática
 
 [<i class="bi bi-download"></i> Baixar o script desta prática (.R)](scripts/desmatamento.R){.btn .btn-outline-primary download="desmatamento.R"}
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-Nesta prática vamos reconstruir, passo a passo, a história do desmatamento na **Amazônia Legal** desde o início do monitoramento, em 1988. A Amazônia Legal é uma região político-administrativa formada por nove estados: Acre, Amapá, Amazonas, Mato Grosso, Pará, Rondônia, Roraima, Tocantins e parte do Maranhão.
+     Nesta prática vamos reconstruir, passo a passo, a história do desmatamento na **Amazônia Legal** desde o início do monitoramento, em 1988. A Amazônia Legal é uma região político-administrativa formada por nove estados: Acre, Amapá, Amazonas, Mato Grosso, Pará, Rondônia, Roraima, Tocantins e parte do Maranhão.
 
-&nbsp;&nbsp;&nbsp;&nbsp;
-Vamos usar dois conjuntos de dados:
+     Vamos usar dois conjuntos de dados:
 
-- as **taxas anuais consolidadas do PRODES** por estado, exportadas do painel do TerraBrasilis, que medem o que **foi desmatado** na Amazônia Legal a cada ano, desde 1988;
-- a **área de vegetação nativa** de cada estado em cada bioma, de 1985 a 2025, da **Coleção 11 do MapBiomas**, que mede o que **ainda existe** em todos os biomas.
+-   as **taxas anuais consolidadas do PRODES** por estado, exportadas do painel do TerraBrasilis, que medem o que **foi desmatado** na Amazônia Legal a cada ano, desde 1988;
+-   a **área de vegetação nativa** de cada estado em cada bioma, de 1985 a 2025, da **Coleção 11 do MapBiomas**, que mede o que **ainda existe** em todos os biomas.
 
 Com eles, vamos responder a quatro perguntas:
 
-1. Como o desmatamento variou ao longo de quase quatro décadas?
-2. Quais estados concentram o desmatamento, e isso mudou com o tempo?
-3. Quanto de floresta já foi perdido, somando todos os anos?
-4. Quanto resta de vegetação nativa em cada bioma e em cada estado?
+1.  Como o desmatamento variou ao longo de quase quatro décadas?
+2.  Quais estados concentram o desmatamento, e isso mudou com o tempo?
+3.  Quanto de floresta já foi perdido, somando todos os anos?
+4.  Quanto resta de vegetação nativa em cada bioma e em cada estado?
 
 ## Preparação
 
 ### Carregar pacotes
 
-```r
+``` r
 # para instalar os pacotes, caso ainda não tenha (só se instala uma vez)
 install.packages("ggplot2")
 install.packages("dplyr")
@@ -143,24 +132,22 @@ num <- scales::label_number(big.mark = ".", decimal.mark = ",")
 
 ### Definindo seu diretório de trabalho
 
-Para cada projeto, sempre crie uma pasta onde você vai salvar todos arquivos e scripts, assim você mantém seu trabalho sempre organizado.
-No comando abaixo, coloque dentro das aspas o caminho para o seu diretório de trabalho.
+Para cada projeto, sempre crie uma pasta onde você vai salvar todos arquivos e scripts, assim você mantém seu trabalho sempre organizado. No comando abaixo, coloque dentro das aspas o caminho para o seu diretório de trabalho.
 
-> DICA: Sempre utilize a tecla `TAB` para autocompletar os caminhos a partir do **\~** ou **/** (ou \*\*\*\*, caso no windows). Para isso, coloque o cursor (|, a barra onde sua digitação aparece) entre as " ".
+> DICA: Sempre utilize a tecla `TAB` para autocompletar os caminhos a partir do **\~** ou **/** (ou \*\*\*\*, caso no windows). Para isso, coloque o cursor (\|, a barra onde sua digitação aparece) entre as " ".
 
-```r
+``` r
 getwd()
 
 setwd("")
 # utilize o tab para autocompletar com o cursor entre as aspas
-
 ```
 
 ### Obter arquivos
 
 Para facilitar, iremos trabalhar com dois arquivos já organizados, que devem ser baixados com os comandos a seguir. Você irá fazer download dos arquivos e em seguida iremos carregá-los no R.
 
-```r
+``` r
 # taxas anuais de desmatamento na Amazônia Legal (PRODES/INPE)
 download.file(
   "https://raw.githubusercontent.com/heronoh/bioinfo/main/aulas/r/arquivos/desmatamento_prodes_amazonia_uf.csv",
@@ -176,7 +163,6 @@ download.file(
   mode = "wb",
   method = "libcurl"
   )
-
 ```
 
 > DICA 1: Para prosseguir na análise que vamos desenvolver, copie e cole os blocos de código num novo documento do tipo *.R*.
@@ -185,10 +171,9 @@ download.file(
 
 ### Ler os arquivos `.csv`
 
-&nbsp;&nbsp;
-O formato `.csv` (_comma-separated values_) é um arquivo de texto simples em que cada linha é uma observação e as colunas são separadas por vírgulas. Você pode abri-lo em qualquer editor de texto para ver como ele é por dentro. No R, ele é lido com a função `read.csv()`:
+   O formato `.csv` (*comma-separated values*) é um arquivo de texto simples em que cada linha é uma observação e as colunas são separadas por vírgulas. Você pode abri-lo em qualquer editor de texto para ver como ele é por dentro. No R, ele é lido com a função `read.csv()`:
 
-```r
+``` r
 #complete usando a tecla TAB até chegar aos arquivos que você baixou
 desmat <- read.csv(file = "desmatamento_prodes_amazonia_uf.csv",
                    sep = ",",
@@ -203,18 +188,17 @@ veg <- read.csv(file = "vegetacao_nativa_mapbiomas_uf.csv",
   tibble::tibble()
 ```
 
-
 ::: {style="background:#FFF7CC; border-left:6px solid #F0B400; padding:1rem 1.25rem; border-radius:8px; margin:1rem 0;"}
 ### Para outros projetos
 
 O arquivo desta prática é um recorte já organizado. Para outras perguntas, você pode baixar diretamente das fontes:
 
-- **PRODES de outros biomas (Cerrado, Mata Atlântica, Caatinga, Pampa, Pantanal), por município ou como polígonos:** [TerraBrasilis - downloads](https://terrabrasilis.dpi.inpe.br/downloads/)
-- **Área de cada classe de cobertura e uso da terra, por estado, município, terra indígena ou unidade de conservação:** [MapBiomas - estatísticas](https://brasil.mapbiomas.org/estatisticas/)
+-   **PRODES de outros biomas (Cerrado, Mata Atlântica, Caatinga, Pampa, Pantanal), por município ou como polígonos:** [TerraBrasilis - downloads](https://terrabrasilis.dpi.inpe.br/downloads/)
+-   **Área de cada classe de cobertura e uso da terra, por estado, município, terra indígena ou unidade de conservação:** [MapBiomas - estatísticas](https://brasil.mapbiomas.org/estatisticas/)
 
-As tabelas exportadas por essas plataformas costumam vir no formato _largo_ (um ano por coluna) e com números no padrão brasileiro (vírgula decimal). Nesses casos, use `read.csv2()` no lugar de `read.csv()`, e converta para o formato _longo_ com `tidyr::pivot_longer()`:
+As tabelas exportadas por essas plataformas costumam vir no formato *largo* (um ano por coluna) e com números no padrão brasileiro (vírgula decimal). Nesses casos, use `read.csv2()` no lugar de `read.csv()`, e converta para o formato *longo* com `tidyr::pivot_longer()`:
 
-```{.r .nao-script}
+``` {.r .nao-script}
 install.packages("tidyr")
 library(tidyr)
 
@@ -227,11 +211,9 @@ tabela_longa <- tabela_larga %>%
 ```
 :::
 
-
 ## Conhecendo a tabela
 
-&nbsp;&nbsp;
-Antes de qualquer gráfico, precisamos saber **o que é cada linha** da tabela. Aqui, cada linha é a combinação de um **ano** e um **estado**, e a coluna `desmatamento_km2` traz a área desmatada naquele estado, naquele ano.
+   Antes de qualquer gráfico, precisamos saber **o que é cada linha** da tabela. Aqui, cada linha é a combinação de um **ano** e um **estado**, e a coluna `desmatamento_km2` traz a área desmatada naquele estado, naquele ano.
 
 ```{r conhecer, echo=TRUE}
 # as primeiras linhas
@@ -260,22 +242,20 @@ summary(desmat$desmatamento_km2)
 
 > PERGUNTA: Se a série vai de 1988 a 2025 e são 9 estados, quantas linhas a tabela deveria ter? Confira com `nrow(desmat)`.
 
-::: {.callout-note}
+::: callout-note
 ## Duas particularidades da série histórica
-- O valor de **1988** é uma **média anual** do período de 1977 a 1988, e não a medição de um único ano.
-- Os valores de **1993** e **1994** são iguais porque correspondem à média dos dois anos, que foram mapeados em conjunto.
+
+-   O valor de **1988** é uma **média anual** do período de 1977 a 1988, e não a medição de um único ano.
+-   Os valores de **1993** e **1994** são iguais porque correspondem à média dos dois anos, que foram mapeados em conjunto.
 
 Saber como o dado foi produzido é parte essencial de qualquer análise!
 :::
 
-
 ## Contexto: os mandatos presidenciais
 
-&nbsp;&nbsp;
-O desmatamento responde a políticas públicas, como fiscalização, crédito rural e criação de áreas protegidas, que mudam de um governo para outro. Para ajudar a interpretar os gráficos, vamos marcar neles os mandatos presidenciais do período.
+   O desmatamento responde a políticas públicas, como fiscalização, crédito rural e criação de áreas protegidas, que mudam de um governo para outro. Para ajudar a interpretar os gráficos, vamos marcar neles os mandatos presidenciais do período.
 
-&nbsp;&nbsp;
-Em vez de baixar outro arquivo, vamos **criar a tabela diretamente no R** com a função `tribble()`, que permite escrever uma tabela linha por linha, de forma bem legível:
+   Em vez de baixar outro arquivo, vamos **criar a tabela diretamente no R** com a função `tribble()`, que permite escrever uma tabela linha por linha, de forma bem legível:
 
 ```{r mandatos, echo=TRUE}
 mandatos <- tibble::tribble(
@@ -297,8 +277,7 @@ mandatos <- tibble::tribble(
 mandatos
 ```
 
-&nbsp;&nbsp;
-Nossos gráficos usam o **ano** como eixo, então precisamos converter as datas em "anos decimais" (por exemplo, 1° de julho de 2016 ≈ 2016,5):
+   Nossos gráficos usam o **ano** como eixo, então precisamos converter as datas em "anos decimais" (por exemplo, 1° de julho de 2016 ≈ 2016,5):
 
 ```{r mandatos_ano, echo=TRUE}
 # converte uma data em ano decimal
@@ -315,8 +294,7 @@ mandatos <- mandatos %>%
 mandatos %>% select(rotulo, inicio_ano, fim_ano)
 ```
 
-&nbsp;&nbsp;
-Vamos marcar também o período da **pandemia de COVID-19**, em vermelho escuro. Ele começa em 11/03/2020, quando a OMS caracterizou a COVID-19 como pandemia e o Distrito Federal adotou as primeiras medidas de restrição de circulação. Termina em 22/05/2022, com o fim da Emergência em Saúde Pública de Importância Nacional (Portaria GM/MS nº 913, em vigor 30 dias após sua publicação, em 22/04/2022). O Brasil não teve um _lockdown_ nacional: as quarentenas foram decretadas por estados e municípios, a partir de março de 2020, com intensidade e duração diferentes em cada lugar.
+   Vamos marcar também o período da **pandemia de COVID-19**, em vermelho escuro. Ele começa em 11/03/2020, quando a OMS caracterizou a COVID-19 como pandemia e o Distrito Federal adotou as primeiras medidas de restrição de circulação. Termina em 22/05/2022, com o fim da Emergência em Saúde Pública de Importância Nacional (Portaria GM/MS nº 913, em vigor 30 dias após sua publicação, em 22/04/2022). O Brasil não teve um *lockdown* nacional: as quarentenas foram decretadas por estados e municípios, a partir de março de 2020, com intensidade e duração diferentes em cada lugar.
 
 ```{r pandemia, echo=TRUE}
 cor_pandemia <- "#8B0000"   # vermelho escuro
@@ -331,8 +309,7 @@ pandemia <- tibble::tribble(
 pandemia
 ```
 
-&nbsp;&nbsp;
-Como vamos repetir essas marcações em vários gráficos, criamos **funções** que devolvem camadas prontas do `ggplot2`. Assim, basta "somar" `+ mandatos_fundo()` ou `+ mandatos_linhas()` a qualquer gráfico. Os argumentos `de` e `ate` indicam o período do gráfico, para cortar os mandatos que começam antes ou terminam depois da série:
+   Como vamos repetir essas marcações em vários gráficos, criamos **funções** que devolvem camadas prontas do `ggplot2`. Assim, basta "somar" `+ mandatos_fundo()` ou `+ mandatos_linhas()` a qualquer gráfico. Os argumentos `de` e `ate` indicam o período do gráfico, para cortar os mandatos que começam antes ou terminam depois da série:
 
 ```{r mandatos_funcoes, echo=TRUE}
 # recorta os mandatos ao período do gráfico
@@ -426,11 +403,9 @@ mandatos_linhas <- function(de = 1988, ate = 2025, dentro = FALSE, tamanho = 3,
 
 > ATENÇÃO: o "ano PRODES" vai de agosto a julho, então as trocas de mandato e o período da pandemia aparecem no meio de uma barra ou de um ano. As marcações servem para orientar a leitura, não como fronteiras exatas.
 
-
 ## A série histórica da Amazônia Legal
 
-&nbsp;&nbsp;
-Para obter o total da Amazônia Legal em cada ano, somamos os nove estados com a dupla `group_by()` + `summarise()`:
+   Para obter o total da Amazônia Legal em cada ano, somamos os nove estados com a dupla `group_by()` + `summarise()`:
 
 ```{r total_ano, echo=TRUE}
 total_ano <- desmat %>%
@@ -440,8 +415,7 @@ total_ano <- desmat %>%
 total_ano
 ```
 
-&nbsp;&nbsp;
-Quais foram os anos de maior e de menor desmatamento?
+   Quais foram os anos de maior e de menor desmatamento?
 
 ```{r extremos, echo=TRUE}
 total_ano %>% slice_max(desmatamento_km2, n = 3)
@@ -468,13 +442,11 @@ total_ano %>%
 
 > PERGUNTA: O gráfico mostra dois grandes picos e uma queda acentuada entre 2004 e 2012. Pesquise que políticas públicas foram adotadas nesse período. O que aconteceu depois de 2012?
 
-
 ## Comparando os estados
 
 ### Um gráfico para cada estado
 
-&nbsp;&nbsp;
-Com `facet_wrap()` desenhamos um painel por estado, todos na mesma escala, o que facilita a comparação:
+   Com `facet_wrap()` desenhamos um painel por estado, todos na mesma escala, o que facilita a comparação:
 
 ```{r grafico_facetas, echo=TRUE, fig.height=7}
 desmat %>%
@@ -491,8 +463,7 @@ desmat %>%
 
 ### Mapa de calor
 
-&nbsp;&nbsp;
-Outra forma de enxergar a tabela inteira de uma só vez é um **mapa de calor** (_heatmap_), em que cada célula é um par estado-ano, e a cor indica a área desmatada. Usamos `reorder()` para ordenar os estados pelo total desmatado:
+   Outra forma de enxergar a tabela inteira de uma só vez é um **mapa de calor** (*heatmap*), em que cada célula é um par estado-ano, e a cor indica a área desmatada. Usamos `reorder()` para ordenar os estados pelo total desmatado:
 
 ```{r grafico_heatmap, echo=TRUE, fig.height=4.5}
 desmat %>%
@@ -512,8 +483,7 @@ desmat %>%
 
 ### Participação de cada estado
 
-&nbsp;&nbsp;
-Com `position = "fill"`, cada barra passa a somar 100%, e vemos a **proporção** de cada estado no desmatamento de cada ano:
+   Com `position = "fill"`, cada barra passa a somar 100%, e vemos a **proporção** de cada estado no desmatamento de cada ano:
 
 ```{r grafico_proporcao, echo=TRUE}
 desmat %>%
@@ -534,11 +504,9 @@ desmat %>%
 
 > PERGUNTA: Qual estado liderava o desmatamento no início da série? E nos anos mais recentes?
 
-
 ## Desmatamento acumulado
 
-&nbsp;&nbsp;
-A taxa anual mostra quanto foi desmatado **em cada ano**. Mas a floresta perdida em um ano não volta no ano seguinte: as perdas se **somam**. Para medir o impacto total, calculamos o **desmatamento acumulado** com a função `cumsum()` (_cumulative sum_, soma acumulada):
+   A taxa anual mostra quanto foi desmatado **em cada ano**. Mas a floresta perdida em um ano não volta no ano seguinte: as perdas se **somam**. Para medir o impacto total, calculamos o **desmatamento acumulado** com a função `cumsum()` (*cumulative sum*, soma acumulada):
 
 ```{r cumsum_exemplo, echo=TRUE}
 # como funciona a soma acumulada?
@@ -546,8 +514,7 @@ c(10, 20, 5, 15)
 cumsum(c(10, 20, 5, 15))
 ```
 
-&nbsp;&nbsp;
-Para acumular **separadamente para cada estado**, ordenamos por ano, agrupamos por estado e só então usamos o `cumsum()`:
+   Para acumular **separadamente para cada estado**, ordenamos por ano, agrupamos por estado e só então usamos o `cumsum()`:
 
 ```{r acumulado, echo=TRUE}
 desmat_acum <- desmat %>%
@@ -562,11 +529,9 @@ desmat_acum %>% filter(uf == "MT")
 
 ### Desmatamento acumulado, ano a ano
 
-&nbsp;&nbsp;
-Agora vamos ver o desmatamento acumulado de toda a Amazônia Legal como um gráfico de barras, uma barra por ano. A cor de cada barra conta o que aconteceu com a **taxa anual** em relação ao ano anterior: **marrom claro** quando a taxa caiu (ou se manteve) e **marrom escuro** quando subiu. A intensidade da cor é proporcional à taxa daquele ano: quanto mais forte, mais se desmatou naquele ano.
+   Agora vamos ver o desmatamento acumulado de toda a Amazônia Legal como um gráfico de barras, uma barra por ano. A cor de cada barra conta o que aconteceu com a **taxa anual** em relação ao ano anterior: **marrom claro** quando a taxa caiu (ou se manteve) e **marrom escuro** quando subiu. A intensidade da cor é proporcional à taxa daquele ano: quanto mais forte, mais se desmatou naquele ano.
 
-&nbsp;&nbsp;
-Para comparar cada ano com o anterior, usamos a função `lag()`, que pega o valor da linha de cima:
+   Para comparar cada ano com o anterior, usamos a função `lag()`, que pega o valor da linha de cima:
 
 ```{r acumulado_ano, echo=TRUE}
 acumulado_ano <- total_ano %>%
@@ -606,8 +571,7 @@ acumulado_ano %>%
 
 ### Quanto cada estado já perdeu?
 
-&nbsp;&nbsp;
-Por fim, pegamos o valor acumulado do último ano de cada estado e colocamos em ordem:
+   Por fim, pegamos o valor acumulado do último ano de cada estado e colocamos em ordem:
 
 ```{r ranking, echo=TRUE}
 ranking <- desmat_acum %>%
@@ -634,21 +598,18 @@ ranking %>%
 
 > PERGUNTA: A área total desmatada desde 1988 equivale a quanto do território de Minas Gerais (cerca de 586 mil km²)?
 
-
 ## Vegetação nativa em todos os biomas (MapBiomas)
 
-&nbsp;&nbsp;
-Os dados do PRODES contam o que **foi perdido**, e só na Amazônia Legal. Agora vamos olhar o outro lado: quanto **ainda existe** de vegetação nativa em **todos os biomas**, segundo a Coleção 11 do MapBiomas.
+   Os dados do PRODES contam o que **foi perdido**, e só na Amazônia Legal. Agora vamos olhar o outro lado: quanto **ainda existe** de vegetação nativa em **todos os biomas**, segundo a Coleção 11 do MapBiomas.
 
 ### Conhecendo a tabela
 
-&nbsp;&nbsp;
-Aqui, cada linha é a combinação de um **bioma**, um **estado** e um **ano**. Um mesmo estado pode aparecer em mais de um bioma: Minas Gerais, por exemplo, tem partes na Mata Atlântica, no Cerrado e na Caatinga. As áreas estão em **hectares** (1 km² = 100 ha):
+   Aqui, cada linha é a combinação de um **bioma**, um **estado** e um **ano**. Um mesmo estado pode aparecer em mais de um bioma: Minas Gerais, por exemplo, tem partes na Mata Atlântica, no Cerrado e na Caatinga. As áreas estão em **hectares** (1 km² = 100 ha):
 
-- `floresta_ha`: formações florestais, savânicas, mangues e florestas alagáveis;
-- `campestre_ha`: vegetação herbácea e arbustiva natural (campos, áreas úmidas, afloramentos rochosos etc.);
-- `vegetacao_nativa_ha`: a soma das duas;
-- `area_total_ha`: a área total daquele estado dentro daquele bioma.
+-   `floresta_ha`: formações florestais, savânicas, mangues e florestas alagáveis;
+-   `campestre_ha`: vegetação herbácea e arbustiva natural (campos, áreas úmidas, afloramentos rochosos etc.);
+-   `vegetacao_nativa_ha`: a soma das duas;
+-   `area_total_ha`: a área total daquele estado dentro daquele bioma.
 
 ```{r veg_conhecer, echo=TRUE}
 head(veg)
@@ -666,8 +627,7 @@ veg %>%
 
 ### Quanto resta em cada bioma?
 
-&nbsp;&nbsp;
-Somando todos os estados, temos a vegetação nativa de cada bioma, ano a ano. Note que agora o período começa em **1985**, por isso passamos `de = 1985` para as funções dos mandatos:
+   Somando todos os estados, temos a vegetação nativa de cada bioma, ano a ano. Note que agora o período começa em **1985**, por isso passamos `de = 1985` para as funções dos mandatos:
 
 ```{r veg_bioma, echo=TRUE}
 veg_bioma <- veg %>%
@@ -706,8 +666,7 @@ veg_bioma %>%
   mandatos_linhas(de = 1985)
 ```
 
-&nbsp;&nbsp;
-Em valores absolutos, a Amazônia domina o gráfico. Para comparar biomas de tamanhos tão diferentes, olhamos a **porcentagem** do bioma ainda coberta por vegetação nativa:
+   Em valores absolutos, a Amazônia domina o gráfico. Para comparar biomas de tamanhos tão diferentes, olhamos a **porcentagem** do bioma ainda coberta por vegetação nativa:
 
 ```{r grafico_veg_perc, echo=TRUE}
 veg_bioma %>%
@@ -729,8 +688,7 @@ veg_bioma %>%
 
 ### Variação acumulada por estado
 
-&nbsp;&nbsp;
-Agora vamos calcular, para cada estado dentro de cada bioma, quanto de vegetação nativa foi perdido **em relação a 1985**. A função `first()` pega o primeiro valor de cada grupo, que é o de 1985, já que ordenamos por ano:
+   Agora vamos calcular, para cada estado dentro de cada bioma, quanto de vegetação nativa foi perdido **em relação a 1985**. A função `first()` pega o primeiro valor de cada grupo, que é o de 1985, já que ordenamos por ano:
 
 ```{r veg_variacao, echo=TRUE}
 veg_var <- veg %>%
@@ -749,8 +707,7 @@ veg_var %>%
 
 #### Gráfico de densidade da perda acumulada por estado
 
-&nbsp;&nbsp;
-Empilhando os estados, a altura total em cada ano é a perda acumulada do bioma desde 1985, e cada faixa mostra a contribuição de um estado:
+   Empilhando os estados, a altura total em cada ano é a perda acumulada do bioma desde 1985, e cada faixa mostra a contribuição de um estado:
 
 ```{r grafico_veg_densidade, echo=TRUE, fig.height=8}
 veg_var %>%
@@ -777,8 +734,7 @@ veg_var %>%
 
 #### Mapa de calor: quanto resta em cada estado
 
-&nbsp;&nbsp;
-Por fim, um mapa de calor com a porcentagem da vegetação nativa de 1985 que ainda existia em cada ano. Com `facet_grid()` e `space = "free_y"`, cada bioma ganha uma altura proporcional ao seu número de estados:
+   Por fim, um mapa de calor com a porcentagem da vegetação nativa de 1985 que ainda existia em cada ano. Com `facet_grid()` e `space = "free_y"`, cada bioma ganha uma altura proporcional ao seu número de estados:
 
 ```{r grafico_veg_heatmap, echo=TRUE, fig.height=9}
 veg_var %>%
@@ -802,29 +758,24 @@ veg_var %>%
 
 > PERGUNTA: Compare o mapa de calor do MapBiomas com o do PRODES, para os estados da Amazônia. Os estados que mais desmataram segundo o PRODES são os que perderam a maior proporção de vegetação nativa? Por que pode haver diferenças?
 
-
 ## Extra: gráfico animado
 
-&nbsp;&nbsp;
-Durante a pandemia de COVID-19 ficaram famosos os gráficos animados que mostravam, ano a ano ou dia a dia, a "corrida" entre países em número de casos. Esse tipo de gráfico é chamado de _bar chart race_. Vamos fazer um com os nossos dados: a **perda acumulada de vegetação nativa desde 1985**, somando todos os biomas de cada estado, com os 12 estados que mais perderam em cada ano e o presidente do período.
+   Durante a pandemia de COVID-19 ficaram famosos os gráficos animados que mostravam, ano a ano ou dia a dia, a "corrida" entre países em número de casos. Esse tipo de gráfico é chamado de *bar chart race*. Vamos fazer um com os nossos dados: a **perda acumulada de vegetação nativa desde 1985**, somando todos os biomas de cada estado, com os 12 estados que mais perderam em cada ano e o presidente do período.
 
-&nbsp;&nbsp;
-Para isso usamos o pacote [*gganimate*](https://gganimate.com/), que transforma um gráfico do `ggplot2` em uma animação, o *gifski*, que salva a animação como um arquivo `.gif`, fácil de compartilhar, e o *transformr*, que ajuda o `gganimate` a transformar polígonos de um quadro para o outro.
+   Para isso usamos o pacote [*gganimate*](https://gganimate.com/), que transforma um gráfico do `ggplot2` em uma animação, o *gifski*, que salva a animação como um arquivo `.gif`, fácil de compartilhar, e o *transformr*, que ajuda o `gganimate` a transformar polígonos de um quadro para o outro.
 
-```r
+``` r
 # instale apenas uma vez
 install.packages(c("gganimate", "gifski", "transformr", "tidyr"))
 ```
 
 ### Preparando os dados
 
-&nbsp;&nbsp;
-Primeiro somamos os biomas de cada estado, calculamos a perda em relação a 1985 (em km²) e a **posição** de cada estado em cada ano. Também descobrimos quem era o presidente em 1º de julho de cada ano, usando a tabela `mandatos` que criamos antes, e quais anos caem no período da pandemia, usando a tabela `pandemia`.
+   Primeiro somamos os biomas de cada estado, calculamos a perda em relação a 1985 (em km²) e a **posição** de cada estado em cada ano. Também descobrimos quem era o presidente em 1º de julho de cada ano, usando a tabela `mandatos` que criamos antes, e quais anos caem no período da pandemia, usando a tabela `pandemia`.
 
-&nbsp;&nbsp;
-Cada barra será dividida em **blocos, um para cada mandato presidencial**: a perda de cada ano é atribuída ao presidente que governava em 1º de julho, e a perda de cada mandato vira um bloco colorido. Governos do mesmo partido aparecem em tons da mesma cor; o partido considerado é aquele pelo qual o presidente foi eleito, como titular ou como vice (por isso Itamar Franco aparece com o PRN, de Collor, e Michel Temer com o PMDB). Quando um novo mandato começa, um novo bloco passa a crescer no fim da barra. Se em algum mandato o estado **ganhou** vegetação (como Mato Grosso do Sul, por causa das áreas alagáveis do Pantanal), a barra recua e o bloco desse mandato aparece em tom bem claro, sobre a parte recuperada:
+   Cada barra será dividida em **blocos, um para cada mandato presidencial**: a perda de cada ano é atribuída ao presidente que governava em 1º de julho, e a perda de cada mandato vira um bloco colorido. Governos do mesmo partido aparecem em tons da mesma cor; o partido considerado é aquele pelo qual o presidente foi eleito, como titular ou como vice (por isso Itamar Franco aparece com o PRN, de Collor, e Michel Temer com o PMDB). Quando um novo mandato começa, um novo bloco passa a crescer no fim da barra. Se em algum mandato o estado **ganhou** vegetação (como Mato Grosso do Sul, por causa das áreas alagáveis do Pantanal), a barra recua e o bloco desse mandato aparece em tom bem claro, sobre a parte recuperada:
 
-```r
+``` r
 library("gganimate")
 
 # partido pelo qual cada presidente foi eleito (como titular ou como vice)
@@ -957,13 +908,11 @@ corrida
 
 ### Um mini-gráfico dentro do gráfico
 
-&nbsp;&nbsp;
-No canto inferior direito do gráfico, onde as barras não chegam, vamos colocar um mini-gráfico com a **vegetação nativa do Brasil inteiro**, em que o total de 1985 vale 100%. O fundo verde é o que resta, e as barras marrons vão acumulando, ano a ano, o que foi perdido. Como no gráfico do desmatamento acumulado da Amazônia Legal, cada barra é marrom clara quando a perda anual caiu em relação ao ano anterior e marrom escura quando subiu, com a intensidade da cor proporcional à perda daquele ano. Assim dá para ver não só quem perdeu mais, mas também **quanto ainda resta**. A cada troca de governo, uma linha vertical aparece no mini-gráfico, com o nome do novo presidente, que some depois de dois anos.
+   No canto inferior direito do gráfico, onde as barras não chegam, vamos colocar um mini-gráfico com a **vegetação nativa do Brasil inteiro**, em que o total de 1985 vale 100%. O fundo verde é o que resta, e as barras marrons vão acumulando, ano a ano, o que foi perdido. Como no gráfico do desmatamento acumulado da Amazônia Legal, cada barra é marrom clara quando a perda anual caiu em relação ao ano anterior e marrom escura quando subiu, com a intensidade da cor proporcional à perda daquele ano. Assim dá para ver não só quem perdeu mais, mas também **quanto ainda resta**. A cada troca de governo, uma linha vertical aparece no mini-gráfico, com o nome do novo presidente, que some depois de dois anos.
 
-&nbsp;&nbsp;
-O `gganimate` não anima um gráfico separado dentro de outro, então desenhamos o mini-gráfico no próprio espaço do gráfico principal, com retângulos (`geom_rect()`). Como o eixo do gráfico principal muda a cada ano (por causa do `view_follow()`), as posições dos retângulos são calculadas, para cada quadro, como uma fração da maior barra daquele ano:
+   O `gganimate` não anima um gráfico separado dentro de outro, então desenhamos o mini-gráfico no próprio espaço do gráfico principal, com retângulos (`geom_rect()`). Como o eixo do gráfico principal muda a cada ano (por causa do `view_follow()`), as posições dos retângulos são calculadas, para cada quadro, como uma fração da maior barra daquele ano:
 
-```r
+``` r
 # fração da vegetação nativa de 1985 já perdida no Brasil, ano a ano
 perda_brasil <- veg %>%
   group_by(ano) %>%
@@ -1132,18 +1081,16 @@ camadas_inset <- function(corrida,
 
 ### Construindo a animação
 
-&nbsp;&nbsp;
-O gráfico é montado como um gráfico comum do `ggplot2`. A diferença está nas últimas linhas:
+   O gráfico é montado como um gráfico comum do `ggplot2`. A diferença está nas últimas linhas:
 
-- `transition_states(ano)` cria um quadro para cada ano e faz a transição suave entre eles;
-- `{closest_state}` no título é substituído pelo ano mostrado em cada quadro; no subtítulo e no `tag` (o texto em vermelho), ele é usado para buscar o presidente e o destaque da pandemia daquele ano nos vetores `presidentes` e `eventos`;
-- `view_follow()` faz o eixo acompanhar o crescimento das barras;
-- `ease_aes()` controla a "aceleração" do movimento.
+-   `transition_states(ano)` cria um quadro para cada ano e faz a transição suave entre eles;
+-   `{closest_state}` no título é substituído pelo ano mostrado em cada quadro; no subtítulo e no `tag` (o texto em vermelho), ele é usado para buscar o presidente e o destaque da pandemia daquele ano nos vetores `presidentes` e `eventos`;
+-   `view_follow()` faz o eixo acompanhar o crescimento das barras;
+-   `ease_aes()` controla a "aceleração" do movimento.
 
-&nbsp;&nbsp;
-As barras são desenhadas com `geom_polygon()`, um polígono de cantos arredondados para cada bloco (estado e mandato), em vez de `geom_col()`: assim cada bloco pode deslizar suavemente de uma posição para outra quando os estados trocam de lugar. A função `arredondar()`, que criamos acima, transforma cada bloco em um polígono com um quarto de círculo em cada canto, e a coluna `grupo` (`paste(uf, mandato)`) diz ao `gganimate` qual bloco de um ano corresponde a qual bloco do ano seguinte.
+   As barras são desenhadas com `geom_polygon()`, um polígono de cantos arredondados para cada bloco (estado e mandato), em vez de `geom_col()`: assim cada bloco pode deslizar suavemente de uma posição para outra quando os estados trocam de lugar. A função `arredondar()`, que criamos acima, transforma cada bloco em um polígono com um quarto de círculo em cada canto, e a coluna `grupo` (`paste(uf, mandato)`) diz ao `gganimate` qual bloco de um ano corresponde a qual bloco do ano seguinte.
 
-```r
+``` r
 animacao <- corrida %>%
   ggplot(aes(x = posicao, group = uf)) +
   # barras em blocos arredondados, um por mandato
@@ -1194,10 +1141,9 @@ animacao <- corrida %>%
 
 ### Gerando e salvando o GIF
 
-&nbsp;&nbsp;
-A função `animate()` desenha todos os quadros. Isso pode levar alguns minutos. Depois, `anim_save()` salva o resultado como `.gif` na sua pasta de trabalho:
+   A função `animate()` desenha todos os quadros. Isso pode levar alguns minutos. Depois, `anim_save()` salva o resultado como `.gif` na sua pasta de trabalho:
 
-```r
+``` r
 gif <- animate(animacao,
                nframes = 800,       # número total de quadros
                fps = 20,            # quadros por segundo (800 / 20 = 40 segundos)
@@ -1212,23 +1158,21 @@ anim_save("desmatamento_animado.gif", gif)
 
 O resultado deve ficar assim:
 
-![](figuras/desmatamento_animado.gif){fig-alt="Animação em que barras horizontais mostram, ano a ano de 1985 a 2025, os 12 estados com maior perda acumulada de vegetação nativa, divididas em blocos coloridos por mandato presidencial, com o ano e o presidente no título, um mini-gráfico da vegetação nativa do Brasil e, em 2020 e 2021, um destaque em vermelho escuro para a pandemia de COVID-19." width=100%}
+![](figuras/desmatamento_animado.gif){fig-alt="Animação em que barras horizontais mostram, ano a ano de 1985 a 2025, os 12 estados com maior perda acumulada de vegetação nativa, divididas em blocos coloridos por mandato presidencial, com o ano e o presidente no título, um mini-gráfico da vegetação nativa do Brasil e, em 2020 e 2021, um destaque em vermelho escuro para a pandemia de COVID-19." width="100%"}
 
 > DICA: para mudar a velocidade, altere `nframes` e `fps`. Para mostrar outros dados, troque a coluna em `perda_km2`, por exemplo pelo desmatamento acumulado do PRODES, que calculamos na tabela `desmat_acum`.
 
 ### Versão 2: cores pelo partido do governador (2007 a 2025)
 
-&nbsp;&nbsp;
-Agora vamos colorir cada barra pelo **partido do governador** do estado naquele ano. Para isso, montamos uma tabela com o partido pelo qual cada governador foi eleito nas eleições de 2006 a 2022, que cobrem os mandatos de 2007 a 2026. Por isso, esta versão da corrida começa em 2007, e a perda de vegetação é contada **a partir de 2007**.
+   Agora vamos colorir cada barra pelo **partido do governador** do estado naquele ano. Para isso, montamos uma tabela com o partido pelo qual cada governador foi eleito nas eleições de 2006 a 2022, que cobrem os mandatos de 2007 a 2026. Por isso, esta versão da corrida começa em 2007, e a perda de vegetação é contada **a partir de 2007**.
 
-&nbsp;&nbsp;
-Algumas simplificações importantes:
+   Algumas simplificações importantes:
 
-- o partido é aquele **pelo qual o governador foi eleito**. Trocas de partido, cassações, eleições suplementares (como no Amazonas, em 2017, e no Tocantins, em 2018) e vices que assumiram o cargo não estão representados;
-- PMDB e MDB, e PFL e DEM, são o mesmo partido com nomes diferentes, então usamos só o nome mais recente;
-- os 10 partidos que mais aparecem têm cor própria, e os demais aparecem como "Outros". A sigla exata aparece ao lado do valor de cada barra.
+-   o partido é aquele **pelo qual o governador foi eleito**. Trocas de partido, cassações, eleições suplementares (como no Amazonas, em 2017, e no Tocantins, em 2018) e vices que assumiram o cargo não estão representados;
+-   PMDB e MDB, e PFL e DEM, são o mesmo partido com nomes diferentes, então usamos só o nome mais recente;
+-   os 10 partidos que mais aparecem têm cor própria, e os demais aparecem como "Outros". A sigla exata aparece ao lado do valor de cada barra.
 
-```r
+``` r
 # partido pelo qual o governador de cada estado foi eleito, em cada eleição
 governadores <- tibble::tribble(
   ~uf, ~e2006,  ~e2010,  ~e2014,  ~e2018,  ~e2022,
@@ -1272,10 +1216,9 @@ governadores_longo <- governadores %>%
 governadores_longo
 ```
 
-&nbsp;&nbsp;
-Para ligar cada ano à eleição correspondente, usamos o fato de que os mandatos começam no ano seguinte à eleição e duram 4 anos: de 2007 a 2010 governam os eleitos em 2006; de 2011 a 2014, os eleitos em 2010; e assim por diante. A conta `2006 + 4 * ((ano - 2007) %/% 4)` faz isso (o operador `%/%` é a divisão inteira):
+   Para ligar cada ano à eleição correspondente, usamos o fato de que os mandatos começam no ano seguinte à eleição e duram 4 anos: de 2007 a 2010 governam os eleitos em 2006; de 2011 a 2014, os eleitos em 2010; e assim por diante. A conta `2006 + 4 * ((ano - 2007) %/% 4)` faz isso (o operador `%/%` é a divisão inteira):
 
-```r
+``` r
 # cores dos partidos (os 10 que mais aparecem na corrida) e "Outros"
 cores_partidos <- c("PT" = "#CC3311", "PSDB" = "#0077BB", "MDB" = "#117733",
                     "PSB" = "#EE7733", "UNIÃO" = "#332288", "DEM" = "#7570B3",
@@ -1301,10 +1244,9 @@ corrida_partidos <- veg %>%
 corrida_partidos %>% count(partido, sort = TRUE)
 ```
 
-&nbsp;&nbsp;
-O gráfico é o mesmo de antes, trocando a cor (`fill = cor_partido`) e acrescentando a sigla do partido ao rótulo de cada barra:
+   O gráfico é o mesmo de antes, trocando a cor (`fill = cor_partido`) e acrescentando a sigla do partido ao rótulo de cada barra:
 
-```r
+``` r
 animacao_partidos <- corrida_partidos %>%
   ggplot(aes(x = posicao, group = uf, fill = cor_partido)) +
   geom_polygon(data = arredondar(corrida_partidos, 0, perda_km2, uf),
@@ -1357,19 +1299,17 @@ gif_partidos
 anim_save("desmatamento_animado_partidos.gif", gif_partidos)
 ```
 
-![](figuras/desmatamento_animado_partidos.gif){fig-alt="Animação em que barras horizontais mostram, ano a ano de 2007 a 2025, os 12 estados com maior perda acumulada de vegetação nativa desde 2007, coloridas pelo partido do governador, com o ano e o presidente no título." width=100%}
+![](figuras/desmatamento_animado_partidos.gif){fig-alt="Animação em que barras horizontais mostram, ano a ano de 2007 a 2025, os 12 estados com maior perda acumulada de vegetação nativa desde 2007, coloridas pelo partido do governador, com o ano e o presidente no título." width="100%"}
 
 > ATENÇÃO: a cor mostra **quem governava** o estado, não **por que** a vegetação foi perdida. O tamanho do estado, a posição na fronteira agrícola, os preços das commodities e as políticas federais também pesam muito. Lembre-se: correlação não é causalidade!
 
 ### Versão 3: mapa de calor animado da taxa por estado (PRODES)
 
-&nbsp;&nbsp;
-Por fim, vamos animar o mapa de calor que fizemos com os dados do PRODES: a cada quadro, uma nova coluna (um novo ano) aparece. As linhas e os nomes dos presidentes surgem quando cada mandato começa, e o período da pandemia aparece em vermelho escuro. No subtítulo, mostramos também a taxa total da Amazônia Legal naquele ano.
+   Por fim, vamos animar o mapa de calor que fizemos com os dados do PRODES: a cada quadro, uma nova coluna (um novo ano) aparece. As linhas e os nomes dos presidentes surgem quando cada mandato começa, e o período da pandemia aparece em vermelho escuro. No subtítulo, mostramos também a taxa total da Amazônia Legal naquele ano.
 
-&nbsp;&nbsp;
-O truque para "revelar" as colunas é repetir a tabela inteira para cada quadro da animação (coluna `quadro`) e deixar invisíveis (`visivel = 0`) os anos que ainda não chegaram. Assim, a cada transição, a nova coluna surge aos poucos:
+   O truque para "revelar" as colunas é repetir a tabela inteira para cada quadro da animação (coluna `quadro`) e deixar invisíveis (`visivel = 0`) os anos que ainda não chegaram. Assim, a cada transição, a nova coluna surge aos poucos:
 
-```r
+``` r
 anos_prodes <- sort(unique(desmat$ano))
 
 # estados em ordem de desmatamento total (o maior fica em cima)
@@ -1404,7 +1344,7 @@ pandemia_quadros <- tidyr::crossing(quadro = anos_prodes,
 taxas <- setNames(num(total_ano$desmatamento_km2), total_ano$ano)
 ```
 
-```r
+``` r
 animacao_mapa <- ggplot() +
   geom_tile(data = mapa_quadros,
             aes(x = ano, y = estado, fill = desmatamento_km2, alpha = visivel),
@@ -1463,18 +1403,15 @@ gif_mapa
 anim_save("desmatamento_mapa_animado.gif", gif_mapa)
 ```
 
-![](figuras/desmatamento_mapa_animado.gif){fig-alt="Animação de um mapa de calor da taxa anual de desmatamento por estado da Amazônia Legal, de 1988 a 2025, em que uma coluna aparece a cada ano, com linhas e nomes dos presidentes surgindo a cada troca de governo e o período da pandemia de COVID-19 marcado em vermelho escuro." width=100%}
-
+![](figuras/desmatamento_mapa_animado.gif){fig-alt="Animação de um mapa de calor da taxa anual de desmatamento por estado da Amazônia Legal, de 1988 a 2025, em que uma coluna aparece a cada ano, com linhas e nomes dos presidentes surgindo a cada troca de governo e o período da pandemia de COVID-19 marcado em vermelho escuro." width="100%"}
 
 ## Desafios
 
-1. Filtre um único estado com `filter(uf == "PA")` e refaça o gráfico da série histórica só para ele.
-2. Calcule a **variação percentual** de um ano para o outro no total da Amazônia Legal. Dica: use `mutate(variacao = 100 * (desmatamento_km2 - lag(desmatamento_km2)) / lag(desmatamento_km2))`. Em que anos houve as maiores quedas?
-3. Divida a série em décadas com `mutate(decada = floor(ano / 10) * 10)` e compare o desmatamento médio anual de cada década, por estado.
-4. Transforme a tabela para o formato _largo_ (um estado por coluna) com `tidyr::pivot_wider(id_cols = ano, names_from = uf, values_from = desmatamento_km2)`. Em que situações esse formato é mais útil?
-5. Com os dados do MapBiomas, filtre um estado que está em mais de um bioma (por exemplo, `filter(uf == "MG")`) e compare a perda de vegetação nativa em cada bioma. Use `floresta_ha` e `campestre_ha` para ver se a perda foi maior em formações florestais ou campestres.
-
-
+1.  Filtre um único estado com `filter(uf == "PA")` e refaça o gráfico da série histórica só para ele.
+2.  Calcule a **variação percentual** de um ano para o outro no total da Amazônia Legal. Dica: use `mutate(variacao = 100 * (desmatamento_km2 - lag(desmatamento_km2)) / lag(desmatamento_km2))`. Em que anos houve as maiores quedas?
+3.  Divida a série em décadas com `mutate(decada = floor(ano / 10) * 10)` e compare o desmatamento médio anual de cada década, por estado.
+4.  Transforme a tabela para o formato *largo* (um estado por coluna) com `tidyr::pivot_wider(id_cols = ano, names_from = uf, values_from = desmatamento_km2)`. Em que situações esse formato é mais útil?
+5.  Com os dados do MapBiomas, filtre um estado que está em mais de um bioma (por exemplo, `filter(uf == "MG")`) e compare a perda de vegetação nativa em cada bioma. Use `floresta_ha` e `campestre_ha` para ver se a perda foi maior em formações florestais ou campestres.
 
 ```{=html}
 <style>
@@ -1507,7 +1444,6 @@ text-align: justify}
 ```
 E por hoje ficamos por aqui!
 
+------------------------------------------------------------------------
 
-***
-
->>>> Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)
+> > > > Voltar para a [*página inicial*](https://heronoh.github.io/bioinfo)

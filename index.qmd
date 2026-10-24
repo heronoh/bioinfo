@@ -33,8 +33,9 @@ listing:
     fields: [title, description]
 ---
 
-
 <!-- ====== ESTILOS (cards + busca) ====== -->
+
+```{=html}
 <style>
 .hero {
   display:flex; align-items:center; justify-content:space-between;
@@ -87,15 +88,16 @@ listing:
 .section-title { margin-top: 1.75rem; }
 .empty-hint { color: var(--bs-secondary-color); font-style:italic; }
 </style>
+```
 
-
----
-
+------------------------------------------------------------------------
 
 ## Aulas de R
-:::{#grid-r}
+
+::: {#grid-r}
 :::
 
 ## Aulas de Shell
-:::{#grid-bash}
+
+::: {#grid-bash}
 :::
