@@ -370,7 +370,13 @@ for arg in "$@"; do
 done
 (( ${#FONTES[@]} )) || FONTES=(cambio ibama queimadas deter)
 
+# cada fonte roda separada: se uma falhar, as outras continuam
+FALHAS=()
 for f in "${FONTES[@]}"; do
-  "fonte_$f"
+  ( trap 'rm -f -- "${TMP_ATUAL:-}"' EXIT; "fonte_$f" ) || FALHAS+=("$f")
 done
+if (( ${#FALHAS[@]} )); then
+  log "concluído COM FALHAS em: ${FALHAS[*]} (veja as mensagens de ERRO acima)"
+  exit 1
+fi
 log "concluído. Manifesto: $MANIFESTO"
