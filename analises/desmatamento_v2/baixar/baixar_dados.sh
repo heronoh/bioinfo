@@ -59,8 +59,8 @@ VALIDADE_DIAS="${VALIDADE_DIAS:-7}"                 # idade máx. de arquivos qu
 # padrões dos arquivos anuais de focos (satélite de referência) no INPE.
 # Se o INPE mudar os nomes, ajuste aqui (o script mostra a listagem).
 QUEIMADAS_DIR="https://dataserver-coids.inpe.br/queimadas/queimadas/focos/csv/anual/"
-QUEIMADAS_PADRAO_SUBDIR='^Brasil_sat_ref/$'
-QUEIMADAS_PADRAO_ARQUIVO='^focos_br_ref_[0-9]{4}\.(zip|csv)$'
+QUEIMADAS_PADRAO_SUBDIR='^Brasil.*ref.*/$'            # subpasta do Brasil, satélite de referência
+QUEIMADAS_PADRAO_ARQUIVO='^focos.*[0-9]{4}\.(zip|csv)$'
 
 DETER_WFS="https://terrabrasilis.dpi.inpe.br/geoserver/deter-amz/wfs"
 DETER_CAMADAS_CANDIDATAS=("deter_public" "deter_amz")
@@ -120,7 +120,7 @@ atual() {
   (( $(idade_dias "$arq") < VALIDADE_DIAS ))
 }
 
-# baixar URL DESTINO TIPO [fixo]   (TIPO: zip | csv | sgs | xml | texto)
+# baixar URL DESTINO TIPO [fixo]   (TIPO: zip | csv | sgs | xml | texto | indice)
 baixar() {
   local url="$1" destino="$2" tipo="$3" fixo="${4:-}" tmp efetiva
 
@@ -163,6 +163,7 @@ baixar() {
         erro "resposta do Banco Central não é a tabela esperada ($(head -c 200 "$tmp")): $url" ;;
     xml)
       head -c 512 "$tmp" | grep -q '<' || erro "resposta não é XML: $url" ;;
+    indice) ;;   # página de listagem de diretório (HTML); só os links são lidos
   esac
 
   mv -f -- "$tmp" "$destino"
@@ -207,7 +208,7 @@ descompactar_seguro() {
 listar_diretorio() (
   local url="$1" tmp
   tmp="$(mktemp "$BRUTOS/.indice.XXXXXX")"
-  LISTAR=0 baixar "$url" "$tmp" texto >/dev/null 2>&1 || { rm -f "$tmp"; return 1; }
+  LISTAR=0 FORCAR=1 baixar "$url" "$tmp" indice >/dev/null || { rm -f "$tmp"; return 1; }
   grep -oE 'href="[A-Za-z0-9_.%-]+/?"' "$tmp" | sed -E 's/^href="//; s/"$//' |
     grep -vE '^\.\.?/?$' | sort -u || true
   rm -f -- "$tmp"
@@ -261,34 +262,48 @@ fonte_ibama() {
 
 fonte_queimadas() {
   log "INPE Queimadas: focos anuais (satélite de referência)"
-  local pasta="$BRUTOS/queimadas" subdir arquivo achou=0 fixo ano
+  local pasta="$BRUTOS/queimadas" item arquivo achou=0 listagem
   mkdir -p -- "$pasta"
-  while IFS= read -r subdir; do
-    [[ "$subdir" =~ $QUEIMADAS_PADRAO_SUBDIR ]] || continue
-    while IFS= read -r arquivo; do
-      [[ "$arquivo" =~ $QUEIMADAS_PADRAO_ARQUIVO ]] || continue
-      achou=1
-      # anos encerrados não mudam; o ano corrente é renovado
-      ano="$(grep -oE '[0-9]{4}' <<< "$arquivo" | tail -1)"
-      fixo=""; (( ano < $(date +%Y) )) && fixo=fixo
-      if [[ "$arquivo" == *.zip ]]; then
-        atual "$pasta/$arquivo" "$fixo" && [[ -d "$pasta/csv_$ano" ]] &&
-          { log "já baixado, pulando: $arquivo"; continue; }
-        baixar "${QUEIMADAS_DIR}${subdir}${arquivo}" "$pasta/$arquivo" zip "$fixo"
-        if [[ "${LISTAR:-0}" != 1 ]]; then
-          rm -rf -- "$pasta/csv_$ano"                 # troca a versão antiga
-          descompactar_seguro "$pasta/$arquivo" "$pasta/csv_$ano"
-        fi
-      else
-        baixar "${QUEIMADAS_DIR}${subdir}${arquivo}" "$pasta/$arquivo" csv "$fixo"
-      fi
-    done < <(listar_diretorio "${QUEIMADAS_DIR}${subdir}")
-  done < <(listar_diretorio "$QUEIMADAS_DIR")
+  listagem="$(listar_diretorio "$QUEIMADAS_DIR")" ||
+    erro "não consegui ler a listagem de $QUEIMADAS_DIR"
+
+  # arquivos podem estar direto em anual/ ou numa subpasta do Brasil
+  while IFS= read -r item; do
+    [[ -n "$item" ]] || continue
+    if [[ "$item" =~ $QUEIMADAS_PADRAO_ARQUIVO ]]; then
+      achou=1; baixar_focos "${QUEIMADAS_DIR}" "$item" "$pasta"
+    elif [[ "$item" =~ $QUEIMADAS_PADRAO_SUBDIR ]]; then
+      while IFS= read -r arquivo; do
+        [[ "$arquivo" =~ $QUEIMADAS_PADRAO_ARQUIVO ]] || continue
+        achou=1; baixar_focos "${QUEIMADAS_DIR}${item}" "$arquivo" "$pasta"
+      done < <(listar_diretorio "${QUEIMADAS_DIR}${item}")
+    fi
+  done <<< "$listagem"
 
   if (( achou == 0 )); then
-    log "Nenhum arquivo bateu com os padrões. Conteúdo do diretório:"
-    listar_diretorio "$QUEIMADAS_DIR" >&2 || true
+    log "Nenhum arquivo bateu com os padrões. Itens em $QUEIMADAS_DIR:"
+    printf '    %s\n' "$listagem" >&2
     erro "ajuste QUEIMADAS_PADRAO_SUBDIR / QUEIMADAS_PADRAO_ARQUIVO no início do script"
+  fi
+}
+
+# baixar_focos URL_DA_PASTA ARQUIVO PASTA_LOCAL
+baixar_focos() {
+  local dir="$1" arquivo="$2" pasta="$3" ano fixo=""
+  # anos encerrados não mudam; o ano corrente é renovado
+  ano="$(grep -oE '[0-9]{4}' <<< "$arquivo" | tail -1)"
+  (( ano < $(date +%Y) )) && fixo=fixo
+  if [[ "$arquivo" == *.zip ]]; then
+    if atual "$pasta/$arquivo" "$fixo" && [[ -d "$pasta/csv_$ano" ]]; then
+      log "já baixado, pulando: $arquivo"; return 0
+    fi
+    baixar "${dir}${arquivo}" "$pasta/$arquivo" zip "$fixo"
+    if [[ "${LISTAR:-0}" != 1 ]]; then
+      rm -rf -- "$pasta/csv_$ano"                 # troca a versão antiga
+      descompactar_seguro "$pasta/$arquivo" "$pasta/csv_$ano"
+    fi
+  else
+    baixar "${dir}${arquivo}" "$pasta/$arquivo" csv "$fixo"
   fi
 }
 
@@ -322,7 +337,7 @@ fonte_deter() {
   geom="$(grep -oE 'name="[A-Za-z0-9_]+"[^>]*type="gml:[A-Za-z]+PropertyType"' "$pasta/campos.xsd" |
           sed -E 's/^name="([^"]+)".*/\1/' | head -1 || true)"
   campos="$(grep -oE '<xsd:element [^>]*name="[A-Za-z0-9_]+"' "$pasta/campos.xsd" |
-            sed -E 's/.*name="([^"]+)"/\1/' | grep -vx "${geom:-__nenhum__}" | paste -sd, -)"
+            sed -E 's/.*name="([^"]+)"/\1/' | grep -vxF -e "${geom:-__nenhum__}" -e "$camada" | paste -sd, -)"
   [[ -n "$campos" ]] || erro "não consegui ler os campos da camada (veja $pasta/campos.xsd)"
   log "campos: $campos (sem a geometria '${geom:-?}')"
   # ordenação estável para a paginação: gid, se existir; senão o primeiro campo
@@ -376,7 +391,7 @@ for f in "${FONTES[@]}"; do
   ( trap 'rm -f -- "${TMP_ATUAL:-}"' EXIT; "fonte_$f" ) || FALHAS+=("$f")
 done
 if (( ${#FALHAS[@]} )); then
-  log "concluído COM FALHAS em: ${FALHAS[*]} (veja as mensagens de ERRO acima)"
+  log "concluído COM FALHAS em: $(IFS=' '; echo "${FALHAS[*]}") (veja as mensagens de ERRO acima)"
   exit 1
 fi
 log "concluído. Manifesto: $MANIFESTO"
