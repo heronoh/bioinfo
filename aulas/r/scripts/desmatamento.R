@@ -473,7 +473,7 @@ veg_var %>%
 ## Extra: gráfico animado ----
 
 # instale apenas uma vez
-install.packages(c("gganimate", "gifski"))
+install.packages(c("gganimate", "gifski", "tidyr"))
 
 ### Preparando os dados ----
 
@@ -528,6 +528,80 @@ eventos[eventos != ""]
 
 corrida
 
+### Um mini-gráfico dentro do gráfico ----
+
+# fração da vegetação nativa de 1985 já perdida no Brasil, ano a ano
+perda_brasil <- veg %>%
+  group_by(ano) %>%
+  summarise(vegetacao_nativa_ha = sum(vegetacao_nativa_ha)) %>%
+  mutate(fracao_perdida = 1 - vegetacao_nativa_ha / first(vegetacao_nativa_ha))
+
+perda_brasil %>% filter(ano %in% c(1985, 2005, 2025))
+
+porcentagem <- scales::label_percent(accuracy = 0.1, decimal.mark = ",")
+
+# posição padrão do mini-gráfico (argumentos de camadas_inset(), abaixo):
+#   na vertical, da posição 7,75 (topo) à 12,45 (base, abaixo da 12ª barra);
+#   na horizontal, de 55% a 97% da maior barra do ano
+
+# calcula os retângulos do mini-gráfico para cada quadro (ano) da corrida
+dados_inset <- function(corrida, topo_inset, base_inset, esq_inset, dir_inset) {
+  maximo <- corrida %>%
+    group_by(ano) %>%
+    summarise(M = max(perda_km2, 1))         # maior barra do ano
+  anos_inset <- perda_brasil$ano
+  largura <- (dir_inset - esq_inset) / length(anos_inset)
+
+  expand.grid(ano = maximo$ano, ano_inset = anos_inset) %>%
+    left_join(maximo, by = "ano") %>%
+    left_join(perda_brasil %>% select(ano_inset = ano, fracao_perdida),
+              by = "ano_inset") %>%
+    # anos que ainda não chegaram ficam com altura zero
+    mutate(fracao    = ifelse(ano_inset <= ano, fracao_perdida, 0),
+           esquerda  = M * (esq_inset + (ano_inset - min(anos_inset)) * largura),
+           direita   = esquerda + M * largura,
+           alto      = base_inset - fracao * (base_inset - topo_inset))
+}
+
+# camadas do ggplot2 com o mini-gráfico
+# (os argumentos permitem mudar a posição do mini-gráfico em cada animação)
+camadas_inset <- function(corrida,
+                          topo_inset = 7.75, base_inset = 12.45,
+                          esq_inset = 0.55, dir_inset = 0.97) {
+  inset <- dados_inset(corrida, topo_inset, base_inset, esq_inset, dir_inset)
+  caixa <- inset %>%
+    filter(ano_inset == ano) %>%
+    mutate(texto = paste0("resta ", porcentagem(1 - fracao),
+                          " · perdida ", porcentagem(fracao)))
+  list(
+    # fundo verde: a vegetação nativa de 1985 inteira (100%)
+    geom_rect(data = caixa,
+              aes(xmin = topo_inset, xmax = base_inset,
+                  ymin = M * esq_inset, ymax = M * dir_inset),
+              fill = "#d4ebd0", colour = "grey45", linewidth = 0.3,
+              inherit.aes = FALSE),
+    # área perdida, acumulando ano a ano
+    geom_rect(data = inset,
+              aes(xmin = alto, xmax = base_inset,
+                  ymin = esquerda, ymax = direita, group = ano_inset),
+              fill = "#8c510a", inherit.aes = FALSE),
+    # títulos e rótulos do mini-gráfico
+    geom_text(data = caixa,
+              aes(x = topo_inset - 0.55, y = M * esq_inset,
+                  label = "Vegetação nativa do Brasil (1985 = 100%)"),
+              hjust = 0, size = 4, fontface = "bold", inherit.aes = FALSE),
+    geom_text(data = caixa,
+              aes(x = topo_inset + 0.45, y = M * (esq_inset + 0.01), label = texto),
+              hjust = 0, size = 3.8, colour = "grey15", inherit.aes = FALSE),
+    geom_text(data = caixa,
+              aes(x = base_inset + 0.3, y = M * esq_inset, label = "1985"),
+              hjust = 0, size = 3.3, colour = "grey30", inherit.aes = FALSE),
+    geom_text(data = caixa,
+              aes(x = base_inset + 0.3, y = M * dir_inset, label = "2025"),
+              hjust = 1, size = 3.3, colour = "grey30", inherit.aes = FALSE)
+  )
+}
+
 ### Construindo a animação ----
 
 animacao <- corrida %>%
@@ -540,6 +614,8 @@ animacao <- corrida %>%
   # valor, no fim da barra
   geom_text(aes(y = perda_km2, label = paste0(" ", num(round(perda_km2)), " km²")),
             hjust = 0, size = 4.5) +
+  # mini-gráfico da vegetação nativa do Brasil
+  camadas_inset(corrida) +
   coord_flip(clip = "off", expand = FALSE) +
   scale_x_reverse() +
   scale_y_continuous(labels = num) +
@@ -559,10 +635,10 @@ animacao <- corrida %>%
         panel.grid.major.y = element_blank(),
         panel.grid.minor = element_blank(),
         legend.position = "bottom",
-        # o "tag" vai no canto inferior direito, em vermelho escuro
+        # o "tag" vai no canto superior direito, em vermelho escuro
         plot.tag = element_text(colour = cor_pandemia, face = "bold",
                                 size = 17, hjust = 1, lineheight = 0.9),
-        plot.tag.position = c(0.95, 0.26),
+        plot.tag.position = c(0.97, 0.925),
         plot.margin = margin(15, 120, 15, 160)) +
   transition_states(ano, transition_length = 4, state_length = 1,
                     wrap = FALSE) +   # termina em 2025, sem voltar a 1985
@@ -572,13 +648,131 @@ animacao <- corrida %>%
 ### Gerando e salvando o GIF ----
 
 gif <- animate(animacao,
-               nframes = 400,       # número total de quadros
-               fps = 20,            # quadros por segundo (400 / 20 = 20 segundos)
-               end_pause = 60,      # segura o último quadro por 3 segundos
+               nframes = 800,       # número total de quadros
+               fps = 20,            # quadros por segundo (800 / 20 = 40 segundos)
+               end_pause = 120,     # segura o último quadro por 6 segundos
                width = 900, height = 650,
                renderer = gifski_renderer())
 
 gif   # mostra a animação no painel Viewer do RStudio
 
 anim_save("desmatamento_animado.gif", gif)
+
+### Versão 2: cores pelo partido do governador (2007 a 2025) ----
+
+# partido pelo qual o governador de cada estado foi eleito, em cada eleição
+governadores <- tibble::tribble(
+  ~uf, ~e2006,  ~e2010,  ~e2014,  ~e2018,  ~e2022,
+  "AC", "PT",    "PT",    "PT",    "PP",    "PP",
+  "AL", "PSDB",  "PSDB",  "PMDB",  "MDB",   "MDB",
+  "AP", "PDT",   "PSB",   "PDT",   "PDT",   "SD",
+  "AM", "PMDB",  "PMN",   "PROS",  "PSC",   "UNIÃO",
+  "BA", "PT",    "PT",    "PT",    "PT",    "PT",
+  "CE", "PSB",   "PSB",   "PT",    "PT",    "PT",
+  "DF", "PFL",   "PT",    "PSB",   "MDB",   "MDB",
+  "ES", "PMDB",  "PSB",   "PMDB",  "PSB",   "PSB",
+  "GO", "PP",    "PSDB",  "PSDB",  "DEM",   "UNIÃO",
+  "MA", "PDT",   "PMDB",  "PCdoB", "PCdoB", "PSB",
+  "MT", "PPS",   "PMDB",  "PDT",   "DEM",   "UNIÃO",
+  "MS", "PMDB",  "PMDB",  "PSDB",  "PSDB",  "PSDB",
+  "MG", "PSDB",  "PSDB",  "PT",    "NOVO",  "NOVO",
+  "PA", "PT",    "PSDB",  "PSDB",  "MDB",   "MDB",
+  "PB", "PSDB",  "PSB",   "PSB",   "PSB",   "PSB",
+  "PR", "PMDB",  "PSDB",  "PSDB",  "PSD",   "PSD",
+  "PE", "PSB",   "PSB",   "PSB",   "PSB",   "PSDB",
+  "PI", "PT",    "PSB",   "PT",    "PT",    "PT",
+  "RJ", "PMDB",  "PMDB",  "PMDB",  "PSC",   "PL",
+  "RN", "PSB",   "DEM",   "PSD",   "PT",    "PT",
+  "RS", "PSDB",  "PT",    "PMDB",  "PSDB",  "PSDB",
+  "RO", "PPS",   "PMDB",  "PMDB",  "PSL",   "UNIÃO",
+  "RR", "PSDB",  "PSDB",  "PP",    "PSL",   "PP",
+  "SC", "PMDB",  "DEM",   "PSD",   "PSL",   "PL",
+  "SP", "PSDB",  "PSDB",  "PSDB",  "PSDB",  "REP",
+  "SE", "PT",    "PT",    "PMDB",  "PSD",   "PSD",
+  "TO", "PMDB",  "PSDB",  "PMDB",  "PHS",   "REP"
+)
+
+# formato longo: uma linha por estado e eleição
+governadores_longo <- governadores %>%
+  tidyr::pivot_longer(-uf,
+                      names_to = "eleicao", names_prefix = "e",
+                      names_transform = as.integer,
+                      values_to = "partido") %>%
+  mutate(partido = recode(partido, "PMDB" = "MDB", "PFL" = "DEM"))
+
+governadores_longo
+
+# cores dos partidos (os 10 que mais aparecem na corrida) e "Outros"
+cores_partidos <- c("PT" = "#CC3311", "PSDB" = "#0077BB", "MDB" = "#117733",
+                    "PSB" = "#EE7733", "UNIÃO" = "#332288", "DEM" = "#7570B3",
+                    "PDT" = "#AA4499", "PP" = "#DDCC77", "PCdoB" = "#882255",
+                    "NOVO" = "#44AA99", "Outros" = "#BBBBBB")
+
+corrida_partidos <- veg %>%
+  filter(ano >= 2007) %>%
+  group_by(uf, estado, ano) %>%
+  summarise(vegetacao_nativa_ha = sum(vegetacao_nativa_ha), .groups = "drop") %>%
+  arrange(uf, ano) %>%
+  group_by(uf) %>%
+  mutate(perda_km2 = (first(vegetacao_nativa_ha) - vegetacao_nativa_ha) / 100) %>%
+  group_by(ano) %>%
+  mutate(posicao = rank(-perda_km2, ties.method = "first")) %>%
+  ungroup() %>%
+  filter(posicao <= 12) %>%
+  mutate(eleicao = 2006 + 4 * ((ano - 2007) %/% 4)) %>%
+  left_join(governadores_longo, by = c("uf", "eleicao")) %>%
+  mutate(cor_partido = ifelse(partido %in% names(cores_partidos), partido, "Outros"),
+         cor_partido = factor(cor_partido, levels = names(cores_partidos)))
+
+corrida_partidos %>% count(partido, sort = TRUE)
+
+animacao_partidos <- corrida_partidos %>%
+  ggplot(aes(x = posicao, group = uf, fill = cor_partido)) +
+  geom_tile(aes(y = perda_km2 / 2, height = perda_km2, width = 0.85),
+            alpha = 0.9) +
+  geom_text(aes(y = 0, label = paste0(estado, " ")),
+            hjust = 1, size = 4.5) +
+  geom_text(aes(y = perda_km2,
+                label = paste0(" ", num(round(perda_km2)), " km² · ", partido)),
+            hjust = 0, size = 4.5) +
+  # rótulos mais longos: mini-gráfico um pouco mais à direita e mais baixo
+  camadas_inset(corrida_partidos, topo_inset = 8.7, esq_inset = 0.63) +
+  coord_flip(clip = "off", expand = FALSE) +
+  scale_x_reverse() +
+  scale_y_continuous(labels = num) +
+  scale_fill_manual(values = cores_partidos, drop = FALSE) +
+  guides(fill = guide_legend(nrow = 2)) +
+  labs(title = "{closest_state}",
+       subtitle = "Presidente: {presidentes[closest_state]}",
+       tag = "{eventos[closest_state]}",
+       y = "Perda acumulada de vegetação nativa desde 2007 (km²)",
+       x = NULL,
+       fill = "Partido do\ngovernador",
+       caption = "Dados: MapBiomas, Coleção 11; partido pelo qual o governador foi eleito (2006 a 2022) · heronoh.github.io/bioinfo") +
+  theme_minimal(base_size = 15) +
+  theme(plot.title = element_text(size = 34, face = "bold"),
+        plot.subtitle = element_text(size = 18),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "bottom",
+        plot.caption = element_text(size = 10),
+        plot.tag = element_text(colour = cor_pandemia, face = "bold",
+                                size = 17, hjust = 1, lineheight = 0.9),
+        plot.tag.position = c(0.97, 0.935),
+        plot.margin = margin(15, 150, 15, 160)) +
+  transition_states(ano, transition_length = 4, state_length = 1,
+                    wrap = FALSE) +
+  view_follow(fixed_x = TRUE) +
+  ease_aes("cubic-in-out")
+
+gif_partidos <- animate(animacao_partidos,
+                        nframes = 600, fps = 20, end_pause = 120,
+                        width = 900, height = 700,
+                        renderer = gifski_renderer())
+
+gif_partidos
+
+anim_save("desmatamento_animado_partidos.gif", gif_partidos)
 
