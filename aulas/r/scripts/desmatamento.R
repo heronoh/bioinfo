@@ -624,7 +624,16 @@ perda_brasil <- veg %>%
   summarise(vegetacao_nativa_ha = sum(vegetacao_nativa_ha)) %>%
   mutate(fracao_perdida = 1 - vegetacao_nativa_ha / first(vegetacao_nativa_ha),
          restante_km2   = vegetacao_nativa_ha / 100,
-         perdida_km2    = (first(vegetacao_nativa_ha) - vegetacao_nativa_ha) / 100)
+         perdida_km2    = (first(vegetacao_nativa_ha) - vegetacao_nativa_ha) / 100,
+         # perda de cada ano e se ela subiu ou caiu em relação ao ano anterior,
+         # como no gráfico do desmatamento acumulado da Amazônia Legal
+         perda_ano_km2  = (lag(vegetacao_nativa_ha) - vegetacao_nativa_ha) / 100,
+         variacao = case_when(
+           is.na(lag(perda_ano_km2))           ~ "sem ano anterior",
+           perda_ano_km2 > lag(perda_ano_km2)  ~ "subiu",
+           TRUE                                ~ "caiu ou se manteve"),
+         intensidade = scales::rescale(perda_ano_km2, to = c(0.35, 1)),
+         intensidade = coalesce(intensidade, 0.6))
 
 perda_brasil %>% filter(ano %in% c(1985, 2005, 2025))
 
@@ -645,7 +654,8 @@ dados_inset <- function(corrida, topo_inset, base_inset, esq_inset, dir_inset) {
   expand.grid(ano = maximo$ano, ano_inset = anos_inset) %>%
     left_join(maximo, by = "ano") %>%
     left_join(perda_brasil %>% select(ano_inset = ano, fracao_perdida,
-                                      restante_km2, perdida_km2),
+                                      restante_km2, perdida_km2,
+                                      variacao, intensidade),
               by = "ano_inset") %>%
     # anos que ainda não chegaram ficam com altura zero
     mutate(fracao    = ifelse(ano_inset <= ano, fracao_perdida, 0),
@@ -688,16 +698,35 @@ camadas_inset <- function(corrida,
                   ymin = M * esq_inset, ymax = M * dir_inset),
               fill = "#d4ebd0", colour = NA,
               inherit.aes = FALSE),
-    # área perdida, acumulando ano a ano
+    # área perdida, acumulando ano a ano: uma barra por ano, marrom claro quando
+    # a perda anual caiu, marrom escuro quando subiu, com intensidade
+    # proporcional à perda daquele ano (uma camada para cada cor)
+    # fundo branco sob as barras, para o verde não aparecer através delas
     geom_rect(data = inset,
-              aes(xmin = alto, xmax = base_inset,
-                  ymin = esquerda, ymax = direita, group = ano_inset),
-              fill = "#8c510a", inherit.aes = FALSE),
+              aes(xmin = alto, xmax = base_inset, ymin = esquerda, ymax = direita,
+                  group = ano_inset),
+              fill = "white", inherit.aes = FALSE),
+    geom_rect(data = inset %>% filter(variacao == "caiu ou se manteve"),
+              aes(xmin = alto, xmax = base_inset, ymin = esquerda, ymax = direita,
+                  alpha = intensidade, group = ano_inset),
+              fill = "#c8a165", inherit.aes = FALSE),
+    geom_rect(data = inset %>% filter(variacao == "subiu"),
+              aes(xmin = alto, xmax = base_inset, ymin = esquerda, ymax = direita,
+                  alpha = intensidade, group = ano_inset),
+              fill = "#5b3412", inherit.aes = FALSE),
+    geom_rect(data = inset %>% filter(variacao == "sem ano anterior"),
+              aes(xmin = alto, xmax = base_inset, ymin = esquerda, ymax = direita,
+                  alpha = intensidade, group = ano_inset),
+              fill = "grey60", inherit.aes = FALSE),
     # títulos e rótulos do mini-gráfico
     geom_text(data = caixa,
-              aes(x = topo_inset - 0.55, y = M * esq_inset,
+              aes(x = topo_inset - 0.85, y = M * esq_inset,
                   label = "Vegetação nativa do Brasil (1985 = 100%)"),
               hjust = 0, size = 4, fontface = "bold", inherit.aes = FALSE),
+    geom_text(data = caixa,
+              aes(x = topo_inset - 0.35, y = M * esq_inset,
+                  label = "perda anual: clara quando caiu, escura quando subiu"),
+              hjust = 0, size = 3.2, colour = "#5b3412", inherit.aes = FALSE),
     geom_text(data = caixa,
               aes(x = topo_inset + 0.15, y = M * (esq_inset + 0.01), label = texto),
               hjust = 0, vjust = 1, size = 3.6, lineheight = 0.95,
