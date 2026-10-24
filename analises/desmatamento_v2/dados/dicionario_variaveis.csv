@@ -1,0 +1,32 @@
+"variavel","unidade","fonte","anos","n_linhas"
+"area_Mineração","ha","MapBiomas Coleção 11","1985–2025",1599
+"area_Mosaico de usos","ha","MapBiomas Coleção 11","1985–2025",2009
+"area_Outras lavouras","ha","MapBiomas Coleção 11","1985–2025",2009
+"area_Outros","ha","MapBiomas Coleção 11","1985–2025",2009
+"area_Pastagem","ha","MapBiomas Coleção 11","1985–2025",2009
+"area_Silvicultura","ha","MapBiomas Coleção 11","1985–2025",1804
+"area_Soja","ha","MapBiomas Coleção 11","1985–2025",1517
+"area_Vegetação nativa campestre","ha","MapBiomas Coleção 11","1985–2025",2009
+"area_Vegetação nativa florestal","ha","MapBiomas Coleção 11","1985–2025",2009
+"area_Água","ha","MapBiomas Coleção 11","1985–2025",2009
+"area_Área urbana","ha","MapBiomas Coleção 11","1985–2025",2009
+"conversao_para_Mineração","ha/ano","MapBiomas Coleção 11","1986–2025",1560
+"conversao_para_Mosaico de usos","ha/ano","MapBiomas Coleção 11","1986–2025",1960
+"conversao_para_Outras lavouras","ha/ano","MapBiomas Coleção 11","1986–2025",1960
+"conversao_para_Outros","ha/ano","MapBiomas Coleção 11","1986–2025",920
+"conversao_para_Pastagem","ha/ano","MapBiomas Coleção 11","1986–2025",1960
+"conversao_para_Silvicultura","ha/ano","MapBiomas Coleção 11","1986–2025",1760
+"conversao_para_Soja","ha/ano","MapBiomas Coleção 11","1986–2025",1480
+"conversao_para_Água","ha/ano","MapBiomas Coleção 11","1986–2025",1800
+"conversao_para_Área urbana","ha/ano","MapBiomas Coleção 11","1986–2025",1960
+"desmatamento_prodes","km²","PRODES/INPE","1988–2025",342
+"desmatamento_prodes","km²","PRODES/INPE (estimativa de 16/10/2026)","2026–2026",9
+"regeneracao_de_Mineração","ha/ano","MapBiomas Coleção 11","1986–2025",1520
+"regeneracao_de_Mosaico de usos","ha/ano","MapBiomas Coleção 11","1986–2025",1960
+"regeneracao_de_Outras lavouras","ha/ano","MapBiomas Coleção 11","1986–2025",1960
+"regeneracao_de_Outros","ha/ano","MapBiomas Coleção 11","1986–2025",720
+"regeneracao_de_Pastagem","ha/ano","MapBiomas Coleção 11","1986–2025",1960
+"regeneracao_de_Silvicultura","ha/ano","MapBiomas Coleção 11","1986–2025",1720
+"regeneracao_de_Soja","ha/ano","MapBiomas Coleção 11","1986–2025",1480
+"regeneracao_de_Água","ha/ano","MapBiomas Coleção 11","1986–2025",1800
+"regeneracao_de_Área urbana","ha/ano","MapBiomas Coleção 11","1986–2025",1960
