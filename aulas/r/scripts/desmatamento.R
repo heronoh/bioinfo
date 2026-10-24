@@ -119,6 +119,17 @@ mandatos <- mandatos %>%
 
 mandatos %>% select(rotulo, inicio_ano, fim_ano)
 
+cor_pandemia <- "#8B0000"   # vermelho escuro
+
+pandemia <- tibble::tribble(
+  ~evento,                ~rotulo,    ~inicio,      ~fim,
+  "Pandemia de COVID-19", "COVID-19", "2020-03-11", "2022-05-22"
+) %>%
+  mutate(inicio_ano = ano_decimal(inicio),
+         fim_ano    = ano_decimal(fim))
+
+pandemia
+
 # recorta os mandatos ao período do gráfico
 mandatos_periodo <- function(de, ate) {
   mandatos %>%
@@ -128,17 +139,33 @@ mandatos_periodo <- function(de, ate) {
     filter(inicio_ano < fim_ano)
 }
 
-# faixas de fundo, alternando tons de cinza (adicionar ANTES dos dados)
+# o mesmo para o período da pandemia
+pandemia_periodo <- function(de, ate) {
+  pandemia %>%
+    mutate(inicio_ano = pmax(inicio_ano, de - 0.5),
+           fim_ano    = pmin(fim_ano,    ate + 0.5),
+           meio       = (inicio_ano + fim_ano) / 2) %>%
+    filter(inicio_ano < fim_ano)
+}
+
+# faixas de fundo, alternando tons de cinza, e a pandemia em vermelho
+# (adicionar ANTES dos dados)
 mandatos_fundo <- function(de = 1988, ate = 2025) {
   m <- mandatos_periodo(de, ate)
   # uma camada para cada tom de cinza
-  lapply(c("grey80", "grey93"), function(cor) {
+  faixas <- lapply(c("grey80", "grey93"), function(cor) {
     geom_rect(data = m %>% filter(cor_faixa == cor),
               aes(xmin = inicio_ano, xmax = fim_ano, ymin = -Inf, ymax = Inf),
               fill = cor,
               alpha = 0.6,
               inherit.aes = FALSE)
   })
+  covid <- geom_rect(data = pandemia_periodo(de, ate),
+                     aes(xmin = inicio_ano, xmax = fim_ano, ymin = -Inf, ymax = Inf),
+                     fill = cor_pandemia,
+                     alpha = 0.18,
+                     inherit.aes = FALSE)
+  c(faixas, list(covid))
 }
 
 # linhas de troca de mandato + nomes dos presidentes (adicionar NO FINAL)
@@ -154,12 +181,23 @@ mandatos_linhas <- function(de = 1988, ate = 2025, dentro = FALSE, tamanho = 3,
                        aes(xintercept = inicio_ano),
                        linetype = "dashed", linewidth = 0.3, colour = "grey20",
                        inherit.aes = FALSE)
+  # pandemia: linha cheia no início e pontilhada no fim, em vermelho escuro
+  p <- pandemia_periodo(de, ate)
+  p_nomes <- p
+  for (coluna in names(so_no_painel)) p_nomes[[coluna]] <- so_no_painel[[coluna]]
+  linhas_covid <- list(
+    geom_vline(data = p, aes(xintercept = inicio_ano),
+               linewidth = 0.7, colour = cor_pandemia, inherit.aes = FALSE),
+    geom_vline(data = p, aes(xintercept = fim_ano),
+               linetype = "dotted", linewidth = 0.7, colour = cor_pandemia,
+               inherit.aes = FALSE))
   if (dentro) {
     nomes <- geom_text(data = m_nomes,
                        aes(x = meio, y = Inf, label = rotulo),
                        angle = 90, hjust = 1.1, size = tamanho, colour = "grey20",
                        inherit.aes = FALSE)
-    list(linhas, nomes)
+    # nos painéis, a pandemia é marcada só pela faixa e pelas linhas vermelhas
+    c(list(linhas, nomes), linhas_covid)
   } else {
     # nomes em duas alturas alternadas, para não se sobreporem nos mandatos curtos
     m_nomes$altura <- ifelse(seq_len(nrow(m_nomes)) %% 2 == 1, -0.5, -1.9)
@@ -167,10 +205,16 @@ mandatos_linhas <- function(de = 1988, ate = 2025, dentro = FALSE, tamanho = 3,
                        aes(x = meio, y = Inf, label = rotulo, vjust = altura),
                        size = tamanho, colour = "grey20",
                        inherit.aes = FALSE)
-    list(linhas, nomes,
-         coord_cartesian(clip = "off"),  # permite escrever fora da área do gráfico
-         theme(plot.title = element_text(margin = margin(b = 30)),
-               plot.margin = margin(t = 34, r = 6, b = 6, l = 6)))
+    # "COVID-19" numa terceira linha, acima dos presidentes
+    nome_covid <- geom_text(data = p_nomes,
+                            aes(x = meio, y = Inf, label = rotulo),
+                            vjust = -3.3, size = tamanho, fontface = "bold",
+                            colour = cor_pandemia, inherit.aes = FALSE)
+    c(list(linhas, nomes), linhas_covid,
+      list(nome_covid,
+           coord_cartesian(clip = "off"),  # permite escrever fora da área do gráfico
+           theme(plot.title = element_text(margin = margin(b = 44)),
+                 plot.margin = margin(t = 48, r = 6, b = 6, l = 6))))
   }
 }
 
@@ -425,4 +469,116 @@ veg_var %>%
         axis.text.x = element_text(angle = 45, hjust = 1)) +
   mandatos_linhas(de = 1985, tamanho = 2.5,
                   so_no_painel = list(bioma = "Amazônia"))
+
+## Extra: gráfico animado ----
+
+# instale apenas uma vez
+install.packages(c("gganimate", "gifski"))
+
+### Preparando os dados ----
+
+library("gganimate")
+
+# região de cada estado, para colorir as barras
+regioes <- c(AC = "Norte", AM = "Norte", AP = "Norte", PA = "Norte",
+             RO = "Norte", RR = "Norte", TO = "Norte",
+             AL = "Nordeste", BA = "Nordeste", CE = "Nordeste", MA = "Nordeste",
+             PB = "Nordeste", PE = "Nordeste", PI = "Nordeste", RN = "Nordeste",
+             SE = "Nordeste",
+             DF = "Centro-Oeste", GO = "Centro-Oeste", MS = "Centro-Oeste",
+             MT = "Centro-Oeste",
+             ES = "Sudeste", MG = "Sudeste", RJ = "Sudeste", SP = "Sudeste",
+             PR = "Sul", RS = "Sul", SC = "Sul")
+
+cores_regioes <- c("Norte" = "#1f6f43", "Nordeste" = "#d9805f",
+                   "Centro-Oeste" = "#c9a227", "Sudeste" = "#3f8fb5",
+                   "Sul" = "#8e6bb8")
+
+# presidente em 1º de julho de cada ano
+presidente_do_ano <- function(anos) {
+  sapply(anos, function(a) {
+    meio_do_ano <- a + 0.5
+    mandatos$rotulo[mandatos$inicio_ano <= meio_do_ano & mandatos$fim_ano > meio_do_ano][1]
+  })
+}
+
+corrida <- veg %>%
+  group_by(uf, estado, ano) %>%
+  summarise(vegetacao_nativa_ha = sum(vegetacao_nativa_ha), .groups = "drop") %>%
+  arrange(uf, ano) %>%
+  group_by(uf) %>%
+  mutate(perda_km2 = (first(vegetacao_nativa_ha) - vegetacao_nativa_ha) / 100) %>%
+  group_by(ano) %>%
+  mutate(posicao = rank(-perda_km2, ties.method = "first")) %>%
+  ungroup() %>%
+  filter(posicao <= 12) %>%
+  mutate(regiao = regioes[uf])
+
+# vetor com o nome do presidente, usando o ano como nome
+presidentes <- setNames(presidente_do_ano(1985:2025), 1985:2025)
+
+# anos da pandemia (também em 1º de julho), para o destaque em vermelho
+anos <- 1985:2025
+eventos <- ifelse(anos + 0.5 >= pandemia$inicio_ano & anos + 0.5 < pandemia$fim_ano,
+                  "Pandemia de COVID-19", "")
+eventos[anos == 2020] <- "Início da pandemia de COVID-19\ne das quarentenas estaduais"
+names(eventos) <- anos
+
+eventos[eventos != ""]
+
+corrida
+
+### Construindo a animação ----
+
+animacao <- corrida %>%
+  ggplot(aes(x = posicao, group = uf, fill = regiao)) +
+  geom_tile(aes(y = perda_km2 / 2, height = perda_km2, width = 0.85),
+            alpha = 0.9) +
+  # nome do estado, à esquerda da barra
+  geom_text(aes(y = 0, label = paste0(estado, " ")),
+            hjust = 1, size = 4.5) +
+  # valor, no fim da barra
+  geom_text(aes(y = perda_km2, label = paste0(" ", num(round(perda_km2)), " km²")),
+            hjust = 0, size = 4.5) +
+  coord_flip(clip = "off", expand = FALSE) +
+  scale_x_reverse() +
+  scale_y_continuous(labels = num) +
+  scale_fill_manual(values = cores_regioes) +
+  labs(title = "{closest_state}",
+       subtitle = "Presidente: {presidentes[closest_state]}",
+       tag = "{eventos[closest_state]}",   # destaque da pandemia
+       y = "Perda acumulada de vegetação nativa desde 1985 (km²)",
+       x = NULL,
+       fill = "Região",
+       caption = "Dados: MapBiomas, Coleção 11 · heronoh.github.io/bioinfo") +
+  theme_minimal(base_size = 15) +
+  theme(plot.title = element_text(size = 34, face = "bold"),
+        plot.subtitle = element_text(size = 18),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "bottom",
+        # o "tag" vai no canto inferior direito, em vermelho escuro
+        plot.tag = element_text(colour = cor_pandemia, face = "bold",
+                                size = 17, hjust = 1, lineheight = 0.9),
+        plot.tag.position = c(0.95, 0.26),
+        plot.margin = margin(15, 120, 15, 160)) +
+  transition_states(ano, transition_length = 4, state_length = 1,
+                    wrap = FALSE) +   # termina em 2025, sem voltar a 1985
+  view_follow(fixed_x = TRUE) +
+  ease_aes("cubic-in-out")
+
+### Gerando e salvando o GIF ----
+
+gif <- animate(animacao,
+               nframes = 400,       # número total de quadros
+               fps = 20,            # quadros por segundo (400 / 20 = 20 segundos)
+               end_pause = 60,      # segura o último quadro por 3 segundos
+               width = 900, height = 650,
+               renderer = gifski_renderer())
+
+gif   # mostra a animação no painel Viewer do RStudio
+
+anim_save("desmatamento_animado.gif", gif)
 

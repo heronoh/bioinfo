@@ -316,6 +316,22 @@ mandatos %>% select(rotulo, inicio_ano, fim_ano)
 ```
 
 &nbsp;&nbsp;
+Vamos marcar também o período da **pandemia de COVID-19**, em vermelho escuro. Ele começa em 11/03/2020, quando a OMS caracterizou a COVID-19 como pandemia e o Distrito Federal adotou as primeiras medidas de restrição de circulação. Termina em 22/05/2022, com o fim da Emergência em Saúde Pública de Importância Nacional (Portaria GM/MS nº 913, em vigor 30 dias após sua publicação, em 22/04/2022). O Brasil não teve um _lockdown_ nacional: as quarentenas foram decretadas por estados e municípios, a partir de março de 2020, com intensidade e duração diferentes em cada lugar.
+
+```{r pandemia, echo=TRUE}
+cor_pandemia <- "#8B0000"   # vermelho escuro
+
+pandemia <- tibble::tribble(
+  ~evento,                ~rotulo,    ~inicio,      ~fim,
+  "Pandemia de COVID-19", "COVID-19", "2020-03-11", "2022-05-22"
+) %>%
+  mutate(inicio_ano = ano_decimal(inicio),
+         fim_ano    = ano_decimal(fim))
+
+pandemia
+```
+
+&nbsp;&nbsp;
 Como vamos repetir essas marcações em vários gráficos, criamos **funções** que devolvem camadas prontas do `ggplot2`. Assim, basta "somar" `+ mandatos_fundo()` ou `+ mandatos_linhas()` a qualquer gráfico. Os argumentos `de` e `ate` indicam o período do gráfico, para cortar os mandatos que começam antes ou terminam depois da série:
 
 ```{r mandatos_funcoes, echo=TRUE}
@@ -328,17 +344,33 @@ mandatos_periodo <- function(de, ate) {
     filter(inicio_ano < fim_ano)
 }
 
-# faixas de fundo, alternando tons de cinza (adicionar ANTES dos dados)
+# o mesmo para o período da pandemia
+pandemia_periodo <- function(de, ate) {
+  pandemia %>%
+    mutate(inicio_ano = pmax(inicio_ano, de - 0.5),
+           fim_ano    = pmin(fim_ano,    ate + 0.5),
+           meio       = (inicio_ano + fim_ano) / 2) %>%
+    filter(inicio_ano < fim_ano)
+}
+
+# faixas de fundo, alternando tons de cinza, e a pandemia em vermelho
+# (adicionar ANTES dos dados)
 mandatos_fundo <- function(de = 1988, ate = 2025) {
   m <- mandatos_periodo(de, ate)
   # uma camada para cada tom de cinza
-  lapply(c("grey80", "grey93"), function(cor) {
+  faixas <- lapply(c("grey80", "grey93"), function(cor) {
     geom_rect(data = m %>% filter(cor_faixa == cor),
               aes(xmin = inicio_ano, xmax = fim_ano, ymin = -Inf, ymax = Inf),
               fill = cor,
               alpha = 0.6,
               inherit.aes = FALSE)
   })
+  covid <- geom_rect(data = pandemia_periodo(de, ate),
+                     aes(xmin = inicio_ano, xmax = fim_ano, ymin = -Inf, ymax = Inf),
+                     fill = cor_pandemia,
+                     alpha = 0.18,
+                     inherit.aes = FALSE)
+  c(faixas, list(covid))
 }
 
 # linhas de troca de mandato + nomes dos presidentes (adicionar NO FINAL)
@@ -354,12 +386,23 @@ mandatos_linhas <- function(de = 1988, ate = 2025, dentro = FALSE, tamanho = 3,
                        aes(xintercept = inicio_ano),
                        linetype = "dashed", linewidth = 0.3, colour = "grey20",
                        inherit.aes = FALSE)
+  # pandemia: linha cheia no início e pontilhada no fim, em vermelho escuro
+  p <- pandemia_periodo(de, ate)
+  p_nomes <- p
+  for (coluna in names(so_no_painel)) p_nomes[[coluna]] <- so_no_painel[[coluna]]
+  linhas_covid <- list(
+    geom_vline(data = p, aes(xintercept = inicio_ano),
+               linewidth = 0.7, colour = cor_pandemia, inherit.aes = FALSE),
+    geom_vline(data = p, aes(xintercept = fim_ano),
+               linetype = "dotted", linewidth = 0.7, colour = cor_pandemia,
+               inherit.aes = FALSE))
   if (dentro) {
     nomes <- geom_text(data = m_nomes,
                        aes(x = meio, y = Inf, label = rotulo),
                        angle = 90, hjust = 1.1, size = tamanho, colour = "grey20",
                        inherit.aes = FALSE)
-    list(linhas, nomes)
+    # nos painéis, a pandemia é marcada só pela faixa e pelas linhas vermelhas
+    c(list(linhas, nomes), linhas_covid)
   } else {
     # nomes em duas alturas alternadas, para não se sobreporem nos mandatos curtos
     m_nomes$altura <- ifelse(seq_len(nrow(m_nomes)) %% 2 == 1, -0.5, -1.9)
@@ -367,15 +410,21 @@ mandatos_linhas <- function(de = 1988, ate = 2025, dentro = FALSE, tamanho = 3,
                        aes(x = meio, y = Inf, label = rotulo, vjust = altura),
                        size = tamanho, colour = "grey20",
                        inherit.aes = FALSE)
-    list(linhas, nomes,
-         coord_cartesian(clip = "off"),  # permite escrever fora da área do gráfico
-         theme(plot.title = element_text(margin = margin(b = 30)),
-               plot.margin = margin(t = 34, r = 6, b = 6, l = 6)))
+    # "COVID-19" numa terceira linha, acima dos presidentes
+    nome_covid <- geom_text(data = p_nomes,
+                            aes(x = meio, y = Inf, label = rotulo),
+                            vjust = -3.3, size = tamanho, fontface = "bold",
+                            colour = cor_pandemia, inherit.aes = FALSE)
+    c(list(linhas, nomes), linhas_covid,
+      list(nome_covid,
+           coord_cartesian(clip = "off"),  # permite escrever fora da área do gráfico
+           theme(plot.title = element_text(margin = margin(b = 44)),
+                 plot.margin = margin(t = 48, r = 6, b = 6, l = 6))))
   }
 }
 ```
 
-> ATENÇÃO: o "ano PRODES" vai de agosto a julho, então as trocas de mandato aparecem no meio de uma barra ou de um ano. As marcações servem para orientar a leitura, não como fronteiras exatas.
+> ATENÇÃO: o "ano PRODES" vai de agosto a julho, então as trocas de mandato e o período da pandemia aparecem no meio de uma barra ou de um ano. As marcações servem para orientar a leitura, não como fronteiras exatas.
 
 
 ## A série histórica da Amazônia Legal
@@ -737,6 +786,156 @@ veg_var %>%
 ```
 
 > PERGUNTA: Compare o mapa de calor do MapBiomas com o do PRODES, para os estados da Amazônia. Os estados que mais desmataram segundo o PRODES são os que perderam a maior proporção de vegetação nativa? Por que pode haver diferenças?
+
+
+## Extra: gráfico animado
+
+&nbsp;&nbsp;
+Durante a pandemia de COVID-19 ficaram famosos os gráficos animados que mostravam, ano a ano ou dia a dia, a "corrida" entre países em número de casos. Esse tipo de gráfico é chamado de _bar chart race_. Vamos fazer um com os nossos dados: a **perda acumulada de vegetação nativa desde 1985**, somando todos os biomas de cada estado, com os 12 estados que mais perderam em cada ano e o presidente do período.
+
+&nbsp;&nbsp;
+Para isso usamos o pacote [*gganimate*](https://gganimate.com/), que transforma um gráfico do `ggplot2` em uma animação, e o *gifski*, que salva a animação como um arquivo `.gif`, fácil de compartilhar.
+
+```r
+# instale apenas uma vez
+install.packages(c("gganimate", "gifski"))
+```
+
+### Preparando os dados
+
+&nbsp;&nbsp;
+Primeiro somamos os biomas de cada estado, calculamos a perda em relação a 1985 (em km²) e a **posição** de cada estado em cada ano. Também descobrimos quem era o presidente em 1º de julho de cada ano, usando a tabela `mandatos` que criamos antes, e quais anos caem no período da pandemia, usando a tabela `pandemia`:
+
+```r
+library("gganimate")
+
+# região de cada estado, para colorir as barras
+regioes <- c(AC = "Norte", AM = "Norte", AP = "Norte", PA = "Norte",
+             RO = "Norte", RR = "Norte", TO = "Norte",
+             AL = "Nordeste", BA = "Nordeste", CE = "Nordeste", MA = "Nordeste",
+             PB = "Nordeste", PE = "Nordeste", PI = "Nordeste", RN = "Nordeste",
+             SE = "Nordeste",
+             DF = "Centro-Oeste", GO = "Centro-Oeste", MS = "Centro-Oeste",
+             MT = "Centro-Oeste",
+             ES = "Sudeste", MG = "Sudeste", RJ = "Sudeste", SP = "Sudeste",
+             PR = "Sul", RS = "Sul", SC = "Sul")
+
+cores_regioes <- c("Norte" = "#1f6f43", "Nordeste" = "#d9805f",
+                   "Centro-Oeste" = "#c9a227", "Sudeste" = "#3f8fb5",
+                   "Sul" = "#8e6bb8")
+
+# presidente em 1º de julho de cada ano
+presidente_do_ano <- function(anos) {
+  sapply(anos, function(a) {
+    meio_do_ano <- a + 0.5
+    mandatos$rotulo[mandatos$inicio_ano <= meio_do_ano & mandatos$fim_ano > meio_do_ano][1]
+  })
+}
+
+corrida <- veg %>%
+  group_by(uf, estado, ano) %>%
+  summarise(vegetacao_nativa_ha = sum(vegetacao_nativa_ha), .groups = "drop") %>%
+  arrange(uf, ano) %>%
+  group_by(uf) %>%
+  mutate(perda_km2 = (first(vegetacao_nativa_ha) - vegetacao_nativa_ha) / 100) %>%
+  group_by(ano) %>%
+  mutate(posicao = rank(-perda_km2, ties.method = "first")) %>%
+  ungroup() %>%
+  filter(posicao <= 12) %>%
+  mutate(regiao = regioes[uf])
+
+# vetor com o nome do presidente, usando o ano como nome
+presidentes <- setNames(presidente_do_ano(1985:2025), 1985:2025)
+
+# anos da pandemia (também em 1º de julho), para o destaque em vermelho
+anos <- 1985:2025
+eventos <- ifelse(anos + 0.5 >= pandemia$inicio_ano & anos + 0.5 < pandemia$fim_ano,
+                  "Pandemia de COVID-19", "")
+eventos[anos == 2020] <- "Início da pandemia de COVID-19\ne das quarentenas estaduais"
+names(eventos) <- anos
+
+eventos[eventos != ""]
+
+corrida
+```
+
+### Construindo a animação
+
+&nbsp;&nbsp;
+O gráfico é montado como um gráfico comum do `ggplot2`. A diferença está nas últimas linhas:
+
+- `transition_states(ano)` cria um quadro para cada ano e faz a transição suave entre eles;
+- `{closest_state}` no título é substituído pelo ano mostrado em cada quadro; no subtítulo e no `tag` (o texto em vermelho), ele é usado para buscar o presidente e o destaque da pandemia daquele ano nos vetores `presidentes` e `eventos`;
+- `view_follow()` faz o eixo acompanhar o crescimento das barras;
+- `ease_aes()` controla a "aceleração" do movimento.
+
+&nbsp;&nbsp;
+Usamos `geom_tile()` em vez de `geom_col()` porque, com ele, cada barra pode deslizar suavemente de uma posição para outra quando os estados trocam de lugar.
+
+```r
+animacao <- corrida %>%
+  ggplot(aes(x = posicao, group = uf, fill = regiao)) +
+  geom_tile(aes(y = perda_km2 / 2, height = perda_km2, width = 0.85),
+            alpha = 0.9) +
+  # nome do estado, à esquerda da barra
+  geom_text(aes(y = 0, label = paste0(estado, " ")),
+            hjust = 1, size = 4.5) +
+  # valor, no fim da barra
+  geom_text(aes(y = perda_km2, label = paste0(" ", num(round(perda_km2)), " km²")),
+            hjust = 0, size = 4.5) +
+  coord_flip(clip = "off", expand = FALSE) +
+  scale_x_reverse() +
+  scale_y_continuous(labels = num) +
+  scale_fill_manual(values = cores_regioes) +
+  labs(title = "{closest_state}",
+       subtitle = "Presidente: {presidentes[closest_state]}",
+       tag = "{eventos[closest_state]}",   # destaque da pandemia
+       y = "Perda acumulada de vegetação nativa desde 1985 (km²)",
+       x = NULL,
+       fill = "Região",
+       caption = "Dados: MapBiomas, Coleção 11 · heronoh.github.io/bioinfo") +
+  theme_minimal(base_size = 15) +
+  theme(plot.title = element_text(size = 34, face = "bold"),
+        plot.subtitle = element_text(size = 18),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "bottom",
+        # o "tag" vai no canto inferior direito, em vermelho escuro
+        plot.tag = element_text(colour = cor_pandemia, face = "bold",
+                                size = 17, hjust = 1, lineheight = 0.9),
+        plot.tag.position = c(0.95, 0.26),
+        plot.margin = margin(15, 120, 15, 160)) +
+  transition_states(ano, transition_length = 4, state_length = 1,
+                    wrap = FALSE) +   # termina em 2025, sem voltar a 1985
+  view_follow(fixed_x = TRUE) +
+  ease_aes("cubic-in-out")
+```
+
+### Gerando e salvando o GIF
+
+&nbsp;&nbsp;
+A função `animate()` desenha todos os quadros. Isso pode levar um ou dois minutos. Depois, `anim_save()` salva o resultado como `.gif` na sua pasta de trabalho:
+
+```r
+gif <- animate(animacao,
+               nframes = 400,       # número total de quadros
+               fps = 20,            # quadros por segundo (400 / 20 = 20 segundos)
+               end_pause = 60,      # segura o último quadro por 3 segundos
+               width = 900, height = 650,
+               renderer = gifski_renderer())
+
+gif   # mostra a animação no painel Viewer do RStudio
+
+anim_save("desmatamento_animado.gif", gif)
+```
+
+O resultado deve ficar assim:
+
+![](figuras/desmatamento_animado.gif){fig-alt="Animação em que barras horizontais mostram, ano a ano de 1985 a 2025, os 12 estados com maior perda acumulada de vegetação nativa, com o ano e o presidente do período no título e, em 2020 e 2021, um destaque em vermelho escuro para a pandemia de COVID-19." width=100%}
+
+> DICA: para mudar a velocidade, altere `nframes` e `fps`. Para mostrar outros dados, troque a coluna em `perda_km2`, por exemplo pelo desmatamento acumulado do PRODES, que calculamos na tabela `desmat_acum`.
 
 
 ## Desafios
