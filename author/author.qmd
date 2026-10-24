@@ -30,33 +30,21 @@ date: today
 .small { font-size: .95rem; }
 </style>
 ```
-
 ## Quem sou
 
 ::: columns
 ::: column
-
 Sou **Heron O. Hilário**, um bioinformáta interessado pelo estudo, preservação e conservação da **Biodiversidade**, utilizando ferramentas de **Biologia Molecular**, **Genética** e **Genômica**. As principais linhas de pesquisa nas quais trabalho são na aplicação do ***eDNA metabarcoding*** para investigação de vertebrados e invertebrados.
 
 ::: {.badges .small}
-<a href="https://github.com/heronoh" target="_blank">🐙 GitHub</a> 
-<a href="https://scholar.google.com/citations?user=e0PUfXoAAAAJ&hl=en&oi=ao" target="_blank">📚 Google Scholar</a>
-<a href="https://orcid.org/0000-0002-2548-1053" target="_blank">🧬 ORCID</a> 
-<a href="http://lattes.cnpq.br/SEU_ID" target="_blank">📄 Lattes</a> 
-<a href="http://instagram.com/hohphoto" target="_blank">🌐 Site</a>
+<a href="https://github.com/heronoh" target="_blank">🐙 GitHub</a> <a href="https://scholar.google.com/citations?user=e0PUfXoAAAAJ&hl=en&oi=ao" target="_blank">📚 Google Scholar</a> <a href="https://orcid.org/0000-0002-2548-1053" target="_blank">🧬 ORCID</a> <a href="http://lattes.cnpq.br/SEU_ID" target="_blank">📄 Lattes</a> <a href="http://instagram.com/hohphoto" target="_blank">🌐 Site</a>
 :::
-
-::: 
+:::
 
 ::: column
 <!-- Substitua o caminho abaixo pela sua foto -->
 
-
-
-
-
 ![](../misc/HOH-01.png){.mt-4 alt="Foto de perfil de Heron O. Hilário" style="width:220px;height:220px;border-radius:50%;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
-
 :::
 :::
 
@@ -64,9 +52,17 @@ Sou **Heron O. Hilário**, um bioinformáta interessado pelo estudo, preservaç�
 
 ## O que faço
 
--   **Docência**: *Bioinformática e Genômica*\
--   **Pesquisa**: análise de dados **ômicos**, bancos **FASTA/FASTQ**, **filogenia**, **taxonomia molecular**\
--   **Ferramentas**: **R**, **Quarto**, **git/GitHub**, **Linux/Shell**
+-   **Docência**: *Bioinformática e Genômica*, *Genética* & *Biologia molecular*\
+-   **Pesquisa**:
+    -   pesquisador no [**Laboratório de Genética da Conservação da PUC Minas**](https://www.instagram.com/lgc_pucminas/)
+    
+![](../misc/Logo_LGC_2026.png){.mt-4 alt="[LGC PUC Minas](https://www.instagram.com/lgc_pucminas/)" style="width:140px;height:100px;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
+
+    -   análise de dados **ômicos**, bancos **FASTA/FASTQ**, **filogenia**, **taxonomia molecular**\
+-   **Ferramentas**: **R**, **Quarto**, **git/GitHub**, **Linux/Shell**\
+-   **Consultoria**: Bioinformata parceiro da [**EcoMol**](https://ecomolconsultoria.com.br/), onde realizo análises de dados de eDNA metabarcoding
+
+![](../misc/logo_EcoMol.jpeg){.mt-4 alt="[EcoMol Consultoria](https://ecomolconsultoria.com.br/)" style="width:125px;height:100px;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
 
 > **Missão:** simplificar o acesso a métodos computacionais na biologia usando materiais claros, reproduzíveis e abertos.
 
