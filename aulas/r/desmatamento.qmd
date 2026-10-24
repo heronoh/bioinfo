@@ -1018,10 +1018,13 @@ camadas_inset <- function(corrida,
   inset <- dados_inset(corrida, topo_inset, base_inset, esq_inset, dir_inset)
   caixa <- inset %>%
     filter(ano_inset == ano) %>%
-    mutate(texto = paste0("resta ", porcentagem(1 - fracao), " · ",
-                          num(round(restante_km2)), " km²\n",
-                          "perdida ", porcentagem(fracao), " · ",
-                          num(round(perdida_km2)), " km²"))
+    mutate(pct_restante = porcentagem(1 - fracao),
+           km2_restante = paste(num(round(restante_km2)), "km²"),
+           pct_perdida  = porcentagem(fracao),
+           km2_perdida  = paste(num(round(perdida_km2)), "km²"),
+           # como fatores, o gganimate troca os textos de um ano para o outro
+           # (como texto simples, ele tentaria "misturá-los" como se fossem cores)
+           across(c(pct_restante, km2_restante, pct_perdida, km2_perdida), factor))
 
   # trocas de governo: uma linha por quadro (ano) e mandato
   largura <- (dir_inset - esq_inset) / length(perda_brasil$ano)
@@ -1073,10 +1076,35 @@ camadas_inset <- function(corrida,
               aes(x = topo_inset - 0.35, y = M * esq_inset,
                   label = "perda anual: clara quando caiu, escura quando subiu"),
               hjust = 0, size = 3.2, colour = "#5b3412", inherit.aes = FALSE),
+    # área restante e perdida, em três colunas alinhadas: nome (à esquerda),
+    # porcentagem e km² (alinhados à direita), em posições proporcionais à
+    # largura do mini-gráfico
     geom_text(data = caixa,
-              aes(x = topo_inset + 0.15, y = M * (esq_inset + 0.01), label = texto),
-              hjust = 0, vjust = 1, size = 3.6, lineheight = 0.95,
-              colour = "grey15", inherit.aes = FALSE),
+              aes(x = topo_inset + 0.35, y = M * (esq_inset + 0.02 * (dir_inset - esq_inset)),
+                  label = "Área restante:"),
+              hjust = 0, size = 3.6, fontface = "bold", colour = "grey15",
+              inherit.aes = FALSE),
+    geom_text(data = caixa,
+              aes(x = topo_inset + 0.85, y = M * (esq_inset + 0.02 * (dir_inset - esq_inset)),
+                  label = "Área perdida:"),
+              hjust = 0, size = 3.6, fontface = "bold", colour = "grey15",
+              inherit.aes = FALSE),
+    geom_text(data = caixa,
+              aes(x = topo_inset + 0.35, y = M * (esq_inset + 0.52 * (dir_inset - esq_inset)),
+                  label = pct_restante),
+              hjust = 1, size = 3.6, colour = "grey15", inherit.aes = FALSE),
+    geom_text(data = caixa,
+              aes(x = topo_inset + 0.85, y = M * (esq_inset + 0.52 * (dir_inset - esq_inset)),
+                  label = pct_perdida),
+              hjust = 1, size = 3.6, colour = "grey15", inherit.aes = FALSE),
+    geom_text(data = caixa,
+              aes(x = topo_inset + 0.35, y = M * (esq_inset + 0.96 * (dir_inset - esq_inset)),
+                  label = km2_restante),
+              hjust = 1, size = 3.6, colour = "grey15", inherit.aes = FALSE),
+    geom_text(data = caixa,
+              aes(x = topo_inset + 0.85, y = M * (esq_inset + 0.96 * (dir_inset - esq_inset)),
+                  label = km2_perdida),
+              hjust = 1, size = 3.6, colour = "grey15", inherit.aes = FALSE),
     geom_text(data = caixa,
               aes(x = base_inset + 0.3, y = M * esq_inset, label = "1985"),
               hjust = 0, size = 3.3, colour = "grey30", inherit.aes = FALSE),
@@ -1084,14 +1112,15 @@ camadas_inset <- function(corrida,
               aes(x = base_inset + 0.3, y = M * dir_inset, label = "2025"),
               hjust = 1, size = 3.3, colour = "grey30", inherit.aes = FALSE),
     # linha em cada troca de governo, que aparece quando a animação chega lá
+    # (só na metade de baixo, para não passar por cima dos números)
     geom_segment(data = transicoes,
-                 aes(x = topo_inset, xend = base_inset,
+                 aes(x = (topo_inset + base_inset) / 2, xend = base_inset,
                      y = horizontal, yend = horizontal,
                      alpha = linha, group = rotulo),
                  colour = "grey20", linewidth = 0.4, inherit.aes = FALSE),
     # nome do presidente, que aparece junto com a linha e some depois
     geom_text(data = transicoes,
-              aes(x = topo_inset + (base_inset - topo_inset) * 0.55,
+              aes(x = topo_inset + (base_inset - topo_inset) * 0.62,
                   y = horizontal, label = rotulo,
                   alpha = nome, hjust = lado, group = rotulo),
               size = 3.8, fontface = "bold", colour = "grey10",
@@ -1173,7 +1202,7 @@ gif <- animate(animacao,
                nframes = 800,       # número total de quadros
                fps = 20,            # quadros por segundo (800 / 20 = 40 segundos)
                end_pause = 120,     # segura o último quadro por 6 segundos
-               width = 900, height = 650,
+               width = 1280, height = 720, res = 90,   # resolução HD (1280 × 720)
                renderer = gifski_renderer())
 
 gif   # mostra a animação no painel Viewer do RStudio
@@ -1320,7 +1349,7 @@ animacao_partidos <- corrida_partidos %>%
 
 gif_partidos <- animate(animacao_partidos,
                         nframes = 600, fps = 20, end_pause = 120,
-                        width = 900, height = 700,
+                        width = 1280, height = 720, res = 90,
                         renderer = gifski_renderer())
 
 gif_partidos
@@ -1331,6 +1360,110 @@ anim_save("desmatamento_animado_partidos.gif", gif_partidos)
 ![](figuras/desmatamento_animado_partidos.gif){fig-alt="Animação em que barras horizontais mostram, ano a ano de 2007 a 2025, os 12 estados com maior perda acumulada de vegetação nativa desde 2007, coloridas pelo partido do governador, com o ano e o presidente no título." width=100%}
 
 > ATENÇÃO: a cor mostra **quem governava** o estado, não **por que** a vegetação foi perdida. O tamanho do estado, a posição na fronteira agrícola, os preços das commodities e as políticas federais também pesam muito. Lembre-se: correlação não é causalidade!
+
+### Versão 3: mapa de calor animado da taxa por estado (PRODES)
+
+&nbsp;&nbsp;
+Por fim, vamos animar o mapa de calor que fizemos com os dados do PRODES: a cada quadro, uma nova coluna (um novo ano) aparece. As linhas e os nomes dos presidentes surgem quando cada mandato começa, e o período da pandemia aparece em vermelho escuro. No subtítulo, mostramos também a taxa total da Amazônia Legal naquele ano.
+
+&nbsp;&nbsp;
+O truque para "revelar" as colunas é repetir a tabela inteira para cada quadro da animação (coluna `quadro`) e deixar invisíveis (`visivel = 0`) os anos que ainda não chegaram. Assim, a cada transição, a nova coluna surge aos poucos:
+
+```r
+anos_prodes <- sort(unique(desmat$ano))
+
+# estados em ordem de desmatamento total (o maior fica em cima)
+ordem_estados <- desmat %>%
+  group_by(estado) %>%
+  summarise(total = sum(desmatamento_km2)) %>%
+  arrange(total) %>%
+  pull(estado)
+
+# a tabela completa, repetida para cada quadro
+mapa_quadros <- tidyr::crossing(quadro = anos_prodes, desmat) %>%
+  mutate(visivel = ifelse(ano <= quadro, 1, 0),
+         estado  = factor(estado, levels = ordem_estados))
+
+# linhas e nomes dos presidentes, que aparecem quando o mandato começa
+n_estados <- length(ordem_estados)
+presidentes_quadros <- tidyr::crossing(quadro = anos_prodes,
+                                       mandatos_periodo(1988, 2025)) %>%
+  mutate(visivel = ifelse(inicio_ano <= quadro + 0.5, 1, 0),
+         linha   = ifelse(inicio_ano > 1987.5, visivel, 0),
+         # nomes em duas alturas alternadas, acima do mapa
+         altura  = n_estados + 0.5 + ifelse(as.integer(factor(inicio_ano)) %% 2 == 1,
+                                            0.45, 1.05))
+
+# o mesmo para a pandemia
+pandemia_quadros <- tidyr::crossing(quadro = anos_prodes,
+                                    pandemia_periodo(1988, 2025)) %>%
+  mutate(inicio_visivel = ifelse(inicio_ano <= quadro + 0.5, 1, 0),
+         fim_visivel    = ifelse(fim_ano    <= quadro + 0.5, 1, 0))
+
+# taxa total da Amazônia Legal em cada ano, para o subtítulo
+taxas <- setNames(num(total_ano$desmatamento_km2), total_ano$ano)
+```
+
+```r
+animacao_mapa <- ggplot() +
+  geom_tile(data = mapa_quadros,
+            aes(x = ano, y = estado, fill = desmatamento_km2, alpha = visivel),
+            colour = "white") +
+  # trocas de presidente
+  geom_segment(data = presidentes_quadros,
+               aes(x = inicio_ano, xend = inicio_ano,
+                   y = 0.5, yend = n_estados + 0.5, alpha = linha),
+               linetype = "dashed", linewidth = 0.4, colour = "grey20") +
+  geom_text(data = presidentes_quadros,
+            aes(x = meio, y = altura, label = rotulo, alpha = visivel),
+            size = 4, colour = "grey20") +
+  # pandemia: linha cheia no início e pontilhada no fim
+  geom_segment(data = pandemia_quadros,
+               aes(x = inicio_ano, xend = inicio_ano,
+                   y = 0.5, yend = n_estados + 0.5, alpha = inicio_visivel),
+               linewidth = 0.9, colour = cor_pandemia) +
+  geom_segment(data = pandemia_quadros,
+               aes(x = fim_ano, xend = fim_ano,
+                   y = 0.5, yend = n_estados + 0.5, alpha = fim_visivel),
+               linetype = "dotted", linewidth = 0.9, colour = cor_pandemia) +
+  geom_text(data = pandemia_quadros,
+            aes(x = meio, y = n_estados + 2.1, label = rotulo, alpha = inicio_visivel),
+            size = 4, fontface = "bold", colour = cor_pandemia) +
+  scale_fill_viridis_c(option = "rocket", direction = -1, labels = num) +
+  scale_alpha_identity() +
+  scale_x_continuous(breaks = seq(1988, 2025, by = 1), expand = c(0, 0)) +
+  coord_cartesian(clip = "off") +
+  labs(title = "Taxa anual de desmatamento na Amazônia Legal · {closest_state}",
+       subtitle = "Presidente: {presidentes[closest_state]} · taxa do ano: {taxas[closest_state]} km²",
+       tag = "{eventos[closest_state]}",
+       x = "Ano PRODES",
+       y = NULL,
+       fill = "km²/ano",
+       caption = "Dados: PRODES/INPE (TerraBrasilis) · heronoh.github.io/bioinfo") +
+  theme_minimal(base_size = 15) +
+  theme(plot.title = element_text(size = 22, face = "bold"),
+        plot.subtitle = element_text(size = 16, margin = margin(b = 50)),
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+        panel.grid = element_blank(),
+        plot.tag = element_text(colour = cor_pandemia, face = "bold",
+                                size = 15, hjust = 1, lineheight = 0.9),
+        plot.tag.position = c(0.97, 0.93),
+        plot.margin = margin(15, 15, 10, 10)) +
+  transition_states(quadro, transition_length = 2, state_length = 1,
+                    wrap = FALSE) +
+  ease_aes("linear")
+
+gif_mapa <- animate(animacao_mapa,
+                    nframes = 600, fps = 20, end_pause = 100,
+                    width = 1280, height = 720, res = 90,
+                    renderer = gifski_renderer())
+
+gif_mapa
+
+anim_save("desmatamento_mapa_animado.gif", gif_mapa)
+```
+
+![](figuras/desmatamento_mapa_animado.gif){fig-alt="Animação de um mapa de calor da taxa anual de desmatamento por estado da Amazônia Legal, de 1988 a 2025, em que uma coluna aparece a cada ano, com linhas e nomes dos presidentes surgindo a cada troca de governo e o período da pandemia de COVID-19 marcado em vermelho escuro." width=100%}
 
 
 ## Desafios
