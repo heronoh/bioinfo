@@ -50,8 +50,16 @@ ler_sgs <- function(serie) {
   arqs <- list.files(file.path(brutos, "bcb"), paste0("^sgs_", serie, "_.*\\.csv$"),
                      full.names = TRUE)
   if (!length(arqs)) return(NULL)
-  bind_rows(lapply(arqs, function(a)
-    read.csv2(a, colClasses = "character", fileEncoding = "UTF-8"))) %>%
+  bind_rows(lapply(arqs, function(a) {
+    d <- read.csv2(a, colClasses = "character", fileEncoding = "UTF-8")
+    if (!all(c("data", "valor") %in% names(d))) {
+      warning("ignorando ", a, ": não é a tabela do SGS (início: ",
+              substr(paste(readLines(a, n = 2, warn = FALSE), collapse = " "), 1, 120),
+              ")", call. = FALSE)
+      return(NULL)
+    }
+    d
+  })) %>%
     transmute(data = as.Date(data, "%d/%m/%Y"), valor = numero_br(valor)) %>%
     filter(!is.na(data), !is.na(valor)) %>%
     distinct(data, .keep_all = TRUE) %>%
@@ -83,7 +91,12 @@ if (!is.null(dolar) && !is.null(ipca)) {
 
   base_ipca  <- ipca_ano$indice_medio[ipca_ano$ano == ANO_BASE]
   base_dolar <- dolar_ano$dolar_medio[dolar_ano$ano == ANO_BASE]
-  stopifnot(length(base_ipca) == 1, length(base_dolar) == 1)
+  faixa <- function(x) if (length(x)) paste(range(x), collapse = "–") else "nenhum"
+  if (length(base_ipca) != 1 || length(base_dolar) != 1)
+    stop("faltam dados de ", ANO_BASE, " (ano-base). Anos lidos: IPCA ",
+         faixa(ipca_ano$ano), "; dólar ", faixa(dolar_ano$ano),
+         ".\nRode de novo: bash analises/desmatamento_v2/baixar/baixar_dados.sh cambio --forcar",
+         call. = FALSE)
 
   cambio <- full_join(ipca_ano, dolar_ano, by = "ano") %>%
     mutate(fator_reais_base = base_ipca / indice_medio,        # R$ do ano -> R$ de 2025

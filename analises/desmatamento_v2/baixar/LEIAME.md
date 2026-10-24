@@ -17,6 +17,10 @@ Rscript analises/desmatamento_v2/R/02_painel.R                         # junta t
 | `queimadas`| INPE, focos anuais (sat. ref.)  | `queimadas_focos_uf.csv`                          |
 | `deter`    | INPE TerraBrasilis (WFS)        | `deter_alertas_uf.csv`                            |
 
+O que já foi baixado não é baixado de novo: anos encerrados nunca se repetem, e o que muda
+(ano corrente, Ibama, DETER) só é renovado depois de 7 dias (`VALIDADE_DIAS=30 bash ...`
+muda o prazo; `--forcar` baixa tudo de novo).
+
 Requisitos: `curl`, `unzip`, `zipinfo`, `flock`, `sha256sum`, R com `dplyr` e `tidyr`.
 Espaço: reserve ~20 GB livres (o script confere antes de cada download).
 
