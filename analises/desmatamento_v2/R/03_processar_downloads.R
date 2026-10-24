@@ -101,7 +101,11 @@ if (!is.null(dolar) && !is.null(ipca)) {
   cambio <- full_join(ipca_ano, dolar_ano, by = "ano") %>%
     mutate(fator_reais_base = base_ipca / indice_medio,        # R$ do ano -> R$ de 2025
            fator_usd_base   = fator_reais_base / base_dolar,   # R$ do ano -> US$ de 2025
-           ano_completo     = meses == 12) %>%
+           ano_completo     = meses == 12,
+           # antes do Plano Real (jul/1994) os valores estavam em outras moedas:
+           # a conversão só vale a partir do primeiro ano inteiro em reais
+           fator_reais_base = ifelse(ano >= 1995, fator_reais_base, NA),
+           fator_usd_base   = ifelse(ano >= 1995, fator_usd_base, NA)) %>%
     select(ano, ipca_anual, dolar_medio, fator_reais_base, fator_usd_base, ano_completo) %>%
     arrange(ano)
   write.csv(cambio, file.path(saida, "cambio_ipca_anual.csv"), row.names = FALSE,
