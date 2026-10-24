@@ -9,6 +9,12 @@
 # Opções:   --manter-brutos   não apaga os arquivos brutos do Ibama depois de
 #                             processados (eles contêm nomes e CPF/CNPJ)
 #           --listar          só mostra o que seria baixado, sem baixar
+#           --forcar          baixa tudo de novo, mesmo o que já existe
+#
+# O que já foi baixado não é baixado de novo:
+#   - arquivos de períodos encerrados (anos passados) nunca são repetidos;
+#   - arquivos que mudam (ano corrente, Ibama, DETER) só são renovados quando
+#     têm mais de VALIDADE_DIAS dias (padrão 7; ex.: VALIDADE_DIAS=30 bash ...)
 #
 # Medidas de segurança:
 #   - recusa rodar como root; usa umask 077 (arquivos visíveis só para o dono)
@@ -47,6 +53,8 @@ TAMANHO_MAX_ARQUIVO=$((3 * 1024 * 1024 * 1024))   # 3 GB por download
 TAMANHO_MAX_DESCOMPACTADO=$((8 * 1024 * 1024 * 1024)) # 8 GB por ZIP
 ESPACO_MIN_LIVRE_GB=20
 PAUSA_ENTRE_PEDIDOS=2                               # segundos
+VALIDADE_DIAS="${VALIDADE_DIAS:-7}"                 # idade máx. de arquivos que mudam
+[[ "$VALIDADE_DIAS" =~ ^[0-9]+$ ]] || { echo "VALIDADE_DIAS inválido" >&2; exit 1; }
 
 # padrões dos arquivos anuais de focos (satélite de referência) no INPE.
 # Se o INPE mudar os nomes, ajuste aqui (o script mostra a listagem).
@@ -99,11 +107,28 @@ registrar() {
     "$(stat -c %s "$arquivo")" "$(sha256sum "$arquivo" | cut -d' ' -f1)" >> "$MANIFESTO"
 }
 
-# baixar URL DESTINO TIPO   (TIPO: zip | csv | xml | texto)
+# idade de um arquivo em dias (inteiro)
+idade_dias() { echo $(( ( $(date +%s) - $(stat -c %Y "$1") ) / 86400 )); }
+
+# atual ARQUIVO [fixo]  ->  verdadeiro se o arquivo pode ser reaproveitado
+#   fixo: período encerrado, nunca muda; senão vale por VALIDADE_DIAS dias
+atual() {
+  local arq="$1" fixo="${2:-}"
+  [[ "${FORCAR:-0}" == 1 ]] && return 1
+  [[ -s "$arq" ]] || return 1
+  [[ "$fixo" == fixo ]] && return 0
+  (( $(idade_dias "$arq") < VALIDADE_DIAS ))
+}
+
+# baixar URL DESTINO TIPO [fixo]   (TIPO: zip | csv | sgs | xml | texto)
 baixar() {
-  local url="$1" destino="$2" tipo="$3" tmp efetiva
+  local url="$1" destino="$2" tipo="$3" fixo="${4:-}" tmp efetiva
 
   dominio_permitido "$url" || erro "domínio fora da lista permitida: $url"
+  if atual "$destino" "$fixo"; then
+    log "já baixado, pulando: $destino"
+    return 0
+  fi
   if [[ "${LISTAR:-0}" == 1 ]]; then log "baixaria: $url -> $destino"; return 0; fi
   checar_espaco
 
@@ -132,6 +157,10 @@ baixar() {
       if head -c 512 "$tmp" | grep -qiE '<(!doctype|html|head|body)'; then
         erro "recebi uma página HTML em vez de dados: $url"
       fi ;;
+    sgs)
+      # o Banco Central às vezes responde 200 com uma mensagem de erro em JSON
+      head -n 1 "$tmp" | grep -qiE '^\W?"?data"?;"?valor"?' ||
+        erro "resposta do Banco Central não é a tabela esperada ($(head -c 200 "$tmp")): $url" ;;
     xml)
       head -c 512 "$tmp" | grep -q '<' || erro "resposta não é XML: $url" ;;
   esac
@@ -187,22 +216,35 @@ listar_diretorio() (
 # --- fontes ------------------------------------------------------------------------
 fonte_cambio() {
   log "Banco Central: dólar (série $BCB_SERIE_DOLAR) e IPCA (série $BCB_SERIE_IPCA)"
-  local pasta="$BRUTOS/bcb" serie ini fim ano_fim
+  local pasta="$BRUTOS/bcb" serie ini fim ano_fim data_fim fixo
   mkdir -p -- "$pasta"
   ano_fim="$(date +%Y)"
+  # remove arquivos da versão anterior do script (sgs_SERIE_INICIO_FIM.csv)
+  find "$pasta" -maxdepth 1 -type f -regextype posix-extended \
+       -regex '.*/sgs_[0-9]+_[0-9]{4}_[0-9]{4}\.csv' -print -delete >&2
   for serie in "$BCB_SERIE_DOLAR" "$BCB_SERIE_IPCA"; do
-    # a API limita cada consulta a 10 anos
+    # a API limita cada consulta a 10 anos e recusa data final no futuro
     for (( ini = ANO_INICIAL; ini <= ano_fim; ini += 10 )); do
       fim=$(( ini + 9 > ano_fim ? ano_fim : ini + 9 ))
-      baixar "https://api.bcb.gov.br/dados/serie/bcdata.sgs.${serie}/dados?formato=csv&dataInicial=01/01/${ini}&dataFinal=31/12/${fim}" \
-             "$pasta/sgs_${serie}_${ini}_${fim}.csv" csv
+      if (( fim < ano_fim )); then
+        data_fim="31/12/${fim}"; fixo=fixo         # bloco encerrado
+      else
+        data_fim="$(date +%d/%m/%Y)"; fixo=""      # bloco do ano corrente
+      fi
+      baixar "https://api.bcb.gov.br/dados/serie/bcdata.sgs.${serie}/dados?formato=csv&dataInicial=01/01/${ini}&dataFinal=${data_fim}" \
+             "$pasta/sgs_${serie}_${ini}.csv" sgs "$fixo"
     done
   done
 }
 
 fonte_ibama() {
   log "Ibama: autos de infração e termos de embargo"
-  local pasta="$BRUTOS/ibama"
+  local pasta="$BRUTOS/ibama" pronto="$BASE/dados/ibama_autos_uf_ano.csv"
+  # os brutos são apagados depois de processados; o que conta é o resumo
+  if atual "$pronto" && atual "$BASE/dados/ibama_embargos_uf_ano.csv"; then
+    log "Ibama já processado há menos de $VALIDADE_DIAS dias, pulando ($pronto)"
+    return 0
+  fi
   mkdir -p -- "$pasta"
   baixar "$IBAMA_AUTOS"    "$pasta/auto_infracao_csv.zip" zip
   baixar "$IBAMA_EMBARGOS" "$pasta/termo_de_embargo.csv"  csv
@@ -219,19 +261,26 @@ fonte_ibama() {
 
 fonte_queimadas() {
   log "INPE Queimadas: focos anuais (satélite de referência)"
-  local pasta="$BRUTOS/queimadas" subdir arquivo achou=0
+  local pasta="$BRUTOS/queimadas" subdir arquivo achou=0 fixo ano
   mkdir -p -- "$pasta"
   while IFS= read -r subdir; do
     [[ "$subdir" =~ $QUEIMADAS_PADRAO_SUBDIR ]] || continue
     while IFS= read -r arquivo; do
       [[ "$arquivo" =~ $QUEIMADAS_PADRAO_ARQUIVO ]] || continue
       achou=1
-      [[ -s "$pasta/$arquivo" ]] && { log "já existe: $arquivo"; continue; }
+      # anos encerrados não mudam; o ano corrente é renovado
+      ano="$(grep -oE '[0-9]{4}' <<< "$arquivo" | tail -1)"
+      fixo=""; (( ano < $(date +%Y) )) && fixo=fixo
       if [[ "$arquivo" == *.zip ]]; then
-        baixar "${QUEIMADAS_DIR}${subdir}${arquivo}" "$pasta/$arquivo" zip
-        [[ "${LISTAR:-0}" == 1 ]] || descompactar_seguro "$pasta/$arquivo" "$pasta/csv"
+        atual "$pasta/$arquivo" "$fixo" && [[ -d "$pasta/csv_$ano" ]] &&
+          { log "já baixado, pulando: $arquivo"; continue; }
+        baixar "${QUEIMADAS_DIR}${subdir}${arquivo}" "$pasta/$arquivo" zip "$fixo"
+        if [[ "${LISTAR:-0}" != 1 ]]; then
+          rm -rf -- "$pasta/csv_$ano"                 # troca a versão antiga
+          descompactar_seguro "$pasta/$arquivo" "$pasta/csv_$ano"
+        fi
       else
-        baixar "${QUEIMADAS_DIR}${subdir}${arquivo}" "$pasta/$arquivo" csv
+        baixar "${QUEIMADAS_DIR}${subdir}${arquivo}" "$pasta/$arquivo" csv "$fixo"
       fi
     done < <(listar_diretorio "${QUEIMADAS_DIR}${subdir}")
   done < <(listar_diretorio "$QUEIMADAS_DIR")
@@ -247,6 +296,14 @@ fonte_deter() {
   log "INPE DETER Amazônia (WFS do TerraBrasilis)"
   local pasta="$BRUTOS/deter" camada="" c total inicio campos geom
   mkdir -p -- "$pasta"
+
+  # o DETER é baixado como um conjunto: as páginas só valem juntas
+  if atual "$pasta/.completo"; then
+    log "DETER baixado há menos de $VALIDADE_DIAS dias, pulando"
+    return 0
+  fi
+  [[ "${LISTAR:-0}" == 1 ]] || rm -f -- "$pasta"/deter_*.csv "$pasta/.completo"
+  local FORCAR=1                    # dentro do conjunto, baixa tudo de novo
 
   baixar "${DETER_WFS}?service=WFS&version=2.0.0&request=GetCapabilities" \
          "$pasta/capabilities.xml" xml
@@ -282,6 +339,7 @@ fonte_deter() {
     baixar "${DETER_WFS}?service=WFS&version=2.0.0&request=GetFeature&typeName=${camada}&propertyName=${campos}&outputFormat=csv&count=${DETER_POR_PAGINA}&startIndex=${inicio}&sortBy=${ordem}" \
            "$pasta/deter_$(printf '%07d' "$inicio").csv" csv
   done
+  date -u '+%FT%TZ' > "$pasta/.completo"
 }
 
 # --- principal -----------------------------------------------------------------------
@@ -305,6 +363,7 @@ for arg in "$@"; do
   case "$arg" in
     --manter-brutos) MANTER_BRUTOS=1 ;;
     --listar)        LISTAR=1 ;;
+    --forcar)        FORCAR=1 ;;
     cambio|ibama|queimadas|deter) FONTES+=("$arg") ;;
     *) erro "argumento desconhecido: $arg" ;;
   esac
