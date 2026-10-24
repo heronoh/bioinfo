@@ -479,20 +479,15 @@ install.packages(c("gganimate", "gifski", "tidyr"))
 
 library("gganimate")
 
-# região de cada estado, para colorir as barras
-regioes <- c(AC = "Norte", AM = "Norte", AP = "Norte", PA = "Norte",
-             RO = "Norte", RR = "Norte", TO = "Norte",
-             AL = "Nordeste", BA = "Nordeste", CE = "Nordeste", MA = "Nordeste",
-             PB = "Nordeste", PE = "Nordeste", PI = "Nordeste", RN = "Nordeste",
-             SE = "Nordeste",
-             DF = "Centro-Oeste", GO = "Centro-Oeste", MS = "Centro-Oeste",
-             MT = "Centro-Oeste",
-             ES = "Sudeste", MG = "Sudeste", RJ = "Sudeste", SP = "Sudeste",
-             PR = "Sul", RS = "Sul", SC = "Sul")
-
-cores_regioes <- c("Norte" = "#1f6f43", "Nordeste" = "#d9805f",
-                   "Centro-Oeste" = "#c9a227", "Sudeste" = "#3f8fb5",
-                   "Sul" = "#8e6bb8")
+# cores dos mandatos: cada presidente tem uma cor, e mandatos da mesma
+# pessoa aparecem em tons diferentes da mesma cor
+cores_mandatos <- c("Sarney"    = "#8c6d31", "Collor"   = "#e6ab02",
+                    "Itamar"    = "#e7298a",
+                    "FHC I"     = "#9ecae1", "FHC II"   = "#3182bd",
+                    "Lula I"    = "#a1d99b", "Lula II"  = "#41ab5d",
+                    "Dilma I"   = "#bcbddc", "Dilma II" = "#756bb1",
+                    "Temer"     = "#969696", "Bolsonaro" = "#f16913",
+                    "Lula III"  = "#005a32")
 
 # presidente em 1º de julho de cada ano
 presidente_do_ano <- function(anos) {
@@ -511,11 +506,53 @@ corrida <- veg %>%
   group_by(ano) %>%
   mutate(posicao = rank(-perda_km2, ties.method = "first")) %>%
   ungroup() %>%
-  filter(posicao <= 12) %>%
-  mutate(regiao = regioes[uf])
+  filter(posicao <= 12)
 
 # vetor com o nome do presidente, usando o ano como nome
 presidentes <- setNames(presidente_do_ano(1985:2025), 1985:2025)
+
+# perda de cada estado em cada ano, atribuída ao presidente em 1º de julho
+perda_anual <- veg %>%
+  group_by(uf, ano) %>%
+  summarise(vegetacao_nativa_ha = sum(vegetacao_nativa_ha), .groups = "drop") %>%
+  arrange(uf, ano) %>%
+  group_by(uf) %>%
+  mutate(perda_ano_km2 = (lag(vegetacao_nativa_ha) - vegetacao_nativa_ha) / 100,
+         perda_ano_km2 = coalesce(perda_ano_km2, 0)) %>%   # 1985 não tem ano anterior
+  ungroup() %>%
+  mutate(mandato = presidentes[as.character(ano)])
+
+# blocos das barras: para cada ano da animação (ano) e cada estado do top 12,
+# soma a perda de cada mandato até aquele ano e empilha os mandatos em ordem
+blocos <- corrida %>%
+  select(ano, uf, posicao) %>%
+  inner_join(perda_anual %>% select(uf, ano_perda = ano, mandato, perda_ano_km2),
+             by = "uf", relationship = "many-to-many") %>%
+  filter(ano_perda <= ano) %>%
+  mutate(mandato = factor(mandato, levels = names(cores_mandatos))) %>%
+  group_by(ano, uf, posicao, mandato) %>%
+  summarise(perda_mandato = sum(perda_ano_km2), .groups = "drop") %>%
+  # mandatos que ainda não começaram entram com perda zero, no fim da barra:
+  # assim o gganimate já "conhece" o bloco e o faz crescer suavemente
+  tidyr::complete(tidyr::nesting(ano, uf, posicao), mandato,
+                  fill = list(perda_mandato = 0)) %>%
+  arrange(ano, uf, mandato) %>%
+  group_by(ano, uf) %>%
+  mutate(fim    = cumsum(perda_mandato),     # onde o bloco termina
+         inicio = fim - perda_mandato) %>%    # onde o bloco começa
+  ungroup() %>%
+  # mandato em que o estado GANHOU vegetação: bloco claro, recuando a barra
+  mutate(transparencia = ifelse(perda_mandato < 0, 0.25, 0.95))
+
+blocos %>% filter(ano == 2025, uf == "MT", perda_mandato != 0)
+
+# fim visível de cada barra (onde vai o número): quando a barra recua,
+# o bloco mais longo vai além do total, e o número fica depois dele
+corrida <- corrida %>%
+  left_join(blocos %>%
+              group_by(ano, uf) %>%
+              summarise(fim_barra = max(pmax(inicio, fim)), .groups = "drop"),
+            by = c("ano", "uf"))
 
 # anos da pandemia (também em 1º de julho), para o destaque em vermelho
 anos <- 1985:2025
@@ -573,6 +610,21 @@ camadas_inset <- function(corrida,
     filter(ano_inset == ano) %>%
     mutate(texto = paste0("resta ", porcentagem(1 - fracao),
                           " · perdida ", porcentagem(fracao)))
+
+  # trocas de governo: uma linha por quadro (ano) e mandato
+  largura <- (dir_inset - esq_inset) / length(perda_brasil$ano)
+  transicoes <- expand.grid(ano = caixa$ano, i = seq_len(nrow(mandatos))) %>%
+    left_join(caixa %>% select(ano, M), by = "ano") %>%
+    mutate(rotulo     = mandatos$rotulo[i],
+           inicio     = pmax(mandatos$inicio_ano[i], min(perda_brasil$ano)),
+           horizontal = M * (esq_inset + (inicio - min(perda_brasil$ano)) * largura),
+           # a linha aparece quando o mandato começa e fica até o fim
+           linha = ifelse(inicio <= ano + 0.5 & inicio > min(perda_brasil$ano) + 0.5, 0.8, 0),
+           # o nome aparece no início do mandato e some depois de 2 anos
+           nome  = ifelse(presidentes[as.character(ano)] == rotulo &
+                          ano + 0.5 < inicio + 2, 1, 0),
+           # perto do fim do mini-gráfico, o nome fica à esquerda da linha
+           lado  = ifelse(inicio > 2013, 1.08, -0.08))
   list(
     # fundo verde: a vegetação nativa de 1985 inteira (100%)
     geom_rect(data = caixa,
@@ -598,34 +650,54 @@ camadas_inset <- function(corrida,
               hjust = 0, size = 3.3, colour = "grey30", inherit.aes = FALSE),
     geom_text(data = caixa,
               aes(x = base_inset + 0.3, y = M * dir_inset, label = "2025"),
-              hjust = 1, size = 3.3, colour = "grey30", inherit.aes = FALSE)
+              hjust = 1, size = 3.3, colour = "grey30", inherit.aes = FALSE),
+    # linha em cada troca de governo, que aparece quando a animação chega lá
+    geom_segment(data = transicoes,
+                 aes(x = topo_inset, xend = base_inset,
+                     y = horizontal, yend = horizontal,
+                     alpha = linha, group = rotulo),
+                 colour = "grey20", linewidth = 0.4, inherit.aes = FALSE),
+    # nome do presidente, que aparece junto com a linha e some depois
+    geom_text(data = transicoes,
+              aes(x = topo_inset + (base_inset - topo_inset) * 0.55,
+                  y = horizontal, label = rotulo,
+                  alpha = nome, hjust = lado, group = rotulo),
+              size = 3.8, fontface = "bold", colour = "grey10",
+              inherit.aes = FALSE),
+    scale_alpha_identity()
   )
 }
 
 ### Construindo a animação ----
 
 animacao <- corrida %>%
-  ggplot(aes(x = posicao, group = uf, fill = regiao)) +
-  geom_tile(aes(y = perda_km2 / 2, height = perda_km2, width = 0.85),
-            alpha = 0.9) +
+  ggplot(aes(x = posicao, group = uf)) +
+  # barras em blocos, um por mandato
+  geom_rect(data = blocos,
+            aes(xmin = posicao - 0.425, xmax = posicao + 0.425,
+                ymin = inicio, ymax = fim,
+                fill = mandato, alpha = transparencia,
+                group = paste(uf, mandato)),
+            inherit.aes = FALSE) +
   # nome do estado, à esquerda da barra
   geom_text(aes(y = 0, label = paste0(estado, " ")),
             hjust = 1, size = 4.5) +
-  # valor, no fim da barra
-  geom_text(aes(y = perda_km2, label = paste0(" ", num(round(perda_km2)), " km²")),
+  # valor (perda total), no fim da barra
+  geom_text(aes(y = fim_barra, label = paste0(" ", num(round(perda_km2)), " km²")),
             hjust = 0, size = 4.5) +
   # mini-gráfico da vegetação nativa do Brasil
   camadas_inset(corrida) +
   coord_flip(clip = "off", expand = FALSE) +
   scale_x_reverse() +
   scale_y_continuous(labels = num) +
-  scale_fill_manual(values = cores_regioes) +
+  scale_fill_manual(values = cores_mandatos, drop = FALSE) +
+  guides(fill = guide_legend(nrow = 2)) +
   labs(title = "{closest_state}",
        subtitle = "Presidente: {presidentes[closest_state]}",
        tag = "{eventos[closest_state]}",   # destaque da pandemia
        y = "Perda acumulada de vegetação nativa desde 1985 (km²)",
        x = NULL,
-       fill = "Região",
+       fill = "Perda em cada\nmandato",
        caption = "Dados: MapBiomas, Coleção 11 · heronoh.github.io/bioinfo") +
   theme_minimal(base_size = 15) +
   theme(plot.title = element_text(size = 34, face = "bold"),
