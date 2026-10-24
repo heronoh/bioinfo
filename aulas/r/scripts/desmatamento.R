@@ -308,24 +308,34 @@ desmat_acum <- desmat %>%
 # conferindo um estado
 desmat_acum %>% filter(uf == "MT")
 
-### Gráfico de densidade do desmatamento acumulado ----
+### Desmatamento acumulado, ano a ano ----
 
-desmat_acum %>%
-  ggplot(aes(x = ano,
-             y = acumulado_km2,
-             fill = reorder(estado, acumulado_km2, FUN = max),
-             col = reorder(estado, acumulado_km2, FUN = max))) +
+acumulado_ano <- total_ano %>%
+  arrange(ano) %>%
+  mutate(acumulado_km2 = cumsum(desmatamento_km2),
+         variacao = case_when(
+           is.na(lag(desmatamento_km2))             ~ "1988 (média de 1977 a 1988)",
+           desmatamento_km2 > lag(desmatamento_km2) ~ "Taxa subiu",
+           TRUE                                     ~ "Taxa caiu ou se manteve"))
+
+acumulado_ano
+
+acumulado_ano %>%
+  ggplot(aes(x = ano, y = acumulado_km2,
+             fill = variacao, alpha = desmatamento_km2)) +
   mandatos_fundo() +
-  geom_density(stat = "identity", position = "stack", alpha = 0.85) +
-  scale_fill_viridis_d(option = "turbo") +
-  scale_color_viridis_d(option = "turbo") +
+  geom_col(width = 0.85) +
+  scale_fill_manual(values = c("Taxa caiu ou se manteve"     = "#c8a165",
+                               "Taxa subiu"                  = "#5b3412",
+                               "1988 (média de 1977 a 1988)" = "grey60")) +
+  scale_alpha_continuous(range = c(0.35, 1), labels = num) +
   scale_y_continuous(labels = num, expand = c(0, 0)) +
   scale_x_continuous(breaks = seq(1988, 2025, by = 1), expand = c(0, 0)) +
   labs(title = "Desmatamento acumulado na Amazônia Legal desde 1988",
        x = "Ano PRODES",
        y = "Área desmatada acumulada (km²)",
-       fill = "Estado",
-       col = "Estado") +
+       fill = "Em relação ao\nano anterior",
+       alpha = "Taxa anual\n(km²/ano)") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   mandatos_linhas()
@@ -473,21 +483,62 @@ veg_var %>%
 ## Extra: gráfico animado ----
 
 # instale apenas uma vez
-install.packages(c("gganimate", "gifski", "tidyr"))
+install.packages(c("gganimate", "gifski", "transformr", "tidyr"))
 
 ### Preparando os dados ----
 
 library("gganimate")
 
-# cores dos mandatos: cada presidente tem uma cor, e mandatos da mesma
-# pessoa aparecem em tons diferentes da mesma cor
-cores_mandatos <- c("Sarney"    = "#8c6d31", "Collor"   = "#e6ab02",
-                    "Itamar"    = "#e7298a",
+# partido pelo qual cada presidente foi eleito (como titular ou como vice)
+partido_mandato <- c("Sarney" = "PMDB", "Collor" = "PRN", "Itamar" = "PRN",
+                     "FHC I" = "PSDB", "FHC II" = "PSDB",
+                     "Lula I" = "PT", "Lula II" = "PT",
+                     "Dilma I" = "PT", "Dilma II" = "PT",
+                     "Temer" = "PMDB", "Bolsonaro" = "PSL", "Lula III" = "PT")
+
+# cores dos mandatos, em ordem cronológica: governos do mesmo partido
+# aparecem em tons da mesma paleta (PT em verdes, PSDB em azuis, PMDB em
+# amarelos, PRN em rosas, PSL em roxo)
+cores_mandatos <- c("Sarney"    = "#fec44f", "Collor"   = "#fa9fb5",
+                    "Itamar"    = "#c51b8a",
                     "FHC I"     = "#9ecae1", "FHC II"   = "#3182bd",
-                    "Lula I"    = "#a1d99b", "Lula II"  = "#41ab5d",
-                    "Dilma I"   = "#bcbddc", "Dilma II" = "#756bb1",
-                    "Temer"     = "#969696", "Bolsonaro" = "#f16913",
-                    "Lula III"  = "#005a32")
+                    "Lula I"    = "#c7e9c0", "Lula II"  = "#a1d99b",
+                    "Dilma I"   = "#74c476", "Dilma II" = "#31a354",
+                    "Temer"     = "#cc8a00", "Bolsonaro" = "#807dba",
+                    "Lula III"  = "#006d2c")
+
+# rótulos da legenda: "Lula I (PT)", "FHC II (PSDB)"...
+rotulos_mandatos <- paste0(names(cores_mandatos), " (",
+                           partido_mandato[names(cores_mandatos)], ")")
+names(rotulos_mandatos) <- names(cores_mandatos)
+
+# barras com cantos arredondados: cada retângulo vira um polígono de 20 pontos,
+# 5 em cada canto, formando um quarto de círculo. Como o eixo horizontal muda a
+# cada ano (por causa do view_follow), o raio na horizontal é uma pequena fração
+# da maior barra do ano. "grupo" identifica cada barra (ou bloco).
+arredondar <- function(dados, inicio, fim, grupo, largura = 0.425, raio = 0.16) {
+  maximo <- dados %>%
+    group_by(ano) %>%
+    summarise(M = max(abs({{ fim }}), 1))
+  angulos <- tibble::tibble(
+    ponto = 1:20,
+    canto = rep(1:4, each = 5),
+    t = c(seq(pi, 1.5 * pi, length.out = 5), seq(1.5 * pi, 2 * pi, length.out = 5),
+          seq(0, 0.5 * pi, length.out = 5),  seq(0.5 * pi, pi, length.out = 5)))
+  dados %>%
+    mutate(grupo = {{ grupo }},
+           h0 = pmin({{ inicio }}, {{ fim }}), h1 = pmax({{ inicio }}, {{ fim }}),
+           v0 = posicao - largura,            v1 = posicao + largura) %>%
+    left_join(maximo, by = "ano") %>%
+    mutate(rh = pmin(0.01 * M, (h1 - h0) / 2),    # raio na horizontal
+           rv = raio) %>%                         # raio na vertical
+    tidyr::crossing(angulos) %>%
+    mutate(cv = ifelse(canto %in% c(1, 4), v0 + rv, v1 - rv),   # centro do canto
+           ch = ifelse(canto %in% c(1, 2), h0 + rh, h1 - rh),
+           vertical   = cv + rv * cos(t),
+           horizontal = ch + rh * sin(t)) %>%
+    arrange(ano, grupo, ponto)
+}
 
 # presidente em 1º de julho de cada ano
 presidente_do_ano <- function(anos) {
@@ -571,7 +622,9 @@ corrida
 perda_brasil <- veg %>%
   group_by(ano) %>%
   summarise(vegetacao_nativa_ha = sum(vegetacao_nativa_ha)) %>%
-  mutate(fracao_perdida = 1 - vegetacao_nativa_ha / first(vegetacao_nativa_ha))
+  mutate(fracao_perdida = 1 - vegetacao_nativa_ha / first(vegetacao_nativa_ha),
+         restante_km2   = vegetacao_nativa_ha / 100,
+         perdida_km2    = (first(vegetacao_nativa_ha) - vegetacao_nativa_ha) / 100)
 
 perda_brasil %>% filter(ano %in% c(1985, 2005, 2025))
 
@@ -591,7 +644,8 @@ dados_inset <- function(corrida, topo_inset, base_inset, esq_inset, dir_inset) {
 
   expand.grid(ano = maximo$ano, ano_inset = anos_inset) %>%
     left_join(maximo, by = "ano") %>%
-    left_join(perda_brasil %>% select(ano_inset = ano, fracao_perdida),
+    left_join(perda_brasil %>% select(ano_inset = ano, fracao_perdida,
+                                      restante_km2, perdida_km2),
               by = "ano_inset") %>%
     # anos que ainda não chegaram ficam com altura zero
     mutate(fracao    = ifelse(ano_inset <= ano, fracao_perdida, 0),
@@ -608,8 +662,10 @@ camadas_inset <- function(corrida,
   inset <- dados_inset(corrida, topo_inset, base_inset, esq_inset, dir_inset)
   caixa <- inset %>%
     filter(ano_inset == ano) %>%
-    mutate(texto = paste0("resta ", porcentagem(1 - fracao),
-                          " · perdida ", porcentagem(fracao)))
+    mutate(texto = paste0("resta ", porcentagem(1 - fracao), " · ",
+                          num(round(restante_km2)), " km²\n",
+                          "perdida ", porcentagem(fracao), " · ",
+                          num(round(perdida_km2)), " km²"))
 
   # trocas de governo: uma linha por quadro (ano) e mandato
   largura <- (dir_inset - esq_inset) / length(perda_brasil$ano)
@@ -630,7 +686,7 @@ camadas_inset <- function(corrida,
     geom_rect(data = caixa,
               aes(xmin = topo_inset, xmax = base_inset,
                   ymin = M * esq_inset, ymax = M * dir_inset),
-              fill = "#d4ebd0", colour = "grey45", linewidth = 0.3,
+              fill = "#d4ebd0", colour = NA,
               inherit.aes = FALSE),
     # área perdida, acumulando ano a ano
     geom_rect(data = inset,
@@ -643,8 +699,9 @@ camadas_inset <- function(corrida,
                   label = "Vegetação nativa do Brasil (1985 = 100%)"),
               hjust = 0, size = 4, fontface = "bold", inherit.aes = FALSE),
     geom_text(data = caixa,
-              aes(x = topo_inset + 0.45, y = M * (esq_inset + 0.01), label = texto),
-              hjust = 0, size = 3.8, colour = "grey15", inherit.aes = FALSE),
+              aes(x = topo_inset + 0.15, y = M * (esq_inset + 0.01), label = texto),
+              hjust = 0, vjust = 1, size = 3.6, lineheight = 0.95,
+              colour = "grey15", inherit.aes = FALSE),
     geom_text(data = caixa,
               aes(x = base_inset + 0.3, y = M * esq_inset, label = "1985"),
               hjust = 0, size = 3.3, colour = "grey30", inherit.aes = FALSE),
@@ -672,13 +729,11 @@ camadas_inset <- function(corrida,
 
 animacao <- corrida %>%
   ggplot(aes(x = posicao, group = uf)) +
-  # barras em blocos, um por mandato
-  geom_rect(data = blocos,
-            aes(xmin = posicao - 0.425, xmax = posicao + 0.425,
-                ymin = inicio, ymax = fim,
-                fill = mandato, alpha = transparencia,
-                group = paste(uf, mandato)),
-            inherit.aes = FALSE) +
+  # barras em blocos arredondados, um por mandato
+  geom_polygon(data = arredondar(blocos, inicio, fim, paste(uf, mandato)),
+               aes(x = vertical, y = horizontal,
+                   fill = mandato, alpha = transparencia, group = grupo),
+               inherit.aes = FALSE) +
   # nome do estado, à esquerda da barra
   geom_text(aes(y = 0, label = paste0(estado, " ")),
             hjust = 1, size = 4.5) +
@@ -690,23 +745,25 @@ animacao <- corrida %>%
   coord_flip(clip = "off", expand = FALSE) +
   scale_x_reverse() +
   scale_y_continuous(labels = num) +
-  scale_fill_manual(values = cores_mandatos, drop = FALSE) +
-  guides(fill = guide_legend(nrow = 2)) +
-  labs(title = "{closest_state}",
+  scale_fill_manual(values = cores_mandatos, labels = rotulos_mandatos,
+                    drop = FALSE) +
+  guides(fill = guide_legend(nrow = 3)) +
+  labs(title = "Desmatamento no Brasil · {closest_state}",
        subtitle = "Presidente: {presidentes[closest_state]}",
        tag = "{eventos[closest_state]}",   # destaque da pandemia
        y = "Perda acumulada de vegetação nativa desde 1985 (km²)",
        x = NULL,
-       fill = "Perda em cada\nmandato",
+       fill = "Perda em cada\nmandato (partido)",
        caption = "Dados: MapBiomas, Coleção 11 · heronoh.github.io/bioinfo") +
   theme_minimal(base_size = 15) +
-  theme(plot.title = element_text(size = 34, face = "bold"),
+  theme(plot.title = element_text(size = 26, face = "bold"),
         plot.subtitle = element_text(size = 18),
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
         panel.grid.major.y = element_blank(),
         panel.grid.minor = element_blank(),
         legend.position = "bottom",
+        legend.text = element_text(size = 11),
         # o "tag" vai no canto superior direito, em vermelho escuro
         plot.tag = element_text(colour = cor_pandemia, face = "bold",
                                 size = 17, hjust = 1, lineheight = 0.9),
@@ -800,8 +857,9 @@ corrida_partidos %>% count(partido, sort = TRUE)
 
 animacao_partidos <- corrida_partidos %>%
   ggplot(aes(x = posicao, group = uf, fill = cor_partido)) +
-  geom_tile(aes(y = perda_km2 / 2, height = perda_km2, width = 0.85),
-            alpha = 0.9) +
+  geom_polygon(data = arredondar(corrida_partidos, 0, perda_km2, uf),
+               aes(x = vertical, y = horizontal, group = grupo),
+               alpha = 0.9) +
   geom_text(aes(y = 0, label = paste0(estado, " ")),
             hjust = 1, size = 4.5) +
   geom_text(aes(y = perda_km2,
@@ -814,7 +872,7 @@ animacao_partidos <- corrida_partidos %>%
   scale_y_continuous(labels = num) +
   scale_fill_manual(values = cores_partidos, drop = FALSE) +
   guides(fill = guide_legend(nrow = 2)) +
-  labs(title = "{closest_state}",
+  labs(title = "Desmatamento no Brasil · {closest_state}",
        subtitle = "Presidente: {presidentes[closest_state]}",
        tag = "{eventos[closest_state]}",
        y = "Perda acumulada de vegetação nativa desde 2007 (km²)",
@@ -822,7 +880,7 @@ animacao_partidos <- corrida_partidos %>%
        fill = "Partido do\ngovernador",
        caption = "Dados: MapBiomas, Coleção 11; partido pelo qual o governador foi eleito (2006 a 2022) · heronoh.github.io/bioinfo") +
   theme_minimal(base_size = 15) +
-  theme(plot.title = element_text(size = 34, face = "bold"),
+  theme(plot.title = element_text(size = 26, face = "bold"),
         plot.subtitle = element_text(size = 18),
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
