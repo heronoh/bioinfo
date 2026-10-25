@@ -621,6 +621,37 @@ ggplot(deter_uf, aes(x = DETER, y = PRODES)) +
        caption = "Fonte: DETER e PRODES/INPE, anos PRODES 2017 em diante.")
 ```
 
+A mesma relação, agora com a **forma** indicando o estado e a **cor** indicando o ano, para ver se a relação muda ao longo do tempo. O teste é a correlação de Pearson entre os logaritmos das duas áreas.
+
+```{r deter-uf-ano, fig.height=6.5}
+teste <- cor.test(log10(deter_uf$DETER + 1), log10(deter_uf$PRODES + 1), method = "pearson")
+formata_p <- function(p) if (p < 0.001) "p < 0,001" else paste0("p = ", format(signif(p, 2), decimal.mark = ","))
+texto_teste <- paste0("r = ", format(round(teste$estimate, 3), decimal.mark = ","),
+                      "   R² = ", format(round(teste$estimate^2, 3), decimal.mark = ","),
+                      "   ", formata_p(teste$p.value),
+                      "   n = ", nrow(deter_uf))
+
+ggplot(deter_uf, aes(x = DETER, y = PRODES)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey50") +
+  geom_smooth(method = "lm", formula = y ~ x, colour = "grey20", fill = "grey80",
+              linewidth = 0.6) +
+  geom_point(aes(shape = uf, colour = ano), size = 2.8, stroke = 1) +
+  annotate("label", x = min(deter_uf$DETER), y = max(deter_uf$PRODES), label = texto_teste,
+           hjust = 0, vjust = 1, size = 3.8, fill = "white", label.size = 0.2) +
+  scale_x_log10(labels = num) +
+  scale_y_log10(labels = num) +
+  scale_shape_manual(values = c(15, 16, 17, 18, 0, 1, 2, 5, 6), name = "UF") +
+  scale_colour_viridis_c(option = "plasma", end = 0.9, name = "ano PRODES",
+                         breaks = seq(2017, ultimo_prodes, 3)) +
+  guides(shape = guide_legend(override.aes = list(size = 3, colour = "grey30"))) +
+  labs(title = "DETER x PRODES por estado e ano",
+       subtitle = "linha contínua: regressão linear (escala log), com intervalo de 95%; tracejada: valores iguais",
+       x = "alertas de desmatamento DETER (km², escala log)",
+       y = "desmatamento PRODES (km², escala log)",
+       caption = paste0("Fonte: DETER e PRODES/INPE, anos PRODES 2017 a ", ultimo_prodes,
+                        " (", ultimo_prodes, " = estimativa). Correlação de Pearson entre log10(km² + 1)."))
+```
+
 # 11. Próximos dados
 
 Para os temas que queremos cruzar, estas são as fontes candidatas. Cada uma entra no painel (`dados/painel_longo.csv`) com as mesmas chaves: estado, bioma, ano, variável, valor, unidade e fonte.
