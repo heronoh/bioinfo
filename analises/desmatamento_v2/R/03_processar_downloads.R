@@ -10,6 +10,8 @@
 #                            para "US$ de 2025" (ver nota abaixo)
 #   queimadas_focos_uf.csv   focos de calor (satélite de referência) por
 #                            UF, bioma e ano
+#   deter_alertas_mun.csv    o mesmo por município e ano PRODES
+#   deter_alertas_mes.csv    o mesmo por UF, classe, ano e mês
 #   deter_alertas_uf.csv     área (km²) e n de alertas DETER por UF, classe,
 #                            ano civil e ano PRODES (ago–jul)
 #
@@ -153,8 +155,11 @@ if (length(arqs_deter)) {
   message("DETER: ", antes, " linhas -> ", nrow(deter), " alertas (removidas ",
           antes - nrow(deter), " cópias com os mesmos dados)")
 
+  col_mun <- intersect(c("mun_geocod", "geocode", "geocodibge"), names(deter))[1]
   deter <- deter %>%
     transmute(uf     = sigla_uf(uf),
+              mun_geocod = if (!is.na(col_mun)) .data[[col_mun]] else NA_character_,
+              municipio  = if ("municipality" %in% names(.)) municipality else NA_character_,
               classe = if ("classname" %in% names(.)) classname else "Todas",
               data   = as.Date(substr(.data[[col_data]], 1, 10)),
               area   = as.numeric(.data[[col_area]])) %>%
@@ -168,6 +173,21 @@ if (length(arqs_deter)) {
     summarise(alertas = n(), area_km2 = sum(area, na.rm = TRUE), .groups = "drop")
   write.csv(resumo, file.path(saida, "deter_alertas_uf.csv"), row.names = FALSE,
             fileEncoding = "UTF-8")
+
+  # por município (código IBGE de 7 dígitos) e ano PRODES
+  deter %>%
+    filter(!is.na(mun_geocod), mun_geocod != "") %>%
+    group_by(mun_geocod, municipio, uf, classe, ano_prodes) %>%
+    summarise(alertas = n(), area_km2 = sum(area, na.rm = TRUE), .groups = "drop") %>%
+    write.csv(file.path(saida, "deter_alertas_mun.csv"), row.names = FALSE,
+              fileEncoding = "UTF-8")
+
+  # por mês (para ver mudanças de tendência dentro dos mandatos)
+  deter %>%
+    group_by(uf, classe, ano, mes) %>%
+    summarise(alertas = n(), area_km2 = sum(area, na.rm = TRUE), .groups = "drop") %>%
+    write.csv(file.path(saida, "deter_alertas_mes.csv"), row.names = FALSE,
+              fileEncoding = "UTF-8")
   message("DETER: ", nrow(deter), " alertas (", min(deter$data), " a ", max(deter$data),
           ") -> ", nrow(resumo), " linhas")
 }

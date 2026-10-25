@@ -15,7 +15,11 @@ Rscript analises/desmatamento_v2/R/02_painel.R                         # junta t
 | `cambio`   | Banco Central, SGS 1 e 433      | `cambio_ipca_anual.csv` (US$ de 2025)             |
 | `ibama`    | Ibama, dados abertos            | `ibama_autos_uf_ano.csv`, `ibama_embargos_uf_ano.csv` |
 | `queimadas`| INPE, focos anuais (sat. ref.)  | `queimadas_focos_uf.csv`                          |
-| `deter`    | INPE TerraBrasilis (WFS)        | `deter_alertas_uf.csv`                            |
+| `deter`    | INPE TerraBrasilis (WFS)        | `deter_alertas_uf.csv`, `_mun.csv`, `_mes.csv`    |
+| `prodes_mun` (só quando pedida) | INPE TerraBrasilis, polígonos PRODES (WFS) | `prodes_mun.csv`, `deter_prodes_mun.csv` (via `R/05_municipios.R`) |
+
+Terras indígenas x focos: `Rscript analises/desmatamento_v2/R/06_terras_indigenas.R` (usa os focos já
+baixados e os limites da Funai, estados e biomas pelo pacote `geobr`, do IPEA; precisa dos pacotes `sf` e `geobr`).
 
 O que já foi baixado não é baixado de novo: anos encerrados nunca se repetem, e o que muda
 (ano corrente, Ibama, DETER) só é renovado depois de 7 dias (`VALIDADE_DIAS=30 bash ...`

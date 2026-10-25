@@ -5,7 +5,8 @@
 # Uso (a partir da raiz do repositório, como usuário comum, NUNCA como root):
 #   bash analises/desmatamento_v2/baixar/baixar_dados.sh [fontes...] [opções]
 #
-# Fontes:   cambio  ibama  queimadas  deter      (padrão: todas)
+# Fontes:   cambio  ibama  queimadas  deter  prodes_mun   (padrão: as quatro primeiras;
+#           prodes_mun só quando pedida, por ser grande)
 # Opções:   --manter-brutos   não apaga os arquivos brutos do Ibama depois de
 #                             processados (eles contêm nomes e CPF/CNPJ)
 #           --listar          só mostra o que seria baixado, sem baixar
@@ -64,7 +65,10 @@ QUEIMADAS_PADRAO_ARQUIVO='^focos.*[0-9]{4}\.(zip|csv)$'
 
 DETER_WFS="https://terrabrasilis.dpi.inpe.br/geoserver/deter-amz/wfs"
 DETER_CAMADAS_CANDIDATAS=("deter_public" "deter_amz")
-DETER_POR_PAGINA=10000
+WFS_POR_PAGINA=10000
+
+PRODES_WFS="https://terrabrasilis.dpi.inpe.br/geoserver/prodes-legal-amz/wfs"
+PRODES_CAMADAS_CANDIDATAS=("yearly_deforestation" "yearly_deforestation_biome")
 
 IBAMA_AUTOS="https://stibamadadosabertosprd.blob.core.windows.net/dados-abertos/dados/SIFISC/auto_infracao/auto_infracao/auto_infracao_csv.zip"
 IBAMA_EMBARGOS="https://stibamadadosabertosprd.blob.core.windows.net/dados-abertos/dados/TERMOS_DE_EMBARGO/TERMO_EMBARGO/termo_de_embargo.csv"
@@ -307,65 +311,83 @@ baixar_focos() {
   fi
 }
 
-fonte_deter() {
-  log "INPE DETER Amazônia (WFS do TerraBrasilis)"
-  local pasta="$BRUTOS/deter" camada="" c total inicio campos geom
+# baixar_wfs ROTULO PASTA URL_WFS PREFIXO COM_GEOMETRIA(0/1) CAMADAS_CANDIDATAS...
+# Baixa uma camada inteira de um GeoServer (WFS 2.0) em páginas CSV.
+baixar_wfs() {
+  local rotulo="$1" pasta="$2" wfs="$3" prefixo="$4" com_geom="$5"; shift 5
+  local camada="" c total inicio campos geom ordem
   mkdir -p -- "$pasta"
 
-  # o DETER é baixado como um conjunto: as páginas só valem juntas
+  # a camada é baixada como um conjunto: as páginas só valem juntas
   if atual "$pasta/.completo"; then
-    log "DETER baixado há menos de $VALIDADE_DIAS dias, pulando"
+    log "$rotulo baixado há menos de $VALIDADE_DIAS dias, pulando"
     return 0
   fi
-  [[ "${LISTAR:-0}" == 1 ]] || rm -f -- "$pasta"/deter_*.csv "$pasta/.completo"
+  [[ "${LISTAR:-0}" == 1 ]] || rm -f -- "$pasta/${prefixo}"_*.csv "$pasta/.completo"
   local FORCAR=1                    # dentro do conjunto, baixa tudo de novo
 
-  baixar "${DETER_WFS}?service=WFS&version=2.0.0&request=GetCapabilities" \
-         "$pasta/capabilities.xml" xml
+  baixar "${wfs}?service=WFS&version=2.0.0&request=GetCapabilities" "$pasta/capabilities.xml" xml
   [[ "${LISTAR:-0}" == 1 ]] && return 0
-  for c in "${DETER_CAMADAS_CANDIDATAS[@]}"; do
-    if grep -qE "<(wfs:)?Name>(deter-amz:)?${c}</(wfs:)?Name>" "$pasta/capabilities.xml"; then
+  for c in "$@"; do
+    if grep -qE "<(wfs:)?Name>([A-Za-z0-9_-]+:)?${c}</(wfs:)?Name>" "$pasta/capabilities.xml"; then
       camada="$c"; break
     fi
   done
-  [[ -n "$camada" ]] || erro "nenhuma camada DETER pública encontrada (veja $pasta/capabilities.xml)"
+  if [[ -z "$camada" ]]; then
+    log "camadas disponíveis:"
+    grep -oE "<(wfs:)?Name>[^<]+</(wfs:)?Name>" "$pasta/capabilities.xml" | sed -E 's/<[^>]+>//g; s/^/    /' >&2
+    erro "nenhuma das camadas esperadas ($*) foi encontrada em $wfs"
+  fi
   log "camada: $camada"
 
-  # campos da camada, sem a geometria (deixa o arquivo muito menor)
-  baixar "${DETER_WFS}?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=${camada}" \
+  baixar "${wfs}?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=${camada}" \
          "$pasta/campos.xsd" xml
   geom="$(grep -oE 'name="[A-Za-z0-9_]+"[^>]*type="gml:[A-Za-z]+PropertyType"' "$pasta/campos.xsd" |
           sed -E 's/^name="([^"]+)".*/\1/' | head -1 || true)"
   campos="$(grep -oE '<xsd:element [^>]*name="[A-Za-z0-9_]+"' "$pasta/campos.xsd" |
-            sed -E 's/.*name="([^"]+)"/\1/' | grep -vxF -e "${geom:-__nenhum__}" -e "$camada" | paste -sd, -)"
+            sed -E 's/.*name="([^"]+)"/\1/' | grep -vxF -e "$camada" |
+            { if [[ "$com_geom" == 1 ]]; then cat; else grep -vxF -e "${geom:-__nenhum__}"; fi; } |
+            paste -sd, -)"
   [[ -n "$campos" ]] || erro "não consegui ler os campos da camada (veja $pasta/campos.xsd)"
-  log "campos: $campos (sem a geometria '${geom:-?}')"
+  log "campos: $campos"
   # ordenação estável para a paginação: gid, se existir; senão o primeiro campo
-  local ordem="${campos%%,*}"
+  ordem="${campos%%,*}"
   [[ ",$campos," == *",gid,"* ]] && ordem="gid"
 
-  baixar "${DETER_WFS}?service=WFS&version=2.0.0&request=GetFeature&typeName=${camada}&resultType=hits" \
+  baixar "${wfs}?service=WFS&version=2.0.0&request=GetFeature&typeName=${camada}&resultType=hits" \
          "$pasta/total.xml" xml
   total="$(grep -oE 'numberMatched="[0-9]+"' "$pasta/total.xml" | grep -oE '[0-9]+' | head -1)"
-  [[ "$total" =~ ^[0-9]+$ ]] || erro "não consegui ler o total de alertas"
-  log "total de alertas: $total"
+  [[ "$total" =~ ^[0-9]+$ ]] || erro "não consegui ler o total de registros"
+  log "total de registros: $total"
 
   # o servidor pode devolver menos linhas que o pedido (limite por consulta):
   # a próxima página começa onde a anterior realmente terminou
   local arq linhas recebidos=0
   inicio=0
   while (( inicio < total )); do
-    arq="$pasta/deter_$(printf '%07d' "$inicio").csv"
-    baixar "${DETER_WFS}?service=WFS&version=2.0.0&request=GetFeature&typeName=${camada}&propertyName=${campos}&outputFormat=csv&count=${DETER_POR_PAGINA}&startIndex=${inicio}&sortBy=${ordem}" \
+    arq="$pasta/${prefixo}_$(printf '%07d' "$inicio").csv"
+    baixar "${wfs}?service=WFS&version=2.0.0&request=GetFeature&typeName=${camada}&propertyName=${campos}&outputFormat=csv&count=${WFS_POR_PAGINA}&startIndex=${inicio}&sortBy=${ordem}" \
            "$arq" csv
     linhas=$(( $(wc -l < "$arq") - 1 ))
     (( linhas > 0 )) || { log "página vazia em $inicio; encerrando"; break; }
     inicio=$(( inicio + linhas ))
     recebidos=$(( recebidos + linhas ))
   done
-  log "DETER: $recebidos de $total alertas recebidos"
-  (( recebidos >= total )) || erro "faltaram $(( total - recebidos )) alertas; rode de novo"
+  log "$rotulo: $recebidos de $total registros recebidos"
+  (( recebidos >= total )) || erro "faltaram $(( total - recebidos )) registros; rode de novo"
   date -u '+%FT%TZ' > "$pasta/.completo"
+}
+
+fonte_deter() {
+  log "INPE DETER Amazônia (WFS do TerraBrasilis)"
+  baixar_wfs DETER "$BRUTOS/deter" "$DETER_WFS" deter 0 "${DETER_CAMADAS_CANDIDATAS[@]}"
+}
+
+fonte_prodes_mun() {
+  # polígonos anuais do PRODES, com geometria, para somar o desmatamento por
+  # município (R/05_municipios.R). Arquivo grande: centenas de MB.
+  log "INPE PRODES Amazônia Legal, polígonos anuais (WFS do TerraBrasilis)"
+  baixar_wfs PRODES "$BRUTOS/prodes_vetor" "$PRODES_WFS" prodes 1 "${PRODES_CAMADAS_CANDIDATAS[@]}"
 }
 
 # --- principal -----------------------------------------------------------------------
@@ -390,7 +412,7 @@ for arg in "$@"; do
     --manter-brutos) MANTER_BRUTOS=1 ;;
     --listar)        LISTAR=1 ;;
     --forcar)        FORCAR=1 ;;
-    cambio|ibama|queimadas|deter) FONTES+=("$arg") ;;
+    cambio|ibama|queimadas|deter|prodes_mun) FONTES+=("$arg") ;;
     *) erro "argumento desconhecido: $arg" ;;
   esac
 done
