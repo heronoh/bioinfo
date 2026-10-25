@@ -350,10 +350,21 @@ fonte_deter() {
   [[ "$total" =~ ^[0-9]+$ ]] || erro "não consegui ler o total de alertas"
   log "total de alertas: $total"
 
-  for (( inicio = 0; inicio < total; inicio += DETER_POR_PAGINA )); do
+  # o servidor pode devolver menos linhas que o pedido (limite por consulta):
+  # a próxima página começa onde a anterior realmente terminou
+  local arq linhas recebidos=0
+  inicio=0
+  while (( inicio < total )); do
+    arq="$pasta/deter_$(printf '%07d' "$inicio").csv"
     baixar "${DETER_WFS}?service=WFS&version=2.0.0&request=GetFeature&typeName=${camada}&propertyName=${campos}&outputFormat=csv&count=${DETER_POR_PAGINA}&startIndex=${inicio}&sortBy=${ordem}" \
-           "$pasta/deter_$(printf '%07d' "$inicio").csv" csv
+           "$arq" csv
+    linhas=$(( $(wc -l < "$arq") - 1 ))
+    (( linhas > 0 )) || { log "página vazia em $inicio; encerrando"; break; }
+    inicio=$(( inicio + linhas ))
+    recebidos=$(( recebidos + linhas ))
   done
+  log "DETER: $recebidos de $total alertas recebidos"
+  (( recebidos >= total )) || erro "faltaram $(( total - recebidos )) alertas; rode de novo"
   date -u '+%FT%TZ' > "$pasta/.completo"
 }
 
