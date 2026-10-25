@@ -1,6 +1,17 @@
 ---
 title: 'Desmatamento no Brasil: v2 (exploração)'
+lang: pt-BR
 description: "Brainstorm de visualizações: desmatamento por mandato, o que substitui a vegetação nativa, mineração, uso da terra, concordância entre fontes e cenários até 2030"
+format:
+  html: default
+  typst:
+    papersize: a4
+    margin:
+      x: 1.5cm
+      y: 1.8cm
+    fig-format: png
+    fig-dpi: 200
+    keep-typ: false
 execute:
   echo: false
   warning: false
@@ -28,10 +39,21 @@ painel <- read.csv("analises/desmatamento_v2/dados/painel_longo.csv",
                    fileEncoding = "UTF-8") %>% tibble::tibble()
 
 tema <- theme_minimal(base_size = 13) +
-  theme(plot.title = element_text(face = "bold"),
-        plot.caption = element_text(colour = "grey40", size = 9),
+  theme(plot.title = element_text(face = "bold", size = 14),
+        plot.subtitle = element_text(size = 10.5, colour = "grey25"),
+        plot.caption = element_text(colour = "grey35", size = 7.5, hjust = 0, lineheight = 1.1),
+        plot.caption.position = "plot", plot.title.position = "plot",
         panel.grid.minor = element_blank())
 theme_set(tema)
+
+# títulos e subtítulos longos quebram em várias linhas automaticamente
+labs <- function(...) {
+  a <- list(...)
+  largura <- c(title = 90, subtitle = 125)
+  for (k in intersect(names(largura), names(a)))
+    if (is.character(a[[k]])) a[[k]] <- paste(strwrap(a[[k]], largura[[k]]), collapse = "\n")
+  do.call(ggplot2::labs, a)
+}
 
 cores_biomas <- c("Amazônia" = "#1f6f43", "Cerrado" = "#c9a227",
                   "Mata Atlântica" = "#5fa35f", "Caatinga" = "#d9805f",
@@ -50,6 +72,7 @@ Esta é a versão de exploração (v2) da prática de desmatamento. A versão pu
 Os mandatos têm durações diferentes, então comparamos a **taxa média anual** de cada um. Cada ano PRODES (agosto a julho) é atribuído a quem governou a maior parte dele. O valor de 1988, que é a média de 1977 a 1988, fica de fora.
 
 ```{r prodes-mandato, fig.height=5.5}
+#| fig-cap: !expr legenda('Média anual da área desmatada por corte raso na Amazônia Legal (PRODES) em cada mandato presidencial.', 'prodes', 'prodes2026', 'mandatos')
 prodes <- painel %>%
   filter(variavel == "desmatamento_prodes") %>%
   group_by(ano, situacao) %>%
@@ -74,14 +97,17 @@ ggplot(por_mandato, aes(x = mandato, y = media, fill = mandato)) +
   scale_fill_manual(values = cores_mandatos, guide = "none") +
   scale_x_discrete(labels = function(x) paste0(x, "\n(", partido_mandato[x], ")")) +
   scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.15))) +
-  labs(title = "Taxa média anual de desmatamento na Amazônia Legal, por mandato",
+  labs(title = "Área desmatada por corte raso na Amazônia Legal (km²/ano, PRODES/INPE): média anual por mandato",
+       subtitle = "Cada ano PRODES (agosto a julho) atribuído a quem governou a maior parte dele; 1989 em diante. Entre parênteses: partido e nº de anos",
        x = NULL, y = "km² por ano (média do mandato)",
-       caption = "Fonte: PRODES/INPE. * Lula III inclui a estimativa de 2026 (3.335 km², divulgada em 16/10/2026).")
+       caption = fontes("prodes", "prodes2026", "mandatos",
+                        nota = "* Lula III inclui a estimativa PRODES 2026 (3.335 km²)."))
 ```
 
 O PRODES mede só o corte raso na Amazônia Legal. O MapBiomas permite olhar **todos os biomas**. Aqui usamos a **conversão bruta** de vegetação nativa em usos humanos (pastagem, agricultura, mineração, área urbana), calculada a partir das transições ano a ano, que é uma medida mais próxima de "desmatamento" do que a simples variação da área de vegetação.
 
 ```{r mapbiomas-mandato, fig.height=7}
+#| fig-cap: !expr legenda('Conversão bruta de vegetação nativa em usos humanos, por bioma, em cada mandato.', 'mapbiomas', 'mandatos')
 conversao <- painel %>%
   filter(startsWith(variavel, "conversao_para_")) %>%
   mutate(destino = sub("conversao_para_", "", variavel))
@@ -99,9 +125,11 @@ ggplot(conv_mandato, aes(x = mandato, y = media, fill = mandato)) +
   facet_wrap(~ bioma, scales = "free_y", ncol = 2) +
   scale_fill_manual(values = cores_mandatos, guide = "none") +
   scale_y_continuous(labels = num) +
-  labs(title = "Conversão anual média de vegetação nativa em usos humanos, por mandato",
+  labs(title = "Vegetação nativa convertida em usos humanos (km²/ano, MapBiomas Col. 11): média anual por mandato e bioma",
+       subtitle = "Conversão bruta: soma das transições anuais de vegetação nativa para pastagem, agricultura, mineração, área urbana e outros usos",
        x = NULL, y = "km² por ano (média do mandato)",
-       caption = "Fonte: MapBiomas Coleção 11 (transições anuais). Cada ano atribuído ao presidente em 1º de julho.") +
+       caption = fontes("mapbiomas", "mandatos",
+                        nota = "Cada ano atribuído ao presidente em exercício em 1º de julho. Escalas verticais diferentes entre biomas.")) +
   theme(axis.text.x = element_text(angle = 60, hjust = 1, size = 8))
 ```
 
@@ -110,6 +138,7 @@ ggplot(conv_mandato, aes(x = mandato, y = media, fill = mandato)) +
 Para onde vai a área desmatada? Abaixo do zero está o movimento contrário: áreas de uso humano que voltaram a ser vegetação nativa (**regeneração**).
 
 ```{r destinos, fig.height=6.5}
+#| fig-cap: !expr legenda('Conversão e regeneração anuais de vegetação nativa no Brasil, por uso da terra.', 'mapbiomas', 'mandatos')
 cores_destinos <- c("Pastagem" = "#c8a165", "Mosaico de usos" = "#e6cf8b",
                     "Soja" = "#8c2d04", "Outras lavouras" = "#d95f0e",
                     "Silvicultura" = "#7a5195", "Mineração" = "#333333",
@@ -137,14 +166,17 @@ ggplot(transicao_brasil, aes(x = ano, y = km2)) +
   scale_fill_manual(values = cores_destinos) +
   scale_y_continuous(labels = num) +
   scale_x_continuous(breaks = seq(1986, 2025, by = 1), expand = c(0, 0)) +
-  labs(title = "Vegetação nativa convertida (acima de zero) e regenerada (abaixo), Brasil",
+  labs(title = "Vegetação nativa convertida (acima de zero) e regenerada (abaixo de zero) no Brasil (km²/ano, MapBiomas Col. 11)",
+       subtitle = "Cores: uso da terra que substituiu a vegetação (acima) ou que voltou a ser vegetação (abaixo)",
        x = NULL, y = "km² por ano", fill = "Uso",
-       caption = "Fonte: MapBiomas Coleção 11. A linha preta é o saldo (conversão menos regeneração).") +
+       caption = fontes("mapbiomas", "mandatos",
+                        nota = "A linha preta é o saldo (conversão menos regeneração).")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8)) +
   mandatos_linhas(de = 1986)
 ```
 
 ```{r destinos-bioma, fig.height=8}
+#| fig-cap: !expr legenda('Uso da terra que substituiu a vegetação nativa convertida, por bioma e ano.', 'mapbiomas')
 conversao %>%
   group_by(bioma, ano, destino) %>%
   summarise(km2 = sum(valor) / 100, .groups = "drop") %>%
@@ -154,9 +186,9 @@ conversao %>%
   facet_wrap(~ bioma, scales = "free_y", ncol = 2) +
   scale_fill_manual(values = cores_destinos) +
   scale_y_continuous(labels = num) +
-  labs(title = "Destino da vegetação nativa convertida, por bioma",
+  labs(title = "Destino da vegetação nativa convertida, por bioma (km²/ano, MapBiomas Col. 11)",
        x = NULL, y = "km² por ano", fill = "Uso",
-       caption = "Fonte: MapBiomas Coleção 11.")
+       caption = fontes("mapbiomas", nota = "Escalas verticais diferentes entre biomas."))
 ```
 
 # 3. Mineração e garimpo
@@ -164,6 +196,7 @@ conversao %>%
 O MapBiomas mapeia a área de mineração, que inclui tanto a mineração industrial quanto o garimpo. Separar os dois exige a coleção específica de mineração do MapBiomas (próximo passo).
 
 ```{r mineracao, fig.height=6}
+#| fig-cap: !expr legenda('Área de mineração por estado ao longo do tempo.', 'mapbiomas', 'mandatos')
 mineracao <- painel %>%
   filter(variavel == "area_Mineração") %>%
   group_by(uf, ano) %>%
@@ -185,8 +218,10 @@ mineracao %>%
   scale_colour_viridis_d(option = "turbo", guide = "none") +
   scale_y_continuous(labels = num) +
   scale_x_continuous(breaks = seq(1985, 2025, by = 1), expand = expansion(add = c(0, 2))) +
-  labs(title = "Área de mineração (industrial e garimpo), estados com mais área em 2025",
-       x = NULL, y = "km²", caption = "Fonte: MapBiomas Coleção 11.") +
+  labs(title = "Área ocupada por mineração industrial e garimpo (km², MapBiomas Col. 11): estados com mais área em 2025",
+       subtitle = "Área total ocupada por mineração em cada ano, nos estados com mais área em 2025",
+       x = NULL, y = "km²",
+       caption = fontes("mapbiomas", "mandatos", nota = "Classe 30 (mineração) do MapBiomas, que inclui mineração industrial e garimpo.")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8)) +
   mandatos_linhas(de = 1985)
 ```
@@ -194,6 +229,7 @@ mineracao %>%
 # 4. Pastagem e soja
 
 ```{r pastagem-soja, fig.height=5.5}
+#| fig-cap: !expr legenda('Evolução das áreas de vegetação nativa, pastagem e soja nos biomas Amazônia e Cerrado.', 'mapbiomas')
 painel %>%
   filter(variavel %in% c("area_Pastagem", "area_Soja", "area_Vegetação nativa florestal",
                          "area_Vegetação nativa campestre"),
@@ -207,9 +243,9 @@ painel %>%
   facet_wrap(~ bioma, scales = "free_y") +
   scale_colour_manual(values = c("Vegetação nativa" = "#1f6f43",
                                  "Pastagem" = "#c8a165", "Soja" = "#8c2d04")) +
-  labs(title = "Vegetação nativa, pastagem e soja na Amazônia e no Cerrado",
+  labs(title = "Área de vegetação nativa, pastagem e soja na Amazônia e no Cerrado (milhões de ha, MapBiomas Col. 11)",
        x = NULL, y = "milhões de hectares", colour = NULL,
-       caption = "Fonte: MapBiomas Coleção 11.")
+       caption = fontes("mapbiomas"))
 ```
 
 # 5. As duas fontes concordam?
@@ -217,6 +253,7 @@ painel %>%
 Antes de cruzar dados, vale testar se as fontes contam a mesma história. Cada ponto é um estado em um ano: no eixo horizontal, o desmatamento do PRODES; no vertical, a conversão de **vegetação florestal** do bioma Amazônia segundo o MapBiomas.
 
 ```{r concordancia, fig.height=6}
+#| fig-cap: !expr legenda('Concordância entre as duas fontes de desmatamento, por estado e ano.', 'prodes', 'mapbiomas')
 mapb_floresta <- painel %>%
   filter(startsWith(variavel, "conversao_para_"), bioma == "Amazônia") %>%
   group_by(uf, ano) %>%
@@ -241,13 +278,14 @@ ggplot(comparacao, aes(x = prodes_km2, y = mapbiomas_km2, colour = periodo)) +
   scale_x_log10(labels = num) +
   scale_y_log10(labels = num) +
   scale_colour_viridis_d(option = "plasma", end = 0.9) +
-  labs(title = "PRODES x MapBiomas: desmatamento por estado e ano (Amazônia)",
+  labs(title = "Área desmatada (km²/ano, PRODES/INPE) × vegetação nativa convertida (km²/ano, MapBiomas Col. 11), por estado e ano",
        subtitle = paste0("Correlação (log): r = ", round(r_pearson, 2),
                          " · Spearman: ρ = ", round(r_spearman, 2),
                          " · linha tracejada: valores iguais"),
        x = "PRODES (km²/ano, escala log)", y = "MapBiomas, conversão no bioma Amazônia (km²/ano, log)",
        colour = "Período",
-       caption = "O PRODES cobre a Amazônia Legal; o MapBiomas, o bioma Amazônia. MA, MT e TO têm partes no Cerrado.")
+       caption = fontes("prodes", "mapbiomas",
+                        nota = "O PRODES cobre a Amazônia Legal; o MapBiomas aqui é o bioma Amazônia. MA, MT e TO têm partes no Cerrado."))
 ```
 
 # 6. Cenários até 2030
@@ -255,6 +293,7 @@ ggplot(comparacao, aes(x = prodes_km2, y = mapbiomas_km2, colour = periodo)) +
 Projeção da taxa PRODES para o próximo mandato (2027–2030), partindo da estimativa de 2026. São **cenários**, não previsões: cada um depende de uma premissa explícita.
 
 ```{r cenarios, fig.height=7}
+#| fig-cap: !expr legenda('Taxa anual de desmatamento observada e quatro cenários para o próximo mandato.', 'prodes', 'prodes2026')
 base <- prodes %>% filter(ano == 2026) %>% pull(km2)          # estimativa 2026
 taxa_2018 <- prodes %>% filter(ano == 2018) %>% pull(km2)
 taxa_2022 <- prodes %>% filter(ano == 2022) %>% pull(km2)
@@ -297,18 +336,21 @@ ggplot() +
   scale_colour_manual(values = cores_cenarios) +
   scale_y_continuous(labels = num, limits = c(0, NA)) +
   scale_x_continuous(breaks = seq(2005, 2030, by = 1)) +
-  labs(title = "Taxa de desmatamento na Amazônia Legal: histórico e cenários até 2030",
+  labs(title = "Área desmatada por corte raso na Amazônia Legal (km²/ano, PRODES/INPE): histórico e cenários para 2027–2030",
        x = NULL, y = "km² por ano", colour = "Cenário", alpha = "PRODES",
-       caption = paste0("Fonte: PRODES/INPE. Ritmo 2019–2022: ",
-                        porcentagem(crescimento_2019_2022), " ao ano (de ",
-                        num(taxa_2018), " km² em 2018 para ", num(taxa_2022),
-                        " km² em 2022).\nMédia 2019–2022: ", num(round(media_2019_2022)), " km²/ano.")) +
+       caption = fontes("prodes", "prodes2026",
+                        nota = paste0("Cenários são projeções, não previsões. Ritmo 2019–2022: ",
+                                      porcentagem(crescimento_2019_2022), " ao ano (de ",
+                                      num(taxa_2018), " km² em 2018 para ", num(taxa_2022),
+                                      " km² em 2022); média 2019–2022: ", num(round(media_2019_2022)),
+                                      " km²/ano. O governo Jair Bolsonaro (2019–2022) é usado como baliza para um governo Flávio Bolsonaro (premissa, não dado)."))) +
   guides(colour = guide_legend(ncol = 2, order = 1), alpha = guide_legend(ncol = 1, order = 2)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         legend.position = "bottom", legend.box = "vertical")
 ```
 
 ```{r cenarios-acumulado, fig.height=4.5}
+#| fig-cap: !expr legenda('Área total desmatada em quatro anos em cada cenário.', 'prodes', 'prodes2026')
 acumulado <- cenarios %>%
   group_by(cenario) %>%
   summarise(km2 = sum(km2), .groups = "drop")
@@ -318,9 +360,9 @@ ggplot(acumulado, aes(x = km2, y = reorder(cenario, km2), fill = cenario)) +
   geom_text(aes(label = paste(num(round(km2)), "km²")), hjust = -0.1, size = 4) +
   scale_fill_manual(values = cores_cenarios, guide = "none") +
   scale_x_continuous(labels = num, expand = expansion(mult = c(0, 0.2))) +
-  labs(title = "Área desmatada na Amazônia Legal entre 2027 e 2030, por cenário",
+  labs(title = "Área desmatada acumulada na Amazônia Legal em 2027–2030, por cenário (km², projeção a partir do PRODES/INPE)",
        x = "km² acumulados em 4 anos", y = NULL,
-       caption = "Soma das taxas anuais projetadas para 2027 a 2030.")
+       caption = fontes("prodes", "prodes2026", nota = "Soma das taxas anuais projetadas para 2027 a 2030 em cada cenário."))
 ```
 
 # 7. Fogo
@@ -328,6 +370,7 @@ ggplot(acumulado, aes(x = km2, y = reorder(cenario, km2), fill = cenario)) +
 O INPE conta **focos de calor** detectados por satélite. Para comparar anos diferentes, usamos só o **satélite de referência** (o mesmo sensor ao longo da série, desde 2003). Focos não são área queimada: um incêndio grande gera muitos focos, e um pequeno pode não ser visto. A série serve para comparar tendências.
 
 ```{r focos-ano, fig.height=6.5}
+#| fig-cap: !expr legenda('Número anual de focos de calor por bioma.', 'queimadas', 'mandatos')
 focos <- read.csv("analises/desmatamento_v2/dados/queimadas_focos_uf.csv",
                   fileEncoding = "UTF-8") %>%
   filter(bioma %in% names(cores_biomas))
@@ -343,15 +386,17 @@ ggplot(focos_ano, aes(x = ano, y = focos, fill = bioma)) +
   scale_fill_manual(values = cores_biomas, name = NULL) +
   scale_x_continuous(breaks = 2003:2025, expand = c(0, 0)) +
   scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.05))) +
-  labs(title = "Focos de calor por bioma",
+  labs(title = "Focos de calor detectados por satélite, por bioma (focos/ano, INPE Programa Queimadas)",
+       subtitle = "Satélite de referência (mesmo sensor em toda a série); focos indicam fogo ativo, não área queimada",
        x = NULL, y = "focos por ano",
-       caption = "Fonte: INPE, Programa Queimadas (satélite de referência).") +
+       caption = fontes("queimadas", "mandatos")) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5),
         legend.position = "bottom") +
   mandatos_linhas(2003, 2025)
 ```
 
 ```{r focos-mandato, fig.height=7}
+#| fig-cap: !expr legenda('Média anual de focos de calor em cada mandato, por bioma.', 'queimadas', 'mandatos')
 focos_mandato <- focos_ano %>%
   mutate(mandato = presidente_do_ano(ano)) %>%
   group_by(bioma, mandato) %>%
@@ -364,9 +409,10 @@ ggplot(focos_mandato, aes(x = mandato, y = media, fill = mandato)) +
   facet_wrap(~ bioma, scales = "free_y", ncol = 2) +
   scale_fill_manual(values = cores_mandatos, guide = "none") +
   scale_y_continuous(labels = num) +
-  labs(title = "Média anual de focos de calor por mandato e bioma",
+  labs(title = "Focos de calor (focos/ano, INPE Programa Queimadas): média anual por mandato e bioma",
        x = NULL, y = "focos por ano (média do mandato)",
-       caption = "Fonte: INPE, Programa Queimadas (satélite de referência). Lula I começa em 2003, primeiro ano da série; Lula III vai até 2025.") +
+       caption = fontes("queimadas", "mandatos",
+                        nota = "Lula I começa em 2003, primeiro ano da série do satélite de referência; Lula III vai até 2025. Escalas verticais diferentes entre biomas.")) +
   theme(axis.text.x = element_text(angle = 60, hjust = 1, size = 8))
 ```
 
@@ -377,6 +423,7 @@ O fogo depende muito do clima: anos de seca forte (como os de El Niño, 2015–2
 Os autos de infração do Ibama mostram a **atividade de fiscalização**: quantas infrações foram autuadas e o valor das multas aplicadas. Para o desmatamento, o tipo mais relevante é **Flora** (corte, queima e comércio ilegal de madeira e vegetação). Os valores estão em **US$ de 2025** (reais corrigidos pelo IPCA e convertidos pelo dólar médio de 2025), a partir de 1995, primeiro ano inteiro do real. A série começa em **1998**: antes disso, quase não há autos de flora nos dados abertos (provavelmente registros antigos não digitalizados), e até 2004 boa parte dos autos não traz valor de multa. Multa aplicada não é multa paga: grande parte é contestada ou nunca cobrada.
 
 ```{r ibama-autos, fig.height=6.5}
+#| fig-cap: !expr legenda('Número de autos de infração contra a flora e valor das multas aplicadas pelo Ibama.', 'ibama_autos', 'bcb', 'mandatos')
 amazonia_legal <- c("AC", "AM", "AP", "MA", "MT", "PA", "RO", "RR", "TO")
 ano_atual <- as.integer(format(Sys.Date(), "%Y"))
 
@@ -403,10 +450,11 @@ ggplot(autos_ano, aes(x = ano, y = valor, fill = regiao)) +
                     name = NULL) +
   scale_x_continuous(breaks = 1998:(ano_atual - 1), expand = c(0, 0)) +
   scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.05))) +
-  labs(title = "Fiscalização do Ibama sobre a flora",
+  labs(title = "Autos de infração contra a flora (nº/ano, Ibama) e multas aplicadas (milhões de US$ de 2025, Ibama + BCB)",
        x = NULL, y = NULL,
-       caption = paste0("Fonte: Ibama, autos de infração (dados abertos), sem autos cancelados; ",
-                        "BCB (IPCA e dólar). Ano corrente (", ano_atual, ") fora por estar incompleto.")) +
+       caption = fontes("ibama_autos", "bcb", "mandatos",
+                        nota = paste0("Autos do tipo Flora, sem autos cancelados, 1998 em diante. Multa aplicada não é multa paga. ",
+                                      "Ano corrente (", ano_atual, ") fora por estar incompleto."))) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5),
         legend.position = "bottom") +
   mandatos_linhas(1998, ano_atual - 1, dentro = TRUE, tamanho = 2.6,
@@ -414,6 +462,7 @@ ggplot(autos_ano, aes(x = ano, y = valor, fill = regiao)) +
 ```
 
 ```{r ibama-embargos, fig.height=5}
+#| fig-cap: !expr legenda('Área total embargada pelo Ibama em cada ano.', 'ibama_embargos', 'mandatos')
 embargos <- read.csv("analises/desmatamento_v2/dados/ibama_embargos_uf_ano.csv",
                      fileEncoding = "UTF-8") %>%
   filter(ano >= 1995, ano < ano_atual) %>%          # descarta datas digitadas erradas
@@ -425,14 +474,17 @@ ggplot(embargos, aes(x = ano, y = area_km2)) +
   geom_col(width = 0.8, fill = "#8c510a") +
   scale_x_continuous(breaks = 1995:(ano_atual - 1), expand = c(0, 0)) +
   scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.05))) +
-  labs(title = "Área embargada pelo Ibama por ano",
+  labs(title = "Área embargada pelo Ibama (km²/ano, termos de embargo)",
+       subtitle = "Soma das áreas dos termos de embargo lavrados em cada ano, em todo o Brasil",
        x = NULL, y = "km² embargados",
-       caption = "Fonte: Ibama, termos de embargo (dados abertos). Todos os estados e tipos de infração.") +
+       caption = fontes("ibama_embargos", "mandatos",
+                        nota = paste0("Todos os estados e tipos de infração; ano do termo de embargo. Ano corrente (", ano_atual, ") fora por estar incompleto."))) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
   mandatos_linhas(1995, ano_atual - 1)
 ```
 
 ```{r fiscalizacao-mandato, fig.height=5}
+#| fig-cap: !expr legenda('Indicadores de fiscalização do Ibama, média anual por mandato.', 'ibama_autos', 'ibama_embargos', 'bcb', 'mandatos')
 fisc_mandato <- autos %>%
   filter(regiao == "Amazônia Legal") %>%
   group_by(ano) %>%
@@ -451,9 +503,10 @@ ggplot(fisc_mandato, aes(x = mandato, y = media, fill = mandato)) +
   facet_wrap(~ medida, scales = "free_y", ncol = 3) +
   scale_fill_manual(values = cores_mandatos, guide = "none") +
   scale_y_continuous(labels = num) +
-  labs(title = "Fiscalização: média anual por mandato",
+  labs(title = "Fiscalização ambiental (Ibama): média anual por mandato de autos, multas (US$ de 2025) e área embargada",
        x = NULL, y = NULL,
-       caption = "Fonte: Ibama (dados abertos); BCB. Cada ano atribuído ao presidente em 1º de julho; Série a partir de 1998 (FHC I com só 1998).") +
+       caption = fontes("ibama_autos", "ibama_embargos", "bcb", "mandatos",
+                        nota = "Cada ano atribuído ao presidente em exercício em 1º de julho. Série a partir de 1998 (FHC I tem só 1998).")) +
   theme(axis.text.x = element_text(angle = 60, hjust = 1, size = 8),
         strip.text = element_text(size = 9))
 ```
@@ -465,6 +518,7 @@ Fiscalizar mais reduz o desmatamento? A relação é de mão dupla: **mais desma
 Fazemos isso de dois jeitos. Com os **valores anuais**, a correlação mistura a relação entre as duas séries com as tendências de longo prazo de cada uma (as duas caíram em boa parte do período, por motivos que podem ser diferentes). Com as **variações de um ano para o outro**, a tendência sai da conta e sobra a pergunta: quando os autos sobem num estado, o desmatamento cai depois?
 
 ```{r fiscalizacao-defasagem, fig.height=7}
+#| fig-cap: !expr legenda('Correlação entre autos de infração e desmatamento em diferentes defasagens, por estado.', 'ibama_autos', 'prodes')
 prodes_uf <- painel %>%
   filter(variavel == "desmatamento_prodes", situacao == "consolidado") %>%
   select(uf, ano, desmat = valor)
@@ -507,9 +561,11 @@ ggplot(defasagens, aes(x = factor(k), y = r)) +
                                                       paste0(k, " ano(s) depois"),
                                                       paste0(abs(as.integer(k)), " ano(s) antes")))) +
   scale_y_continuous(limits = c(-1, 1)) +
-  labs(title = "Autos de infração (Flora) e desmatamento PRODES nos estados da Amazônia Legal",
+  labs(title = "Autos de infração contra a flora (nº/ano, Ibama) × área desmatada (km²/ano, PRODES/INPE): correlação com defasagem",
+       subtitle = "Correlação de Spearman calculada dentro de cada estado da Amazônia Legal, com o desmatamento medido antes, no mesmo ano ou depois dos autos",
        x = "desmatamento medido...", y = "correlação de Spearman",
-       caption = "Pontos verdes: estados; losango: média dos 9 estados. Autos do Ibama (1998 em diante) x PRODES/INPE consolidado.")
+       caption = fontes("ibama_autos", "prodes",
+                        nota = "Pontos verdes: estados (9); losango: média. Autos de 1998 em diante; PRODES consolidado (sem a estimativa 2026)."))
 ```
 
 ```{r fiscalizacao-tabela}
@@ -531,6 +587,7 @@ resumo_def %>%
 O **DETER** é o sistema de alertas do INPE: imagens de resolução mais baixa, analisadas quase em tempo real, para orientar a fiscalização. O **PRODES** é o mapeamento anual, mais detalhado, que dá a taxa oficial. Os dois usam o mesmo "ano PRODES" (agosto a julho). Aqui, o desmatamento do DETER soma as classes de corte raso, corte raso com vegetação e mineração; degradação, corte seletivo e cicatrizes de queimada são mostrados à parte.
 
 ```{r deter-prodes, fig.height=5.5}
+#| fig-cap: !expr legenda('Comparação anual entre a taxa PRODES e a área de alertas de desmatamento do DETER.', 'prodes', 'prodes2026', 'deter', 'mandatos')
 deter <- painel %>%
   filter(startsWith(variavel, "deter_")) %>%
   mutate(grupo = case_when(
@@ -561,10 +618,11 @@ comparacao %>%
   scale_fill_manual(values = c("DETER" = "#fdae61", "PRODES" = "#1f6f43"), name = NULL) +
   scale_x_continuous(breaks = comparacao$ano, expand = c(0, 0)) +
   scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.12))) +
-  labs(title = "Desmatamento na Amazônia Legal: alertas DETER e taxa PRODES",
+  labs(title = "Área desmatada por corte raso (km²/ano, PRODES/INPE) × área com alertas de desmatamento (km²/ano, DETER/INPE), Amazônia Legal",
+       subtitle = "DETER: corte raso, corte raso com vegetação e mineração. Acima das barras: PRODES ÷ DETER",
        x = "ano PRODES (agosto do ano anterior a julho)", y = "km²",
-       caption = paste0("Fonte: DETER e PRODES/INPE. Acima das barras: PRODES ÷ DETER. ",
-                        "PRODES ", ultimo_prodes, " é a estimativa divulgada em 16/10/2026.")) +
+       caption = fontes("prodes", "prodes2026", "deter", "mandatos",
+                        nota = paste0("PRODES ", ultimo_prodes, " é a estimativa divulgada em 16/10/2026."))) +
   theme(legend.position = "bottom") +
   mandatos_linhas(min(comparacao$ano), ultimo_prodes)
 ```
@@ -572,6 +630,7 @@ comparacao %>%
 O DETER enxerga menos que o PRODES (polígonos pequenos e áreas sob nuvem escapam), mas acompanha bem a **direção** da taxa. A razão PRODES ÷ DETER varia de ano a ano, por isso o DETER serve para antecipar a tendência, não o número exato.
 
 ```{r deter-classes, fig.height=6}
+#| fig-cap: !expr legenda('Área anual com alertas DETER, separada em desmatamento, degradação e cicatrizes de queimada.', 'deter', 'mandatos')
 deter %>%
   filter(!is.na(grupo), ano < max(ano)) %>%            # último ano PRODES ainda em curso
   group_by(ano, grupo) %>%
@@ -587,9 +646,10 @@ deter %>%
                                "Cicatriz de queimada" = "#d7301f"), guide = "none") +
   scale_x_continuous(breaks = 2017:ultimo_prodes, expand = c(0, 0)) +
   scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.08))) +
-  labs(title = "Área com alertas DETER por tipo, Amazônia Legal",
+  labs(title = "Área com alertas DETER/INPE por tipo na Amazônia Legal (km²/ano): desmatamento, degradação e cicatriz de queimada",
        x = "ano PRODES (agosto do ano anterior a julho)", y = "km²",
-       caption = "Fonte: DETER/INPE. Ano PRODES 2017 = ago/2016 a jul/2017 (início do DETER atual).") +
+       caption = fontes("deter", "mandatos",
+                        nota = "Ano PRODES 2017 = ago/2016 a jul/2017 (início do DETER atual). Desmatamento: corte raso, corte raso com vegetação e mineração; degradação: degradação e corte seletivo. Escalas verticais diferentes.")) +
   mandatos_linhas(2017, ultimo_prodes, dentro = TRUE, tamanho = 2.6,
                   so_no_painel = list(grupo = factor("Cicatriz de queimada")))
 ```
@@ -597,6 +657,7 @@ deter %>%
 O desmatamento caiu a partir de 2023, mas **degradação e fogo não acompanharam**: o ano PRODES 2025 (agosto de 2024 a julho de 2025), que inclui a temporada de seca extrema de 2024, tem a maior área de cicatrizes de queimada da série. Floresta degradada pelo fogo não entra na taxa de desmatamento do PRODES, mas perde carbono e biodiversidade e fica mais vulnerável a ser desmatada depois. Esse é um dos pontos que ambientalistas e cientistas destacam ao avaliar os números recentes.
 
 ```{r deter-uf, fig.height=6}
+#| fig-cap: !expr legenda('Relação entre DETER e PRODES para cada estado e ano, cor por estado.', 'prodes', 'prodes2026', 'deter')
 deter_uf <- painel %>%
   filter(variavel %in% c("deter_desmatamento_cr", "deter_desmatamento_veg", "deter_mineracao"),
          ano <= ultimo_prodes) %>%
@@ -613,17 +674,18 @@ ggplot(deter_uf, aes(x = DETER, y = PRODES)) +
   scale_x_log10(labels = num) +
   scale_y_log10(labels = num) +
   scale_colour_brewer(palette = "Set1", name = "UF") +
-  labs(title = "DETER x PRODES por estado e ano",
-       subtitle = paste0("correlação (escala log) = ", format(round(r_uf, 2), decimal.mark = ","),
+  labs(title = "Área desmatada (km²/ano, PRODES/INPE) × área com alertas de desmatamento (km²/ano, DETER/INPE), por estado e ano",
+       subtitle = paste0("correlação de Pearson entre os logaritmos = ", format(round(r_uf, 2), decimal.mark = ","),
                          "; linha tracejada: valores iguais"),
        x = "alertas de desmatamento DETER (km², escala log)",
        y = "desmatamento PRODES (km², escala log)",
-       caption = "Fonte: DETER e PRODES/INPE, anos PRODES 2017 em diante.")
+       caption = fontes("prodes", "prodes2026", "deter", nota = "Anos PRODES 2017 em diante; cada ponto é um estado em um ano."))
 ```
 
 A mesma relação, agora com a **forma** indicando o estado e a **cor** indicando o ano, para ver se a relação muda ao longo do tempo. O teste é a correlação de Pearson entre os logaritmos das duas áreas.
 
 ```{r deter-uf-ano, fig.height=6.5}
+#| fig-cap: !expr legenda('Relação entre DETER e PRODES para cada estado e ano, forma por estado e cor por ano.', 'prodes', 'prodes2026', 'deter')
 teste <- cor.test(log10(deter_uf$DETER + 1), log10(deter_uf$PRODES + 1), method = "pearson")
 formata_p <- function(p) if (p < 0.001) "p < 0,001" else paste0("p = ", format(signif(p, 2), decimal.mark = ","))
 texto_teste <- paste0("r = ", format(round(teste$estimate, 3), decimal.mark = ","),
@@ -644,12 +706,13 @@ ggplot(deter_uf, aes(x = DETER, y = PRODES)) +
   scale_colour_viridis_c(option = "plasma", end = 0.9, name = "ano PRODES",
                          breaks = seq(2017, ultimo_prodes, 3)) +
   guides(shape = guide_legend(override.aes = list(size = 3, colour = "grey30"))) +
-  labs(title = "DETER x PRODES por estado e ano",
-       subtitle = "linha contínua: regressão linear (escala log), com intervalo de 95%; tracejada: valores iguais",
+  labs(title = "Área desmatada (km²/ano, PRODES/INPE) × área com alertas de desmatamento (km²/ano, DETER/INPE), por estado e ano",
+       subtitle = "forma: estado; cor: ano PRODES. Linha contínua: regressão linear em escala log, com intervalo de 95%; tracejada: valores iguais",
        x = "alertas de desmatamento DETER (km², escala log)",
        y = "desmatamento PRODES (km², escala log)",
-       caption = paste0("Fonte: DETER e PRODES/INPE, anos PRODES 2017 a ", ultimo_prodes,
-                        " (", ultimo_prodes, " = estimativa). Correlação de Pearson entre log10(km² + 1)."))
+       caption = fontes("prodes", "prodes2026", "deter",
+                        nota = paste0("Anos PRODES 2017 a ", ultimo_prodes, " (", ultimo_prodes,
+                                      " = estimativa). r: correlação de Pearson entre log10(km² + 1); os anos de um mesmo estado não são independentes, então o p-valor é otimista.")))
 ```
 
 # 11. Próximos dados

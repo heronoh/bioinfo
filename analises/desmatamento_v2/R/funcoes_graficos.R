@@ -134,8 +134,10 @@ mandatos_linhas <- function(de = 1988, ate = 2025, dentro = FALSE, tamanho = 3,
     c(list(linhas, nomes), linhas_covid,
       list(nome_covid,
            coord_cartesian(clip = "off"),  # permite escrever fora da área do gráfico
-           theme(plot.title = element_text(margin = margin(b = 44)),
-                 plot.margin = margin(t = 48, r = 6, b = 6, l = 6))))
+           # os nomes ficam entre o subtítulo e o gráfico (todo gráfico com
+           # mandatos_linhas() acima do painel precisa de subtítulo)
+           theme(plot.subtitle = element_text(margin = margin(b = 46)),
+                 plot.margin = margin(t = 6, r = 6, b = 6, l = 6))))
   }
 }
 
@@ -161,3 +163,49 @@ cores_mandatos <- c("Sarney"    = "#fec44f", "Collor"   = "#fa9fb5",
                     "Dilma I"   = "#74c476", "Dilma II" = "#31a354",
                     "Temer"     = "#cc8a00", "Bolsonaro" = "#807dba",
                     "Lula III"  = "#006d2c")
+
+
+# --- referências das fontes, para rodapés e legendas ---------------------------
+# cada gráfico cita as fontes que usa: fontes("prodes", "mandatos", nota = "...")
+referencias <- list(
+  prodes = c("INPE. PRODES: taxas anuais de desmatamento por corte raso na Amazônia Legal, por estado (km²/ano).",
+             "https://terrabrasilis.dpi.inpe.br/downloads/"),
+  prodes2026 = c("INPE. Estimativa da taxa PRODES 2026 (ago/2025–jul/2026), divulgada em 16/10/2026.",
+                 NA),
+  deter = c("INPE. DETER Amazônia: alertas de desmatamento e degradação (camada deter-amz:deter_amz).",
+            "https://terrabrasilis.dpi.inpe.br/geoserver/deter-amz/wfs"),
+  mapbiomas = c("Projeto MapBiomas. Coleção 11 da série anual de mapas de cobertura e uso da terra do Brasil: estatísticas por bioma e estado (cobertura e transições).",
+                "https://brasil.mapbiomas.org/estatisticas/"),
+  queimadas = c("INPE. Programa Queimadas: focos de calor anuais detectados pelo satélite de referência.",
+                "https://dataserver-coids.inpe.br/queimadas/queimadas/focos/csv/anual/"),
+  ibama_autos = c("Ibama. Dados abertos: autos de infração (SIFISC).",
+                  "https://stibamadadosabertosprd.blob.core.windows.net/dados-abertos/dados/SIFISC/auto_infracao/auto_infracao/auto_infracao_csv.zip"),
+  ibama_embargos = c("Ibama. Dados abertos: termos de embargo.",
+                     "https://stibamadadosabertosprd.blob.core.windows.net/dados-abertos/dados/TERMOS_DE_EMBARGO/TERMO_EMBARGO/termo_de_embargo.csv"),
+  bcb = c("Banco Central do Brasil. SGS: série 1 (dólar comercial, venda, diário) e série 433 (IPCA, variação mensal). Valores corrigidos pelo IPCA para 2025 e convertidos pelo dólar médio de 2025.",
+          "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv"),
+  mandatos = c("Mandatos presidenciais: datas de posse e de término (Presidência da República). Pandemia de COVID-19: declaração da OMS (11/03/2020) até o fim da Emergência em Saúde Pública de Importância Nacional (Portaria GM/MS nº 913/2022, vigente em 22/05/2022).",
+               NA)
+)
+
+# rodapé do gráfico (texto simples, com as URLs por extenso)
+fontes <- function(..., nota = NULL, largura = 150) {
+  chaves <- c(...)
+  stopifnot(all(chaves %in% names(referencias)))
+  linhas <- vapply(seq_along(chaves), function(i) {
+    r <- referencias[[chaves[i]]]
+    paste0("[", i, "] ", r[1], if (!is.na(r[2])) paste0(" ", r[2]) else "")
+  }, character(1))
+  linhas <- c(if (!is.null(nota)) paste("Nota:", nota), "Fontes:", linhas)
+  paste(unlist(lapply(linhas, strwrap, width = largura, exdent = 4)), collapse = "\n")
+}
+
+# legenda da figura em markdown (links clicáveis no HTML e no PDF)
+legenda <- function(texto, ...) {
+  chaves <- c(...)
+  refs <- vapply(chaves, function(k) {
+    r <- referencias[[k]]
+    if (is.na(r[2])) r[1] else paste0(r[1], " <", r[2], ">")
+  }, character(1))
+  paste0(texto, " Fontes: ", paste(refs, collapse = " "))
+}
