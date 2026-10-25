@@ -21,6 +21,15 @@
 "conversao_para_Área urbana","ha/ano","MapBiomas Coleção 11","1986–2025",1960
 "desmatamento_prodes","km²","PRODES/INPE","1988–2025",342
 "desmatamento_prodes","km²","PRODES/INPE (estimativa de 16/10/2026)","2026–2026",9
+"deter_cicatriz_de_queimada","km² (ano PRODES)","DETER/INPE","2017–2027",91
+"deter_corte_seletivo","km² (ano PRODES)","DETER/INPE","2017–2017",1
+"deter_cs_desordenado","km² (ano PRODES)","DETER/INPE","2017–2027",66
+"deter_cs_geometrico","km² (ano PRODES)","DETER/INPE","2017–2027",43
+"deter_degradacao","km² (ano PRODES)","DETER/INPE","2017–2027",91
+"deter_desmatamento_cr","km² (ano PRODES)","DETER/INPE","2017–2027",98
+"deter_desmatamento_veg","km² (ano PRODES)","DETER/INPE","2017–2027",59
+"deter_mineracao","km² (ano PRODES)","DETER/INPE","2017–2027",47
+"focos_calor","focos/ano","INPE Programa Queimadas (satélite de referência)","2003–2025",1131
 "ibama_area_embargada","ha","Ibama (termos de embargo, dados abertos)","1987–2925",839
 "ibama_autos","autos/ano","Ibama (autos de infração, dados abertos)","1977–2026",1129
 "ibama_embargos","embargos/ano","Ibama (termos de embargo, dados abertos)","1987–2925",839

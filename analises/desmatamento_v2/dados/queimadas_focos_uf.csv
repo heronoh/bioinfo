@@ -1,0 +1,1132 @@
+"uf","bioma","ano","focos"
+"AC","Amazônia",2003,10523
+"AC","Amazônia",2004,7271
+"AC","Amazônia",2005,15993
+"AC","Amazônia",2006,6198
+"AC","Amazônia",2007,8549
+"AC","Amazônia",2008,5699
+"AC","Amazônia",2009,3511
+"AC","Amazônia",2010,8661
+"AC","Amazônia",2011,3191
+"AC","Amazônia",2012,4720
+"AC","Amazônia",2013,4980
+"AC","Amazônia",2014,4398
+"AC","Amazônia",2015,5779
+"AC","Amazônia",2016,7684
+"AC","Amazônia",2017,6295
+"AC","Amazônia",2018,6626
+"AC","Amazônia",2019,6802
+"AC","Amazônia",2020,9193
+"AC","Amazônia",2021,8828
+"AC","Amazônia",2022,11840
+"AC","Amazônia",2023,6562
+"AC","Amazônia",2024,8658
+"AC","Amazônia",2025,2184
+"AL","Caatinga",2003,151
+"AL","Caatinga",2004,58
+"AL","Caatinga",2005,73
+"AL","Caatinga",2006,70
+"AL","Caatinga",2007,76
+"AL","Caatinga",2008,122
+"AL","Caatinga",2009,122
+"AL","Caatinga",2010,103
+"AL","Caatinga",2011,77
+"AL","Caatinga",2012,118
+"AL","Caatinga",2013,61
+"AL","Caatinga",2014,44
+"AL","Caatinga",2015,53
+"AL","Caatinga",2016,53
+"AL","Caatinga",2017,28
+"AL","Caatinga",2018,27
+"AL","Caatinga",2019,28
+"AL","Caatinga",2020,19
+"AL","Caatinga",2021,56
+"AL","Caatinga",2022,32
+"AL","Caatinga",2023,60
+"AL","Caatinga",2024,58
+"AL","Caatinga",2025,93
+"AL","Mata Atlântica",2003,222
+"AL","Mata Atlântica",2004,175
+"AL","Mata Atlântica",2005,219
+"AL","Mata Atlântica",2006,198
+"AL","Mata Atlântica",2007,186
+"AL","Mata Atlântica",2008,287
+"AL","Mata Atlântica",2009,238
+"AL","Mata Atlântica",2010,196
+"AL","Mata Atlântica",2011,190
+"AL","Mata Atlântica",2012,259
+"AL","Mata Atlântica",2013,140
+"AL","Mata Atlântica",2014,121
+"AL","Mata Atlântica",2015,407
+"AL","Mata Atlântica",2016,335
+"AL","Mata Atlântica",2017,101
+"AL","Mata Atlântica",2018,174
+"AL","Mata Atlântica",2019,204
+"AL","Mata Atlântica",2020,140
+"AL","Mata Atlântica",2021,117
+"AL","Mata Atlântica",2022,108
+"AL","Mata Atlântica",2023,167
+"AL","Mata Atlântica",2024,227
+"AL","Mata Atlântica",2025,135
+"AM","Amazônia",2003,10191
+"AM","Amazônia",2004,8083
+"AM","Amazônia",2005,15644
+"AM","Amazônia",2006,11697
+"AM","Amazônia",2007,11293
+"AM","Amazônia",2008,6701
+"AM","Amazônia",2009,9280
+"AM","Amazônia",2010,12139
+"AM","Amazônia",2011,5028
+"AM","Amazônia",2012,9114
+"AM","Amazônia",2013,6512
+"AM","Amazônia",2014,9007
+"AM","Amazônia",2015,13419
+"AM","Amazônia",2016,11173
+"AM","Amazônia",2017,11685
+"AM","Amazônia",2018,11446
+"AM","Amazônia",2019,12676
+"AM","Amazônia",2020,16729
+"AM","Amazônia",2021,14848
+"AM","Amazônia",2022,21217
+"AM","Amazônia",2023,19601
+"AM","Amazônia",2024,25499
+"AM","Amazônia",2025,4545
+"AP","Amazônia",2003,2516
+"AP","Amazônia",2004,3413
+"AP","Amazônia",2005,2020
+"AP","Amazônia",2006,1665
+"AP","Amazônia",2007,1484
+"AP","Amazônia",2008,2153
+"AP","Amazônia",2009,2456
+"AP","Amazônia",2010,1000
+"AP","Amazônia",2011,1396
+"AP","Amazônia",2012,2518
+"AP","Amazônia",2013,1529
+"AP","Amazônia",2014,1848
+"AP","Amazônia",2015,2936
+"AP","Amazônia",2016,2595
+"AP","Amazônia",2017,1946
+"AP","Amazônia",2018,1206
+"AP","Amazônia",2019,1277
+"AP","Amazônia",2020,750
+"AP","Amazônia",2021,676
+"AP","Amazônia",2022,990
+"AP","Amazônia",2023,2552
+"AP","Amazônia",2024,2014
+"AP","Amazônia",2025,948
+"BA","Caatinga",2003,8125
+"BA","Caatinga",2004,8522
+"BA","Caatinga",2005,7374
+"BA","Caatinga",2006,4352
+"BA","Caatinga",2007,9657
+"BA","Caatinga",2008,9256
+"BA","Caatinga",2009,4223
+"BA","Caatinga",2010,5156
+"BA","Caatinga",2011,4011
+"BA","Caatinga",2012,4205
+"BA","Caatinga",2013,2682
+"BA","Caatinga",2014,1938
+"BA","Caatinga",2015,4681
+"BA","Caatinga",2016,2341
+"BA","Caatinga",2017,2458
+"BA","Caatinga",2018,1906
+"BA","Caatinga",2019,2089
+"BA","Caatinga",2020,2689
+"BA","Caatinga",2021,4025
+"BA","Caatinga",2022,3433
+"BA","Caatinga",2023,4745
+"BA","Caatinga",2024,3288
+"BA","Caatinga",2025,4268
+"BA","Cerrado",2003,6830
+"BA","Cerrado",2004,7414
+"BA","Cerrado",2005,8423
+"BA","Cerrado",2006,4211
+"BA","Cerrado",2007,16086
+"BA","Cerrado",2008,7660
+"BA","Cerrado",2009,2878
+"BA","Cerrado",2010,10233
+"BA","Cerrado",2011,7844
+"BA","Cerrado",2012,10870
+"BA","Cerrado",2013,3064
+"BA","Cerrado",2014,4104
+"BA","Cerrado",2015,9097
+"BA","Cerrado",2016,2623
+"BA","Cerrado",2017,3258
+"BA","Cerrado",2018,2074
+"BA","Cerrado",2019,3423
+"BA","Cerrado",2020,4135
+"BA","Cerrado",2021,8526
+"BA","Cerrado",2022,5429
+"BA","Cerrado",2023,4815
+"BA","Cerrado",2024,4428
+"BA","Cerrado",2025,6337
+"BA","Mata Atlântica",2003,4629
+"BA","Mata Atlântica",2004,3047
+"BA","Mata Atlântica",2005,2650
+"BA","Mata Atlântica",2006,1655
+"BA","Mata Atlântica",2007,3725
+"BA","Mata Atlântica",2008,3865
+"BA","Mata Atlântica",2009,1855
+"BA","Mata Atlântica",2010,1674
+"BA","Mata Atlântica",2011,1281
+"BA","Mata Atlântica",2012,1821
+"BA","Mata Atlântica",2013,1485
+"BA","Mata Atlântica",2014,1148
+"BA","Mata Atlântica",2015,2735
+"BA","Mata Atlântica",2016,1347
+"BA","Mata Atlântica",2017,734
+"BA","Mata Atlântica",2018,976
+"BA","Mata Atlântica",2019,1859
+"BA","Mata Atlântica",2020,1088
+"BA","Mata Atlântica",2021,1808
+"BA","Mata Atlântica",2022,958
+"BA","Mata Atlântica",2023,2357
+"BA","Mata Atlântica",2024,1444
+"BA","Mata Atlântica",2025,1484
+"CE","Caatinga",2003,11626
+"CE","Caatinga",2004,10582
+"CE","Caatinga",2005,8524
+"CE","Caatinga",2006,6167
+"CE","Caatinga",2007,7527
+"CE","Caatinga",2008,7631
+"CE","Caatinga",2009,5447
+"CE","Caatinga",2010,4934
+"CE","Caatinga",2011,4798
+"CE","Caatinga",2012,4308
+"CE","Caatinga",2013,2831
+"CE","Caatinga",2014,2327
+"CE","Caatinga",2015,3158
+"CE","Caatinga",2016,4316
+"CE","Caatinga",2017,3486
+"CE","Caatinga",2018,3034
+"CE","Caatinga",2019,4304
+"CE","Caatinga",2020,3979
+"CE","Caatinga",2021,4379
+"CE","Caatinga",2022,4136
+"CE","Caatinga",2023,6808
+"CE","Caatinga",2024,7160
+"CE","Caatinga",2025,7852
+"DF","Cerrado",2003,161
+"DF","Cerrado",2004,312
+"DF","Cerrado",2005,140
+"DF","Cerrado",2006,140
+"DF","Cerrado",2007,485
+"DF","Cerrado",2008,201
+"DF","Cerrado",2009,99
+"DF","Cerrado",2010,613
+"DF","Cerrado",2011,270
+"DF","Cerrado",2012,169
+"DF","Cerrado",2013,105
+"DF","Cerrado",2014,241
+"DF","Cerrado",2015,155
+"DF","Cerrado",2016,229
+"DF","Cerrado",2017,287
+"DF","Cerrado",2018,88
+"DF","Cerrado",2019,213
+"DF","Cerrado",2020,196
+"DF","Cerrado",2021,259
+"DF","Cerrado",2022,251
+"DF","Cerrado",2023,89
+"DF","Cerrado",2024,349
+"DF","Cerrado",2025,234
+"ES","Mata Atlântica",2003,976
+"ES","Mata Atlântica",2004,267
+"ES","Mata Atlântica",2005,199
+"ES","Mata Atlântica",2006,431
+"ES","Mata Atlântica",2007,757
+"ES","Mata Atlântica",2008,412
+"ES","Mata Atlântica",2009,239
+"ES","Mata Atlântica",2010,295
+"ES","Mata Atlântica",2011,364
+"ES","Mata Atlântica",2012,384
+"ES","Mata Atlântica",2013,275
+"ES","Mata Atlântica",2014,296
+"ES","Mata Atlântica",2015,940
+"ES","Mata Atlântica",2016,599
+"ES","Mata Atlântica",2017,187
+"ES","Mata Atlântica",2018,205
+"ES","Mata Atlântica",2019,622
+"ES","Mata Atlântica",2020,401
+"ES","Mata Atlântica",2021,549
+"ES","Mata Atlântica",2022,474
+"ES","Mata Atlântica",2023,543
+"ES","Mata Atlântica",2024,662
+"ES","Mata Atlântica",2025,385
+"GO","Cerrado",2003,6779
+"GO","Cerrado",2004,8912
+"GO","Cerrado",2005,6052
+"GO","Cerrado",2006,4303
+"GO","Cerrado",2007,12485
+"GO","Cerrado",2008,5146
+"GO","Cerrado",2009,2788
+"GO","Cerrado",2010,13113
+"GO","Cerrado",2011,5632
+"GO","Cerrado",2012,5910
+"GO","Cerrado",2013,2919
+"GO","Cerrado",2014,5767
+"GO","Cerrado",2015,5954
+"GO","Cerrado",2016,4712
+"GO","Cerrado",2017,6204
+"GO","Cerrado",2018,2936
+"GO","Cerrado",2019,6877
+"GO","Cerrado",2020,5730
+"GO","Cerrado",2021,5867
+"GO","Cerrado",2022,4726
+"GO","Cerrado",2023,3093
+"GO","Cerrado",2024,6066
+"GO","Cerrado",2025,4731
+"GO","Mata Atlântica",2003,95
+"GO","Mata Atlântica",2004,100
+"GO","Mata Atlântica",2005,76
+"GO","Mata Atlântica",2006,84
+"GO","Mata Atlântica",2007,154
+"GO","Mata Atlântica",2008,94
+"GO","Mata Atlântica",2009,132
+"GO","Mata Atlântica",2010,306
+"GO","Mata Atlântica",2011,134
+"GO","Mata Atlântica",2012,121
+"GO","Mata Atlântica",2013,131
+"GO","Mata Atlântica",2014,130
+"GO","Mata Atlântica",2015,153
+"GO","Mata Atlântica",2016,200
+"GO","Mata Atlântica",2017,224
+"GO","Mata Atlântica",2018,174
+"GO","Mata Atlântica",2019,283
+"GO","Mata Atlântica",2020,278
+"GO","Mata Atlântica",2021,153
+"GO","Mata Atlântica",2022,70
+"GO","Mata Atlântica",2023,67
+"GO","Mata Atlântica",2024,296
+"GO","Mata Atlântica",2025,147
+"MA","Amazônia",2003,12036
+"MA","Amazônia",2004,11443
+"MA","Amazônia",2005,10820
+"MA","Amazônia",2006,7885
+"MA","Amazônia",2007,12329
+"MA","Amazônia",2008,7822
+"MA","Amazônia",2009,6664
+"MA","Amazônia",2010,7298
+"MA","Amazônia",2011,4976
+"MA","Amazônia",2012,6919
+"MA","Amazônia",2013,4418
+"MA","Amazônia",2014,5733
+"MA","Amazônia",2015,7475
+"MA","Amazônia",2016,4928
+"MA","Amazônia",2017,5896
+"MA","Amazônia",2018,2449
+"MA","Amazônia",2019,4328
+"MA","Amazônia",2020,3589
+"MA","Amazônia",2021,3709
+"MA","Amazônia",2022,4463
+"MA","Amazônia",2023,5009
+"MA","Amazônia",2024,6043
+"MA","Amazônia",2025,6624
+"MA","Caatinga",2003,254
+"MA","Caatinga",2004,203
+"MA","Caatinga",2005,244
+"MA","Caatinga",2006,171
+"MA","Caatinga",2007,304
+"MA","Caatinga",2008,123
+"MA","Caatinga",2009,126
+"MA","Caatinga",2010,342
+"MA","Caatinga",2011,131
+"MA","Caatinga",2012,388
+"MA","Caatinga",2013,137
+"MA","Caatinga",2014,232
+"MA","Caatinga",2015,266
+"MA","Caatinga",2016,294
+"MA","Caatinga",2017,291
+"MA","Caatinga",2018,161
+"MA","Caatinga",2019,241
+"MA","Caatinga",2020,155
+"MA","Caatinga",2021,128
+"MA","Caatinga",2022,323
+"MA","Caatinga",2023,316
+"MA","Caatinga",2024,270
+"MA","Caatinga",2025,342
+"MA","Cerrado",2003,22258
+"MA","Cerrado",2004,21939
+"MA","Cerrado",2005,22627
+"MA","Cerrado",2006,15246
+"MA","Cerrado",2007,32132
+"MA","Cerrado",2008,14177
+"MA","Cerrado",2009,12342
+"MA","Cerrado",2010,28637
+"MA","Cerrado",2011,14208
+"MA","Cerrado",2012,26992
+"MA","Cerrado",2013,12900
+"MA","Cerrado",2014,18710
+"MA","Cerrado",2015,20695
+"MA","Cerrado",2016,16567
+"MA","Cerrado",2017,19389
+"MA","Cerrado",2018,11282
+"MA","Cerrado",2019,13952
+"MA","Cerrado",2020,13073
+"MA","Cerrado",2021,12240
+"MA","Cerrado",2022,15438
+"MA","Cerrado",2023,15788
+"MA","Cerrado",2024,16566
+"MA","Cerrado",2025,17334
+"MG","Caatinga",2003,502
+"MG","Caatinga",2004,388
+"MG","Caatinga",2005,504
+"MG","Caatinga",2006,157
+"MG","Caatinga",2007,373
+"MG","Caatinga",2008,440
+"MG","Caatinga",2009,104
+"MG","Caatinga",2010,209
+"MG","Caatinga",2011,269
+"MG","Caatinga",2012,468
+"MG","Caatinga",2013,209
+"MG","Caatinga",2014,210
+"MG","Caatinga",2015,185
+"MG","Caatinga",2016,53
+"MG","Caatinga",2017,67
+"MG","Caatinga",2018,86
+"MG","Caatinga",2019,158
+"MG","Caatinga",2020,185
+"MG","Caatinga",2021,332
+"MG","Caatinga",2022,268
+"MG","Caatinga",2023,223
+"MG","Caatinga",2024,140
+"MG","Caatinga",2025,220
+"MG","Cerrado",2003,9464
+"MG","Cerrado",2004,7934
+"MG","Cerrado",2005,7223
+"MG","Cerrado",2006,4937
+"MG","Cerrado",2007,12247
+"MG","Cerrado",2008,6096
+"MG","Cerrado",2009,2449
+"MG","Cerrado",2010,8444
+"MG","Cerrado",2011,6622
+"MG","Cerrado",2012,5943
+"MG","Cerrado",2013,3107
+"MG","Cerrado",2014,6091
+"MG","Cerrado",2015,4668
+"MG","Cerrado",2016,3906
+"MG","Cerrado",2017,4702
+"MG","Cerrado",2018,2576
+"MG","Cerrado",2019,5128
+"MG","Cerrado",2020,5595
+"MG","Cerrado",2021,7060
+"MG","Cerrado",2022,4369
+"MG","Cerrado",2023,3614
+"MG","Cerrado",2024,6147
+"MG","Cerrado",2025,5168
+"MG","Mata Atlântica",2003,9460
+"MG","Mata Atlântica",2004,4907
+"MG","Mata Atlântica",2005,5975
+"MG","Mata Atlântica",2006,3738
+"MG","Mata Atlântica",2007,9894
+"MG","Mata Atlântica",2008,5352
+"MG","Mata Atlântica",2009,2383
+"MG","Mata Atlântica",2010,5113
+"MG","Mata Atlântica",2011,4875
+"MG","Mata Atlântica",2012,3697
+"MG","Mata Atlântica",2013,2071
+"MG","Mata Atlântica",2014,5036
+"MG","Mata Atlântica",2015,4637
+"MG","Mata Atlântica",2016,2523
+"MG","Mata Atlântica",2017,3614
+"MG","Mata Atlântica",2018,1965
+"MG","Mata Atlântica",2019,4713
+"MG","Mata Atlântica",2020,2957
+"MG","Mata Atlântica",2021,4718
+"MG","Mata Atlântica",2022,3153
+"MG","Mata Atlântica",2023,2661
+"MG","Mata Atlântica",2024,5500
+"MG","Mata Atlântica",2025,3328
+"MS","Cerrado",2003,2574
+"MS","Cerrado",2004,2933
+"MS","Cerrado",2005,3607
+"MS","Cerrado",2006,2570
+"MS","Cerrado",2007,3927
+"MS","Cerrado",2008,1852
+"MS","Cerrado",2009,871
+"MS","Cerrado",2010,2990
+"MS","Cerrado",2011,1736
+"MS","Cerrado",2012,997
+"MS","Cerrado",2013,1328
+"MS","Cerrado",2014,966
+"MS","Cerrado",2015,1421
+"MS","Cerrado",2016,1687
+"MS","Cerrado",2017,1529
+"MS","Cerrado",2018,1042
+"MS","Cerrado",2019,2822
+"MS","Cerrado",2020,2775
+"MS","Cerrado",2021,3002
+"MS","Cerrado",2022,973
+"MS","Cerrado",2023,1620
+"MS","Cerrado",2024,3858
+"MS","Cerrado",2025,1174
+"MS","Mata Atlântica",2003,891
+"MS","Mata Atlântica",2004,642
+"MS","Mata Atlântica",2005,428
+"MS","Mata Atlântica",2006,416
+"MS","Mata Atlântica",2007,620
+"MS","Mata Atlântica",2008,381
+"MS","Mata Atlântica",2009,257
+"MS","Mata Atlântica",2010,465
+"MS","Mata Atlântica",2011,306
+"MS","Mata Atlântica",2012,320
+"MS","Mata Atlântica",2013,312
+"MS","Mata Atlântica",2014,222
+"MS","Mata Atlântica",2015,245
+"MS","Mata Atlântica",2016,358
+"MS","Mata Atlântica",2017,439
+"MS","Mata Atlântica",2018,296
+"MS","Mata Atlântica",2019,668
+"MS","Mata Atlântica",2020,396
+"MS","Mata Atlântica",2021,474
+"MS","Mata Atlântica",2022,220
+"MS","Mata Atlântica",2023,282
+"MS","Mata Atlântica",2024,1025
+"MS","Mata Atlântica",2025,235
+"MS","Pantanal",2003,2147
+"MS","Pantanal",2004,5041
+"MS","Pantanal",2005,8869
+"MS","Pantanal",2006,2258
+"MS","Pantanal",2007,6592
+"MS","Pantanal",2008,2597
+"MS","Pantanal",2009,5185
+"MS","Pantanal",2010,3901
+"MS","Pantanal",2011,1689
+"MS","Pantanal",2012,6111
+"MS","Pantanal",2013,1975
+"MS","Pantanal",2014,1026
+"MS","Pantanal",2015,2951
+"MS","Pantanal",2016,4328
+"MS","Pantanal",2017,3769
+"MS","Pantanal",2018,1042
+"MS","Pantanal",2019,8163
+"MS","Pantanal",2020,8909
+"MS","Pantanal",2021,5901
+"MS","Pantanal",2022,1175
+"MS","Pantanal",2023,2627
+"MS","Pantanal",2024,8158
+"MS","Pantanal",2025,435
+"MT","Amazônia",2003,50713
+"MT","Amazônia",2004,70422
+"MT","Amazônia",2005,53489
+"MT","Amazônia",2006,32745
+"MT","Amazônia",2007,52399
+"MT","Amazônia",2008,18602
+"MT","Amazônia",2009,9970
+"MT","Amazônia",2010,28362
+"MT","Amazônia",2011,9103
+"MT","Amazônia",2012,16133
+"MT","Amazônia",2013,10830
+"MT","Amazônia",2014,15677
+"MT","Amazônia",2015,17599
+"MT","Amazônia",2016,15836
+"MT","Amazônia",2017,18143
+"MT","Amazônia",2018,11621
+"MT","Amazônia",2019,17654
+"MT","Amazônia",2020,20648
+"MT","Amazônia",2021,12885
+"MT","Amazônia",2022,21054
+"MT","Amazônia",2023,12768
+"MT","Amazônia",2024,25282
+"MT","Amazônia",2025,6597
+"MT","Cerrado",2003,18272
+"MT","Cerrado",2004,22943
+"MT","Cerrado",2005,14948
+"MT","Cerrado",2006,9819
+"MT","Cerrado",2007,24292
+"MT","Cerrado",2008,8898
+"MT","Cerrado",2009,4537
+"MT","Cerrado",2010,26532
+"MT","Cerrado",2011,6425
+"MT","Cerrado",2012,10484
+"MT","Cerrado",2013,6303
+"MT","Cerrado",2014,8737
+"MT","Cerrado",2015,8635
+"MT","Cerrado",2016,10613
+"MT","Cerrado",2017,10764
+"MT","Cerrado",2018,5762
+"MT","Cerrado",2019,11653
+"MT","Cerrado",2020,13853
+"MT","Cerrado",2021,7278
+"MT","Cerrado",2022,7523
+"MT","Cerrado",2023,5002
+"MT","Cerrado",2024,18929
+"MT","Cerrado",2025,4175
+"MT","Pantanal",2003,1575
+"MT","Pantanal",2004,3647
+"MT","Pantanal",2005,3667
+"MT","Pantanal",2006,915
+"MT","Pantanal",2007,3277
+"MT","Pantanal",2008,1948
+"MT","Pantanal",2009,552
+"MT","Pantanal",2010,4119
+"MT","Pantanal",2011,1843
+"MT","Pantanal",2012,1336
+"MT","Pantanal",2013,1421
+"MT","Pantanal",2014,541
+"MT","Pantanal",2015,1507
+"MT","Pantanal",2016,856
+"MT","Pantanal",2017,2004
+"MT","Pantanal",2018,649
+"MT","Pantanal",2019,1862
+"MT","Pantanal",2020,13207
+"MT","Pantanal",2021,2357
+"MT","Pantanal",2022,462
+"MT","Pantanal",2023,3953
+"MT","Pantanal",2024,6340
+"MT","Pantanal",2025,289
+"PA","Amazônia",2003,53040
+"PA","Amazônia",2004,74214
+"PA","Amazônia",2005,71477
+"PA","Amazônia",2006,55840
+"PA","Amazônia",2007,68491
+"PA","Amazônia",2008,48449
+"PA","Amazônia",2009,41664
+"PA","Amazônia",2010,57196
+"PA","Amazônia",2011,26563
+"PA","Amazônia",2012,37221
+"PA","Amazônia",2013,24046
+"PA","Amazônia",2014,35526
+"PA","Amazônia",2015,43164
+"PA","Amazônia",2016,29724
+"PA","Amazônia",2017,49770
+"PA","Amazônia",2018,22080
+"PA","Amazônia",2019,30165
+"PA","Amazônia",2020,38603
+"PA","Amazônia",2021,22876
+"PA","Amazônia",2022,41421
+"PA","Amazônia",2023,41715
+"PA","Amazônia",2024,56070
+"PA","Amazônia",2025,18367
+"PB","Caatinga",2003,1471
+"PB","Caatinga",2004,1033
+"PB","Caatinga",2005,920
+"PB","Caatinga",2006,951
+"PB","Caatinga",2007,933
+"PB","Caatinga",2008,786
+"PB","Caatinga",2009,965
+"PB","Caatinga",2010,891
+"PB","Caatinga",2011,886
+"PB","Caatinga",2012,474
+"PB","Caatinga",2013,270
+"PB","Caatinga",2014,344
+"PB","Caatinga",2015,419
+"PB","Caatinga",2016,595
+"PB","Caatinga",2017,328
+"PB","Caatinga",2018,634
+"PB","Caatinga",2019,1117
+"PB","Caatinga",2020,855
+"PB","Caatinga",2021,870
+"PB","Caatinga",2022,746
+"PB","Caatinga",2023,890
+"PB","Caatinga",2024,939
+"PB","Caatinga",2025,996
+"PB","Mata Atlântica",2003,91
+"PB","Mata Atlântica",2004,75
+"PB","Mata Atlântica",2005,84
+"PB","Mata Atlântica",2006,63
+"PB","Mata Atlântica",2007,54
+"PB","Mata Atlântica",2008,81
+"PB","Mata Atlântica",2009,91
+"PB","Mata Atlântica",2010,65
+"PB","Mata Atlântica",2011,56
+"PB","Mata Atlântica",2012,74
+"PB","Mata Atlântica",2013,36
+"PB","Mata Atlântica",2014,51
+"PB","Mata Atlântica",2015,121
+"PB","Mata Atlântica",2016,113
+"PB","Mata Atlântica",2017,35
+"PB","Mata Atlântica",2018,125
+"PB","Mata Atlântica",2019,67
+"PB","Mata Atlântica",2020,55
+"PB","Mata Atlântica",2021,37
+"PB","Mata Atlântica",2022,54
+"PB","Mata Atlântica",2023,61
+"PB","Mata Atlântica",2024,135
+"PB","Mata Atlântica",2025,65
+"PE","Caatinga",2003,2570
+"PE","Caatinga",2004,1843
+"PE","Caatinga",2005,1650
+"PE","Caatinga",2006,1620
+"PE","Caatinga",2007,2044
+"PE","Caatinga",2008,1424
+"PE","Caatinga",2009,1497
+"PE","Caatinga",2010,1784
+"PE","Caatinga",2011,1548
+"PE","Caatinga",2012,987
+"PE","Caatinga",2013,603
+"PE","Caatinga",2014,492
+"PE","Caatinga",2015,645
+"PE","Caatinga",2016,612
+"PE","Caatinga",2017,478
+"PE","Caatinga",2018,484
+"PE","Caatinga",2019,607
+"PE","Caatinga",2020,803
+"PE","Caatinga",2021,1071
+"PE","Caatinga",2022,1047
+"PE","Caatinga",2023,1655
+"PE","Caatinga",2024,1753
+"PE","Caatinga",2025,2096
+"PE","Mata Atlântica",2003,200
+"PE","Mata Atlântica",2004,160
+"PE","Mata Atlântica",2005,161
+"PE","Mata Atlântica",2006,139
+"PE","Mata Atlântica",2007,113
+"PE","Mata Atlântica",2008,196
+"PE","Mata Atlântica",2009,217
+"PE","Mata Atlântica",2010,135
+"PE","Mata Atlântica",2011,174
+"PE","Mata Atlântica",2012,198
+"PE","Mata Atlântica",2013,93
+"PE","Mata Atlântica",2014,101
+"PE","Mata Atlântica",2015,305
+"PE","Mata Atlântica",2016,262
+"PE","Mata Atlântica",2017,85
+"PE","Mata Atlântica",2018,238
+"PE","Mata Atlântica",2019,233
+"PE","Mata Atlântica",2020,214
+"PE","Mata Atlântica",2021,121
+"PE","Mata Atlântica",2022,108
+"PE","Mata Atlântica",2023,179
+"PE","Mata Atlântica",2024,304
+"PE","Mata Atlântica",2025,239
+"PI","Caatinga",2003,6387
+"PI","Caatinga",2004,6243
+"PI","Caatinga",2005,5769
+"PI","Caatinga",2006,4202
+"PI","Caatinga",2007,7617
+"PI","Caatinga",2008,3209
+"PI","Caatinga",2009,3476
+"PI","Caatinga",2010,7739
+"PI","Caatinga",2011,4285
+"PI","Caatinga",2012,5254
+"PI","Caatinga",2013,2773
+"PI","Caatinga",2014,3571
+"PI","Caatinga",2015,5244
+"PI","Caatinga",2016,4945
+"PI","Caatinga",2017,3524
+"PI","Caatinga",2018,4576
+"PI","Caatinga",2019,5694
+"PI","Caatinga",2020,5164
+"PI","Caatinga",2021,6458
+"PI","Caatinga",2022,5117
+"PI","Caatinga",2023,6225
+"PI","Caatinga",2024,5984
+"PI","Caatinga",2025,6896
+"PI","Cerrado",2003,4471
+"PI","Cerrado",2004,4943
+"PI","Cerrado",2005,6105
+"PI","Cerrado",2006,3665
+"PI","Cerrado",2007,10361
+"PI","Cerrado",2008,3447
+"PI","Cerrado",2009,3065
+"PI","Cerrado",2010,11453
+"PI","Cerrado",2011,6878
+"PI","Cerrado",2012,9283
+"PI","Cerrado",2013,3711
+"PI","Cerrado",2014,5639
+"PI","Cerrado",2015,8595
+"PI","Cerrado",2016,3358
+"PI","Cerrado",2017,4133
+"PI","Cerrado",2018,4855
+"PI","Cerrado",2019,5200
+"PI","Cerrado",2020,4153
+"PI","Cerrado",2021,6287
+"PI","Cerrado",2022,5749
+"PI","Cerrado",2023,6732
+"PI","Cerrado",2024,4603
+"PI","Cerrado",2025,4910
+"PR","",2004,1
+"PR","",2007,1
+"PR","Cerrado",2003,205
+"PR","Cerrado",2004,122
+"PR","Cerrado",2005,124
+"PR","Cerrado",2006,76
+"PR","Cerrado",2007,43
+"PR","Cerrado",2008,40
+"PR","Cerrado",2009,19
+"PR","Cerrado",2010,29
+"PR","Cerrado",2011,25
+"PR","Cerrado",2012,24
+"PR","Cerrado",2013,17
+"PR","Cerrado",2014,33
+"PR","Cerrado",2015,15
+"PR","Cerrado",2016,32
+"PR","Cerrado",2017,25
+"PR","Cerrado",2018,13
+"PR","Cerrado",2019,57
+"PR","Cerrado",2020,61
+"PR","Cerrado",2021,54
+"PR","Cerrado",2022,16
+"PR","Cerrado",2023,14
+"PR","Cerrado",2024,46
+"PR","Cerrado",2025,47
+"PR","Mata Atlântica",2003,10661
+"PR","Mata Atlântica",2004,7009
+"PR","Mata Atlântica",2005,4899
+"PR","Mata Atlântica",2006,5804
+"PR","Mata Atlântica",2007,4954
+"PR","Mata Atlântica",2008,3622
+"PR","Mata Atlântica",2009,3006
+"PR","Mata Atlântica",2010,3369
+"PR","Mata Atlântica",2011,3363
+"PR","Mata Atlântica",2012,2644
+"PR","Mata Atlântica",2013,2514
+"PR","Mata Atlântica",2014,2200
+"PR","Mata Atlântica",2015,2072
+"PR","Mata Atlântica",2016,4119
+"PR","Mata Atlântica",2017,3567
+"PR","Mata Atlântica",2018,2498
+"PR","Mata Atlântica",2019,3257
+"PR","Mata Atlântica",2020,3458
+"PR","Mata Atlântica",2021,3644
+"PR","Mata Atlântica",2022,1755
+"PR","Mata Atlântica",2023,1425
+"PR","Mata Atlântica",2024,2658
+"PR","Mata Atlântica",2025,1765
+"RJ","Mata Atlântica",2003,1111
+"RJ","Mata Atlântica",2004,750
+"RJ","Mata Atlântica",2005,687
+"RJ","Mata Atlântica",2006,1172
+"RJ","Mata Atlântica",2007,1369
+"RJ","Mata Atlântica",2008,590
+"RJ","Mata Atlântica",2009,422
+"RJ","Mata Atlântica",2010,1137
+"RJ","Mata Atlântica",2011,1101
+"RJ","Mata Atlântica",2012,551
+"RJ","Mata Atlântica",2013,392
+"RJ","Mata Atlântica",2014,1283
+"RJ","Mata Atlântica",2015,542
+"RJ","Mata Atlântica",2016,677
+"RJ","Mata Atlântica",2017,959
+"RJ","Mata Atlântica",2018,246
+"RJ","Mata Atlântica",2019,712
+"RJ","Mata Atlântica",2020,693
+"RJ","Mata Atlântica",2021,502
+"RJ","Mata Atlântica",2022,747
+"RJ","Mata Atlântica",2023,404
+"RJ","Mata Atlântica",2024,1200
+"RJ","Mata Atlântica",2025,512
+"RN","Caatinga",2003,1499
+"RN","Caatinga",2004,792
+"RN","Caatinga",2005,985
+"RN","Caatinga",2006,699
+"RN","Caatinga",2007,753
+"RN","Caatinga",2008,584
+"RN","Caatinga",2009,631
+"RN","Caatinga",2010,569
+"RN","Caatinga",2011,447
+"RN","Caatinga",2012,403
+"RN","Caatinga",2013,237
+"RN","Caatinga",2014,300
+"RN","Caatinga",2015,372
+"RN","Caatinga",2016,340
+"RN","Caatinga",2017,325
+"RN","Caatinga",2018,400
+"RN","Caatinga",2019,696
+"RN","Caatinga",2020,635
+"RN","Caatinga",2021,543
+"RN","Caatinga",2022,394
+"RN","Caatinga",2023,555
+"RN","Caatinga",2024,578
+"RN","Caatinga",2025,590
+"RN","Mata Atlântica",2003,48
+"RN","Mata Atlântica",2004,33
+"RN","Mata Atlântica",2005,16
+"RN","Mata Atlântica",2006,35
+"RN","Mata Atlântica",2007,21
+"RN","Mata Atlântica",2008,13
+"RN","Mata Atlântica",2009,28
+"RN","Mata Atlântica",2010,59
+"RN","Mata Atlântica",2011,17
+"RN","Mata Atlântica",2012,29
+"RN","Mata Atlântica",2013,13
+"RN","Mata Atlântica",2014,17
+"RN","Mata Atlântica",2015,30
+"RN","Mata Atlântica",2016,38
+"RN","Mata Atlântica",2017,26
+"RN","Mata Atlântica",2018,56
+"RN","Mata Atlântica",2019,34
+"RN","Mata Atlântica",2020,29
+"RN","Mata Atlântica",2021,20
+"RN","Mata Atlântica",2022,17
+"RN","Mata Atlântica",2023,24
+"RN","Mata Atlântica",2024,46
+"RN","Mata Atlântica",2025,49
+"RO","Amazônia",2003,30533
+"RO","Amazônia",2004,40824
+"RO","Amazônia",2005,41641
+"RO","Amazônia",2006,25699
+"RO","Amazônia",2007,27477
+"RO","Amazônia",2008,11549
+"RO","Amazônia",2009,5396
+"RO","Amazônia",2010,16924
+"RO","Amazônia",2011,6078
+"RO","Amazônia",2012,8312
+"RO","Amazônia",2013,4613
+"RO","Amazônia",2014,7327
+"RO","Amazônia",2015,13105
+"RO","Amazônia",2016,11462
+"RO","Amazônia",2017,11298
+"RO","Amazônia",2018,10253
+"RO","Amazônia",2019,11229
+"RO","Amazônia",2020,11140
+"RO","Amazônia",2021,10029
+"RO","Amazônia",2022,12456
+"RO","Amazônia",2023,7415
+"RO","Amazônia",2024,10689
+"RO","Amazônia",2025,1879
+"RO","Cerrado",2003,24
+"RO","Cerrado",2004,57
+"RO","Cerrado",2005,8
+"RO","Cerrado",2006,3
+"RO","Cerrado",2007,23
+"RO","Cerrado",2008,11
+"RO","Cerrado",2009,5
+"RO","Cerrado",2010,46
+"RO","Cerrado",2011,2
+"RO","Cerrado",2014,7
+"RO","Cerrado",2015,8
+"RO","Cerrado",2016,12
+"RO","Cerrado",2017,15
+"RO","Cerrado",2018,2
+"RO","Cerrado",2019,1
+"RO","Cerrado",2020,5
+"RO","Cerrado",2021,1
+"RO","Cerrado",2022,4
+"RO","Cerrado",2023,2
+"RO","Cerrado",2024,3
+"RR","Amazônia",2003,3987
+"RR","Amazônia",2004,2221
+"RR","Amazônia",2005,1461
+"RR","Amazônia",2006,2189
+"RR","Amazônia",2007,3244
+"RR","Amazônia",2008,1950
+"RR","Amazônia",2009,2359
+"RR","Amazônia",2010,1918
+"RR","Amazônia",2011,1475
+"RR","Amazônia",2012,1376
+"RR","Amazônia",2013,1395
+"RR","Amazônia",2014,2519
+"RR","Amazônia",2015,2452
+"RR","Amazônia",2016,3870
+"RR","Amazônia",2017,1565
+"RR","Amazônia",2018,2383
+"RR","Amazônia",2019,4784
+"RR","Amazônia",2020,1930
+"RR","Amazônia",2021,989
+"RR","Amazônia",2022,1223
+"RR","Amazônia",2023,2659
+"RR","Amazônia",2024,5358
+"RR","Amazônia",2025,1539
+"RS","Mata Atlântica",2003,4343
+"RS","Mata Atlântica",2004,3052
+"RS","Mata Atlântica",2005,1729
+"RS","Mata Atlântica",2006,2781
+"RS","Mata Atlântica",2007,1777
+"RS","Mata Atlântica",2008,1412
+"RS","Mata Atlântica",2009,1838
+"RS","Mata Atlântica",2010,1559
+"RS","Mata Atlântica",2011,1048
+"RS","Mata Atlântica",2012,1270
+"RS","Mata Atlântica",2013,746
+"RS","Mata Atlântica",2014,1396
+"RS","Mata Atlântica",2015,548
+"RS","Mata Atlântica",2016,2200
+"RS","Mata Atlântica",2017,1282
+"RS","Mata Atlântica",2018,873
+"RS","Mata Atlântica",2019,1776
+"RS","Mata Atlântica",2020,1930
+"RS","Mata Atlântica",2021,1189
+"RS","Mata Atlântica",2022,881
+"RS","Mata Atlântica",2023,1108
+"RS","Mata Atlântica",2024,1148
+"RS","Mata Atlântica",2025,916
+"RS","Pampa",2003,1789
+"RS","Pampa",2004,1677
+"RS","Pampa",2005,1138
+"RS","Pampa",2006,1335
+"RS","Pampa",2007,1045
+"RS","Pampa",2008,948
+"RS","Pampa",2009,1150
+"RS","Pampa",2010,956
+"RS","Pampa",2011,931
+"RS","Pampa",2012,1052
+"RS","Pampa",2013,801
+"RS","Pampa",2014,708
+"RS","Pampa",2015,730
+"RS","Pampa",2016,1327
+"RS","Pampa",2017,936
+"RS","Pampa",2018,742
+"RS","Pampa",2019,1420
+"RS","Pampa",2020,1682
+"RS","Pampa",2021,1256
+"RS","Pampa",2022,754
+"RS","Pampa",2023,717
+"RS","Pampa",2024,424
+"RS","Pampa",2025,704
+"SC","Mata Atlântica",2003,7639
+"SC","Mata Atlântica",2004,5030
+"SC","Mata Atlântica",2005,3582
+"SC","Mata Atlântica",2006,4985
+"SC","Mata Atlântica",2007,2689
+"SC","Mata Atlântica",2008,2245
+"SC","Mata Atlântica",2009,2119
+"SC","Mata Atlântica",2010,2163
+"SC","Mata Atlântica",2011,1772
+"SC","Mata Atlântica",2012,1819
+"SC","Mata Atlântica",2013,1663
+"SC","Mata Atlântica",2014,1180
+"SC","Mata Atlântica",2015,906
+"SC","Mata Atlântica",2016,2561
+"SC","Mata Atlântica",2017,2005
+"SC","Mata Atlântica",2018,1417
+"SC","Mata Atlântica",2019,1804
+"SC","Mata Atlântica",2020,2422
+"SC","Mata Atlântica",2021,2351
+"SC","Mata Atlântica",2022,1360
+"SC","Mata Atlântica",2023,1341
+"SC","Mata Atlântica",2024,1801
+"SC","Mata Atlântica",2025,1478
+"SC","Pampa",2003,9
+"SC","Pampa",2006,1
+"SC","Pampa",2009,2
+"SC","Pampa",2012,1
+"SC","Pampa",2020,3
+"SE","Caatinga",2003,188
+"SE","Caatinga",2004,102
+"SE","Caatinga",2005,106
+"SE","Caatinga",2006,101
+"SE","Caatinga",2007,107
+"SE","Caatinga",2008,146
+"SE","Caatinga",2009,102
+"SE","Caatinga",2010,65
+"SE","Caatinga",2011,109
+"SE","Caatinga",2012,112
+"SE","Caatinga",2013,56
+"SE","Caatinga",2014,38
+"SE","Caatinga",2015,110
+"SE","Caatinga",2016,44
+"SE","Caatinga",2017,19
+"SE","Caatinga",2018,39
+"SE","Caatinga",2019,26
+"SE","Caatinga",2020,20
+"SE","Caatinga",2021,55
+"SE","Caatinga",2022,42
+"SE","Caatinga",2023,73
+"SE","Caatinga",2024,65
+"SE","Caatinga",2025,71
+"SE","Mata Atlântica",2003,280
+"SE","Mata Atlântica",2004,186
+"SE","Mata Atlântica",2005,187
+"SE","Mata Atlântica",2006,125
+"SE","Mata Atlântica",2007,84
+"SE","Mata Atlântica",2008,167
+"SE","Mata Atlântica",2009,151
+"SE","Mata Atlântica",2010,100
+"SE","Mata Atlântica",2011,122
+"SE","Mata Atlântica",2012,139
+"SE","Mata Atlântica",2013,118
+"SE","Mata Atlântica",2014,51
+"SE","Mata Atlântica",2015,131
+"SE","Mata Atlântica",2016,90
+"SE","Mata Atlântica",2017,58
+"SE","Mata Atlântica",2018,101
+"SE","Mata Atlântica",2019,55
+"SE","Mata Atlântica",2020,57
+"SE","Mata Atlântica",2021,77
+"SE","Mata Atlântica",2022,43
+"SE","Mata Atlântica",2023,78
+"SE","Mata Atlântica",2024,125
+"SE","Mata Atlântica",2025,86
+"SP","Cerrado",2003,1812
+"SP","Cerrado",2004,1652
+"SP","Cerrado",2005,1451
+"SP","Cerrado",2006,2115
+"SP","Cerrado",2007,1662
+"SP","Cerrado",2008,1181
+"SP","Cerrado",2009,800
+"SP","Cerrado",2010,3320
+"SP","Cerrado",2011,1779
+"SP","Cerrado",2012,1290
+"SP","Cerrado",2013,993
+"SP","Cerrado",2014,2019
+"SP","Cerrado",2015,655
+"SP","Cerrado",2016,1089
+"SP","Cerrado",2017,1624
+"SP","Cerrado",2018,1067
+"SP","Cerrado",2019,1184
+"SP","Cerrado",2020,2729
+"SP","Cerrado",2021,2397
+"SP","Cerrado",2022,631
+"SP","Cerrado",2023,661
+"SP","Cerrado",2024,3955
+"SP","Cerrado",2025,848
+"SP","Mata Atlântica",2003,3785
+"SP","Mata Atlântica",2004,2681
+"SP","Mata Atlântica",2005,2381
+"SP","Mata Atlântica",2006,3252
+"SP","Mata Atlântica",2007,2814
+"SP","Mata Atlântica",2008,1615
+"SP","Mata Atlântica",2009,963
+"SP","Mata Atlântica",2010,3971
+"SP","Mata Atlântica",2011,2404
+"SP","Mata Atlântica",2012,1372
+"SP","Mata Atlântica",2013,1395
+"SP","Mata Atlântica",2014,2465
+"SP","Mata Atlântica",2015,1153
+"SP","Mata Atlântica",2016,2097
+"SP","Mata Atlântica",2017,2278
+"SP","Mata Atlântica",2018,1952
+"SP","Mata Atlântica",2019,1890
+"SP","Mata Atlântica",2020,3394
+"SP","Mata Atlântica",2021,3072
+"SP","Mata Atlântica",2022,968
+"SP","Mata Atlântica",2023,1005
+"SP","Mata Atlântica",2024,4757
+"SP","Mata Atlântica",2025,1528
+"TO","Amazônia",2003,861
+"TO","Amazônia",2004,746
+"TO","Amazônia",2005,1175
+"TO","Amazônia",2006,504
+"TO","Amazônia",2007,1214
+"TO","Amazônia",2008,528
+"TO","Amazônia",2009,382
+"TO","Amazônia",2010,1116
+"TO","Amazônia",2011,376
+"TO","Amazônia",2012,406
+"TO","Amazônia",2013,365
+"TO","Amazônia",2014,518
+"TO","Amazônia",2015,509
+"TO","Amazônia",2016,489
+"TO","Amazônia",2017,841
+"TO","Amazônia",2018,281
+"TO","Amazônia",2019,261
+"TO","Amazônia",2020,579
+"TO","Amazônia",2021,250
+"TO","Amazônia",2022,369
+"TO","Amazônia",2023,358
+"TO","Amazônia",2024,733
+"TO","Amazônia",2025,448
+"TO","Cerrado",2003,11263
+"TO","Cerrado",2004,14401
+"TO","Cerrado",2005,15039
+"TO","Cerrado",2006,9795
+"TO","Cerrado",2007,24175
+"TO","Cerrado",2008,10225
+"TO","Cerrado",2009,6046
+"TO","Cerrado",2010,27984
+"TO","Cerrado",2011,10261
+"TO","Cerrado",2012,18638
+"TO","Cerrado",2013,9570
+"TO","Cerrado",2014,13557
+"TO","Cerrado",2015,15196
+"TO","Cerrado",2016,14005
+"TO","Cerrado",2017,14832
+"TO","Cerrado",2018,7752
+"TO","Cerrado",2019,13364
+"TO","Cerrado",2020,11514
+"TO","Cerrado",2021,9757
+"TO","Cerrado",2022,11776
+"TO","Cerrado",2023,9283
+"TO","Cerrado",2024,16518
+"TO","Cerrado",2025,11100
