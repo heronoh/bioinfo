@@ -21,6 +21,11 @@
 "conversao_para_Área urbana","ha/ano","MapBiomas Coleção 11","1986–2025",1960
 "desmatamento_prodes","km²","PRODES/INPE","1988–2025",342
 "desmatamento_prodes","km²","PRODES/INPE (estimativa de 16/10/2026)","2026–2026",9
+"ibama_area_embargada","ha","Ibama (termos de embargo, dados abertos)","1987–2925",839
+"ibama_autos","autos/ano","Ibama (autos de infração, dados abertos)","1977–2026",1129
+"ibama_embargos","embargos/ano","Ibama (termos de embargo, dados abertos)","1987–2925",839
+"ibama_multas_valor","R$ nominais","Ibama (autos de infração, dados abertos)","1977–2026",1129
+"ibama_multas_valor_usd","US$ de 2025","Ibama (autos de infração, dados abertos) + BCB (IPCA e câmbio)","1985–2026",1088
 "regeneracao_de_Mineração","ha/ano","MapBiomas Coleção 11","1986–2025",1520
 "regeneracao_de_Mosaico de usos","ha/ano","MapBiomas Coleção 11","1986–2025",1960
 "regeneracao_de_Outras lavouras","ha/ano","MapBiomas Coleção 11","1986–2025",1960
