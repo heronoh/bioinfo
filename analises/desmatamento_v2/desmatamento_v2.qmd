@@ -323,15 +323,217 @@ ggplot(acumulado, aes(x = km2, y = reorder(cenario, km2), fill = cenario)) +
        caption = "Soma das taxas anuais projetadas para 2027 a 2030.")
 ```
 
-# 7. Próximos dados
+# 7. Fogo
+
+O INPE conta **focos de calor** detectados por satélite. Para comparar anos diferentes, usamos só o **satélite de referência** (o mesmo sensor ao longo da série, desde 2003). Focos não são área queimada: um incêndio grande gera muitos focos, e um pequeno pode não ser visto. A série serve para comparar tendências.
+
+```{r focos-ano, fig.height=6.5}
+focos <- read.csv("analises/desmatamento_v2/dados/queimadas_focos_uf.csv",
+                  fileEncoding = "UTF-8") %>%
+  filter(bioma %in% names(cores_biomas))
+
+focos_ano <- focos %>%
+  group_by(ano, bioma) %>%
+  summarise(focos = sum(focos), .groups = "drop") %>%
+  mutate(bioma = factor(bioma, levels = rev(names(cores_biomas))))
+
+ggplot(focos_ano, aes(x = ano, y = focos, fill = bioma)) +
+  mandatos_fundo(2003, 2025) +
+  geom_col(width = 0.8) +
+  scale_fill_manual(values = cores_biomas, name = NULL) +
+  scale_x_continuous(breaks = 2003:2025, expand = c(0, 0)) +
+  scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.05))) +
+  labs(title = "Focos de calor por bioma",
+       x = NULL, y = "focos por ano",
+       caption = "Fonte: INPE, Programa Queimadas (satélite de referência).") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5),
+        legend.position = "bottom") +
+  mandatos_linhas(2003, 2025)
+```
+
+```{r focos-mandato, fig.height=7}
+focos_mandato <- focos_ano %>%
+  mutate(mandato = presidente_do_ano(ano)) %>%
+  group_by(bioma, mandato) %>%
+  summarise(media = mean(focos), anos = n(), .groups = "drop") %>%
+  mutate(mandato = factor(mandato, levels = names(cores_mandatos)),
+         bioma = factor(bioma, levels = names(cores_biomas)))
+
+ggplot(focos_mandato, aes(x = mandato, y = media, fill = mandato)) +
+  geom_col(width = 0.8) +
+  facet_wrap(~ bioma, scales = "free_y", ncol = 2) +
+  scale_fill_manual(values = cores_mandatos, guide = "none") +
+  scale_y_continuous(labels = num) +
+  labs(title = "Média anual de focos de calor por mandato e bioma",
+       x = NULL, y = "focos por ano (média do mandato)",
+       caption = "Fonte: INPE, Programa Queimadas (satélite de referência). Lula I começa em 2003, primeiro ano da série; Lula III vai até 2025.") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, size = 8))
+```
+
+O fogo depende muito do clima: anos de seca forte (como os de El Niño, 2015–2016 e 2023–2024) concentram focos mesmo sem mudança de política. Por isso, comparar mandatos pela média de focos mistura política e clima, e o cruzamento com dados de chuva fica para uma próxima etapa.
+
+# 8. Fiscalização
+
+Os autos de infração do Ibama mostram a **atividade de fiscalização**: quantas infrações foram autuadas e o valor das multas aplicadas. Para o desmatamento, o tipo mais relevante é **Flora** (corte, queima e comércio ilegal de madeira e vegetação). Os valores estão em **US$ de 2025** (reais corrigidos pelo IPCA e convertidos pelo dólar médio de 2025), a partir de 1995, primeiro ano inteiro do real. A série começa em **1998**: antes disso, quase não há autos de flora nos dados abertos (provavelmente registros antigos não digitalizados), e até 2004 boa parte dos autos não traz valor de multa. Multa aplicada não é multa paga: grande parte é contestada ou nunca cobrada.
+
+```{r ibama-autos, fig.height=6.5}
+amazonia_legal <- c("AC", "AM", "AP", "MA", "MT", "PA", "RO", "RR", "TO")
+ano_atual <- as.integer(format(Sys.Date(), "%Y"))
+
+cambio <- read.csv("analises/desmatamento_v2/dados/cambio_ipca_anual.csv")
+autos <- read.csv("analises/desmatamento_v2/dados/ibama_autos_uf_ano.csv",
+                  fileEncoding = "UTF-8") %>%
+  filter(tipo == "Flora", ano >= 1998, ano < ano_atual) %>%
+  left_join(cambio %>% select(ano, fator_usd_base), by = "ano") %>%
+  mutate(regiao = ifelse(uf %in% amazonia_legal, "Amazônia Legal", "Demais estados"),
+         usd = valor_reais * fator_usd_base)
+
+autos_ano <- autos %>%
+  group_by(ano, regiao) %>%
+  summarise(`Autos de infração (Flora)` = sum(n_autos),
+            `Multas aplicadas (milhões de US$ de 2025)` = sum(usd) / 1e6,
+            .groups = "drop") %>%
+  pivot_longer(-c(ano, regiao), names_to = "medida", values_to = "valor")
+
+ggplot(autos_ano, aes(x = ano, y = valor, fill = regiao)) +
+  mandatos_fundo(1998, ano_atual - 1) +
+  geom_col(width = 0.8) +
+  facet_wrap(~ medida, ncol = 1, scales = "free_y") +
+  scale_fill_manual(values = c("Amazônia Legal" = "#1f6f43", "Demais estados" = "grey60"),
+                    name = NULL) +
+  scale_x_continuous(breaks = 1998:(ano_atual - 1), expand = c(0, 0)) +
+  scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.05))) +
+  labs(title = "Fiscalização do Ibama sobre a flora",
+       x = NULL, y = NULL,
+       caption = paste0("Fonte: Ibama, autos de infração (dados abertos), sem autos cancelados; ",
+                        "BCB (IPCA e dólar). Ano corrente (", ano_atual, ") fora por estar incompleto.")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5),
+        legend.position = "bottom") +
+  mandatos_linhas(1998, ano_atual - 1, dentro = TRUE, tamanho = 2.6,
+                  so_no_painel = list(medida = "Autos de infração (Flora)"))
+```
+
+```{r ibama-embargos, fig.height=5}
+embargos <- read.csv("analises/desmatamento_v2/dados/ibama_embargos_uf_ano.csv",
+                     fileEncoding = "UTF-8") %>%
+  filter(ano >= 1995, ano < ano_atual) %>%          # descarta datas digitadas erradas
+  group_by(ano) %>%
+  summarise(area_km2 = sum(area_ha) / 100, n = sum(n_embargos), .groups = "drop")
+
+ggplot(embargos, aes(x = ano, y = area_km2)) +
+  mandatos_fundo(1995, ano_atual - 1) +
+  geom_col(width = 0.8, fill = "#8c510a") +
+  scale_x_continuous(breaks = 1995:(ano_atual - 1), expand = c(0, 0)) +
+  scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.05))) +
+  labs(title = "Área embargada pelo Ibama por ano",
+       x = NULL, y = "km² embargados",
+       caption = "Fonte: Ibama, termos de embargo (dados abertos). Todos os estados e tipos de infração.") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  mandatos_linhas(1995, ano_atual - 1)
+```
+
+```{r fiscalizacao-mandato, fig.height=5}
+fisc_mandato <- autos %>%
+  filter(regiao == "Amazônia Legal") %>%
+  group_by(ano) %>%
+  summarise(autos = sum(n_autos), usd = sum(usd) / 1e6, .groups = "drop") %>%
+  left_join(embargos %>% select(ano, area_km2), by = "ano") %>%
+  mutate(mandato = presidente_do_ano(ano)) %>%
+  group_by(mandato) %>%
+  summarise(`Autos de infração (Flora), Amazônia Legal` = mean(autos),
+            `Multas (milhões de US$ de 2025), Amazônia Legal` = mean(usd),
+            `Área embargada (km²), Brasil` = mean(area_km2), .groups = "drop") %>%
+  pivot_longer(-mandato, names_to = "medida", values_to = "media") %>%
+  mutate(mandato = factor(mandato, levels = names(cores_mandatos)))
+
+ggplot(fisc_mandato, aes(x = mandato, y = media, fill = mandato)) +
+  geom_col(width = 0.8) +
+  facet_wrap(~ medida, scales = "free_y", ncol = 3) +
+  scale_fill_manual(values = cores_mandatos, guide = "none") +
+  scale_y_continuous(labels = num) +
+  labs(title = "Fiscalização: média anual por mandato",
+       x = NULL, y = NULL,
+       caption = "Fonte: Ibama (dados abertos); BCB. Cada ano atribuído ao presidente em 1º de julho; Série a partir de 1998 (FHC I com só 1998).") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1, size = 8),
+        strip.text = element_text(size = 9))
+```
+
+# 9. Fiscalização e desmatamento
+
+Fiscalizar mais reduz o desmatamento? A relação é de mão dupla: **mais desmatamento gera mais autos** (há mais infrações para autuar), e **mais fiscalização deveria gerar menos desmatamento** depois. Para separar um pouco os dois efeitos, comparamos os autos de cada ano com o desmatamento dos anos **anteriores**, do **mesmo ano** e dos anos **seguintes**, estado por estado, usando a correlação de postos (Spearman) dentro de cada estado.
+
+Fazemos isso de dois jeitos. Com os **valores anuais**, a correlação mistura a relação entre as duas séries com as tendências de longo prazo de cada uma (as duas caíram em boa parte do período, por motivos que podem ser diferentes). Com as **variações de um ano para o outro**, a tendência sai da conta e sobra a pergunta: quando os autos sobem num estado, o desmatamento cai depois?
+
+```{r fiscalizacao-defasagem, fig.height=7}
+prodes_uf <- painel %>%
+  filter(variavel == "desmatamento_prodes", situacao == "consolidado") %>%
+  select(uf, ano, desmat = valor)
+
+autos_uf <- autos %>%
+  filter(regiao == "Amazônia Legal") %>%
+  group_by(uf, ano) %>%
+  summarise(autos = sum(n_autos), .groups = "drop")
+
+defasagens <- lapply(-2:3, function(k) {
+  autos_uf %>%
+    mutate(ano = ano + k) %>%                 # autos do ano t x desmatamento de t + k
+    inner_join(prodes_uf, by = c("uf", "ano")) %>%
+    arrange(uf, ano) %>%
+    group_by(uf) %>%
+    mutate(var_autos  = log(autos) - lag(log(autos)),            # variação relativa
+           var_desmat = log(desmat + 1) - lag(log(desmat + 1))) %>%
+    filter(n() >= 10) %>%
+    summarise(`Valores anuais` = cor(autos, desmat, method = "spearman"),
+              `Variações de um ano para o outro` =
+                cor(var_autos, var_desmat, method = "spearman", use = "complete.obs"),
+              .groups = "drop") %>%
+    mutate(k = k)
+}) %>%
+  bind_rows() %>%
+  pivot_longer(-c(uf, k), names_to = "medida", values_to = "r") %>%
+  mutate(medida = factor(medida, levels = c("Valores anuais", "Variações de um ano para o outro")))
+
+resumo_def <- defasagens %>%
+  group_by(medida, k) %>%
+  summarise(media = mean(r), min = min(r), max = max(r), .groups = "drop")
+
+ggplot(defasagens, aes(x = factor(k), y = r)) +
+  geom_hline(yintercept = 0, colour = "grey40") +
+  geom_jitter(width = 0.12, height = 0, colour = "#1f6f43", alpha = 0.6, size = 2) +
+  geom_point(data = resumo_def, aes(y = media), size = 4, shape = 18) +
+  facet_wrap(~ medida, ncol = 1) +
+  scale_x_discrete(labels = function(k) ifelse(k == "0", "mesmo ano",
+                                               ifelse(as.integer(k) > 0,
+                                                      paste0(k, " ano(s) depois"),
+                                                      paste0(abs(as.integer(k)), " ano(s) antes")))) +
+  scale_y_continuous(limits = c(-1, 1)) +
+  labs(title = "Autos de infração (Flora) e desmatamento PRODES nos estados da Amazônia Legal",
+       x = "desmatamento medido...", y = "correlação de Spearman",
+       caption = "Pontos verdes: estados; losango: média dos 9 estados. Autos do Ibama (1998 em diante) x PRODES/INPE consolidado.")
+```
+
+```{r fiscalizacao-tabela}
+resumo_def %>%
+  mutate(across(c(media, min, max), ~ round(.x, 2))) %>%
+  rename(`medida` = medida, `defasagem (anos)` = k, `média entre estados` = media,
+         `menor` = min, `maior` = max) %>%
+  knitr::kable()
+```
+
+**O que os números mostram (e o que não mostram):**
+
+- Com os **valores anuais**, a média entre estados fica levemente negativa e se torna mais negativa quanto mais à frente olhamos (mais autos num ano, menos desmatamento três anos depois). Mas esse padrão pode vir só das tendências: os autos subiram até 2008 e o desmatamento caiu de 2005 a 2012, então qualquer série que suba e depois caia "parece" antecipar a queda.
+- Com as **variações anuais**, as correlações ficam próximas de zero em todas as defasagens, e os estados discordam muito entre si. Ou seja, nesta escala (estado e ano) **não aparece um sinal claro** de que um aumento de autos seja seguido de queda do desmatamento.
+- Isso **não** quer dizer que a fiscalização não funciona. Contar autos é uma medida grosseira (um auto pode ser de 1 hectare ou de 10 mil), e o efeito da fiscalização passa também por embargos, apreensões, crédito rural bloqueado e pela simples expectativa de ser pego. Estudos que usam desenhos mais cuidadosos, como os do Climate Policy Initiative (PUC-Rio) sobre o DETER e a fiscalização em municípios da Amazônia, encontram efeitos dissuasórios relevantes. Esta correlação simples é só um ponto de partida para a análise por município, com área embargada e alertas do DETER.
+
+# 10. Próximos dados
 
 Para os temas que queremos cruzar, estas são as fontes candidatas. Cada uma entra no painel (`dados/painel_longo.csv`) com as mesmas chaves: estado, bioma, ano, variável, valor, unidade e fonte.
 
 | Tema | Fonte candidata | O que permite mostrar |
 |---|---|---|
-| Queimadas (focos e área queimada) | INPE Programa Queimadas; MapBiomas Fogo | fogo x desmatamento x seca, por mandato |
+| Queimadas (área queimada) | MapBiomas Fogo; INPE (área queimada) | fogo x desmatamento x seca, por mandato (focos: já na seção 7) |
 | Alertas mensais | DETER/INPE (TerraBrasilis) | mudanças de tendência dentro dos mandatos |
-| Fiscalização | Ibama (autos de infração e embargos, dados abertos) | fiscalização x desmatamento, com defasagem |
 | Orçamento e pessoal | Portal da Transparência; SIOP; Painel Estatístico de Pessoal | recursos e efetivo de MMA, Ibama, ICMBio, Funai |
 | Forças de segurança e crime | Polícia Federal; Fórum Brasileiro de Segurança Pública | operações, apreensões, crimes ambientais |
 | Garimpo e terras indígenas | MapBiomas Mineração e Terras Indígenas; Funai | garimpo dentro e fora de terras indígenas |
@@ -339,4 +541,3 @@ Para os temas que queremos cruzar, estas são as fontes candidatas. Cada uma ent
 | Produção e renda | IBGE (PAM, PPM, PEVS, Censo Agropecuário) | renda por hectare de pastagem, soja, extrativismo |
 | Fundos e investimentos | Fundo Amazônia (BNDES); Fundo Clima; ODA ambiental | recursos para preservação ao longo do tempo |
 | Serviços ecossistêmicos e carbono | literatura científica de valoração; mercados de carbono | valor da floresta em pé x convertida |
-| Câmbio e inflação | Banco Central (PTAX); IBGE (IPCA) | converter tudo para dólares de um mesmo ano |
