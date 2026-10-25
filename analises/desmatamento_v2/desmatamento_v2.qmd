@@ -526,14 +526,108 @@ resumo_def %>%
 - Com as **variações anuais**, as correlações ficam próximas de zero em todas as defasagens, e os estados discordam muito entre si. Ou seja, nesta escala (estado e ano) **não aparece um sinal claro** de que um aumento de autos seja seguido de queda do desmatamento.
 - Isso **não** quer dizer que a fiscalização não funciona. Contar autos é uma medida grosseira (um auto pode ser de 1 hectare ou de 10 mil), e o efeito da fiscalização passa também por embargos, apreensões, crédito rural bloqueado e pela simples expectativa de ser pego. Estudos que usam desenhos mais cuidadosos, como os do Climate Policy Initiative (PUC-Rio) sobre o DETER e a fiscalização em municípios da Amazônia, encontram efeitos dissuasórios relevantes. Esta correlação simples é só um ponto de partida para a análise por município, com área embargada e alertas do DETER.
 
-# 10. Próximos dados
+# 10. Alertas do DETER
+
+O **DETER** é o sistema de alertas do INPE: imagens de resolução mais baixa, analisadas quase em tempo real, para orientar a fiscalização. O **PRODES** é o mapeamento anual, mais detalhado, que dá a taxa oficial. Os dois usam o mesmo "ano PRODES" (agosto a julho). Aqui, o desmatamento do DETER soma as classes de corte raso, corte raso com vegetação e mineração; degradação, corte seletivo e cicatrizes de queimada são mostrados à parte.
+
+```{r deter-prodes, fig.height=5.5}
+deter <- painel %>%
+  filter(startsWith(variavel, "deter_")) %>%
+  mutate(grupo = case_when(
+    variavel %in% c("deter_desmatamento_cr", "deter_desmatamento_veg", "deter_mineracao") ~ "Desmatamento",
+    variavel %in% c("deter_degradacao", "deter_cs_desordenado", "deter_cs_geometrico",
+                    "deter_corte_seletivo") ~ "Degradação e corte seletivo",
+    variavel == "deter_cicatriz_de_queimada" ~ "Cicatriz de queimada"))
+
+ultimo_prodes <- max(painel$ano[painel$variavel == "desmatamento_prodes"])
+
+comparacao <- deter %>%
+  filter(grupo == "Desmatamento", ano <= ultimo_prodes) %>%
+  group_by(ano) %>%
+  summarise(DETER = sum(valor), .groups = "drop") %>%
+  inner_join(prodes %>% group_by(ano) %>%
+               summarise(PRODES = sum(km2), estimativa = any(situacao == "estimativa")),
+             by = "ano") %>%
+  mutate(razao = PRODES / DETER)
+
+comparacao %>%
+  pivot_longer(c(DETER, PRODES), names_to = "sistema", values_to = "km2") %>%
+  ggplot(aes(x = ano, y = km2, fill = sistema)) +
+  mandatos_fundo(min(comparacao$ano), ultimo_prodes) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.75) +
+  geom_text(data = comparacao, aes(x = ano, y = pmax(DETER, PRODES),
+                                   label = paste0("×", format(round(razao, 2), decimal.mark = ","))),
+            vjust = -0.4, size = 3.2, inherit.aes = FALSE) +
+  scale_fill_manual(values = c("DETER" = "#fdae61", "PRODES" = "#1f6f43"), name = NULL) +
+  scale_x_continuous(breaks = comparacao$ano, expand = c(0, 0)) +
+  scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.12))) +
+  labs(title = "Desmatamento na Amazônia Legal: alertas DETER e taxa PRODES",
+       x = "ano PRODES (agosto do ano anterior a julho)", y = "km²",
+       caption = paste0("Fonte: DETER e PRODES/INPE. Acima das barras: PRODES ÷ DETER. ",
+                        "PRODES ", ultimo_prodes, " é a estimativa divulgada em 16/10/2026.")) +
+  theme(legend.position = "bottom") +
+  mandatos_linhas(min(comparacao$ano), ultimo_prodes)
+```
+
+O DETER enxerga menos que o PRODES (polígonos pequenos e áreas sob nuvem escapam), mas acompanha bem a **direção** da taxa. A razão PRODES ÷ DETER varia de ano a ano, por isso o DETER serve para antecipar a tendência, não o número exato.
+
+```{r deter-classes, fig.height=6}
+deter %>%
+  filter(!is.na(grupo), ano < max(ano)) %>%            # último ano PRODES ainda em curso
+  group_by(ano, grupo) %>%
+  summarise(km2 = sum(valor), .groups = "drop") %>%
+  mutate(grupo = factor(grupo, levels = c("Cicatriz de queimada",
+                                          "Degradação e corte seletivo", "Desmatamento"))) %>%
+  ggplot(aes(x = ano, y = km2, fill = grupo)) +
+  mandatos_fundo(2017, ultimo_prodes) +
+  geom_col(width = 0.8) +
+  facet_wrap(~ grupo, ncol = 1, scales = "free_y") +
+  scale_fill_manual(values = c("Desmatamento" = "#1f6f43",
+                               "Degradação e corte seletivo" = "#8c510a",
+                               "Cicatriz de queimada" = "#d7301f"), guide = "none") +
+  scale_x_continuous(breaks = 2017:ultimo_prodes, expand = c(0, 0)) +
+  scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.08))) +
+  labs(title = "Área com alertas DETER por tipo, Amazônia Legal",
+       x = "ano PRODES (agosto do ano anterior a julho)", y = "km²",
+       caption = "Fonte: DETER/INPE. Ano PRODES 2017 = ago/2016 a jul/2017 (início do DETER atual).") +
+  mandatos_linhas(2017, ultimo_prodes, dentro = TRUE, tamanho = 2.6,
+                  so_no_painel = list(grupo = factor("Cicatriz de queimada")))
+```
+
+O desmatamento caiu a partir de 2023, mas **degradação e fogo não acompanharam**: o ano PRODES 2025 (agosto de 2024 a julho de 2025), que inclui a temporada de seca extrema de 2024, tem a maior área de cicatrizes de queimada da série. Floresta degradada pelo fogo não entra na taxa de desmatamento do PRODES, mas perde carbono e biodiversidade e fica mais vulnerável a ser desmatada depois. Esse é um dos pontos que ambientalistas e cientistas destacam ao avaliar os números recentes.
+
+```{r deter-uf, fig.height=6}
+deter_uf <- painel %>%
+  filter(variavel %in% c("deter_desmatamento_cr", "deter_desmatamento_veg", "deter_mineracao"),
+         ano <= ultimo_prodes) %>%
+  group_by(uf, ano) %>%
+  summarise(DETER = sum(valor), .groups = "drop") %>%
+  inner_join(painel %>% filter(variavel == "desmatamento_prodes") %>%
+               select(uf, ano, PRODES = valor), by = c("uf", "ano"))
+
+r_uf <- cor(log10(deter_uf$DETER + 1), log10(deter_uf$PRODES + 1))
+
+ggplot(deter_uf, aes(x = DETER, y = PRODES)) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey50") +
+  geom_point(aes(colour = uf), size = 2.3, alpha = 0.8) +
+  scale_x_log10(labels = num) +
+  scale_y_log10(labels = num) +
+  scale_colour_brewer(palette = "Set1", name = "UF") +
+  labs(title = "DETER x PRODES por estado e ano",
+       subtitle = paste0("correlação (escala log) = ", format(round(r_uf, 2), decimal.mark = ","),
+                         "; linha tracejada: valores iguais"),
+       x = "alertas de desmatamento DETER (km², escala log)",
+       y = "desmatamento PRODES (km², escala log)",
+       caption = "Fonte: DETER e PRODES/INPE, anos PRODES 2017 em diante.")
+```
+
+# 11. Próximos dados
 
 Para os temas que queremos cruzar, estas são as fontes candidatas. Cada uma entra no painel (`dados/painel_longo.csv`) com as mesmas chaves: estado, bioma, ano, variável, valor, unidade e fonte.
 
 | Tema | Fonte candidata | O que permite mostrar |
 |---|---|---|
 | Queimadas (área queimada) | MapBiomas Fogo; INPE (área queimada) | fogo x desmatamento x seca, por mandato (focos: já na seção 7) |
-| Alertas mensais | DETER/INPE (TerraBrasilis) | mudanças de tendência dentro dos mandatos |
 | Orçamento e pessoal | Portal da Transparência; SIOP; Painel Estatístico de Pessoal | recursos e efetivo de MMA, Ibama, ICMBio, Funai |
 | Forças de segurança e crime | Polícia Federal; Fórum Brasileiro de Segurança Pública | operações, apreensões, crimes ambientais |
 | Garimpo e terras indígenas | MapBiomas Mineração e Terras Indígenas; Funai | garimpo dentro e fora de terras indígenas |
