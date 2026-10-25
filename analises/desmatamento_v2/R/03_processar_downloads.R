@@ -143,32 +143,15 @@ if (length(arqs_deter)) {
   col_area <- intersect(c("areamunkm", "areauckm", "areatotalkm", "area_km"), names(deter))[1]
   col_data <- intersect(c("view_date", "date", "data"), names(deter))[1]
   stopifnot(!is.na(col_area), !is.na(col_data), "uf" %in% names(deter))
-  # O mesmo gid aparece em várias linhas (a camada junta alertas atuais e
-  # históricos, "_hist"). Mostra quais colunas mudam dentro de um mesmo gid:
-  deter <- distinct(deter)                               # só cópias idênticas
-  if ("gid" %in% names(deter)) {
-    repetidos <- deter %>% group_by(gid) %>% filter(n() > 1) %>% ungroup()
-    if (nrow(repetidos)) {
-      varia <- repetidos %>%
-        group_by(gid) %>%
-        summarise(across(everything(), ~ n_distinct(.x) > 1)) %>%
-        select(-gid) %>%
-        colMeans()
-      message("DETER: ", n_distinct(repetidos$gid), " gid em mais de uma linha; ",
-              "fração desses gid em que cada coluna muda:")
-      print(round(sort(varia[varia > 0], decreasing = TRUE), 3))
-    }
-    # Um alerta que cruza municípios vira uma linha por município (somar áreas).
-    # Um alerta republicado aparece de novo em outro mês (vale a última versão).
-    col_mun <- intersect(c("mun_geocod", "geocode", "geocodibge", "municipality"), names(deter))[1]
-    col_pub <- intersect(c("publish_month", "publish_date"), names(deter))[1]
-    chave <- c("gid", if (!is.na(col_mun)) col_mun)
-    if (!is.na(col_pub)) deter <- arrange(deter, desc(.data[[col_pub]]))
-    antes <- nrow(deter)
-    deter <- distinct(deter, across(all_of(chave)), .keep_all = TRUE)
-    message("DETER: ", antes, " linhas -> ", nrow(deter),
-            " (uma por alerta e município, versão mais recente)")
-  }
+  # O gid NÃO identifica o alerta: a camada junta tabelas com numeração
+  # própria (ex.: "_hist") e o mesmo número aparece em alertas diferentes
+  # (datas, municípios e classes distintos). Cada linha é um alerta; só são
+  # removidas as linhas iguais em tudo, exceto nos identificadores.
+  ids <- intersect(c("fid", "gid"), names(deter))
+  antes <- nrow(deter)
+  deter <- distinct(deter, across(-all_of(ids)), .keep_all = TRUE)
+  message("DETER: ", antes, " linhas -> ", nrow(deter), " alertas (removidas ",
+          antes - nrow(deter), " cópias com os mesmos dados)")
 
   deter <- deter %>%
     transmute(uf     = sigla_uf(uf),
