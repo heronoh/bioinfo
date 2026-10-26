@@ -715,7 +715,187 @@ ggplot(deter_uf, aes(x = DETER, y = PRODES)) +
                                       " = estimativa). r: correlação de Pearson entre log10(km² + 1); os anos de um mesmo estado não são independentes, então o p-valor é otimista.")))
 ```
 
-# 11. Próximos dados
+# 11. DETER e PRODES por município
+
+Por estado, os alertas do DETER acompanham de perto o PRODES. Por município dá para ver o padrão com mais detalhe e achar os lugares que **destoam**: onde o DETER registra bem menos (ou bem mais) do que o PRODES mapeia depois. O PRODES por município é a soma dos polígonos anuais de desmatamento que caem em cada município; ela fica entre 83% e 106% da taxa oficial de cada ano (a taxa inclui uma correção para áreas sob nuvem).
+
+Para reduzir o ruído de anos com valores pequenos, somamos 2017 a 2025 em cada município e usamos só os municípios com pelo menos 5 km² desmatados no período.
+
+```{r mun-dispersao, fig.height=8}
+#| fig-cap: !expr legenda('Área desmatada (PRODES) e área de alertas (DETER) somadas de 2017 a 2025 em cada município da Amazônia Legal; destacados os que ficam fora do intervalo de predição de 95%.', 'prodes_poligonos', 'deter_mun', 'limites')
+mun <- read.csv("analises/desmatamento_v2/dados/deter_prodes_mun.csv",
+                colClasses = c(mun_geocod = "character"), fileEncoding = "UTF-8") %>%
+  group_by(mun_geocod, municipio, uf) %>%
+  summarise(PRODES = sum(prodes_km2), DETER = sum(deter_km2), .groups = "drop") %>%
+  filter(PRODES >= 5, DETER > 0)
+
+modelo_mun <- lm(log10(PRODES) ~ log10(DETER), data = mun)
+pred <- predict(modelo_mun, newdata = mun, interval = "prediction", level = 0.95)
+mun <- mun %>%
+  mutate(ajuste = 10^pred[, "fit"], inf = 10^pred[, "lwr"], sup = 10^pred[, "upr"],
+         residuo = rstandard(modelo_mun),
+         situacao = case_when(PRODES > sup ~ "PRODES acima do esperado (DETER subestima)",
+                              PRODES < inf ~ "PRODES abaixo do esperado (DETER superestima)",
+                              TRUE ~ "dentro do esperado"))
+
+faixa <- tibble(DETER = 10^seq(log10(min(mun$DETER)), log10(max(mun$DETER)), length.out = 100))
+faixa <- bind_cols(faixa, as.data.frame(10^predict(modelo_mun, faixa, interval = "prediction")))
+
+teste_mun <- cor.test(log10(mun$DETER), log10(mun$PRODES))
+texto_mun <- paste0("r = ", format(round(teste_mun$estimate, 3), decimal.mark = ","),
+                    "   R² = ", format(round(summary(modelo_mun)$r.squared, 3), decimal.mark = ","),
+                    "   p < 0,001   n = ", nrow(mun), " municípios")
+
+cores_situacao <- c("dentro do esperado" = "grey70",
+                    "PRODES acima do esperado (DETER subestima)" = "#b2182b",
+                    "PRODES abaixo do esperado (DETER superestima)" = "#2166ac")
+
+ggplot(mun, aes(x = DETER, y = PRODES)) +
+  geom_ribbon(data = faixa, aes(x = DETER, ymin = lwr, ymax = upr), inherit.aes = FALSE,
+              fill = "grey85", alpha = 0.7) +
+  geom_line(data = faixa, aes(x = DETER, y = fit), colour = "grey20", linewidth = 0.6) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", colour = "grey45") +
+  geom_point(aes(colour = situacao), size = 1.8, alpha = 0.85) +
+  ggrepel::geom_text_repel(data = mun %>% filter(situacao != "dentro do esperado"),
+                           aes(label = paste0(municipio, " (", uf, ")"), colour = situacao),
+                           size = 2.9, max.overlaps = 30, min.segment.length = 0,
+                           show.legend = FALSE, seed = 1) +
+  annotate("label", x = min(mun$DETER), y = max(mun$PRODES), label = texto_mun,
+           hjust = 0, vjust = 1, size = 3.6, fill = "white", label.size = 0.2) +
+  scale_x_log10(labels = num) +
+  scale_y_log10(labels = num) +
+  scale_colour_manual(values = cores_situacao, name = NULL) +
+  labs(title = "Área desmatada (km², PRODES/INPE) × área com alertas de desmatamento (km², DETER/INPE), por município da Amazônia Legal, soma de 2017 a 2025",
+       subtitle = "Linha contínua: regressão em escala log; faixa cinza: intervalo de predição de 95%; tracejada: valores iguais. Nomes: municípios fora da faixa",
+       x = "alertas de desmatamento DETER, 2017–2025 (km², escala log)",
+       y = "desmatamento PRODES, 2017–2025 (km², escala log)",
+       caption = fontes("prodes_poligonos", "deter_mun", "limites",
+                        nota = "Municípios com pelo menos 5 km² no PRODES e algum alerta DETER no período. DETER: corte raso, corte raso com vegetação e mineração; anos PRODES (agosto a julho).")) +
+  theme(legend.position = "bottom") +
+  guides(colour = guide_legend(nrow = 2))
+```
+
+```{r mun-tabela}
+mun %>%
+  filter(situacao != "dentro do esperado") %>%
+  arrange(desc(abs(residuo))) %>%
+  transmute(`município` = municipio, UF = uf,
+            `PRODES (km²)` = num(round(PRODES, 1)), `DETER (km²)` = num(round(DETER, 1)),
+            `PRODES ÷ DETER` = format(round(PRODES / DETER, 2), decimal.mark = ","),
+            `PRODES esperado (km²)` = num(round(ajuste, 1)),
+            `situação` = sub(" \\(.*", "", situacao)) %>%
+  knitr::kable(align = "llrrrrl")
+```
+
+Municípios com **PRODES bem acima do esperado** pelo DETER são lugares onde o desmatamento escapou dos alertas: polígonos pequenos (abaixo da área mínima do DETER), cobertura de nuvens persistente na época dos alertas ou desmatamento gradual. O contrário (**DETER acima do esperado**) costuma indicar alertas que o PRODES não confirmou como corte raso, por exemplo áreas de degradação intensa ou de mineração. A lista serve como ponto de partida para olhar caso a caso, não como diagnóstico.
+
+# 12. Terras indígenas e fogo
+
+**Comparar o número de TIs com o número de focos por estado** mede principalmente o **tamanho** de cada estado: estados grandes têm mais TIs e mais focos. A pergunta que interessa é outra: **dentro das TIs há mais ou menos fogo do que fora delas, na mesma área?** Para isso, cada foco foi localizado dentro ou fora de uma TI pelas coordenadas, e calculamos a **densidade** de focos (focos por 1.000 km² por ano).
+
+```{r ti-estados, fig.height=6}
+#| fig-cap: !expr legenda('Número de terras indígenas e número total de focos de calor por estado (2003 a 2025).', 'ti', 'queimadas', 'limites')
+ti_focos <- read.csv("analises/desmatamento_v2/dados/ti_focos.csv", fileEncoding = "UTF-8")
+ti_uf <- read.csv("analises/desmatamento_v2/dados/ti_area_uf.csv", fileEncoding = "UTF-8")
+ti_bioma <- read.csv("analises/desmatamento_v2/dados/ti_area_bioma.csv", fileEncoding = "UTF-8")
+anos_ti <- n_distinct(ti_focos$ano)
+
+por_uf <- ti_focos %>%
+  group_by(uf) %>%
+  summarise(focos = sum(focos), .groups = "drop") %>%
+  left_join(ti_uf, by = "uf") %>%
+  mutate(pct_ti = 100 * area_ti_km2 / area_km2,
+         densidade = focos / anos_ti / area_km2 * 1000)
+
+sp1 <- cor.test(por_uf$n_ti, por_uf$focos, method = "spearman", exact = FALSE)
+sp2 <- cor.test(por_uf$n_ti, por_uf$area_km2, method = "spearman", exact = FALSE)
+texto_uf <- paste0("Spearman: ρ = ", format(round(sp1$estimate, 2), decimal.mark = ","),
+                   ", p = ", format(signif(sp1$p.value, 2), decimal.mark = ","),
+                   "\n(nº de TIs × área do estado: ρ = ", format(round(sp2$estimate, 2), decimal.mark = ","), ")")
+
+ggplot(por_uf, aes(x = n_ti, y = focos)) +
+  geom_point(aes(size = area_km2 / 1000), colour = "#8c510a", alpha = 0.7) +
+  ggrepel::geom_text_repel(aes(label = uf), size = 3.3, seed = 1) +
+  annotate("label", x = 0, y = max(por_uf$focos), label = texto_uf, hjust = 0, vjust = 1,
+           size = 3.5, fill = "white", label.size = 0.2) +
+  scale_x_continuous(trans = scales::pseudo_log_trans(base = 10), breaks = c(0, 1, 3, 10, 30, 100)) +
+  scale_y_log10(labels = num) +
+  scale_size_area(max_size = 12, name = "área do estado\n(mil km²)", labels = num) +
+  labs(title = "Número de terras indígenas (Funai) × focos de calor (INPE Programa Queimadas), por estado, 2003–2025",
+       subtitle = "Correlação positiva, mas o número de TIs também acompanha o tamanho do estado: a comparação mistura área com fogo",
+       x = "terras indígenas no estado (nº, escala pseudo-log, que inclui o zero)", y = "focos de calor 2003–2025 (escala log)",
+       caption = fontes("ti", "queimadas", "limites",
+                        nota = "Uma TI que cruza a divisa conta para os dois estados. Focos do satélite de referência, localizados pelas coordenadas."))
+```
+
+```{r ti-densidade-bioma, fig.height=5.5}
+#| fig-cap: !expr legenda('Densidade média anual de focos de calor dentro e fora de terras indígenas, por bioma (2003 a 2025).', 'ti', 'queimadas', 'limites')
+dens_bioma <- ti_focos %>%
+  filter(!is.na(bioma)) %>%
+  group_by(bioma, dentro_ti) %>%
+  summarise(focos = sum(focos), .groups = "drop") %>%
+  left_join(ti_bioma, by = "bioma") %>%
+  mutate(area = ifelse(dentro_ti, area_ti_km2, area_km2 - area_ti_km2),
+         densidade = focos / anos_ti / area * 1000,
+         onde = factor(ifelse(dentro_ti, "dentro de TIs", "fora de TIs"),
+                       levels = c("fora de TIs", "dentro de TIs")),
+         bioma = factor(bioma, levels = names(cores_biomas)))
+
+razoes <- dens_bioma %>%
+  select(bioma, onde, densidade, area_ti_km2) %>%
+  tidyr::pivot_wider(names_from = onde, values_from = densidade) %>%
+  mutate(rotulo = paste0("dentro ÷ fora: ", format(round(`dentro de TIs` / `fora de TIs`, 2), decimal.mark = ","),
+                         "\nTIs: ", num(round(area_ti_km2)), " km²"))
+
+ggplot(dens_bioma, aes(x = bioma, y = densidade, fill = onde)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.75) +
+  geom_text(data = razoes, aes(x = bioma, y = pmax(`dentro de TIs`, `fora de TIs`), label = rotulo),
+            inherit.aes = FALSE, vjust = -0.3, size = 3, lineheight = 0.9) +
+  scale_fill_manual(values = c("fora de TIs" = "grey60", "dentro de TIs" = "#d7301f"), name = NULL) +
+  scale_y_continuous(labels = num, expand = expansion(mult = c(0, 0.25))) +
+  labs(title = "Focos de calor por 1.000 km² por ano (INPE Programa Queimadas), dentro e fora de terras indígenas (Funai), por bioma",
+       subtitle = "Média de 2003 a 2025. Acima das barras: razão entre as densidades e área total de TIs no bioma",
+       x = NULL, y = "focos por 1.000 km² por ano",
+       caption = fontes("ti", "queimadas", "limites",
+                        nota = "'Fora de TIs' inclui toda a área do bioma fora das TIs (vegetação nativa, lavouras, pastagens, cidades). Pampa, Caatinga, Mata Atlântica e Pantanal têm pouca área de TI, então as densidades dentro delas são instáveis.")) +
+  theme(legend.position = "bottom")
+```
+
+```{r ti-densidade-ano, fig.height=7}
+#| fig-cap: !expr legenda('Densidade anual de focos de calor dentro e fora de terras indígenas na Amazônia e no Cerrado.', 'ti', 'queimadas', 'limites', 'mandatos')
+dens_ano <- ti_focos %>%
+  filter(bioma %in% c("Amazônia", "Cerrado")) %>%
+  group_by(bioma, ano, dentro_ti) %>%
+  summarise(focos = sum(focos), .groups = "drop") %>%
+  left_join(ti_bioma, by = "bioma") %>%
+  mutate(area = ifelse(dentro_ti, area_ti_km2, area_km2 - area_ti_km2),
+         densidade = focos / area * 1000,
+         onde = factor(ifelse(dentro_ti, "dentro de TIs", "fora de TIs"),
+                       levels = c("fora de TIs", "dentro de TIs")))
+
+ggplot(dens_ano, aes(x = ano, y = densidade, colour = onde)) +
+  mandatos_fundo(2003, 2025) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 1.6) +
+  facet_wrap(~ bioma, ncol = 1, scales = "free_y") +
+  scale_colour_manual(values = c("fora de TIs" = "grey40", "dentro de TIs" = "#d7301f"), name = NULL) +
+  scale_x_continuous(breaks = 2003:2025, expand = c(0, 0)) +
+  scale_y_continuous(labels = num, limits = c(0, NA)) +
+  labs(title = "Focos de calor por 1.000 km² (INPE Programa Queimadas), dentro e fora de terras indígenas (Funai): Amazônia e Cerrado",
+       x = NULL, y = "focos por 1.000 km² no ano",
+       caption = fontes("ti", "queimadas", "limites", "mandatos",
+                        nota = "Limites das TIs fixos (versão de 2021) para toda a série. Escalas verticais diferentes entre biomas.")) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5), legend.position = "bottom") +
+  mandatos_linhas(2003, 2025, dentro = TRUE, tamanho = 2.6, so_no_painel = list(bioma = "Amazônia"))
+```
+
+**O que os números mostram:**
+
+- Na **Amazônia**, a densidade de focos dentro das terras indígenas é cerca de **seis vezes menor** do que fora delas, em todos os anos da série. Isso concorda com os estudos que apontam as TIs como barreiras ao desmatamento e ao fogo na floresta.
+- Fora da Amazônia o padrão muda. No **Cerrado**, que tem a segunda maior área de TIs, a densidade é **2,5 vezes maior dentro delas**; no Pantanal, na Mata Atlântica e no Pampa ela também é maior dentro, e na Caatinga é menor, mas nesses quatro biomas a área de TIs é pequena e os números oscilam muito. O fogo no Cerrado tem outro significado: é um bioma adaptado ao fogo, as TIs conservam vegetação nativa que queima naturalmente (fora delas, boa parte virou lavoura e pastagem), e várias TIs usam queimas controladas no início da seca, inclusive pelo Manejo Integrado do Fogo, para evitar incêndios grandes no fim da estação. Focos de calor contam **todo** fogo ativo, sem distinguir queima de manejo de incêndio florestal ou de queima para desmatar.
+- Para separar essas situações, os próximos passos seriam comparar as TIs com a **vegetação nativa** fora delas (e não com a área total) e usar **área queimada** e **época do fogo** (início ou fim da seca), em vez de só o número de focos.
+
+# 13. Próximos dados
 
 Para os temas que queremos cruzar, estas são as fontes candidatas. Cada uma entra no painel (`dados/painel_longo.csv`) com as mesmas chaves: estado, bioma, ano, variável, valor, unidade e fonte.
 
@@ -724,7 +904,7 @@ Para os temas que queremos cruzar, estas são as fontes candidatas. Cada uma ent
 | Queimadas (área queimada) | MapBiomas Fogo; INPE (área queimada) | fogo x desmatamento x seca, por mandato (focos: já na seção 7) |
 | Orçamento e pessoal | Portal da Transparência; SIOP; Painel Estatístico de Pessoal | recursos e efetivo de MMA, Ibama, ICMBio, Funai |
 | Forças de segurança e crime | Polícia Federal; Fórum Brasileiro de Segurança Pública | operações, apreensões, crimes ambientais |
-| Garimpo e terras indígenas | MapBiomas Mineração e Terras Indígenas; Funai | garimpo dentro e fora de terras indígenas |
+| Garimpo e terras indígenas | MapBiomas Mineração e Terras Indígenas; Funai | garimpo e desmatamento dentro e fora de terras indígenas (fogo: seção 12) |
 | Valor da terra | preços de terra por região (consultorias e institutos de economia agrícola) | valorização da terra desmatada |
 | Produção e renda | IBGE (PAM, PPM, PEVS, Censo Agropecuário) | renda por hectare de pastagem, soja, extrativismo |
 | Fundos e investimentos | Fundo Amazônia (BNDES); Fundo Clima; ODA ambiental | recursos para preservação ao longo do tempo |

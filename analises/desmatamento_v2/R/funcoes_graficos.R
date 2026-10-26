@@ -184,6 +184,14 @@ referencias <- list(
                      "https://stibamadadosabertosprd.blob.core.windows.net/dados-abertos/dados/TERMOS_DE_EMBARGO/TERMO_EMBARGO/termo_de_embargo.csv"),
   bcb = c("Banco Central do Brasil. SGS: série 1 (dólar comercial, venda, diário) e série 433 (IPCA, variação mensal). Valores corrigidos pelo IPCA para 2025 e convertidos pelo dólar médio de 2025.",
           "https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=csv"),
+  prodes_poligonos = c("INPE. PRODES Amazônia Legal: polígonos anuais de desmatamento (serviço WFS prodes-legal-amz), somados por município.",
+                       "https://terrabrasilis.dpi.inpe.br/geoserver/prodes-legal-amz/wfs"),
+  deter_mun = c("INPE. DETER Amazônia: área de cada alerta no município (campo areamunkm, código IBGE do município).",
+                "https://terrabrasilis.dpi.inpe.br/geoserver/deter-amz/wfs"),
+  limites = c("IBGE: malhas de municípios (2022), estados (2020) e biomas (2019), na versão preparada pelo IPEA para o pacote geobr.",
+              "https://www.ipea.gov.br/geobr/data_gpkg/"),
+  ti = c("Funai: terras indígenas (todas as fases), versão de março de 2021 preparada pelo IPEA para o pacote geobr.",
+         "https://www.ipea.gov.br/geobr/data_gpkg/indigenous_land/202103/indigenous_land_202103.gpkg"),
   mandatos = c("Mandatos presidenciais: datas de posse e de término (Presidência da República). Pandemia de COVID-19: declaração da OMS (11/03/2020) até o fim da Emergência em Saúde Pública de Importância Nacional (Portaria GM/MS nº 913/2022, vigente em 22/05/2022).",
                NA)
 )
