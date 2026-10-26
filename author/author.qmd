@@ -1,69 +1,134 @@
 ---
-title: "Olá"
-date: today
-    # logo opcional (canto superior direito):
-    # logo: misc/HOH-02.png
-    # título em "banner" opcional:
-    # title-slide-attributes:
-    #   data-background-image: misc/HOH-02.png
-    #   data-background-size: contain
+title: "Heron O. Hilário"
+toc: false
 ---
 
 ```{=html}
 <style>
-.photo {
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.15);
-  width: 100%;
-  max-width: 320px;
-  height: auto;
+/* idioma: mostra só o bloco do idioma escolhido */
+html[lang="en"] .lang-pt { display: none; }
+html:not([lang="en"]) .lang-en { display: none; }
+
+.lang-switch {
+  float: right;
+  margin: -0.5rem 0 1rem 1rem;
+  display: inline-flex;
+  border: 1px solid rgba(127,127,127,.4);
+  border-radius: 999px;
+  overflow: hidden;
+  font-size: .9rem;
 }
+.lang-switch button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: .3rem .8rem;
+  cursor: pointer;
+}
+.lang-switch button[aria-pressed="true"] {
+  background: var(--bs-primary, #2c3e50);
+  color: #fff;
+}
+
 .badges a {
-  display:inline-block;
+  display: inline-block;
   margin: 0 .5rem .5rem 0;
   padding: .35rem .6rem;
   border-radius: .5rem;
-  background: rgba(0,0,0,.06);
+  background: rgba(127,127,127,.12);
   text-decoration: none;
 }
-.badges a:hover { background: rgba(0,0,0,.12); }
+.badges a:hover { background: rgba(127,127,127,.24); }
 .small { font-size: .95rem; }
+
+.foto {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 1rem auto;
+}
+.logos, .logos > p {
+  display: flex; flex-wrap: wrap; gap: 2rem;
+  align-items: center; justify-content: center;
+  margin: 1.5rem 0;
+}
+.logos img { height: 90px; width: auto; object-fit: contain; }
 </style>
+
+<div class="lang-switch" role="group" aria-label="Idioma / Language">
+  <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+  <button type="button" data-lang="en" aria-pressed="false">EN</button>
+</div>
+
+<script>
+(function () {
+  // idioma: ?lang=en na URL > escolha salva > idioma do navegador > português
+  function escolher(lang, salvar) {
+    document.documentElement.lang = (lang === "en") ? "en" : "pt-BR";
+    document.querySelectorAll(".lang-switch button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.lang === lang));
+    });
+    if (salvar) {
+      try { localStorage.setItem("idioma", lang); } catch (e) {}
+      var url = new URL(window.location.href);
+      url.searchParams.set("lang", lang);
+      history.replaceState(null, "", url);
+    }
+  }
+  var daUrl = new URLSearchParams(window.location.search).get("lang");
+  var salvo = null;
+  try { salvo = localStorage.getItem("idioma"); } catch (e) {}
+  var inicial = daUrl || salvo || ((navigator.language || "pt").slice(0, 2) === "pt" ? "pt" : "en");
+  document.addEventListener("DOMContentLoaded", function () {
+    escolher(inicial === "en" ? "en" : "pt", false);
+    document.querySelectorAll(".lang-switch button").forEach(function (b) {
+      b.addEventListener("click", function () { escolher(b.dataset.lang, true); });
+    });
+  });
+})();
+</script>
 ```
+
+<img src="../misc/HOH-01.png" class="foto" alt="Foto de Heron O. Hilário / Photo of Heron O. Hilário">
+
+::: {.badges .small style="text-align:center"}
+<a href="https://github.com/heronoh" target="_blank">🐙 GitHub</a> <a href="https://scholar.google.com/citations?user=e0PUfXoAAAAJ&hl=en&oi=ao" target="_blank">📚 Google Scholar</a> <a href="https://orcid.org/0000-0002-2548-1053" target="_blank">🧬 ORCID</a> <a href="http://instagram.com/hohphoto" target="_blank">📷 Instagram</a>
+:::
+
+::: lang-pt
 ## Quem sou
 
-::: columns
-::: column
-Sou **Heron O. Hilário**, um bioinformáta interessado pelo estudo, preservação e conservação da **Biodiversidade**, utilizando ferramentas de **Biologia Molecular**, **Genética** e **Genômica**. As principais linhas de pesquisa nas quais trabalho são na aplicação do ***eDNA metabarcoding*** para investigação de vertebrados e invertebrados.
-
-::: {.badges .small}
-<a href="https://github.com/heronoh" target="_blank">🐙 GitHub</a> <a href="https://scholar.google.com/citations?user=e0PUfXoAAAAJ&hl=en&oi=ao" target="_blank">📚 Google Scholar</a> <a href="https://orcid.org/0000-0002-2548-1053" target="_blank">🧬 ORCID</a> <a href="http://lattes.cnpq.br/SEU_ID" target="_blank">📄 Lattes</a> <a href="http://instagram.com/hohphoto" target="_blank">🌐 Site</a>
-:::
-:::
-
-::: column
-<!-- Substitua o caminho abaixo pela sua foto -->
-
-![](../misc/HOH-01.png){.mt-4 alt="Foto de perfil de Heron O. Hilário" style="width:220px;height:220px;border-radius:50%;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
-:::
-:::
-
-------------------------------------------------------------------------
+Sou bioinformata e trabalho com o estudo e a conservação da **biodiversidade** usando ferramentas de **biologia molecular**, **genética** e **genômica**. Minha principal linha de pesquisa é o uso de ***metabarcoding* de DNA ambiental (eDNA)** para inventariar e monitorar vertebrados e invertebrados.
 
 ## O que faço
 
--   **Docência**: *Bioinformática e Genômica*, *Genética* & *Biologia molecular*\
--   **Pesquisa**:
-    -   pesquisador no [**Laboratório de Genética da Conservação da PUC Minas**](https://www.instagram.com/lgc_pucminas/)
-    
-![](../misc/Logo_LGC_2026.png){.mt-4 alt="[LGC PUC Minas](https://www.instagram.com/lgc_pucminas/)" style="width:140px;height:100px;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
+-   **Docência:** *Bioinformática e Genômica*, *Genética* e *Biologia Molecular* na PUC Minas.
+-   **Pesquisa:** pesquisador do [Laboratório de Genética da Conservação (LGC) da PUC Minas](https://www.instagram.com/lgc_pucminas/), com análise de dados ômicos (FASTA/FASTQ), filogenia e taxonomia molecular.
+-   **Software:** desenvolvo o pacote R [BLASTr](https://heronoh.github.io/BLASTr/), para identificação taxonômica de sequências de *metabarcoding*.
+-   **Consultoria:** bioinformata parceiro da [EcoMol Consultoria](https://ecomolconsultoria.com.br/), onde faço as análises de dados de eDNA *metabarcoding*.
+-   **Ferramentas:** R, Quarto, git/GitHub, Linux/shell.
 
-    -   análise de dados **ômicos**, bancos **FASTA/FASTQ**, **filogenia**, **taxonomia molecular**\
--   **Ferramentas**: **R**, **Quarto**, **git/GitHub**, **Linux/Shell**\
--   **Consultoria**: Bioinformata parceiro da [**EcoMol**](https://ecomolconsultoria.com.br/), onde realizo análises de dados de eDNA metabarcoding
+> **Missão:** tornar os métodos computacionais em biologia mais acessíveis, com materiais claros, reproduzíveis e abertos.
+:::
 
-![](../misc/logo_EcoMol.jpeg){.mt-4 alt="[EcoMol Consultoria](https://ecomolconsultoria.com.br/)" style="width:125px;height:100px;object-fit:cover;display:block;margin-left:auto;margin-right:auto;"}
+::: lang-en
+## About me
 
-> **Missão:** simplificar o acesso a métodos computacionais na biologia usando materiais claros, reproduzíveis e abertos.
+I am a bioinformatician working on the study and conservation of **biodiversity** with tools from **molecular biology**, **genetics** and **genomics**. My main research line is **environmental DNA (eDNA) *metabarcoding*** for surveying and monitoring vertebrates and invertebrates.
 
-------------------------------------------------------------------------
+## What I do
+
+-   **Teaching:** *Bioinformatics and Genomics*, *Genetics* and *Molecular Biology* at PUC Minas (Brazil).
+-   **Research:** researcher at the [Conservation Genetics Laboratory (LGC), PUC Minas](https://www.instagram.com/lgc_pucminas/), working with omics data (FASTA/FASTQ), phylogenetics and molecular taxonomy.
+-   **Software:** developer of the R package [BLASTr](https://heronoh.github.io/BLASTr/), for taxonomic identification of *metabarcoding* sequences.
+-   **Consulting:** partner bioinformatician at [EcoMol Consultoria](https://ecomolconsultoria.com.br/), responsible for eDNA *metabarcoding* data analysis.
+-   **Tools:** R, Quarto, git/GitHub, Linux/shell.
+
+> **Mission:** making computational methods in biology more accessible through clear, reproducible and open materials.
+:::
+
+::: logos
+<a href="https://www.instagram.com/lgc_pucminas/" target="_blank"><img src="../misc/Logo_LGC_2026.png" alt="LGC PUC Minas"></a>
+<a href="https://ecomolconsultoria.com.br/" target="_blank"><img src="../misc/logo_EcoMol.jpeg" alt="EcoMol Consultoria"></a>
+:::
