@@ -1,10 +1,13 @@
 # =============================================================================
 # limites.R
 #
-# Limites oficiais (municípios, estados, biomas, terras indígenas) via pacote
-# geobr (IPEA), guardados em cache em dados_brutos/limites/ para não baixar de
-# novo. Tudo é devolvido na projeção cônica de Albers do IBGE para o Brasil,
-# que preserva áreas (bom para km² e para cruzar pontos e polígonos).
+# Limites oficiais (municípios, estados, biomas, terras indígenas) nas versões
+# preparadas pelo IPEA para o pacote geobr. Os arquivos são baixados direto
+# pelo script de download (não precisa do pacote geobr):
+#   bash analises/desmatamento_v2/baixar/baixar_dados.sh limites
+#
+# Tudo é devolvido na projeção cônica de Albers do IBGE para o Brasil, que
+# preserva áreas (bom para km² e para cruzar pontos e polígonos).
 # =============================================================================
 
 suppressMessages(library(sf))
@@ -12,32 +15,20 @@ suppressMessages(library(sf))
 albers_brasil <- paste("+proj=aea +lat_0=-12 +lon_0=-54 +lat_1=-2 +lat_2=-22",
                        "+x_0=5000000 +y_0=10000000 +ellps=GRS80 +units=m +no_defs")
 
-pasta_limites <- "analises/desmatamento_v2/dados_brutos/limites"
+pasta_limites <- "analises/desmatamento_v2/dados_brutos/limites/gpkg"
 
 amazonia_legal <- c("AC", "AM", "AP", "MA", "MT", "PA", "RO", "RR", "TO")
 
-limite <- function(nome, baixar) {
-  dir.create(pasta_limites, showWarnings = FALSE, recursive = TRUE, mode = "0700")
-  arquivo <- file.path(pasta_limites, paste0(nome, ".gpkg"))
-  if (!file.exists(arquivo)) {
-    if (!requireNamespace("geobr", quietly = TRUE))
-      stop("instale o pacote geobr: install.packages('geobr')", call. = FALSE)
-    message("baixando ", nome, " (geobr/IPEA)...")
-    st_write(baixar(), arquivo, quiet = TRUE)
-  }
-  st_transform(st_read(arquivo, quiet = TRUE), albers_brasil)
+ler_limite <- function(padrao) {
+  arqs <- list.files(pasta_limites, padrao, full.names = TRUE)
+  if (!length(arqs))
+    stop("limites não encontrados (", padrao, "). Rode antes:\n",
+         "  bash analises/desmatamento_v2/baixar/baixar_dados.sh limites", call. = FALSE)
+  camadas <- lapply(arqs, function(a) st_transform(st_read(a, quiet = TRUE), albers_brasil))
+  do.call(rbind, camadas)
 }
 
-municipios <- function() limite("municipios_2022", function()
-  geobr::read_municipality(code_muni = "all", year = 2022, simplified = FALSE,
-                           showProgress = FALSE))
-
-estados <- function() limite("estados_2020", function()
-  geobr::read_state(code_state = "all", year = 2020, simplified = FALSE,
-                    showProgress = FALSE))
-
-biomas <- function() limite("biomas_2019", function()
-  geobr::read_biomes(year = 2019, simplified = FALSE, showProgress = FALSE))
-
-terras_indigenas <- function() limite("terras_indigenas", function()
-  geobr::read_indigenous_land(simplified = FALSE, showProgress = FALSE))
+municipios       <- function() ler_limite("^\\d{2}municipality_2022\\.gpkg$")
+estados          <- function() ler_limite("^\\d{2}state_2020\\.gpkg$")
+biomas           <- function() ler_limite("^biomes_2019\\.gpkg$")
+terras_indigenas <- function() ler_limite("^indigenous_land_202103\\.gpkg$")

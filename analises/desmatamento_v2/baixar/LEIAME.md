@@ -19,7 +19,8 @@ Rscript analises/desmatamento_v2/R/02_painel.R                         # junta t
 | `prodes_mun` (só quando pedida) | INPE TerraBrasilis, polígonos PRODES (WFS) | `prodes_mun.csv`, `deter_prodes_mun.csv` (via `R/05_municipios.R`) |
 
 Terras indígenas x focos: `Rscript analises/desmatamento_v2/R/06_terras_indigenas.R` (usa os focos já
-baixados e os limites da Funai, estados e biomas pelo pacote `geobr`, do IPEA; precisa dos pacotes `sf` e `geobr`).
+baixados e os limites de terras indígenas, estados e biomas preparados pelo IPEA para o geobr, baixados com
+`baixar_dados.sh limites`; precisa só do pacote `sf`).
 
 O que já foi baixado não é baixado de novo: anos encerrados nunca se repetem, e o que muda
 (ano corrente, Ibama, DETER) só é renovado depois de 7 dias (`VALIDADE_DIAS=30 bash ...`

@@ -8,13 +8,13 @@
 # Entradas:
 #   dados_brutos/prodes_vetor/prodes_*.csv  (baixar_dados.sh prodes_mun)
 #   dados/deter_alertas_mun.csv             (03_processar_downloads.R)
-#   limites municipais 2022 (geobr/IPEA, em cache em dados_brutos/limites/)
+#   limites municipais 2022 (IPEA/geobr; baixar_dados.sh limites)
 #
 # Saídas (em dados/):
 #   prodes_mun.csv        área desmatada PRODES (km²) por município e ano PRODES
 #   deter_prodes_mun.csv  PRODES x DETER (desmatamento) por município e ano
 #
-# Requer os pacotes sf e geobr. Rodar a partir da raiz do repositório:
+# Requer o pacote sf. Rodar a partir da raiz do repositório:
 #   Rscript analises/desmatamento_v2/R/05_municipios.R
 # =============================================================================
 

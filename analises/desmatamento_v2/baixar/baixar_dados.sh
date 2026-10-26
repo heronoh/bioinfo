@@ -5,8 +5,8 @@
 # Uso (a partir da raiz do repositório, como usuário comum, NUNCA como root):
 #   bash analises/desmatamento_v2/baixar/baixar_dados.sh [fontes...] [opções]
 #
-# Fontes:   cambio  ibama  queimadas  deter  prodes_mun   (padrão: as quatro primeiras;
-#           prodes_mun só quando pedida, por ser grande)
+# Fontes:   cambio  ibama  queimadas  deter  prodes_mun  limites
+#           (padrão: as quatro primeiras; prodes_mun e limites só quando pedidas)
 # Opções:   --manter-brutos   não apaga os arquivos brutos do Ibama depois de
 #                             processados (eles contêm nomes e CPF/CNPJ)
 #           --listar          só mostra o que seria baixado, sem baixar
@@ -48,6 +48,7 @@ DOMINIOS_PERMITIDOS=(
   "terrabrasilis.dpi.inpe.br"                    # INPE TerraBrasilis (DETER)
   "stibamadadosabertosprd.blob.core.windows.net" # Ibama dados abertos
   "api.bcb.gov.br"                               # Banco Central (SGS)
+  "www.ipea.gov.br"                              # IPEA/geobr (limites oficiais)
 )
 
 TAMANHO_MAX_ARQUIVO=$((3 * 1024 * 1024 * 1024))   # 3 GB por download
@@ -124,7 +125,7 @@ atual() {
   (( $(idade_dias "$arq") < VALIDADE_DIAS ))
 }
 
-# baixar URL DESTINO TIPO [fixo]   (TIPO: zip | csv | sgs | xml | texto | indice)
+# baixar URL DESTINO TIPO [fixo]   (TIPO: zip | csv | sgs | xml | texto | indice | gpkg)
 baixar() {
   local url="$1" destino="$2" tipo="$3" fixo="${4:-}" tmp efetiva
 
@@ -167,7 +168,10 @@ baixar() {
         erro "resposta do Banco Central não é a tabela esperada ($(head -c 200 "$tmp")): $url" ;;
     xml)
       head -c 512 "$tmp" | grep -q '<' || erro "resposta não é XML: $url" ;;
-    indice) ;;   # página de listagem de diretório (HTML); só os links são lidos
+    indice) ;;
+    gpkg)
+      # GeoPackage é um banco SQLite
+      [[ "$(head -c 15 "$tmp")" == "SQLite format 3" ]] || erro "não é um GeoPackage: $url" ;;   # página de listagem de diretório (HTML); só os links são lidos
   esac
 
   mv -f -- "$tmp" "$destino"
@@ -383,6 +387,20 @@ fonte_deter() {
   baixar_wfs DETER "$BRUTOS/deter" "$DETER_WFS" deter 0 "${DETER_CAMADAS_CANDIDATAS[@]}"
 }
 
+fonte_limites() {
+  # limites oficiais usados nas análises espaciais, nas versões preparadas pelo
+  # IPEA para o pacote geobr (baixados direto, sem precisar do pacote)
+  log "IPEA/geobr: municípios 2022, estados 2020, biomas 2019 e terras indígenas 2021"
+  local pasta="$BRUTOS/limites/gpkg" base="https://www.ipea.gov.br/geobr/data_gpkg" uf
+  mkdir -p -- "$pasta"
+  for uf in 11 12 13 14 15 16 17 21 22 23 24 25 26 27 28 29 31 32 33 35 41 42 43 50 51 52 53; do
+    baixar "$base/municipality/2022/${uf}municipality_2022.gpkg" "$pasta/${uf}municipality_2022.gpkg" gpkg fixo
+    baixar "$base/state/2020/${uf}state_2020.gpkg" "$pasta/${uf}state_2020.gpkg" gpkg fixo
+  done
+  baixar "$base/biomes/2019/biomes_2019.gpkg" "$pasta/biomes_2019.gpkg" gpkg fixo
+  baixar "$base/indigenous_land/202103/indigenous_land_202103.gpkg" "$pasta/indigenous_land_202103.gpkg" gpkg fixo
+}
+
 fonte_prodes_mun() {
   # polígonos anuais do PRODES, com geometria, para somar o desmatamento por
   # município (R/05_municipios.R). Arquivo grande: centenas de MB.
@@ -412,7 +430,7 @@ for arg in "$@"; do
     --manter-brutos) MANTER_BRUTOS=1 ;;
     --listar)        LISTAR=1 ;;
     --forcar)        FORCAR=1 ;;
-    cambio|ibama|queimadas|deter|prodes_mun) FONTES+=("$arg") ;;
+    cambio|ibama|queimadas|deter|prodes_mun|limites) FONTES+=("$arg") ;;
     *) erro "argumento desconhecido: $arg" ;;
   esac
 done

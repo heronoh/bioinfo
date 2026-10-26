@@ -8,14 +8,14 @@
 #
 # Entradas:
 #   dados_brutos/queimadas/**.csv  focos anuais do INPE, com latitude e longitude
-#   limites de TIs (Funai), estados e biomas (geobr/IPEA, em cache)
+#   limites de TIs (Funai, 2021), estados e biomas (IPEA/geobr; baixar_dados.sh limites)
 #
 # Saídas (em dados/):
 #   ti_focos.csv       focos por UF, bioma, ano e dentro/fora de TI
 #   ti_area_uf.csv     área do estado, área de TIs e nº de TIs por UF
 #   ti_area_bioma.csv  o mesmo por bioma
 #
-# Requer os pacotes sf e geobr. Rodar a partir da raiz do repositório:
+# Requer o pacote sf. Rodar a partir da raiz do repositório:
 #   Rscript analises/desmatamento_v2/R/06_terras_indigenas.R
 # =============================================================================
 
