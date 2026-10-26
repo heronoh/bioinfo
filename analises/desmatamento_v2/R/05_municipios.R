@@ -49,15 +49,45 @@ ler_pagina <- function(arq) {
   col_area <- intersect(c("area_km", "areakm", "area_km2", "area"), names(d))[1]
   if (anyNA(c(col_geom, col_ano, col_area)))
     stop("colunas não reconhecidas em ", arq, ": ", paste(names(d), collapse = ", "), call. = FALSE)
-  pol <- st_as_sf(d[, c(col_ano, col_area, col_geom)], wkt = col_geom, crs = 4674)
-  # confere se as coordenadas são graus (SIRGAS 2000), como esperado
-  caixa <- st_bbox(pol)
-  if (caixa["xmin"] < -80 || caixa["xmax"] > -40)
-    stop("coordenadas fora do esperado para graus em ", arq, call. = FALSE)
+  pol <- st_as_sf(d[, c(col_ano, col_area, col_geom)], wkt = col_geom, crs = NA)
+  pol <- ajustar_crs(pol, arq)
   pontos <- st_point_on_surface(st_transform(st_make_valid(pol), albers_brasil))
   pontos %>%
     transmute(ano = as.integer(round(as.numeric(.data[[col_ano]]))),
               area_km2 = as.numeric(.data[[col_area]]))
+}
+
+# O WFS 2.0 pode devolver as coordenadas em ordem latitude/longitude (padrão
+# do EPSG para SIRGAS 2000) ou numa projeção em metros. Detecta pela faixa
+# de valores e corrige.
+crs_do_servico <- local({
+  cap <- file.path(brutos, "prodes_vetor", "capabilities.xml")
+  if (!file.exists(cap)) return(NA)
+  x <- paste(readLines(cap, warn = FALSE), collapse = " ")
+  m <- regmatches(x, regexpr("<(wfs:)?DefaultCRS>[^<]+</(wfs:)?DefaultCRS>", x))
+  cod <- suppressWarnings(as.integer(sub(".*EPSG:+([0-9]+).*", "\\1", m)))
+  if (length(cod) && !is.na(cod)) cod else NA
+})
+avisado <- FALSE
+ajustar_crs <- function(pol, arq) {
+  cx <- st_bbox(pol)
+  em_graus_lonlat <- cx["xmin"] >= -80 && cx["xmax"] <= -40 && cx["ymin"] >= -20 && cx["ymax"] <= 8
+  em_graus_latlon <- cx["xmin"] >= -20 && cx["xmax"] <= 8 && cx["ymin"] >= -80 && cx["ymax"] <= -40
+  if (em_graus_lonlat) {
+    st_crs(pol) <- 4674; caso <- "graus, longitude/latitude"
+  } else if (em_graus_latlon) {
+    st_geometry(pol) <- st_sfc(lapply(st_geometry(pol), function(g) {
+      g[] <- lapply(g, function(p) if (is.list(p)) lapply(p, function(m) m[, 2:1]) else p[, 2:1]); g
+    }), crs = 4674)
+    caso <- "graus em ordem latitude/longitude (invertida para longitude/latitude)"
+  } else if (!is.na(crs_do_servico)) {
+    st_crs(pol) <- crs_do_servico; caso <- paste0("projeção EPSG:", crs_do_servico, " informada pelo serviço")
+  } else {
+    stop("não reconheci o sistema de coordenadas em ", arq, " (caixa: ",
+         paste(round(cx), collapse = ", "), ")", call. = FALSE)
+  }
+  if (!avisado) { message("coordenadas do PRODES: ", caso); avisado <<- TRUE }
+  pol
 }
 
 pontos <- do.call(rbind, lapply(arqs, function(a) { message("lendo ", basename(a)); ler_pagina(a) }))
