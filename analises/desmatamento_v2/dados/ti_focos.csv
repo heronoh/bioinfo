@@ -1,0 +1,1956 @@
+"uf","bioma","ano","dentro_ti","focos"
+"AC","Amazônia",2003,FALSE,10369
+"AC","Amazônia",2003,TRUE,148
+"AC","Amazônia",2004,FALSE,7210
+"AC","Amazônia",2004,TRUE,56
+"AC","Amazônia",2005,FALSE,15768
+"AC","Amazônia",2005,TRUE,222
+"AC","Amazônia",2006,FALSE,6054
+"AC","Amazônia",2006,TRUE,139
+"AC","Amazônia",2007,FALSE,8400
+"AC","Amazônia",2007,TRUE,141
+"AC","Amazônia",2008,FALSE,5565
+"AC","Amazônia",2008,TRUE,132
+"AC","Amazônia",2009,FALSE,3421
+"AC","Amazônia",2009,TRUE,86
+"AC","Amazônia",2010,FALSE,8444
+"AC","Amazônia",2010,TRUE,217
+"AC","Amazônia",2011,FALSE,3118
+"AC","Amazônia",2011,TRUE,72
+"AC","Amazônia",2012,FALSE,4587
+"AC","Amazônia",2012,TRUE,131
+"AC","Amazônia",2013,FALSE,4857
+"AC","Amazônia",2013,TRUE,122
+"AC","Amazônia",2014,FALSE,4297
+"AC","Amazônia",2014,TRUE,101
+"AC","Amazônia",2015,FALSE,5654
+"AC","Amazônia",2015,TRUE,124
+"AC","Amazônia",2016,FALSE,7501
+"AC","Amazônia",2016,TRUE,182
+"AC","Amazônia",2017,FALSE,6170
+"AC","Amazônia",2017,TRUE,122
+"AC","Amazônia",2018,FALSE,6496
+"AC","Amazônia",2018,TRUE,129
+"AC","Amazônia",2019,FALSE,6656
+"AC","Amazônia",2019,TRUE,144
+"AC","Amazônia",2020,FALSE,8978
+"AC","Amazônia",2020,TRUE,212
+"AC","Amazônia",2021,FALSE,8645
+"AC","Amazônia",2021,TRUE,182
+"AC","Amazônia",2022,FALSE,11624
+"AC","Amazônia",2022,TRUE,210
+"AC","Amazônia",2023,FALSE,6395
+"AC","Amazônia",2023,TRUE,167
+"AC","Amazônia",2024,FALSE,8432
+"AC","Amazônia",2024,TRUE,226
+"AC","Amazônia",2025,FALSE,2135
+"AC","Amazônia",2025,TRUE,49
+"AC",NA,2003,FALSE,4
+"AC",NA,2004,FALSE,4
+"AC",NA,2005,FALSE,3
+"AC",NA,2006,FALSE,2
+"AC",NA,2006,TRUE,1
+"AC",NA,2007,FALSE,4
+"AC",NA,2008,FALSE,1
+"AC",NA,2009,FALSE,2
+"AC",NA,2012,FALSE,1
+"AC",NA,2013,TRUE,1
+"AC",NA,2015,FALSE,1
+"AC",NA,2017,FALSE,2
+"AC",NA,2018,FALSE,1
+"AC",NA,2019,FALSE,1
+"AC",NA,2020,FALSE,1
+"AC",NA,2022,FALSE,2
+"AL","Caatinga",2003,FALSE,150
+"AL","Caatinga",2004,FALSE,58
+"AL","Caatinga",2005,FALSE,68
+"AL","Caatinga",2005,TRUE,5
+"AL","Caatinga",2006,FALSE,76
+"AL","Caatinga",2007,FALSE,72
+"AL","Caatinga",2007,TRUE,2
+"AL","Caatinga",2008,FALSE,127
+"AL","Caatinga",2009,FALSE,111
+"AL","Caatinga",2010,FALSE,111
+"AL","Caatinga",2011,FALSE,79
+"AL","Caatinga",2011,TRUE,3
+"AL","Caatinga",2012,FALSE,124
+"AL","Caatinga",2012,TRUE,6
+"AL","Caatinga",2013,FALSE,69
+"AL","Caatinga",2014,FALSE,42
+"AL","Caatinga",2015,FALSE,42
+"AL","Caatinga",2016,FALSE,50
+"AL","Caatinga",2016,TRUE,1
+"AL","Caatinga",2017,FALSE,23
+"AL","Caatinga",2018,FALSE,25
+"AL","Caatinga",2019,FALSE,25
+"AL","Caatinga",2019,TRUE,1
+"AL","Caatinga",2020,FALSE,20
+"AL","Caatinga",2021,FALSE,63
+"AL","Caatinga",2022,FALSE,29
+"AL","Caatinga",2023,FALSE,57
+"AL","Caatinga",2023,TRUE,1
+"AL","Caatinga",2024,FALSE,63
+"AL","Caatinga",2025,FALSE,98
+"AL","Mata Atlântica",2003,FALSE,217
+"AL","Mata Atlântica",2003,TRUE,6
+"AL","Mata Atlântica",2004,FALSE,173
+"AL","Mata Atlântica",2004,TRUE,2
+"AL","Mata Atlântica",2005,FALSE,217
+"AL","Mata Atlântica",2005,TRUE,2
+"AL","Mata Atlântica",2006,FALSE,190
+"AL","Mata Atlântica",2006,TRUE,2
+"AL","Mata Atlântica",2007,FALSE,185
+"AL","Mata Atlântica",2007,TRUE,3
+"AL","Mata Atlântica",2008,FALSE,277
+"AL","Mata Atlântica",2008,TRUE,5
+"AL","Mata Atlântica",2009,FALSE,246
+"AL","Mata Atlântica",2009,TRUE,3
+"AL","Mata Atlântica",2010,FALSE,184
+"AL","Mata Atlântica",2010,TRUE,2
+"AL","Mata Atlântica",2011,FALSE,180
+"AL","Mata Atlântica",2011,TRUE,5
+"AL","Mata Atlântica",2012,FALSE,244
+"AL","Mata Atlântica",2012,TRUE,3
+"AL","Mata Atlântica",2013,FALSE,131
+"AL","Mata Atlântica",2013,TRUE,1
+"AL","Mata Atlântica",2014,FALSE,122
+"AL","Mata Atlântica",2014,TRUE,1
+"AL","Mata Atlântica",2015,FALSE,405
+"AL","Mata Atlântica",2015,TRUE,13
+"AL","Mata Atlântica",2016,FALSE,334
+"AL","Mata Atlântica",2016,TRUE,3
+"AL","Mata Atlântica",2017,FALSE,106
+"AL","Mata Atlântica",2018,FALSE,172
+"AL","Mata Atlântica",2018,TRUE,4
+"AL","Mata Atlântica",2019,FALSE,204
+"AL","Mata Atlântica",2019,TRUE,2
+"AL","Mata Atlântica",2020,FALSE,138
+"AL","Mata Atlântica",2020,TRUE,1
+"AL","Mata Atlântica",2021,FALSE,110
+"AL","Mata Atlântica",2022,FALSE,110
+"AL","Mata Atlântica",2022,TRUE,1
+"AL","Mata Atlântica",2023,FALSE,169
+"AL","Mata Atlântica",2024,FALSE,220
+"AL","Mata Atlântica",2024,TRUE,2
+"AL","Mata Atlântica",2025,FALSE,127
+"AL","Mata Atlântica",2025,TRUE,3
+"AM","Amazônia",2003,FALSE,9484
+"AM","Amazônia",2003,TRUE,704
+"AM","Amazônia",2004,FALSE,7513
+"AM","Amazônia",2004,TRUE,568
+"AM","Amazônia",2005,FALSE,14972
+"AM","Amazônia",2005,TRUE,672
+"AM","Amazônia",2006,FALSE,11020
+"AM","Amazônia",2006,TRUE,675
+"AM","Amazônia",2007,FALSE,10520
+"AM","Amazônia",2007,TRUE,772
+"AM","Amazônia",2008,FALSE,6288
+"AM","Amazônia",2008,TRUE,412
+"AM","Amazônia",2009,FALSE,8737
+"AM","Amazônia",2009,TRUE,542
+"AM","Amazônia",2010,FALSE,11199
+"AM","Amazônia",2010,TRUE,938
+"AM","Amazônia",2011,FALSE,4595
+"AM","Amazônia",2011,TRUE,430
+"AM","Amazônia",2012,FALSE,8525
+"AM","Amazônia",2012,TRUE,587
+"AM","Amazônia",2013,FALSE,6041
+"AM","Amazônia",2013,TRUE,469
+"AM","Amazônia",2014,FALSE,8333
+"AM","Amazônia",2014,TRUE,674
+"AM","Amazônia",2015,FALSE,12600
+"AM","Amazônia",2015,TRUE,821
+"AM","Amazônia",2016,FALSE,10462
+"AM","Amazônia",2016,TRUE,709
+"AM","Amazônia",2017,FALSE,11035
+"AM","Amazônia",2017,TRUE,649
+"AM","Amazônia",2018,FALSE,10870
+"AM","Amazônia",2018,TRUE,576
+"AM","Amazônia",2019,FALSE,11999
+"AM","Amazônia",2019,TRUE,677
+"AM","Amazônia",2020,FALSE,15887
+"AM","Amazônia",2020,TRUE,839
+"AM","Amazônia",2021,FALSE,14235
+"AM","Amazônia",2021,TRUE,609
+"AM","Amazônia",2022,FALSE,20369
+"AM","Amazônia",2022,TRUE,849
+"AM","Amazônia",2023,FALSE,18486
+"AM","Amazônia",2023,TRUE,1112
+"AM","Amazônia",2024,FALSE,24145
+"AM","Amazônia",2024,TRUE,1349
+"AM","Amazônia",2025,FALSE,4258
+"AM","Amazônia",2025,TRUE,288
+"AM",NA,2003,FALSE,2
+"AM",NA,2003,TRUE,1
+"AM",NA,2004,FALSE,1
+"AM",NA,2005,FALSE,1
+"AM",NA,2006,FALSE,1
+"AM",NA,2007,TRUE,2
+"AM",NA,2008,TRUE,2
+"AM",NA,2010,FALSE,1
+"AM",NA,2011,FALSE,1
+"AM",NA,2011,TRUE,1
+"AM",NA,2013,FALSE,1
+"AM",NA,2014,FALSE,1
+"AM",NA,2016,FALSE,2
+"AM",NA,2017,TRUE,2
+"AM",NA,2018,FALSE,1
+"AM",NA,2018,TRUE,1
+"AM",NA,2019,FALSE,1
+"AM",NA,2020,TRUE,1
+"AM",NA,2021,FALSE,2
+"AM",NA,2021,TRUE,1
+"AM",NA,2023,FALSE,2
+"AM",NA,2024,FALSE,3
+"AM",NA,2024,TRUE,1
+"AP","Amazônia",2003,FALSE,2416
+"AP","Amazônia",2003,TRUE,100
+"AP","Amazônia",2004,FALSE,3136
+"AP","Amazônia",2004,TRUE,277
+"AP","Amazônia",2005,FALSE,1779
+"AP","Amazônia",2005,TRUE,241
+"AP","Amazônia",2006,FALSE,1578
+"AP","Amazônia",2006,TRUE,87
+"AP","Amazônia",2007,FALSE,1362
+"AP","Amazônia",2007,TRUE,122
+"AP","Amazônia",2008,FALSE,1933
+"AP","Amazônia",2008,TRUE,220
+"AP","Amazônia",2009,FALSE,2165
+"AP","Amazônia",2009,TRUE,289
+"AP","Amazônia",2010,FALSE,877
+"AP","Amazônia",2010,TRUE,122
+"AP","Amazônia",2011,FALSE,1312
+"AP","Amazônia",2011,TRUE,84
+"AP","Amazônia",2012,FALSE,2201
+"AP","Amazônia",2012,TRUE,317
+"AP","Amazônia",2013,FALSE,1353
+"AP","Amazônia",2013,TRUE,175
+"AP","Amazônia",2014,FALSE,1640
+"AP","Amazônia",2014,TRUE,208
+"AP","Amazônia",2015,FALSE,2637
+"AP","Amazônia",2015,TRUE,299
+"AP","Amazônia",2016,FALSE,2317
+"AP","Amazônia",2016,TRUE,277
+"AP","Amazônia",2017,FALSE,1763
+"AP","Amazônia",2017,TRUE,183
+"AP","Amazônia",2018,FALSE,1033
+"AP","Amazônia",2018,TRUE,171
+"AP","Amazônia",2019,FALSE,1106
+"AP","Amazônia",2019,TRUE,169
+"AP","Amazônia",2020,FALSE,660
+"AP","Amazônia",2020,TRUE,90
+"AP","Amazônia",2021,FALSE,629
+"AP","Amazônia",2021,TRUE,47
+"AP","Amazônia",2022,FALSE,850
+"AP","Amazônia",2022,TRUE,138
+"AP","Amazônia",2023,FALSE,2342
+"AP","Amazônia",2023,TRUE,210
+"AP","Amazônia",2024,FALSE,1884
+"AP","Amazônia",2024,TRUE,130
+"AP","Amazônia",2025,FALSE,845
+"AP","Amazônia",2025,TRUE,103
+"BA","Caatinga",2003,FALSE,10649
+"BA","Caatinga",2003,TRUE,4
+"BA","Caatinga",2004,FALSE,11234
+"BA","Caatinga",2004,TRUE,3
+"BA","Caatinga",2005,FALSE,10386
+"BA","Caatinga",2005,TRUE,8
+"BA","Caatinga",2006,FALSE,5735
+"BA","Caatinga",2006,TRUE,12
+"BA","Caatinga",2007,FALSE,14036
+"BA","Caatinga",2007,TRUE,9
+"BA","Caatinga",2008,FALSE,11914
+"BA","Caatinga",2008,TRUE,9
+"BA","Caatinga",2009,FALSE,5309
+"BA","Caatinga",2010,FALSE,7168
+"BA","Caatinga",2010,TRUE,1
+"BA","Caatinga",2011,FALSE,6092
+"BA","Caatinga",2011,TRUE,6
+"BA","Caatinga",2012,FALSE,6569
+"BA","Caatinga",2012,TRUE,1
+"BA","Caatinga",2013,FALSE,3919
+"BA","Caatinga",2013,TRUE,4
+"BA","Caatinga",2014,FALSE,2942
+"BA","Caatinga",2014,TRUE,1
+"BA","Caatinga",2015,FALSE,8798
+"BA","Caatinga",2015,TRUE,9
+"BA","Caatinga",2016,FALSE,3269
+"BA","Caatinga",2016,TRUE,3
+"BA","Caatinga",2017,FALSE,3194
+"BA","Caatinga",2017,TRUE,5
+"BA","Caatinga",2018,FALSE,2586
+"BA","Caatinga",2018,TRUE,1
+"BA","Caatinga",2019,FALSE,3062
+"BA","Caatinga",2019,TRUE,3
+"BA","Caatinga",2020,FALSE,4025
+"BA","Caatinga",2020,TRUE,2
+"BA","Caatinga",2021,FALSE,7498
+"BA","Caatinga",2021,TRUE,6
+"BA","Caatinga",2022,FALSE,5334
+"BA","Caatinga",2022,TRUE,3
+"BA","Caatinga",2023,FALSE,6281
+"BA","Caatinga",2024,FALSE,4399
+"BA","Caatinga",2024,TRUE,1
+"BA","Caatinga",2025,FALSE,6592
+"BA","Caatinga",2025,TRUE,1
+"BA","Cerrado",2003,FALSE,4577
+"BA","Cerrado",2004,FALSE,4927
+"BA","Cerrado",2005,FALSE,5586
+"BA","Cerrado",2006,FALSE,2939
+"BA","Cerrado",2007,FALSE,12014
+"BA","Cerrado",2008,FALSE,5369
+"BA","Cerrado",2009,FALSE,1970
+"BA","Cerrado",2010,FALSE,8444
+"BA","Cerrado",2011,FALSE,5890
+"BA","Cerrado",2012,FALSE,8685
+"BA","Cerrado",2013,FALSE,1951
+"BA","Cerrado",2014,FALSE,3173
+"BA","Cerrado",2015,FALSE,5110
+"BA","Cerrado",2016,FALSE,1767
+"BA","Cerrado",2017,FALSE,2609
+"BA","Cerrado",2018,FALSE,1464
+"BA","Cerrado",2019,FALSE,2533
+"BA","Cerrado",2020,FALSE,2902
+"BA","Cerrado",2021,FALSE,5218
+"BA","Cerrado",2022,FALSE,3631
+"BA","Cerrado",2023,FALSE,3410
+"BA","Cerrado",2024,FALSE,3402
+"BA","Cerrado",2025,FALSE,4165
+"BA","Mata Atlântica",2003,FALSE,4258
+"BA","Mata Atlântica",2003,TRUE,96
+"BA","Mata Atlântica",2004,FALSE,2766
+"BA","Mata Atlântica",2004,TRUE,51
+"BA","Mata Atlântica",2005,FALSE,2421
+"BA","Mata Atlântica",2005,TRUE,50
+"BA","Mata Atlântica",2006,FALSE,1509
+"BA","Mata Atlântica",2006,TRUE,30
+"BA","Mata Atlântica",2007,FALSE,3415
+"BA","Mata Atlântica",2007,TRUE,30
+"BA","Mata Atlântica",2008,FALSE,3441
+"BA","Mata Atlântica",2008,TRUE,61
+"BA","Mata Atlântica",2009,FALSE,1634
+"BA","Mata Atlântica",2009,TRUE,40
+"BA","Mata Atlântica",2010,FALSE,1441
+"BA","Mata Atlântica",2010,TRUE,33
+"BA","Mata Atlântica",2011,FALSE,1142
+"BA","Mata Atlântica",2011,TRUE,10
+"BA","Mata Atlântica",2012,FALSE,1613
+"BA","Mata Atlântica",2012,TRUE,33
+"BA","Mata Atlântica",2013,FALSE,1321
+"BA","Mata Atlântica",2013,TRUE,39
+"BA","Mata Atlântica",2014,FALSE,1062
+"BA","Mata Atlântica",2014,TRUE,20
+"BA","Mata Atlântica",2015,FALSE,2514
+"BA","Mata Atlântica",2015,TRUE,76
+"BA","Mata Atlântica",2016,FALSE,1219
+"BA","Mata Atlântica",2016,TRUE,56
+"BA","Mata Atlântica",2017,FALSE,636
+"BA","Mata Atlântica",2017,TRUE,17
+"BA","Mata Atlântica",2018,FALSE,880
+"BA","Mata Atlântica",2018,TRUE,30
+"BA","Mata Atlântica",2019,FALSE,1716
+"BA","Mata Atlântica",2019,TRUE,64
+"BA","Mata Atlântica",2020,FALSE,961
+"BA","Mata Atlântica",2020,TRUE,26
+"BA","Mata Atlântica",2021,FALSE,1636
+"BA","Mata Atlântica",2021,TRUE,34
+"BA","Mata Atlântica",2022,FALSE,865
+"BA","Mata Atlântica",2022,TRUE,4
+"BA","Mata Atlântica",2023,FALSE,2151
+"BA","Mata Atlântica",2023,TRUE,73
+"BA","Mata Atlântica",2024,FALSE,1334
+"BA","Mata Atlântica",2024,TRUE,21
+"BA","Mata Atlântica",2025,FALSE,1319
+"BA","Mata Atlântica",2025,TRUE,20
+"CE","Caatinga",2003,FALSE,11592
+"CE","Caatinga",2003,TRUE,34
+"CE","Caatinga",2004,FALSE,10559
+"CE","Caatinga",2004,TRUE,23
+"CE","Caatinga",2005,FALSE,8516
+"CE","Caatinga",2005,TRUE,8
+"CE","Caatinga",2006,FALSE,6145
+"CE","Caatinga",2006,TRUE,22
+"CE","Caatinga",2007,FALSE,7511
+"CE","Caatinga",2007,TRUE,16
+"CE","Caatinga",2008,FALSE,7608
+"CE","Caatinga",2008,TRUE,23
+"CE","Caatinga",2009,FALSE,5438
+"CE","Caatinga",2009,TRUE,9
+"CE","Caatinga",2010,FALSE,4910
+"CE","Caatinga",2010,TRUE,24
+"CE","Caatinga",2011,FALSE,4791
+"CE","Caatinga",2011,TRUE,7
+"CE","Caatinga",2012,FALSE,4296
+"CE","Caatinga",2012,TRUE,12
+"CE","Caatinga",2013,FALSE,2823
+"CE","Caatinga",2013,TRUE,8
+"CE","Caatinga",2014,FALSE,2322
+"CE","Caatinga",2014,TRUE,5
+"CE","Caatinga",2015,FALSE,3156
+"CE","Caatinga",2015,TRUE,2
+"CE","Caatinga",2016,FALSE,4304
+"CE","Caatinga",2016,TRUE,12
+"CE","Caatinga",2017,FALSE,3477
+"CE","Caatinga",2017,TRUE,9
+"CE","Caatinga",2018,FALSE,3030
+"CE","Caatinga",2018,TRUE,4
+"CE","Caatinga",2019,FALSE,4302
+"CE","Caatinga",2019,TRUE,2
+"CE","Caatinga",2020,FALSE,3972
+"CE","Caatinga",2020,TRUE,7
+"CE","Caatinga",2021,FALSE,4370
+"CE","Caatinga",2021,TRUE,8
+"CE","Caatinga",2022,FALSE,4131
+"CE","Caatinga",2022,TRUE,5
+"CE","Caatinga",2023,FALSE,6799
+"CE","Caatinga",2023,TRUE,9
+"CE","Caatinga",2024,FALSE,7146
+"CE","Caatinga",2024,TRUE,14
+"CE","Caatinga",2025,FALSE,7846
+"CE","Caatinga",2025,TRUE,6
+"DF","Cerrado",2003,FALSE,161
+"DF","Cerrado",2004,FALSE,311
+"DF","Cerrado",2005,FALSE,140
+"DF","Cerrado",2006,FALSE,139
+"DF","Cerrado",2007,FALSE,484
+"DF","Cerrado",2008,FALSE,199
+"DF","Cerrado",2009,FALSE,100
+"DF","Cerrado",2010,FALSE,612
+"DF","Cerrado",2011,FALSE,270
+"DF","Cerrado",2012,FALSE,166
+"DF","Cerrado",2013,FALSE,105
+"DF","Cerrado",2014,FALSE,241
+"DF","Cerrado",2015,FALSE,154
+"DF","Cerrado",2016,FALSE,229
+"DF","Cerrado",2017,FALSE,287
+"DF","Cerrado",2018,FALSE,88
+"DF","Cerrado",2019,FALSE,213
+"DF","Cerrado",2020,FALSE,196
+"DF","Cerrado",2021,FALSE,258
+"DF","Cerrado",2022,FALSE,252
+"DF","Cerrado",2023,FALSE,89
+"DF","Cerrado",2024,FALSE,348
+"DF","Cerrado",2025,FALSE,234
+"ES","Mata Atlântica",2003,FALSE,976
+"ES","Mata Atlântica",2004,FALSE,266
+"ES","Mata Atlântica",2004,TRUE,1
+"ES","Mata Atlântica",2005,FALSE,198
+"ES","Mata Atlântica",2005,TRUE,1
+"ES","Mata Atlântica",2006,FALSE,413
+"ES","Mata Atlântica",2006,TRUE,18
+"ES","Mata Atlântica",2007,FALSE,728
+"ES","Mata Atlântica",2007,TRUE,29
+"ES","Mata Atlântica",2008,FALSE,379
+"ES","Mata Atlântica",2008,TRUE,33
+"ES","Mata Atlântica",2009,FALSE,227
+"ES","Mata Atlântica",2009,TRUE,12
+"ES","Mata Atlântica",2010,FALSE,283
+"ES","Mata Atlântica",2010,TRUE,12
+"ES","Mata Atlântica",2011,FALSE,322
+"ES","Mata Atlântica",2011,TRUE,42
+"ES","Mata Atlântica",2012,FALSE,359
+"ES","Mata Atlântica",2012,TRUE,25
+"ES","Mata Atlântica",2013,FALSE,251
+"ES","Mata Atlântica",2013,TRUE,24
+"ES","Mata Atlântica",2014,FALSE,275
+"ES","Mata Atlântica",2014,TRUE,20
+"ES","Mata Atlântica",2015,FALSE,919
+"ES","Mata Atlântica",2015,TRUE,21
+"ES","Mata Atlântica",2016,FALSE,588
+"ES","Mata Atlântica",2016,TRUE,11
+"ES","Mata Atlântica",2017,FALSE,183
+"ES","Mata Atlântica",2017,TRUE,4
+"ES","Mata Atlântica",2018,FALSE,203
+"ES","Mata Atlântica",2018,TRUE,2
+"ES","Mata Atlântica",2019,FALSE,620
+"ES","Mata Atlântica",2019,TRUE,2
+"ES","Mata Atlântica",2020,FALSE,399
+"ES","Mata Atlântica",2020,TRUE,2
+"ES","Mata Atlântica",2021,FALSE,542
+"ES","Mata Atlântica",2021,TRUE,7
+"ES","Mata Atlântica",2022,FALSE,470
+"ES","Mata Atlântica",2022,TRUE,4
+"ES","Mata Atlântica",2023,FALSE,542
+"ES","Mata Atlântica",2023,TRUE,1
+"ES","Mata Atlântica",2024,FALSE,653
+"ES","Mata Atlântica",2024,TRUE,9
+"ES","Mata Atlântica",2025,FALSE,385
+"ES",NA,2014,FALSE,1
+"GO","Cerrado",2003,FALSE,6804
+"GO","Cerrado",2003,TRUE,6
+"GO","Cerrado",2004,FALSE,8942
+"GO","Cerrado",2004,TRUE,26
+"GO","Cerrado",2005,FALSE,6073
+"GO","Cerrado",2005,TRUE,5
+"GO","Cerrado",2006,FALSE,4306
+"GO","Cerrado",2006,TRUE,33
+"GO","Cerrado",2007,FALSE,12505
+"GO","Cerrado",2007,TRUE,48
+"GO","Cerrado",2008,FALSE,5172
+"GO","Cerrado",2008,TRUE,23
+"GO","Cerrado",2009,FALSE,2854
+"GO","Cerrado",2009,TRUE,4
+"GO","Cerrado",2010,FALSE,13223
+"GO","Cerrado",2010,TRUE,79
+"GO","Cerrado",2011,FALSE,5712
+"GO","Cerrado",2011,TRUE,13
+"GO","Cerrado",2012,FALSE,5975
+"GO","Cerrado",2012,TRUE,27
+"GO","Cerrado",2013,FALSE,3000
+"GO","Cerrado",2013,TRUE,5
+"GO","Cerrado",2014,FALSE,5836
+"GO","Cerrado",2014,TRUE,24
+"GO","Cerrado",2015,FALSE,6026
+"GO","Cerrado",2015,TRUE,31
+"GO","Cerrado",2016,FALSE,4828
+"GO","Cerrado",2016,TRUE,3
+"GO","Cerrado",2017,FALSE,6282
+"GO","Cerrado",2017,TRUE,70
+"GO","Cerrado",2018,FALSE,3050
+"GO","Cerrado",2019,FALSE,7022
+"GO","Cerrado",2019,TRUE,15
+"GO","Cerrado",2020,FALSE,5902
+"GO","Cerrado",2020,TRUE,4
+"GO","Cerrado",2021,FALSE,5983
+"GO","Cerrado",2021,TRUE,4
+"GO","Cerrado",2022,FALSE,4749
+"GO","Cerrado",2022,TRUE,10
+"GO","Cerrado",2023,FALSE,3125
+"GO","Cerrado",2023,TRUE,6
+"GO","Cerrado",2024,FALSE,6242
+"GO","Cerrado",2024,TRUE,3
+"GO","Cerrado",2025,FALSE,4802
+"GO","Cerrado",2025,TRUE,33
+"GO","Mata Atlântica",2003,FALSE,62
+"GO","Mata Atlântica",2004,FALSE,50
+"GO","Mata Atlântica",2005,FALSE,51
+"GO","Mata Atlântica",2006,FALSE,50
+"GO","Mata Atlântica",2007,FALSE,84
+"GO","Mata Atlântica",2008,FALSE,51
+"GO","Mata Atlântica",2009,FALSE,61
+"GO","Mata Atlântica",2010,FALSE,120
+"GO","Mata Atlântica",2011,FALSE,43
+"GO","Mata Atlântica",2012,FALSE,44
+"GO","Mata Atlântica",2013,FALSE,46
+"GO","Mata Atlântica",2014,FALSE,40
+"GO","Mata Atlântica",2015,FALSE,54
+"GO","Mata Atlântica",2016,FALSE,78
+"GO","Mata Atlântica",2017,FALSE,73
+"GO","Mata Atlântica",2018,FALSE,61
+"GO","Mata Atlântica",2019,FALSE,128
+"GO","Mata Atlântica",2020,FALSE,102
+"GO","Mata Atlântica",2021,FALSE,41
+"GO","Mata Atlântica",2022,FALSE,26
+"GO","Mata Atlântica",2023,FALSE,30
+"GO","Mata Atlântica",2024,FALSE,118
+"GO","Mata Atlântica",2025,FALSE,47
+"MA","Amazônia",2003,FALSE,11507
+"MA","Amazônia",2003,TRUE,342
+"MA","Amazônia",2004,FALSE,11012
+"MA","Amazônia",2004,TRUE,313
+"MA","Amazônia",2005,FALSE,10031
+"MA","Amazônia",2005,TRUE,481
+"MA","Amazônia",2006,FALSE,7596
+"MA","Amazônia",2006,TRUE,215
+"MA","Amazônia",2007,FALSE,10978
+"MA","Amazônia",2007,TRUE,1014
+"MA","Amazônia",2008,FALSE,7374
+"MA","Amazônia",2008,TRUE,350
+"MA","Amazônia",2009,FALSE,6300
+"MA","Amazônia",2009,TRUE,244
+"MA","Amazônia",2010,FALSE,6382
+"MA","Amazônia",2010,TRUE,702
+"MA","Amazônia",2011,FALSE,4645
+"MA","Amazônia",2011,TRUE,248
+"MA","Amazônia",2012,FALSE,5792
+"MA","Amazônia",2012,TRUE,833
+"MA","Amazônia",2013,FALSE,4082
+"MA","Amazônia",2013,TRUE,230
+"MA","Amazônia",2014,FALSE,5279
+"MA","Amazônia",2014,TRUE,265
+"MA","Amazônia",2015,FALSE,6324
+"MA","Amazônia",2015,TRUE,979
+"MA","Amazônia",2016,FALSE,4298
+"MA","Amazônia",2016,TRUE,472
+"MA","Amazônia",2017,FALSE,5046
+"MA","Amazônia",2017,TRUE,764
+"MA","Amazônia",2018,FALSE,2314
+"MA","Amazônia",2018,TRUE,60
+"MA","Amazônia",2019,FALSE,4059
+"MA","Amazônia",2019,TRUE,154
+"MA","Amazônia",2020,FALSE,3344
+"MA","Amazônia",2020,TRUE,203
+"MA","Amazônia",2021,FALSE,3602
+"MA","Amazônia",2021,TRUE,57
+"MA","Amazônia",2022,FALSE,4254
+"MA","Amazônia",2022,TRUE,111
+"MA","Amazônia",2023,FALSE,4723
+"MA","Amazônia",2023,TRUE,154
+"MA","Amazônia",2024,FALSE,5715
+"MA","Amazônia",2024,TRUE,197
+"MA","Amazônia",2025,FALSE,6427
+"MA","Amazônia",2025,TRUE,106
+"MA","Cerrado",2003,FALSE,21593
+"MA","Cerrado",2003,TRUE,1114
+"MA","Cerrado",2004,FALSE,21602
+"MA","Cerrado",2004,TRUE,666
+"MA","Cerrado",2005,FALSE,21905
+"MA","Cerrado",2005,TRUE,1274
+"MA","Cerrado",2006,FALSE,14871
+"MA","Cerrado",2006,TRUE,625
+"MA","Cerrado",2007,FALSE,30211
+"MA","Cerrado",2007,TRUE,2556
+"MA","Cerrado",2008,FALSE,13754
+"MA","Cerrado",2008,TRUE,650
+"MA","Cerrado",2009,FALSE,12014
+"MA","Cerrado",2009,TRUE,579
+"MA","Cerrado",2010,FALSE,26411
+"MA","Cerrado",2010,TRUE,2785
+"MA","Cerrado",2011,FALSE,13582
+"MA","Cerrado",2011,TRUE,847
+"MA","Cerrado",2012,FALSE,24552
+"MA","Cerrado",2012,TRUE,3127
+"MA","Cerrado",2013,FALSE,12211
+"MA","Cerrado",2013,TRUE,934
+"MA","Cerrado",2014,FALSE,16839
+"MA","Cerrado",2014,TRUE,2299
+"MA","Cerrado",2015,FALSE,18695
+"MA","Cerrado",2015,TRUE,2440
+"MA","Cerrado",2016,FALSE,15295
+"MA","Cerrado",2016,TRUE,1726
+"MA","Cerrado",2017,FALSE,16567
+"MA","Cerrado",2017,TRUE,3204
+"MA","Cerrado",2018,FALSE,10410
+"MA","Cerrado",2018,TRUE,1108
+"MA","Cerrado",2019,FALSE,12724
+"MA","Cerrado",2019,TRUE,1585
+"MA","Cerrado",2020,FALSE,12211
+"MA","Cerrado",2020,TRUE,1059
+"MA","Cerrado",2021,FALSE,11754
+"MA","Cerrado",2021,TRUE,665
+"MA","Cerrado",2022,FALSE,14692
+"MA","Cerrado",2022,TRUE,1168
+"MA","Cerrado",2023,FALSE,15163
+"MA","Cerrado",2023,TRUE,1074
+"MA","Cerrado",2024,FALSE,15946
+"MA","Cerrado",2024,TRUE,1021
+"MA","Cerrado",2025,FALSE,16528
+"MA","Cerrado",2025,TRUE,1237
+"MG","Caatinga",2003,FALSE,1614
+"MG","Caatinga",2003,TRUE,65
+"MG","Caatinga",2004,FALSE,1008
+"MG","Caatinga",2004,TRUE,44
+"MG","Caatinga",2005,FALSE,1350
+"MG","Caatinga",2005,TRUE,61
+"MG","Caatinga",2006,FALSE,639
+"MG","Caatinga",2006,TRUE,26
+"MG","Caatinga",2007,FALSE,1218
+"MG","Caatinga",2007,TRUE,62
+"MG","Caatinga",2008,FALSE,1119
+"MG","Caatinga",2008,TRUE,36
+"MG","Caatinga",2009,FALSE,366
+"MG","Caatinga",2009,TRUE,15
+"MG","Caatinga",2010,FALSE,635
+"MG","Caatinga",2010,TRUE,34
+"MG","Caatinga",2011,FALSE,686
+"MG","Caatinga",2011,TRUE,21
+"MG","Caatinga",2012,FALSE,1058
+"MG","Caatinga",2012,TRUE,32
+"MG","Caatinga",2013,FALSE,566
+"MG","Caatinga",2013,TRUE,15
+"MG","Caatinga",2014,FALSE,510
+"MG","Caatinga",2014,TRUE,32
+"MG","Caatinga",2015,FALSE,548
+"MG","Caatinga",2015,TRUE,5
+"MG","Caatinga",2016,FALSE,172
+"MG","Caatinga",2016,TRUE,3
+"MG","Caatinga",2017,FALSE,214
+"MG","Caatinga",2017,TRUE,2
+"MG","Caatinga",2018,FALSE,309
+"MG","Caatinga",2018,TRUE,6
+"MG","Caatinga",2019,FALSE,414
+"MG","Caatinga",2019,TRUE,6
+"MG","Caatinga",2020,FALSE,588
+"MG","Caatinga",2020,TRUE,13
+"MG","Caatinga",2021,FALSE,830
+"MG","Caatinga",2021,TRUE,9
+"MG","Caatinga",2022,FALSE,610
+"MG","Caatinga",2022,TRUE,9
+"MG","Caatinga",2023,FALSE,580
+"MG","Caatinga",2023,TRUE,12
+"MG","Caatinga",2024,FALSE,350
+"MG","Caatinga",2024,TRUE,8
+"MG","Caatinga",2025,FALSE,708
+"MG","Caatinga",2025,TRUE,10
+"MG","Cerrado",2003,FALSE,8469
+"MG","Cerrado",2003,TRUE,17
+"MG","Cerrado",2004,FALSE,7354
+"MG","Cerrado",2004,TRUE,13
+"MG","Cerrado",2005,FALSE,6485
+"MG","Cerrado",2005,TRUE,52
+"MG","Cerrado",2006,FALSE,4452
+"MG","Cerrado",2006,TRUE,6
+"MG","Cerrado",2007,FALSE,11678
+"MG","Cerrado",2007,TRUE,16
+"MG","Cerrado",2008,FALSE,5655
+"MG","Cerrado",2008,TRUE,7
+"MG","Cerrado",2009,FALSE,2231
+"MG","Cerrado",2010,FALSE,8007
+"MG","Cerrado",2010,TRUE,8
+"MG","Cerrado",2011,FALSE,6182
+"MG","Cerrado",2011,TRUE,9
+"MG","Cerrado",2012,FALSE,5475
+"MG","Cerrado",2012,TRUE,20
+"MG","Cerrado",2013,FALSE,2803
+"MG","Cerrado",2013,TRUE,2
+"MG","Cerrado",2014,FALSE,5675
+"MG","Cerrado",2014,TRUE,5
+"MG","Cerrado",2015,FALSE,4397
+"MG","Cerrado",2015,TRUE,8
+"MG","Cerrado",2016,FALSE,3815
+"MG","Cerrado",2016,TRUE,3
+"MG","Cerrado",2017,FALSE,4523
+"MG","Cerrado",2018,FALSE,2349
+"MG","Cerrado",2018,TRUE,4
+"MG","Cerrado",2019,FALSE,4899
+"MG","Cerrado",2019,TRUE,2
+"MG","Cerrado",2020,FALSE,5135
+"MG","Cerrado",2020,TRUE,2
+"MG","Cerrado",2021,FALSE,6496
+"MG","Cerrado",2021,TRUE,8
+"MG","Cerrado",2022,FALSE,4127
+"MG","Cerrado",2022,TRUE,4
+"MG","Cerrado",2023,FALSE,3340
+"MG","Cerrado",2023,TRUE,3
+"MG","Cerrado",2024,FALSE,5990
+"MG","Cerrado",2024,TRUE,2
+"MG","Cerrado",2025,FALSE,4772
+"MG","Cerrado",2025,TRUE,6
+"MG","Mata Atlântica",2003,FALSE,9238
+"MG","Mata Atlântica",2003,TRUE,25
+"MG","Mata Atlântica",2004,FALSE,4786
+"MG","Mata Atlântica",2004,TRUE,22
+"MG","Mata Atlântica",2005,FALSE,5742
+"MG","Mata Atlântica",2005,TRUE,12
+"MG","Mata Atlântica",2006,FALSE,3702
+"MG","Mata Atlântica",2006,TRUE,7
+"MG","Mata Atlântica",2007,FALSE,9507
+"MG","Mata Atlântica",2007,TRUE,33
+"MG","Mata Atlântica",2008,FALSE,5051
+"MG","Mata Atlântica",2008,TRUE,20
+"MG","Mata Atlântica",2009,FALSE,2313
+"MG","Mata Atlântica",2009,TRUE,11
+"MG","Mata Atlântica",2010,FALSE,5076
+"MG","Mata Atlântica",2010,TRUE,7
+"MG","Mata Atlântica",2011,FALSE,4854
+"MG","Mata Atlântica",2011,TRUE,13
+"MG","Mata Atlântica",2012,FALSE,3507
+"MG","Mata Atlântica",2012,TRUE,16
+"MG","Mata Atlântica",2013,FALSE,1987
+"MG","Mata Atlântica",2013,TRUE,14
+"MG","Mata Atlântica",2014,FALSE,5109
+"MG","Mata Atlântica",2014,TRUE,5
+"MG","Mata Atlântica",2015,FALSE,4509
+"MG","Mata Atlântica",2015,TRUE,23
+"MG","Mata Atlântica",2016,FALSE,2484
+"MG","Mata Atlântica",2016,TRUE,4
+"MG","Mata Atlântica",2017,FALSE,3639
+"MG","Mata Atlântica",2017,TRUE,6
+"MG","Mata Atlântica",2018,FALSE,1954
+"MG","Mata Atlântica",2018,TRUE,5
+"MG","Mata Atlântica",2019,FALSE,4656
+"MG","Mata Atlântica",2019,TRUE,18
+"MG","Mata Atlântica",2020,FALSE,2989
+"MG","Mata Atlântica",2020,TRUE,10
+"MG","Mata Atlântica",2021,FALSE,4763
+"MG","Mata Atlântica",2021,TRUE,5
+"MG","Mata Atlântica",2022,FALSE,3026
+"MG","Mata Atlântica",2022,TRUE,12
+"MG","Mata Atlântica",2023,FALSE,2563
+"MG","Mata Atlântica",2024,FALSE,5428
+"MG","Mata Atlântica",2024,TRUE,10
+"MG","Mata Atlântica",2025,FALSE,3218
+"MG","Mata Atlântica",2025,TRUE,2
+"MS","Cerrado",2003,FALSE,2424
+"MS","Cerrado",2003,TRUE,96
+"MS","Cerrado",2004,FALSE,2584
+"MS","Cerrado",2004,TRUE,308
+"MS","Cerrado",2005,FALSE,2303
+"MS","Cerrado",2005,TRUE,541
+"MS","Cerrado",2006,FALSE,2128
+"MS","Cerrado",2006,TRUE,244
+"MS","Cerrado",2007,FALSE,2789
+"MS","Cerrado",2007,TRUE,601
+"MS","Cerrado",2008,FALSE,1234
+"MS","Cerrado",2008,TRUE,266
+"MS","Cerrado",2009,FALSE,789
+"MS","Cerrado",2009,TRUE,39
+"MS","Cerrado",2010,FALSE,1890
+"MS","Cerrado",2010,TRUE,585
+"MS","Cerrado",2011,FALSE,1318
+"MS","Cerrado",2011,TRUE,216
+"MS","Cerrado",2012,FALSE,801
+"MS","Cerrado",2012,TRUE,163
+"MS","Cerrado",2013,FALSE,998
+"MS","Cerrado",2013,TRUE,185
+"MS","Cerrado",2014,FALSE,839
+"MS","Cerrado",2014,TRUE,95
+"MS","Cerrado",2015,FALSE,1030
+"MS","Cerrado",2015,TRUE,286
+"MS","Cerrado",2016,FALSE,908
+"MS","Cerrado",2016,TRUE,345
+"MS","Cerrado",2017,FALSE,1159
+"MS","Cerrado",2017,TRUE,360
+"MS","Cerrado",2018,FALSE,892
+"MS","Cerrado",2018,TRUE,112
+"MS","Cerrado",2019,FALSE,1728
+"MS","Cerrado",2019,TRUE,654
+"MS","Cerrado",2020,FALSE,1967
+"MS","Cerrado",2020,TRUE,391
+"MS","Cerrado",2021,FALSE,2088
+"MS","Cerrado",2021,TRUE,429
+"MS","Cerrado",2022,FALSE,841
+"MS","Cerrado",2022,TRUE,71
+"MS","Cerrado",2023,FALSE,1180
+"MS","Cerrado",2023,TRUE,236
+"MS","Cerrado",2024,FALSE,2719
+"MS","Cerrado",2024,TRUE,709
+"MS","Cerrado",2025,FALSE,1026
+"MS","Cerrado",2025,TRUE,123
+"MS","Mata Atlântica",2003,FALSE,728
+"MS","Mata Atlântica",2003,TRUE,33
+"MS","Mata Atlântica",2004,FALSE,422
+"MS","Mata Atlântica",2004,TRUE,22
+"MS","Mata Atlântica",2005,FALSE,308
+"MS","Mata Atlântica",2005,TRUE,21
+"MS","Mata Atlântica",2006,FALSE,329
+"MS","Mata Atlântica",2006,TRUE,31
+"MS","Mata Atlântica",2007,FALSE,430
+"MS","Mata Atlântica",2007,TRUE,66
+"MS","Mata Atlântica",2008,FALSE,306
+"MS","Mata Atlântica",2008,TRUE,28
+"MS","Mata Atlântica",2009,FALSE,193
+"MS","Mata Atlântica",2009,TRUE,18
+"MS","Mata Atlântica",2010,FALSE,325
+"MS","Mata Atlântica",2010,TRUE,31
+"MS","Mata Atlântica",2011,FALSE,203
+"MS","Mata Atlântica",2011,TRUE,27
+"MS","Mata Atlântica",2012,FALSE,229
+"MS","Mata Atlântica",2012,TRUE,19
+"MS","Mata Atlântica",2013,FALSE,184
+"MS","Mata Atlântica",2013,TRUE,37
+"MS","Mata Atlântica",2014,FALSE,155
+"MS","Mata Atlântica",2014,TRUE,23
+"MS","Mata Atlântica",2015,FALSE,133
+"MS","Mata Atlântica",2015,TRUE,36
+"MS","Mata Atlântica",2016,FALSE,200
+"MS","Mata Atlântica",2016,TRUE,38
+"MS","Mata Atlântica",2017,FALSE,238
+"MS","Mata Atlântica",2017,TRUE,49
+"MS","Mata Atlântica",2018,FALSE,189
+"MS","Mata Atlântica",2018,TRUE,35
+"MS","Mata Atlântica",2019,FALSE,492
+"MS","Mata Atlântica",2019,TRUE,42
+"MS","Mata Atlântica",2020,FALSE,267
+"MS","Mata Atlântica",2020,TRUE,25
+"MS","Mata Atlântica",2021,FALSE,344
+"MS","Mata Atlântica",2021,TRUE,41
+"MS","Mata Atlântica",2022,FALSE,151
+"MS","Mata Atlântica",2022,TRUE,17
+"MS","Mata Atlântica",2023,FALSE,181
+"MS","Mata Atlântica",2023,TRUE,26
+"MS","Mata Atlântica",2024,FALSE,819
+"MS","Mata Atlântica",2024,TRUE,42
+"MS","Mata Atlântica",2025,FALSE,156
+"MS","Mata Atlântica",2025,TRUE,22
+"MS","Pantanal",2003,FALSE,2234
+"MS","Pantanal",2003,TRUE,96
+"MS","Pantanal",2004,FALSE,5105
+"MS","Pantanal",2004,TRUE,174
+"MS","Pantanal",2005,FALSE,8967
+"MS","Pantanal",2005,TRUE,761
+"MS","Pantanal",2006,FALSE,2237
+"MS","Pantanal",2006,TRUE,274
+"MS","Pantanal",2007,FALSE,6585
+"MS","Pantanal",2007,TRUE,666
+"MS","Pantanal",2008,FALSE,2676
+"MS","Pantanal",2008,TRUE,319
+"MS","Pantanal",2009,FALSE,5138
+"MS","Pantanal",2009,TRUE,135
+"MS","Pantanal",2010,FALSE,3928
+"MS","Pantanal",2010,TRUE,594
+"MS","Pantanal",2011,FALSE,1739
+"MS","Pantanal",2011,TRUE,228
+"MS","Pantanal",2012,FALSE,6144
+"MS","Pantanal",2012,TRUE,71
+"MS","Pantanal",2013,FALSE,1930
+"MS","Pantanal",2013,TRUE,281
+"MS","Pantanal",2014,FALSE,1042
+"MS","Pantanal",2014,TRUE,60
+"MS","Pantanal",2015,FALSE,2888
+"MS","Pantanal",2015,TRUE,243
+"MS","Pantanal",2016,FALSE,4186
+"MS","Pantanal",2016,TRUE,696
+"MS","Pantanal",2017,FALSE,3665
+"MS","Pantanal",2017,TRUE,263
+"MS","Pantanal",2018,FALSE,1009
+"MS","Pantanal",2018,TRUE,143
+"MS","Pantanal",2019,FALSE,7849
+"MS","Pantanal",2019,TRUE,886
+"MS","Pantanal",2020,FALSE,8813
+"MS","Pantanal",2020,TRUE,616
+"MS","Pantanal",2021,FALSE,5852
+"MS","Pantanal",2021,TRUE,621
+"MS","Pantanal",2022,FALSE,1070
+"MS","Pantanal",2022,TRUE,218
+"MS","Pantanal",2023,FALSE,2544
+"MS","Pantanal",2023,TRUE,363
+"MS","Pantanal",2024,FALSE,7741
+"MS","Pantanal",2024,TRUE,1009
+"MS","Pantanal",2025,FALSE,414
+"MS","Pantanal",2025,TRUE,103
+"MS",NA,2003,FALSE,1
+"MS",NA,2004,FALSE,1
+"MS",NA,2005,FALSE,3
+"MS",NA,2006,FALSE,1
+"MS",NA,2007,FALSE,2
+"MS",NA,2008,FALSE,1
+"MS",NA,2009,FALSE,1
+"MS",NA,2010,FALSE,3
+"MS",NA,2012,FALSE,1
+"MS",NA,2015,FALSE,1
+"MS",NA,2017,FALSE,3
+"MS",NA,2019,FALSE,1
+"MS",NA,2020,FALSE,1
+"MS",NA,2021,FALSE,1
+"MS",NA,2024,FALSE,2
+"MT","Amazônia",2003,FALSE,53362
+"MT","Amazônia",2003,TRUE,1308
+"MT","Amazônia",2004,FALSE,72706
+"MT","Amazônia",2004,TRUE,2734
+"MT","Amazônia",2005,FALSE,55086
+"MT","Amazônia",2005,TRUE,1943
+"MT","Amazônia",2006,FALSE,32773
+"MT","Amazônia",2006,TRUE,1619
+"MT","Amazônia",2007,FALSE,53190
+"MT","Amazônia",2007,TRUE,2944
+"MT","Amazônia",2008,FALSE,18640
+"MT","Amazônia",2008,TRUE,1193
+"MT","Amazônia",2009,FALSE,10047
+"MT","Amazônia",2009,TRUE,531
+"MT","Amazônia",2010,FALSE,27025
+"MT","Amazônia",2010,TRUE,2959
+"MT","Amazônia",2011,FALSE,8839
+"MT","Amazônia",2011,TRUE,964
+"MT","Amazônia",2012,FALSE,15648
+"MT","Amazônia",2012,TRUE,1521
+"MT","Amazônia",2013,FALSE,10453
+"MT","Amazônia",2013,TRUE,920
+"MT","Amazônia",2014,FALSE,15265
+"MT","Amazônia",2014,TRUE,1289
+"MT","Amazônia",2015,FALSE,16578
+"MT","Amazônia",2015,TRUE,1750
+"MT","Amazônia",2016,FALSE,14753
+"MT","Amazônia",2016,TRUE,1904
+"MT","Amazônia",2017,FALSE,17204
+"MT","Amazônia",2017,TRUE,1901
+"MT","Amazônia",2018,FALSE,11179
+"MT","Amazônia",2018,TRUE,862
+"MT","Amazônia",2019,FALSE,16835
+"MT","Amazônia",2019,TRUE,1872
+"MT","Amazônia",2020,FALSE,18870
+"MT","Amazônia",2020,TRUE,2392
+"MT","Amazônia",2021,FALSE,12367
+"MT","Amazônia",2021,TRUE,1052
+"MT","Amazônia",2022,FALSE,19802
+"MT","Amazônia",2022,TRUE,1950
+"MT","Amazônia",2023,FALSE,12634
+"MT","Amazônia",2023,TRUE,524
+"MT","Amazônia",2024,FALSE,22360
+"MT","Amazônia",2024,TRUE,3612
+"MT","Amazônia",2025,FALSE,6407
+"MT","Amazônia",2025,TRUE,491
+"MT","Cerrado",2003,FALSE,12507
+"MT","Cerrado",2003,TRUE,2220
+"MT","Cerrado",2004,FALSE,15770
+"MT","Cerrado",2004,TRUE,2737
+"MT","Cerrado",2005,FALSE,9101
+"MT","Cerrado",2005,TRUE,2666
+"MT","Cerrado",2006,FALSE,6407
+"MT","Cerrado",2006,TRUE,1991
+"MT","Cerrado",2007,FALSE,16034
+"MT","Cerrado",2007,TRUE,4949
+"MT","Cerrado",2008,FALSE,5924
+"MT","Cerrado",2008,TRUE,1880
+"MT","Cerrado",2009,FALSE,2881
+"MT","Cerrado",2009,TRUE,1121
+"MT","Cerrado",2010,FALSE,19004
+"MT","Cerrado",2010,TRUE,6243
+"MT","Cerrado",2011,FALSE,3794
+"MT","Cerrado",2011,TRUE,2021
+"MT","Cerrado",2012,FALSE,6082
+"MT","Cerrado",2012,TRUE,3433
+"MT","Cerrado",2013,FALSE,4107
+"MT","Cerrado",2013,TRUE,1785
+"MT","Cerrado",2014,FALSE,5105
+"MT","Cerrado",2014,TRUE,2848
+"MT","Cerrado",2015,FALSE,6142
+"MT","Cerrado",2015,TRUE,2001
+"MT","Cerrado",2016,FALSE,6539
+"MT","Cerrado",2016,TRUE,3348
+"MT","Cerrado",2017,FALSE,7188
+"MT","Cerrado",2017,TRUE,2752
+"MT","Cerrado",2018,FALSE,3351
+"MT","Cerrado",2018,TRUE,2071
+"MT","Cerrado",2019,FALSE,7464
+"MT","Cerrado",2019,TRUE,3232
+"MT","Cerrado",2020,FALSE,10047
+"MT","Cerrado",2020,TRUE,3503
+"MT","Cerrado",2021,FALSE,4422
+"MT","Cerrado",2021,TRUE,2396
+"MT","Cerrado",2022,FALSE,4163
+"MT","Cerrado",2022,TRUE,2767
+"MT","Cerrado",2023,FALSE,3130
+"MT","Cerrado",2023,TRUE,1648
+"MT","Cerrado",2024,FALSE,12320
+"MT","Cerrado",2024,TRUE,6215
+"MT","Cerrado",2025,FALSE,2737
+"MT","Cerrado",2025,TRUE,1264
+"MT","Pantanal",2003,FALSE,1161
+"MT","Pantanal",2004,FALSE,3032
+"MT","Pantanal",2004,TRUE,33
+"MT","Pantanal",2005,FALSE,3216
+"MT","Pantanal",2005,TRUE,92
+"MT","Pantanal",2006,FALSE,687
+"MT","Pantanal",2006,TRUE,2
+"MT","Pantanal",2007,FALSE,2811
+"MT","Pantanal",2007,TRUE,40
+"MT","Pantanal",2008,FALSE,1764
+"MT","Pantanal",2008,TRUE,47
+"MT","Pantanal",2009,FALSE,478
+"MT","Pantanal",2009,TRUE,1
+"MT","Pantanal",2010,FALSE,3674
+"MT","Pantanal",2010,TRUE,107
+"MT","Pantanal",2011,FALSE,1745
+"MT","Pantanal",2011,TRUE,8
+"MT","Pantanal",2012,FALSE,1256
+"MT","Pantanal",2012,TRUE,13
+"MT","Pantanal",2013,FALSE,1222
+"MT","Pantanal",2013,TRUE,67
+"MT","Pantanal",2014,FALSE,428
+"MT","Pantanal",2014,TRUE,20
+"MT","Pantanal",2015,FALSE,1233
+"MT","Pantanal",2015,TRUE,36
+"MT","Pantanal",2016,FALSE,725
+"MT","Pantanal",2016,TRUE,36
+"MT","Pantanal",2017,FALSE,1811
+"MT","Pantanal",2017,TRUE,55
+"MT","Pantanal",2018,FALSE,562
+"MT","Pantanal",2018,TRUE,7
+"MT","Pantanal",2019,FALSE,1703
+"MT","Pantanal",2019,TRUE,63
+"MT","Pantanal",2020,FALSE,12631
+"MT","Pantanal",2020,TRUE,260
+"MT","Pantanal",2021,FALSE,2249
+"MT","Pantanal",2021,TRUE,31
+"MT","Pantanal",2022,FALSE,323
+"MT","Pantanal",2022,TRUE,33
+"MT","Pantanal",2023,FALSE,3735
+"MT","Pantanal",2023,TRUE,50
+"MT","Pantanal",2024,FALSE,5929
+"MT","Pantanal",2024,TRUE,113
+"MT","Pantanal",2025,FALSE,157
+"MT","Pantanal",2025,TRUE,5
+"MT",NA,2003,FALSE,2
+"MT",NA,2010,FALSE,1
+"MT",NA,2015,FALSE,1
+"MT",NA,2020,FALSE,5
+"MT",NA,2021,FALSE,3
+"MT",NA,2022,FALSE,1
+"MT",NA,2023,FALSE,2
+"MT",NA,2024,FALSE,2
+"PA","Amazônia",2003,FALSE,51388
+"PA","Amazônia",2003,TRUE,1046
+"PA","Amazônia",2004,FALSE,71445
+"PA","Amazônia",2004,TRUE,1998
+"PA","Amazônia",2005,FALSE,68360
+"PA","Amazônia",2005,TRUE,2194
+"PA","Amazônia",2006,FALSE,53526
+"PA","Amazônia",2006,TRUE,1867
+"PA","Amazônia",2007,FALSE,65060
+"PA","Amazônia",2007,TRUE,2047
+"PA","Amazônia",2008,FALSE,46146
+"PA","Amazônia",2008,TRUE,1860
+"PA","Amazônia",2009,FALSE,39991
+"PA","Amazônia",2009,TRUE,1366
+"PA","Amazônia",2010,FALSE,52812
+"PA","Amazônia",2010,TRUE,2734
+"PA","Amazônia",2011,FALSE,25184
+"PA","Amazônia",2011,TRUE,1094
+"PA","Amazônia",2012,FALSE,34965
+"PA","Amazônia",2012,TRUE,1670
+"PA","Amazônia",2013,FALSE,22785
+"PA","Amazônia",2013,TRUE,753
+"PA","Amazônia",2014,FALSE,33468
+"PA","Amazônia",2014,TRUE,1551
+"PA","Amazônia",2015,FALSE,40799
+"PA","Amazônia",2015,TRUE,1533
+"PA","Amazônia",2016,FALSE,28135
+"PA","Amazônia",2016,TRUE,1030
+"PA","Amazônia",2017,FALSE,45915
+"PA","Amazônia",2017,TRUE,2690
+"PA","Amazônia",2018,FALSE,20764
+"PA","Amazônia",2018,TRUE,1076
+"PA","Amazônia",2019,FALSE,27674
+"PA","Amazônia",2019,TRUE,1934
+"PA","Amazônia",2020,FALSE,35198
+"PA","Amazônia",2020,TRUE,2708
+"PA","Amazônia",2021,FALSE,21264
+"PA","Amazônia",2021,TRUE,1303
+"PA","Amazônia",2022,FALSE,38473
+"PA","Amazônia",2022,TRUE,2434
+"PA","Amazônia",2023,FALSE,39376
+"PA","Amazônia",2023,TRUE,1934
+"PA","Amazônia",2024,FALSE,48735
+"PA","Amazônia",2024,TRUE,6562
+"PA","Amazônia",2025,FALSE,17009
+"PA","Amazônia",2025,TRUE,1005
+"PA","Cerrado",2003,FALSE,581
+"PA","Cerrado",2003,TRUE,18
+"PA","Cerrado",2004,FALSE,750
+"PA","Cerrado",2004,TRUE,14
+"PA","Cerrado",2005,FALSE,896
+"PA","Cerrado",2005,TRUE,20
+"PA","Cerrado",2006,FALSE,433
+"PA","Cerrado",2006,TRUE,11
+"PA","Cerrado",2007,FALSE,1345
+"PA","Cerrado",2007,TRUE,35
+"PA","Cerrado",2008,FALSE,435
+"PA","Cerrado",2008,TRUE,3
+"PA","Cerrado",2009,FALSE,289
+"PA","Cerrado",2009,TRUE,16
+"PA","Cerrado",2010,FALSE,1586
+"PA","Cerrado",2010,TRUE,62
+"PA","Cerrado",2011,FALSE,265
+"PA","Cerrado",2011,TRUE,17
+"PA","Cerrado",2012,FALSE,558
+"PA","Cerrado",2012,TRUE,22
+"PA","Cerrado",2013,FALSE,483
+"PA","Cerrado",2013,TRUE,22
+"PA","Cerrado",2014,FALSE,489
+"PA","Cerrado",2014,TRUE,16
+"PA","Cerrado",2015,FALSE,798
+"PA","Cerrado",2015,TRUE,30
+"PA","Cerrado",2016,FALSE,545
+"PA","Cerrado",2016,TRUE,11
+"PA","Cerrado",2017,FALSE,1136
+"PA","Cerrado",2017,TRUE,26
+"PA","Cerrado",2018,FALSE,232
+"PA","Cerrado",2018,TRUE,7
+"PA","Cerrado",2019,FALSE,534
+"PA","Cerrado",2019,TRUE,19
+"PA","Cerrado",2020,FALSE,682
+"PA","Cerrado",2020,TRUE,17
+"PA","Cerrado",2021,FALSE,292
+"PA","Cerrado",2021,TRUE,14
+"PA","Cerrado",2022,FALSE,498
+"PA","Cerrado",2022,TRUE,15
+"PA","Cerrado",2023,FALSE,397
+"PA","Cerrado",2023,TRUE,6
+"PA","Cerrado",2024,FALSE,737
+"PA","Cerrado",2024,TRUE,35
+"PA","Cerrado",2025,FALSE,350
+"PA","Cerrado",2025,TRUE,2
+"PA",NA,2004,TRUE,1
+"PA",NA,2005,TRUE,2
+"PA",NA,2007,TRUE,2
+"PA",NA,2009,TRUE,1
+"PA",NA,2012,TRUE,2
+"PA",NA,2013,TRUE,2
+"PA",NA,2015,FALSE,1
+"PA",NA,2015,TRUE,1
+"PA",NA,2021,FALSE,1
+"PA",NA,2023,FALSE,1
+"PA",NA,2023,TRUE,1
+"PA",NA,2025,TRUE,1
+"PB","Caatinga",2003,FALSE,1486
+"PB","Caatinga",2004,FALSE,1035
+"PB","Caatinga",2005,FALSE,926
+"PB","Caatinga",2006,FALSE,959
+"PB","Caatinga",2007,FALSE,941
+"PB","Caatinga",2008,FALSE,801
+"PB","Caatinga",2009,FALSE,988
+"PB","Caatinga",2010,FALSE,897
+"PB","Caatinga",2011,FALSE,892
+"PB","Caatinga",2012,FALSE,483
+"PB","Caatinga",2013,FALSE,274
+"PB","Caatinga",2014,FALSE,352
+"PB","Caatinga",2015,FALSE,438
+"PB","Caatinga",2016,FALSE,613
+"PB","Caatinga",2017,FALSE,338
+"PB","Caatinga",2018,FALSE,656
+"PB","Caatinga",2019,FALSE,1122
+"PB","Caatinga",2020,FALSE,861
+"PB","Caatinga",2021,FALSE,874
+"PB","Caatinga",2022,FALSE,753
+"PB","Caatinga",2023,FALSE,897
+"PB","Caatinga",2024,FALSE,976
+"PB","Caatinga",2025,FALSE,1010
+"PB","Mata Atlântica",2003,FALSE,57
+"PB","Mata Atlântica",2003,TRUE,19
+"PB","Mata Atlântica",2004,FALSE,58
+"PB","Mata Atlântica",2004,TRUE,15
+"PB","Mata Atlântica",2005,FALSE,50
+"PB","Mata Atlântica",2005,TRUE,28
+"PB","Mata Atlântica",2006,FALSE,40
+"PB","Mata Atlântica",2006,TRUE,15
+"PB","Mata Atlântica",2007,FALSE,36
+"PB","Mata Atlântica",2007,TRUE,10
+"PB","Mata Atlântica",2008,FALSE,57
+"PB","Mata Atlântica",2008,TRUE,9
+"PB","Mata Atlântica",2009,FALSE,44
+"PB","Mata Atlântica",2009,TRUE,24
+"PB","Mata Atlântica",2010,FALSE,44
+"PB","Mata Atlântica",2010,TRUE,15
+"PB","Mata Atlântica",2011,FALSE,41
+"PB","Mata Atlântica",2011,TRUE,9
+"PB","Mata Atlântica",2012,FALSE,45
+"PB","Mata Atlântica",2012,TRUE,20
+"PB","Mata Atlântica",2013,FALSE,32
+"PB","Mata Atlântica",2014,FALSE,41
+"PB","Mata Atlântica",2014,TRUE,2
+"PB","Mata Atlântica",2015,FALSE,90
+"PB","Mata Atlântica",2015,TRUE,12
+"PB","Mata Atlântica",2016,FALSE,92
+"PB","Mata Atlântica",2016,TRUE,3
+"PB","Mata Atlântica",2017,FALSE,23
+"PB","Mata Atlântica",2017,TRUE,2
+"PB","Mata Atlântica",2018,FALSE,101
+"PB","Mata Atlântica",2018,TRUE,2
+"PB","Mata Atlântica",2019,FALSE,57
+"PB","Mata Atlântica",2019,TRUE,5
+"PB","Mata Atlântica",2020,FALSE,49
+"PB","Mata Atlântica",2021,FALSE,32
+"PB","Mata Atlântica",2021,TRUE,1
+"PB","Mata Atlântica",2022,FALSE,39
+"PB","Mata Atlântica",2022,TRUE,8
+"PB","Mata Atlântica",2023,FALSE,50
+"PB","Mata Atlântica",2023,TRUE,4
+"PB","Mata Atlântica",2024,FALSE,91
+"PB","Mata Atlântica",2024,TRUE,7
+"PB","Mata Atlântica",2025,FALSE,49
+"PB","Mata Atlântica",2025,TRUE,2
+"PE","Caatinga",2003,FALSE,2535
+"PE","Caatinga",2003,TRUE,29
+"PE","Caatinga",2004,FALSE,1830
+"PE","Caatinga",2004,TRUE,12
+"PE","Caatinga",2005,FALSE,1619
+"PE","Caatinga",2005,TRUE,25
+"PE","Caatinga",2006,FALSE,1600
+"PE","Caatinga",2006,TRUE,20
+"PE","Caatinga",2007,FALSE,2017
+"PE","Caatinga",2007,TRUE,36
+"PE","Caatinga",2008,FALSE,1407
+"PE","Caatinga",2008,TRUE,23
+"PE","Caatinga",2009,FALSE,1478
+"PE","Caatinga",2009,TRUE,19
+"PE","Caatinga",2010,FALSE,1745
+"PE","Caatinga",2010,TRUE,34
+"PE","Caatinga",2011,FALSE,1517
+"PE","Caatinga",2011,TRUE,34
+"PE","Caatinga",2012,FALSE,968
+"PE","Caatinga",2012,TRUE,21
+"PE","Caatinga",2013,FALSE,594
+"PE","Caatinga",2013,TRUE,10
+"PE","Caatinga",2014,FALSE,479
+"PE","Caatinga",2014,TRUE,8
+"PE","Caatinga",2015,FALSE,615
+"PE","Caatinga",2015,TRUE,24
+"PE","Caatinga",2016,FALSE,576
+"PE","Caatinga",2016,TRUE,28
+"PE","Caatinga",2017,FALSE,474
+"PE","Caatinga",2017,TRUE,5
+"PE","Caatinga",2018,FALSE,497
+"PE","Caatinga",2018,TRUE,3
+"PE","Caatinga",2019,FALSE,599
+"PE","Caatinga",2019,TRUE,4
+"PE","Caatinga",2020,FALSE,785
+"PE","Caatinga",2020,TRUE,20
+"PE","Caatinga",2021,FALSE,1051
+"PE","Caatinga",2021,TRUE,15
+"PE","Caatinga",2022,FALSE,1038
+"PE","Caatinga",2022,TRUE,5
+"PE","Caatinga",2023,FALSE,1668
+"PE","Caatinga",2023,TRUE,11
+"PE","Caatinga",2024,FALSE,1746
+"PE","Caatinga",2024,TRUE,15
+"PE","Caatinga",2025,FALSE,2082
+"PE","Caatinga",2025,TRUE,15
+"PE","Mata Atlântica",2003,FALSE,206
+"PE","Mata Atlântica",2004,FALSE,161
+"PE","Mata Atlântica",2005,FALSE,167
+"PE","Mata Atlântica",2006,FALSE,139
+"PE","Mata Atlântica",2007,FALSE,104
+"PE","Mata Atlântica",2008,FALSE,190
+"PE","Mata Atlântica",2009,FALSE,217
+"PE","Mata Atlântica",2010,FALSE,140
+"PE","Mata Atlântica",2011,FALSE,171
+"PE","Mata Atlântica",2012,FALSE,196
+"PE","Mata Atlântica",2013,FALSE,92
+"PE","Mata Atlântica",2014,FALSE,106
+"PE","Mata Atlântica",2015,FALSE,311
+"PE","Mata Atlântica",2016,FALSE,270
+"PE","Mata Atlântica",2017,FALSE,84
+"PE","Mata Atlântica",2018,FALSE,222
+"PE","Mata Atlântica",2019,FALSE,237
+"PE","Mata Atlântica",2020,FALSE,212
+"PE","Mata Atlântica",2021,FALSE,126
+"PE","Mata Atlântica",2022,FALSE,112
+"PE","Mata Atlântica",2023,FALSE,155
+"PE","Mata Atlântica",2024,FALSE,296
+"PE","Mata Atlântica",2025,FALSE,238
+"PI","Caatinga",2003,FALSE,4505
+"PI","Caatinga",2004,FALSE,4441
+"PI","Caatinga",2005,FALSE,4372
+"PI","Caatinga",2006,FALSE,3070
+"PI","Caatinga",2007,FALSE,6055
+"PI","Caatinga",2008,FALSE,2552
+"PI","Caatinga",2009,FALSE,2391
+"PI","Caatinga",2010,FALSE,6142
+"PI","Caatinga",2011,FALSE,3295
+"PI","Caatinga",2012,FALSE,3046
+"PI","Caatinga",2013,FALSE,1813
+"PI","Caatinga",2014,FALSE,1810
+"PI","Caatinga",2015,FALSE,5543
+"PI","Caatinga",2016,FALSE,2727
+"PI","Caatinga",2017,FALSE,2023
+"PI","Caatinga",2018,FALSE,2953
+"PI","Caatinga",2019,FALSE,4292
+"PI","Caatinga",2020,FALSE,3904
+"PI","Caatinga",2021,FALSE,5827
+"PI","Caatinga",2022,FALSE,3830
+"PI","Caatinga",2023,FALSE,4438
+"PI","Caatinga",2024,FALSE,4024
+"PI","Caatinga",2025,FALSE,4482
+"PI","Cerrado",2003,FALSE,6352
+"PI","Cerrado",2004,FALSE,6747
+"PI","Cerrado",2005,FALSE,7507
+"PI","Cerrado",2006,FALSE,4796
+"PI","Cerrado",2007,FALSE,11930
+"PI","Cerrado",2008,FALSE,4103
+"PI","Cerrado",2009,FALSE,4149
+"PI","Cerrado",2010,FALSE,13054
+"PI","Cerrado",2011,FALSE,7869
+"PI","Cerrado",2012,FALSE,11493
+"PI","Cerrado",2013,FALSE,4672
+"PI","Cerrado",2014,FALSE,7395
+"PI","Cerrado",2015,FALSE,8296
+"PI","Cerrado",2016,FALSE,5578
+"PI","Cerrado",2017,FALSE,5637
+"PI","Cerrado",2018,FALSE,6479
+"PI","Cerrado",2019,FALSE,6604
+"PI","Cerrado",2020,FALSE,5414
+"PI","Cerrado",2021,FALSE,6921
+"PI","Cerrado",2022,FALSE,7036
+"PI","Cerrado",2023,FALSE,8524
+"PI","Cerrado",2024,FALSE,6564
+"PI","Cerrado",2025,FALSE,7326
+"PR","Cerrado",2003,FALSE,174
+"PR","Cerrado",2004,FALSE,95
+"PR","Cerrado",2005,FALSE,117
+"PR","Cerrado",2006,FALSE,66
+"PR","Cerrado",2007,FALSE,41
+"PR","Cerrado",2008,FALSE,40
+"PR","Cerrado",2009,FALSE,17
+"PR","Cerrado",2010,FALSE,26
+"PR","Cerrado",2011,FALSE,24
+"PR","Cerrado",2012,FALSE,18
+"PR","Cerrado",2013,FALSE,21
+"PR","Cerrado",2014,FALSE,29
+"PR","Cerrado",2015,FALSE,12
+"PR","Cerrado",2016,FALSE,28
+"PR","Cerrado",2017,FALSE,26
+"PR","Cerrado",2018,FALSE,14
+"PR","Cerrado",2019,FALSE,46
+"PR","Cerrado",2020,FALSE,55
+"PR","Cerrado",2021,FALSE,49
+"PR","Cerrado",2022,FALSE,12
+"PR","Cerrado",2023,FALSE,9
+"PR","Cerrado",2024,FALSE,44
+"PR","Cerrado",2025,FALSE,42
+"PR","Mata Atlântica",2003,FALSE,10589
+"PR","Mata Atlântica",2003,TRUE,103
+"PR","Mata Atlântica",2004,FALSE,6977
+"PR","Mata Atlântica",2004,TRUE,60
+"PR","Mata Atlântica",2005,FALSE,4863
+"PR","Mata Atlântica",2005,TRUE,43
+"PR","Mata Atlântica",2006,FALSE,5712
+"PR","Mata Atlântica",2006,TRUE,102
+"PR","Mata Atlântica",2007,FALSE,4879
+"PR","Mata Atlântica",2007,TRUE,78
+"PR","Mata Atlântica",2008,FALSE,3573
+"PR","Mata Atlântica",2008,TRUE,49
+"PR","Mata Atlântica",2009,FALSE,2974
+"PR","Mata Atlântica",2009,TRUE,34
+"PR","Mata Atlântica",2010,FALSE,3305
+"PR","Mata Atlântica",2010,TRUE,67
+"PR","Mata Atlântica",2011,FALSE,3316
+"PR","Mata Atlântica",2011,TRUE,48
+"PR","Mata Atlântica",2012,FALSE,2620
+"PR","Mata Atlântica",2012,TRUE,30
+"PR","Mata Atlântica",2013,FALSE,2470
+"PR","Mata Atlântica",2013,TRUE,40
+"PR","Mata Atlântica",2014,FALSE,2182
+"PR","Mata Atlântica",2014,TRUE,22
+"PR","Mata Atlântica",2015,FALSE,2046
+"PR","Mata Atlântica",2015,TRUE,29
+"PR","Mata Atlântica",2016,FALSE,4037
+"PR","Mata Atlântica",2016,TRUE,86
+"PR","Mata Atlântica",2017,FALSE,3510
+"PR","Mata Atlântica",2017,TRUE,56
+"PR","Mata Atlântica",2018,FALSE,2460
+"PR","Mata Atlântica",2018,TRUE,37
+"PR","Mata Atlântica",2019,FALSE,3201
+"PR","Mata Atlântica",2019,TRUE,66
+"PR","Mata Atlântica",2020,FALSE,3420
+"PR","Mata Atlântica",2020,TRUE,44
+"PR","Mata Atlântica",2021,FALSE,3597
+"PR","Mata Atlântica",2021,TRUE,52
+"PR","Mata Atlântica",2022,FALSE,1749
+"PR","Mata Atlântica",2022,TRUE,10
+"PR","Mata Atlântica",2023,FALSE,1422
+"PR","Mata Atlântica",2023,TRUE,8
+"PR","Mata Atlântica",2024,FALSE,2622
+"PR","Mata Atlântica",2024,TRUE,38
+"PR","Mata Atlântica",2025,FALSE,1757
+"PR","Mata Atlântica",2025,TRUE,13
+"PR",NA,2019,FALSE,1
+"RJ","Mata Atlântica",2003,FALSE,1110
+"RJ","Mata Atlântica",2003,TRUE,1
+"RJ","Mata Atlântica",2004,FALSE,750
+"RJ","Mata Atlântica",2005,FALSE,687
+"RJ","Mata Atlântica",2006,FALSE,1172
+"RJ","Mata Atlântica",2007,FALSE,1369
+"RJ","Mata Atlântica",2008,FALSE,590
+"RJ","Mata Atlântica",2009,FALSE,422
+"RJ","Mata Atlântica",2010,FALSE,1137
+"RJ","Mata Atlântica",2011,FALSE,1101
+"RJ","Mata Atlântica",2012,FALSE,551
+"RJ","Mata Atlântica",2013,FALSE,392
+"RJ","Mata Atlântica",2014,FALSE,1283
+"RJ","Mata Atlântica",2015,FALSE,542
+"RJ","Mata Atlântica",2016,FALSE,677
+"RJ","Mata Atlântica",2017,FALSE,959
+"RJ","Mata Atlântica",2018,FALSE,246
+"RJ","Mata Atlântica",2019,FALSE,712
+"RJ","Mata Atlântica",2020,FALSE,693
+"RJ","Mata Atlântica",2021,FALSE,502
+"RJ","Mata Atlântica",2022,FALSE,747
+"RJ","Mata Atlântica",2023,FALSE,404
+"RJ","Mata Atlântica",2024,FALSE,1200
+"RJ","Mata Atlântica",2025,FALSE,512
+"RN","Caatinga",2003,FALSE,1522
+"RN","Caatinga",2004,FALSE,811
+"RN","Caatinga",2005,FALSE,995
+"RN","Caatinga",2006,FALSE,716
+"RN","Caatinga",2007,FALSE,765
+"RN","Caatinga",2008,FALSE,590
+"RN","Caatinga",2009,FALSE,637
+"RN","Caatinga",2010,FALSE,593
+"RN","Caatinga",2011,FALSE,458
+"RN","Caatinga",2012,FALSE,415
+"RN","Caatinga",2013,FALSE,242
+"RN","Caatinga",2014,FALSE,305
+"RN","Caatinga",2015,FALSE,388
+"RN","Caatinga",2016,FALSE,356
+"RN","Caatinga",2017,FALSE,338
+"RN","Caatinga",2018,FALSE,408
+"RN","Caatinga",2019,FALSE,715
+"RN","Caatinga",2020,FALSE,641
+"RN","Caatinga",2021,FALSE,558
+"RN","Caatinga",2022,FALSE,401
+"RN","Caatinga",2023,FALSE,568
+"RN","Caatinga",2024,FALSE,588
+"RN","Caatinga",2025,FALSE,608
+"RN","Mata Atlântica",2003,FALSE,25
+"RN","Mata Atlântica",2004,FALSE,14
+"RN","Mata Atlântica",2005,FALSE,6
+"RN","Mata Atlântica",2006,FALSE,18
+"RN","Mata Atlântica",2007,FALSE,9
+"RN","Mata Atlântica",2008,FALSE,7
+"RN","Mata Atlântica",2009,FALSE,22
+"RN","Mata Atlântica",2010,FALSE,35
+"RN","Mata Atlântica",2011,FALSE,6
+"RN","Mata Atlântica",2012,FALSE,17
+"RN","Mata Atlântica",2013,FALSE,8
+"RN","Mata Atlântica",2014,FALSE,12
+"RN","Mata Atlântica",2015,FALSE,14
+"RN","Mata Atlântica",2016,FALSE,22
+"RN","Mata Atlântica",2017,FALSE,13
+"RN","Mata Atlântica",2018,FALSE,48
+"RN","Mata Atlântica",2019,FALSE,15
+"RN","Mata Atlântica",2020,FALSE,23
+"RN","Mata Atlântica",2021,FALSE,5
+"RN","Mata Atlântica",2022,FALSE,10
+"RN","Mata Atlântica",2023,FALSE,11
+"RN","Mata Atlântica",2024,FALSE,36
+"RN","Mata Atlântica",2025,FALSE,31
+"RO","Amazônia",2003,FALSE,29783
+"RO","Amazônia",2003,TRUE,504
+"RO","Amazônia",2004,FALSE,39851
+"RO","Amazônia",2004,TRUE,628
+"RO","Amazônia",2005,FALSE,40709
+"RO","Amazônia",2005,TRUE,724
+"RO","Amazônia",2006,FALSE,25093
+"RO","Amazônia",2006,TRUE,555
+"RO","Amazônia",2007,FALSE,26665
+"RO","Amazônia",2007,TRUE,564
+"RO","Amazônia",2008,FALSE,11061
+"RO","Amazônia",2008,TRUE,405
+"RO","Amazônia",2009,FALSE,5131
+"RO","Amazônia",2009,TRUE,228
+"RO","Amazônia",2010,FALSE,15703
+"RO","Amazônia",2010,TRUE,830
+"RO","Amazônia",2011,FALSE,5666
+"RO","Amazônia",2011,TRUE,382
+"RO","Amazônia",2012,FALSE,7829
+"RO","Amazônia",2012,TRUE,352
+"RO","Amazônia",2013,FALSE,4372
+"RO","Amazônia",2013,TRUE,196
+"RO","Amazônia",2014,FALSE,7085
+"RO","Amazônia",2014,TRUE,184
+"RO","Amazônia",2015,FALSE,12661
+"RO","Amazônia",2015,TRUE,352
+"RO","Amazônia",2016,FALSE,10756
+"RO","Amazônia",2016,TRUE,581
+"RO","Amazônia",2017,FALSE,10775
+"RO","Amazônia",2017,TRUE,469
+"RO","Amazônia",2018,FALSE,9801
+"RO","Amazônia",2018,TRUE,417
+"RO","Amazônia",2019,FALSE,10595
+"RO","Amazônia",2019,TRUE,507
+"RO","Amazônia",2020,FALSE,10376
+"RO","Amazônia",2020,TRUE,664
+"RO","Amazônia",2021,FALSE,9499
+"RO","Amazônia",2021,TRUE,485
+"RO","Amazônia",2022,FALSE,11830
+"RO","Amazônia",2022,TRUE,564
+"RO","Amazônia",2023,FALSE,6807
+"RO","Amazônia",2023,TRUE,548
+"RO","Amazônia",2024,FALSE,8780
+"RO","Amazônia",2024,TRUE,1786
+"RO","Amazônia",2025,FALSE,1737
+"RO","Amazônia",2025,TRUE,126
+"RO","Cerrado",2003,FALSE,266
+"RO","Cerrado",2003,TRUE,2
+"RO","Cerrado",2004,FALSE,379
+"RO","Cerrado",2004,TRUE,18
+"RO","Cerrado",2005,FALSE,192
+"RO","Cerrado",2005,TRUE,18
+"RO","Cerrado",2006,FALSE,54
+"RO","Cerrado",2007,FALSE,261
+"RO","Cerrado",2007,TRUE,10
+"RO","Cerrado",2008,FALSE,85
+"RO","Cerrado",2008,TRUE,8
+"RO","Cerrado",2009,FALSE,41
+"RO","Cerrado",2009,TRUE,1
+"RO","Cerrado",2010,FALSE,426
+"RO","Cerrado",2010,TRUE,11
+"RO","Cerrado",2011,FALSE,32
+"RO","Cerrado",2012,FALSE,125
+"RO","Cerrado",2012,TRUE,6
+"RO","Cerrado",2013,FALSE,42
+"RO","Cerrado",2013,TRUE,2
+"RO","Cerrado",2014,FALSE,64
+"RO","Cerrado",2014,TRUE,1
+"RO","Cerrado",2015,FALSE,100
+"RO","Cerrado",2016,FALSE,137
+"RO","Cerrado",2017,FALSE,67
+"RO","Cerrado",2017,TRUE,1
+"RO","Cerrado",2018,FALSE,35
+"RO","Cerrado",2018,TRUE,1
+"RO","Cerrado",2019,FALSE,127
+"RO","Cerrado",2019,TRUE,1
+"RO","Cerrado",2020,FALSE,94
+"RO","Cerrado",2020,TRUE,4
+"RO","Cerrado",2021,FALSE,46
+"RO","Cerrado",2022,FALSE,60
+"RO","Cerrado",2022,TRUE,1
+"RO","Cerrado",2023,FALSE,60
+"RO","Cerrado",2024,FALSE,97
+"RO","Cerrado",2024,TRUE,19
+"RO","Cerrado",2025,FALSE,16
+"RO",NA,2003,FALSE,2
+"RO",NA,2004,FALSE,3
+"RO",NA,2004,TRUE,2
+"RO",NA,2005,FALSE,6
+"RO",NA,2008,FALSE,1
+"RO",NA,2013,FALSE,1
+"RO",NA,2017,FALSE,1
+"RO",NA,2018,FALSE,1
+"RO",NA,2020,FALSE,7
+"RO",NA,2022,FALSE,5
+"RO",NA,2023,FALSE,2
+"RO",NA,2024,FALSE,10
+"RR","Amazônia",2003,FALSE,3354
+"RR","Amazônia",2003,TRUE,625
+"RR","Amazônia",2004,FALSE,1407
+"RR","Amazônia",2004,TRUE,813
+"RR","Amazônia",2005,FALSE,908
+"RR","Amazônia",2005,TRUE,550
+"RR","Amazônia",2006,FALSE,1539
+"RR","Amazônia",2006,TRUE,650
+"RR","Amazônia",2007,FALSE,2570
+"RR","Amazônia",2007,TRUE,668
+"RR","Amazônia",2008,FALSE,1434
+"RR","Amazônia",2008,TRUE,512
+"RR","Amazônia",2009,FALSE,1669
+"RR","Amazônia",2009,TRUE,688
+"RR","Amazônia",2010,FALSE,1503
+"RR","Amazônia",2010,TRUE,413
+"RR","Amazônia",2011,FALSE,875
+"RR","Amazônia",2011,TRUE,600
+"RR","Amazônia",2012,FALSE,788
+"RR","Amazônia",2012,TRUE,584
+"RR","Amazônia",2013,FALSE,876
+"RR","Amazônia",2013,TRUE,512
+"RR","Amazônia",2014,FALSE,1897
+"RR","Amazônia",2014,TRUE,622
+"RR","Amazônia",2015,FALSE,1845
+"RR","Amazônia",2015,TRUE,607
+"RR","Amazônia",2016,FALSE,3274
+"RR","Amazônia",2016,TRUE,595
+"RR","Amazônia",2017,FALSE,918
+"RR","Amazônia",2017,TRUE,647
+"RR","Amazônia",2018,FALSE,1836
+"RR","Amazônia",2018,TRUE,544
+"RR","Amazônia",2019,FALSE,3885
+"RR","Amazônia",2019,TRUE,893
+"RR","Amazônia",2020,FALSE,1203
+"RR","Amazônia",2020,TRUE,726
+"RR","Amazônia",2021,FALSE,527
+"RR","Amazônia",2021,TRUE,462
+"RR","Amazônia",2022,FALSE,790
+"RR","Amazônia",2022,TRUE,430
+"RR","Amazônia",2023,FALSE,1708
+"RR","Amazônia",2023,TRUE,949
+"RR","Amazônia",2024,FALSE,4166
+"RR","Amazônia",2024,TRUE,1188
+"RR","Amazônia",2025,FALSE,976
+"RR","Amazônia",2025,TRUE,560
+"RR",NA,2003,TRUE,1
+"RR",NA,2009,FALSE,1
+"RR",NA,2016,TRUE,1
+"RR",NA,2019,TRUE,1
+"RS","Mata Atlântica",2003,FALSE,4155
+"RS","Mata Atlântica",2003,TRUE,69
+"RS","Mata Atlântica",2004,FALSE,2941
+"RS","Mata Atlântica",2004,TRUE,75
+"RS","Mata Atlântica",2005,FALSE,1689
+"RS","Mata Atlântica",2005,TRUE,50
+"RS","Mata Atlântica",2006,FALSE,2737
+"RS","Mata Atlântica",2006,TRUE,54
+"RS","Mata Atlântica",2007,FALSE,1697
+"RS","Mata Atlântica",2007,TRUE,60
+"RS","Mata Atlântica",2008,FALSE,1388
+"RS","Mata Atlântica",2008,TRUE,36
+"RS","Mata Atlântica",2009,FALSE,1794
+"RS","Mata Atlântica",2009,TRUE,74
+"RS","Mata Atlântica",2010,FALSE,1507
+"RS","Mata Atlântica",2010,TRUE,49
+"RS","Mata Atlântica",2011,FALSE,1020
+"RS","Mata Atlântica",2011,TRUE,49
+"RS","Mata Atlântica",2012,FALSE,1214
+"RS","Mata Atlântica",2012,TRUE,41
+"RS","Mata Atlântica",2013,FALSE,722
+"RS","Mata Atlântica",2013,TRUE,33
+"RS","Mata Atlântica",2014,FALSE,1386
+"RS","Mata Atlântica",2014,TRUE,27
+"RS","Mata Atlântica",2015,FALSE,526
+"RS","Mata Atlântica",2015,TRUE,13
+"RS","Mata Atlântica",2016,FALSE,2132
+"RS","Mata Atlântica",2016,TRUE,53
+"RS","Mata Atlântica",2017,FALSE,1224
+"RS","Mata Atlântica",2017,TRUE,38
+"RS","Mata Atlântica",2018,FALSE,886
+"RS","Mata Atlântica",2018,TRUE,17
+"RS","Mata Atlântica",2019,FALSE,1715
+"RS","Mata Atlântica",2019,TRUE,49
+"RS","Mata Atlântica",2020,FALSE,1901
+"RS","Mata Atlântica",2020,TRUE,48
+"RS","Mata Atlântica",2021,FALSE,1177
+"RS","Mata Atlântica",2021,TRUE,31
+"RS","Mata Atlântica",2022,FALSE,879
+"RS","Mata Atlântica",2022,TRUE,3
+"RS","Mata Atlântica",2023,FALSE,1122
+"RS","Mata Atlântica",2023,TRUE,7
+"RS","Mata Atlântica",2024,FALSE,1150
+"RS","Mata Atlântica",2024,TRUE,5
+"RS","Mata Atlântica",2025,FALSE,939
+"RS","Mata Atlântica",2025,TRUE,4
+"RS","Pampa",2003,FALSE,1907
+"RS","Pampa",2003,TRUE,1
+"RS","Pampa",2004,FALSE,1713
+"RS","Pampa",2005,FALSE,1128
+"RS","Pampa",2006,FALSE,1324
+"RS","Pampa",2006,TRUE,1
+"RS","Pampa",2007,FALSE,1062
+"RS","Pampa",2007,TRUE,3
+"RS","Pampa",2008,FALSE,936
+"RS","Pampa",2009,FALSE,1120
+"RS","Pampa",2010,FALSE,959
+"RS","Pampa",2011,FALSE,909
+"RS","Pampa",2011,TRUE,1
+"RS","Pampa",2012,FALSE,1065
+"RS","Pampa",2012,TRUE,2
+"RS","Pampa",2013,FALSE,791
+"RS","Pampa",2013,TRUE,1
+"RS","Pampa",2014,FALSE,690
+"RS","Pampa",2014,TRUE,1
+"RS","Pampa",2015,FALSE,738
+"RS","Pampa",2015,TRUE,1
+"RS","Pampa",2016,FALSE,1341
+"RS","Pampa",2016,TRUE,1
+"RS","Pampa",2017,FALSE,955
+"RS","Pampa",2017,TRUE,1
+"RS","Pampa",2018,FALSE,712
+"RS","Pampa",2019,FALSE,1429
+"RS","Pampa",2019,TRUE,3
+"RS","Pampa",2020,FALSE,1663
+"RS","Pampa",2021,FALSE,1237
+"RS","Pampa",2022,FALSE,753
+"RS","Pampa",2023,FALSE,696
+"RS","Pampa",2024,FALSE,417
+"RS","Pampa",2025,FALSE,677
+"SC","Mata Atlântica",2003,FALSE,7569
+"SC","Mata Atlântica",2003,TRUE,79
+"SC","Mata Atlântica",2004,FALSE,4971
+"SC","Mata Atlântica",2004,TRUE,57
+"SC","Mata Atlântica",2005,FALSE,3538
+"SC","Mata Atlântica",2005,TRUE,44
+"SC","Mata Atlântica",2006,FALSE,4905
+"SC","Mata Atlântica",2006,TRUE,81
+"SC","Mata Atlântica",2007,FALSE,2651
+"SC","Mata Atlântica",2007,TRUE,38
+"SC","Mata Atlântica",2008,FALSE,2207
+"SC","Mata Atlântica",2008,TRUE,38
+"SC","Mata Atlântica",2009,FALSE,2093
+"SC","Mata Atlântica",2009,TRUE,28
+"SC","Mata Atlântica",2010,FALSE,2130
+"SC","Mata Atlântica",2010,TRUE,33
+"SC","Mata Atlântica",2011,FALSE,1737
+"SC","Mata Atlântica",2011,TRUE,35
+"SC","Mata Atlântica",2012,FALSE,1802
+"SC","Mata Atlântica",2012,TRUE,18
+"SC","Mata Atlântica",2013,FALSE,1636
+"SC","Mata Atlântica",2013,TRUE,27
+"SC","Mata Atlântica",2014,FALSE,1166
+"SC","Mata Atlântica",2014,TRUE,13
+"SC","Mata Atlântica",2015,FALSE,891
+"SC","Mata Atlântica",2015,TRUE,15
+"SC","Mata Atlântica",2016,FALSE,2525
+"SC","Mata Atlântica",2016,TRUE,36
+"SC","Mata Atlântica",2017,FALSE,1962
+"SC","Mata Atlântica",2017,TRUE,43
+"SC","Mata Atlântica",2018,FALSE,1401
+"SC","Mata Atlântica",2018,TRUE,16
+"SC","Mata Atlântica",2019,FALSE,1778
+"SC","Mata Atlântica",2019,TRUE,26
+"SC","Mata Atlântica",2020,FALSE,2412
+"SC","Mata Atlântica",2020,TRUE,13
+"SC","Mata Atlântica",2021,FALSE,2327
+"SC","Mata Atlântica",2021,TRUE,24
+"SC","Mata Atlântica",2022,FALSE,1354
+"SC","Mata Atlântica",2022,TRUE,6
+"SC","Mata Atlântica",2023,FALSE,1325
+"SC","Mata Atlântica",2023,TRUE,16
+"SC","Mata Atlântica",2024,FALSE,1777
+"SC","Mata Atlântica",2024,TRUE,24
+"SC","Mata Atlântica",2025,FALSE,1473
+"SC","Mata Atlântica",2025,TRUE,5
+"SC",NA,2004,FALSE,2
+"SC",NA,2014,FALSE,1
+"SE","Caatinga",2003,FALSE,271
+"SE","Caatinga",2004,FALSE,151
+"SE","Caatinga",2005,FALSE,143
+"SE","Caatinga",2006,FALSE,122
+"SE","Caatinga",2007,FALSE,129
+"SE","Caatinga",2008,FALSE,192
+"SE","Caatinga",2009,FALSE,133
+"SE","Caatinga",2010,FALSE,88
+"SE","Caatinga",2011,FALSE,132
+"SE","Caatinga",2012,FALSE,146
+"SE","Caatinga",2013,FALSE,76
+"SE","Caatinga",2013,TRUE,1
+"SE","Caatinga",2014,FALSE,42
+"SE","Caatinga",2015,FALSE,124
+"SE","Caatinga",2016,FALSE,55
+"SE","Caatinga",2017,FALSE,21
+"SE","Caatinga",2018,FALSE,46
+"SE","Caatinga",2019,FALSE,25
+"SE","Caatinga",2020,FALSE,21
+"SE","Caatinga",2021,FALSE,66
+"SE","Caatinga",2022,FALSE,55
+"SE","Caatinga",2023,FALSE,77
+"SE","Caatinga",2024,FALSE,77
+"SE","Caatinga",2025,FALSE,79
+"SE","Mata Atlântica",2003,FALSE,196
+"SE","Mata Atlântica",2004,FALSE,137
+"SE","Mata Atlântica",2005,FALSE,151
+"SE","Mata Atlântica",2006,FALSE,102
+"SE","Mata Atlântica",2007,FALSE,60
+"SE","Mata Atlântica",2008,FALSE,122
+"SE","Mata Atlântica",2009,FALSE,119
+"SE","Mata Atlântica",2010,FALSE,81
+"SE","Mata Atlântica",2011,FALSE,97
+"SE","Mata Atlântica",2012,FALSE,104
+"SE","Mata Atlântica",2013,FALSE,96
+"SE","Mata Atlântica",2014,FALSE,46
+"SE","Mata Atlântica",2015,FALSE,115
+"SE","Mata Atlântica",2016,FALSE,79
+"SE","Mata Atlântica",2017,FALSE,56
+"SE","Mata Atlântica",2018,FALSE,94
+"SE","Mata Atlântica",2019,FALSE,56
+"SE","Mata Atlântica",2020,FALSE,56
+"SE","Mata Atlântica",2021,FALSE,66
+"SE","Mata Atlântica",2022,FALSE,30
+"SE","Mata Atlântica",2023,FALSE,75
+"SE","Mata Atlântica",2024,FALSE,114
+"SE","Mata Atlântica",2025,FALSE,78
+"SP","Cerrado",2003,FALSE,1010
+"SP","Cerrado",2004,FALSE,876
+"SP","Cerrado",2005,FALSE,784
+"SP","Cerrado",2006,FALSE,1049
+"SP","Cerrado",2007,FALSE,839
+"SP","Cerrado",2008,FALSE,582
+"SP","Cerrado",2009,FALSE,394
+"SP","Cerrado",2010,FALSE,1485
+"SP","Cerrado",2011,FALSE,891
+"SP","Cerrado",2012,FALSE,645
+"SP","Cerrado",2013,FALSE,531
+"SP","Cerrado",2014,FALSE,794
+"SP","Cerrado",2015,FALSE,345
+"SP","Cerrado",2016,FALSE,560
+"SP","Cerrado",2017,FALSE,621
+"SP","Cerrado",2018,FALSE,508
+"SP","Cerrado",2019,FALSE,668
+"SP","Cerrado",2020,FALSE,1143
+"SP","Cerrado",2021,FALSE,1159
+"SP","Cerrado",2022,FALSE,362
+"SP","Cerrado",2023,FALSE,371
+"SP","Cerrado",2024,FALSE,1613
+"SP","Cerrado",2025,FALSE,406
+"SP","Mata Atlântica",2003,FALSE,4585
+"SP","Mata Atlântica",2003,TRUE,2
+"SP","Mata Atlântica",2004,FALSE,3455
+"SP","Mata Atlântica",2004,TRUE,2
+"SP","Mata Atlântica",2005,FALSE,3048
+"SP","Mata Atlântica",2006,FALSE,4317
+"SP","Mata Atlântica",2006,TRUE,1
+"SP","Mata Atlântica",2007,FALSE,3633
+"SP","Mata Atlântica",2007,TRUE,4
+"SP","Mata Atlântica",2008,FALSE,2212
+"SP","Mata Atlântica",2008,TRUE,2
+"SP","Mata Atlântica",2009,FALSE,1367
+"SP","Mata Atlântica",2009,TRUE,2
+"SP","Mata Atlântica",2010,FALSE,5805
+"SP","Mata Atlântica",2010,TRUE,1
+"SP","Mata Atlântica",2011,FALSE,3292
+"SP","Mata Atlântica",2012,FALSE,2014
+"SP","Mata Atlântica",2012,TRUE,3
+"SP","Mata Atlântica",2013,FALSE,1855
+"SP","Mata Atlântica",2013,TRUE,2
+"SP","Mata Atlântica",2014,FALSE,3688
+"SP","Mata Atlântica",2014,TRUE,2
+"SP","Mata Atlântica",2015,FALSE,1460
+"SP","Mata Atlântica",2015,TRUE,3
+"SP","Mata Atlântica",2016,FALSE,2626
+"SP","Mata Atlântica",2017,FALSE,3281
+"SP","Mata Atlântica",2018,FALSE,2509
+"SP","Mata Atlântica",2018,TRUE,2
+"SP","Mata Atlântica",2019,FALSE,2406
+"SP","Mata Atlântica",2020,FALSE,4970
+"SP","Mata Atlântica",2020,TRUE,10
+"SP","Mata Atlântica",2021,FALSE,4310
+"SP","Mata Atlântica",2022,FALSE,1235
+"SP","Mata Atlântica",2022,TRUE,2
+"SP","Mata Atlântica",2023,FALSE,1292
+"SP","Mata Atlântica",2023,TRUE,3
+"SP","Mata Atlântica",2024,FALSE,7093
+"SP","Mata Atlântica",2024,TRUE,6
+"SP","Mata Atlântica",2025,FALSE,1970
+"TO","Amazônia",2003,FALSE,818
+"TO","Amazônia",2004,FALSE,682
+"TO","Amazônia",2004,TRUE,2
+"TO","Amazônia",2005,FALSE,1150
+"TO","Amazônia",2005,TRUE,1
+"TO","Amazônia",2006,FALSE,485
+"TO","Amazônia",2007,FALSE,1158
+"TO","Amazônia",2008,FALSE,516
+"TO","Amazônia",2008,TRUE,2
+"TO","Amazônia",2009,FALSE,359
+"TO","Amazônia",2009,TRUE,1
+"TO","Amazônia",2010,FALSE,1046
+"TO","Amazônia",2011,FALSE,368
+"TO","Amazônia",2012,FALSE,345
+"TO","Amazônia",2013,FALSE,327
+"TO","Amazônia",2014,FALSE,488
+"TO","Amazônia",2015,FALSE,433
+"TO","Amazônia",2016,FALSE,509
+"TO","Amazônia",2017,FALSE,890
+"TO","Amazônia",2018,FALSE,263
+"TO","Amazônia",2019,FALSE,272
+"TO","Amazônia",2020,FALSE,612
+"TO","Amazônia",2021,FALSE,248
+"TO","Amazônia",2022,FALSE,376
+"TO","Amazônia",2023,FALSE,312
+"TO","Amazônia",2024,FALSE,764
+"TO","Amazônia",2024,TRUE,2
+"TO","Amazônia",2025,FALSE,431
+"TO","Amazônia",2025,TRUE,2
+"TO","Cerrado",2003,FALSE,9676
+"TO","Cerrado",2003,TRUE,1631
+"TO","Cerrado",2004,FALSE,12851
+"TO","Cerrado",2004,TRUE,1607
+"TO","Cerrado",2005,FALSE,12641
+"TO","Cerrado",2005,TRUE,2415
+"TO","Cerrado",2006,FALSE,8422
+"TO","Cerrado",2006,TRUE,1386
+"TO","Cerrado",2007,FALSE,20190
+"TO","Cerrado",2007,TRUE,4010
+"TO","Cerrado",2008,FALSE,8147
+"TO","Cerrado",2008,TRUE,2069
+"TO","Cerrado",2009,FALSE,5374
+"TO","Cerrado",2009,TRUE,696
+"TO","Cerrado",2010,FALSE,22066
+"TO","Cerrado",2010,TRUE,5955
+"TO","Cerrado",2011,FALSE,8549
+"TO","Cerrado",2011,TRUE,1713
+"TO","Cerrado",2012,FALSE,14807
+"TO","Cerrado",2012,TRUE,3875
+"TO","Cerrado",2013,FALSE,8369
+"TO","Cerrado",2013,TRUE,1235
+"TO","Cerrado",2014,FALSE,11552
+"TO","Cerrado",2014,TRUE,2025
+"TO","Cerrado",2015,FALSE,13168
+"TO","Cerrado",2015,TRUE,2107
+"TO","Cerrado",2016,FALSE,10859
+"TO","Cerrado",2016,TRUE,3126
+"TO","Cerrado",2017,FALSE,11143
+"TO","Cerrado",2017,TRUE,3625
+"TO","Cerrado",2018,FALSE,6376
+"TO","Cerrado",2018,TRUE,1387
+"TO","Cerrado",2019,FALSE,9977
+"TO","Cerrado",2019,TRUE,3368
+"TO","Cerrado",2020,FALSE,9237
+"TO","Cerrado",2020,TRUE,2239
+"TO","Cerrado",2021,FALSE,7042
+"TO","Cerrado",2021,TRUE,2676
+"TO","Cerrado",2022,FALSE,9402
+"TO","Cerrado",2022,TRUE,2362
+"TO","Cerrado",2023,FALSE,7122
+"TO","Cerrado",2023,TRUE,2202
+"TO","Cerrado",2024,FALSE,11418
+"TO","Cerrado",2024,TRUE,5068
+"TO","Cerrado",2025,FALSE,9236
+"TO","Cerrado",2025,TRUE,1866
