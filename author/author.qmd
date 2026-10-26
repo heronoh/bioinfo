@@ -93,7 +93,7 @@ html:not([lang="en"]) .lang-en { display: none; }
 <img src="../misc/HOH-01.png" class="foto" alt="Foto de Heron O. Hilário / Photo of Heron O. Hilário">
 
 ::: {.badges .small style="text-align:center"}
-<a href="https://github.com/heronoh" target="_blank">🐙 GitHub</a> <a href="https://scholar.google.com/citations?user=e0PUfXoAAAAJ&hl=en&oi=ao" target="_blank">📚 Google Scholar</a> <a href="https://orcid.org/0000-0002-2548-1053" target="_blank">🧬 ORCID</a> <a href="http://instagram.com/hohphoto" target="_blank">📷 Instagram</a>
+<a href="https://github.com/heronoh" target="_blank">🐙 GitHub</a> <a href="https://scholar.google.com/citations?user=e0PUfXoAAAAJ&hl=en&oi=ao" target="_blank">📚 Google Scholar</a> <a href="https://orcid.org/0000-0002-2548-1053" target="_blank">🧬 ORCID</a> <a href="http://lattes.cnpq.br/3654105041586325" target="_blank">📄 Lattes</a> <a href="http://instagram.com/hohphoto" target="_blank">📷 Instagram</a>
 :::
 
 ::: lang-pt
