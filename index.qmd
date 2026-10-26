@@ -16,6 +16,13 @@ listing:
     filter-ui: true
     fields: [title, description]
 
+  - id: grid-desmatamento
+    contents:
+      - "analises/desmatamento_v2/desmatamento_v2.qmd"
+    type: grid
+    sort: "title"
+    fields: [title, description]
+
   - id: grid-bash
     contents:
       - "aulas/bash/P*.qmd"
@@ -95,6 +102,11 @@ listing:
 ## Aulas de R
 
 ::: {#grid-r}
+:::
+
+## Análises avançadas sobre desmatamento
+
+::: {#grid-desmatamento}
 :::
 
 ## Aulas de Shell

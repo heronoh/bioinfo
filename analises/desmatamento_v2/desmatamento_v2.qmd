@@ -1,7 +1,7 @@
 ---
 title: 'Desmatamento no Brasil: v2 (exploração)'
 lang: pt-BR
-description: "Brainstorm de visualizações: desmatamento por mandato, o que substitui a vegetação nativa, mineração, uso da terra, concordância entre fontes e cenários até 2030"
+description: "Desmatamento por mandato, uso da terra, mineração, cenários até 2030, fogo, fiscalização do Ibama, alertas DETER, comparação por município e fogo dentro e fora de terras indígenas"
 format:
   html: default
   typst:
