@@ -4975,6 +4975,34 @@ vertical-align: -.125em;
   
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-grid-desmatamento .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-grid-desmatamento'] = new List('listing-grid-desmatamento', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
     const listingTargetEl = window.document.querySelector('#listing-grid-bash .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
@@ -5235,6 +5263,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#aulas-de-r" id="toc-aulas-de-r" class="nav-link active" data-scroll-target="#aulas-de-r">Aulas de R</a></li>
+  <li><a href="#análises-avançadas-sobre-desmatamento" id="toc-análises-avançadas-sobre-desmatamento" class="nav-link" data-scroll-target="#análises-avançadas-sobre-desmatamento">Análises avançadas sobre desmatamento</a></li>
   <li><a href="#aulas-de-shell" id="toc-aulas-de-shell" class="nav-link" data-scroll-target="#aulas-de-shell">Aulas de Shell</a></li>
   </ul>
 </nav>
@@ -5424,6 +5453,30 @@ Visualização de dados do SUS
 </h5>
 <div class="card-text listing-description">
 Utilizando o R para obter dados do SUS e realizar análises exploratórias utilizando visualização de dados
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+Sem itens correspondentes
+</div>
+</div>
+</section>
+<section id="análises-avançadas-sobre-desmatamento" class="level2">
+<h2 data-anchor-id="análises-avançadas-sobre-desmatamento">Análises avançadas sobre desmatamento</h2>
+<div id="listing-grid-desmatamento" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-listing-date-sort="1793060235000" data-listing-file-modified-sort="1793060235766" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="53" data-listing-word-count-sort="10585">
+<a href="./analises/desmatamento_v2/desmatamento_v2.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Desmatamento no Brasil: v2 (exploração)
+</h5>
+<div class="card-text listing-description">
+Desmatamento por mandato, uso da terra, mineração, cenários até 2030, fogo, fiscalização do Ibama, alertas DETER, comparação por município e fogo dentro e fora de terras…
 </div>
 </div>
 </div>

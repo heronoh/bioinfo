@@ -4880,7 +4880,7 @@ vertical-align: -.125em;
 </tr>
 </tbody>
 </table>
-<p>Terras indígenas x focos: <code>Rscript analises/desmatamento_v2/R/06_terras_indigenas.R</code> (usa os focos já baixados e os limites da Funai, estados e biomas pelo pacote <code>geobr</code>, do IPEA; precisa dos pacotes <code>sf</code> e <code>geobr</code>).</p>
+<p>Terras indígenas x focos: <code>Rscript analises/desmatamento_v2/R/06_terras_indigenas.R</code> (usa os focos já baixados e os limites de terras indígenas, estados e biomas preparados pelo IPEA para o geobr, baixados com <code>baixar_dados.sh limites</code>; precisa só do pacote <code>sf</code>).</p>
 <p>O que já foi baixado não é baixado de novo: anos encerrados nunca se repetem, e o que muda (ano corrente, Ibama, DETER) só é renovado depois de 7 dias (<code>VALIDADE_DIAS=30 bash ...</code> muda o prazo; <code>--forcar</code> baixa tudo de novo).</p>
 <p>Requisitos: <code>curl</code>, <code>unzip</code>, <code>zipinfo</code>, <code>flock</code>, <code>sha256sum</code>, R com <code>dplyr</code> e <code>tidyr</code>. Espaço: reserve ~20 GB livres (o script confere antes de cada download).</p>
 <section id="segurança" class="level2">
